@@ -1,0 +1,23 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1280, "h": 800, "title": "1. Login" },
+    { "file": "Dashboard.dc.html", "x": 1400, "y": 0, "w": 1280, "h": 800, "title": "2. Dashboard" },
+    { "file": "SiteList.dc.html", "x": 2800, "y": 0, "w": 1280, "h": 800, "title": "3. Site List" },
+    { "file": "CreateSite.dc.html", "x": 4200, "y": 0, "w": 1280, "h": 800, "title": "4. Create Site" },
+    { "file": "CandidateReview.dc.html", "x": 5600, "y": 0, "w": 1280, "h": 800, "title": "4b. Candidate Review" },
+    { "file": "SiteDetails.dc.html", "x": 0, "y": 950, "w": 1280, "h": 800, "title": "5. Site Details" },
+    { "file": "ConflictResolution.dc.html", "x": 1400, "y": 950, "w": 1280, "h": 800, "title": "6. Conflict Resolution" },
+    { "file": "MapGIS.dc.html", "x": 2800, "y": 950, "w": 1280, "h": 800, "title": "7. Map / GIS" },
+    { "file": "Documents.dc.html", "x": 4200, "y": 950, "w": 1280, "h": 800, "title": "8. Documents" },
+    { "file": "AnalysisProgress.dc.html", "x": 0, "y": 1900, "w": 1280, "h": 800, "title": "9. Analysis Progress" },
+    { "file": "ActivityHistory.dc.html", "x": 1400, "y": 1900, "w": 1280, "h": 800, "title": "10. Activity History" },
+    { "file": "Reports.dc.html", "x": 2800, "y": 1900, "w": 1280, "h": 800, "title": "11. Reports" },
+    { "file": "UserManagement.dc.html", "x": 4200, "y": 1900, "w": 1280, "h": 800, "title": "12. User Management" }
+  ],
+  "annotations": [
+    { "id": "flow-note-1", "x": 0, "y": -110, "w": 2680, "text": "Row 1 — Entry & discovery: sign in, land on the dashboard, browse/search sites, start a new investigation, then automated matching hands off to human candidate confirmation (4b) before any parcel/zoning data is treated as confirmed." },
+    { "id": "flow-note-2", "x": 0, "y": 840, "w": 1280, "text": "Row 2 — Core investigation: the site record, resolving conflicting source data, the map, and supporting documents." },
+    { "id": "flow-note-3", "x": 0, "y": 1790, "w": 1280, "text": "Row 3 — Process & output: background analysis status, the audit trail, the immutable report, and admin user management." }
+  ],
+  "launch": { "view": "canvas" }
+}

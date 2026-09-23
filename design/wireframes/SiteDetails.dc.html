@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #eef1f5; color: #1e293b; }
+    .frame { width: 1280px; height: 800px; display: flex; flex-direction: column; background: #f8fafc; border: 1px solid #cbd5e1; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 20px; background: #1e293b; color: #e2e8f0; flex-shrink: 0; }
+    .topbar .logo { font-weight: 700; font-size: 14px; letter-spacing: 0.6px; color: #fff; }
+    .topbar .nav { display: flex; gap: 22px; font-size: 12px; color: #94a3b8; }
+    .topbar .nav .active { color: #fff; font-weight: 600; }
+    .topbar .user { width: 26px; height: 26px; border-radius: 50%; background: #475569; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; }
+    .siteheader { padding: 14px 24px; border-bottom: 1px solid #cbd5e1; background: #fff; flex-shrink: 0; }
+    .body { flex: 1; display: flex; overflow: hidden; }
+    .sidebar { width: 190px; border-right: 1px solid #cbd5e1; background: #f8fafc; padding: 14px 10px; flex-shrink: 0; }
+    .main { flex: 1; padding: 20px 26px; overflow-y: auto; }
+    .box { border: 1px solid #cbd5e1; background: #fff; border-radius: 3px; }
+    .ph { border: 1px dashed #94a3b8; background: #f1f5f9; border-radius: 3px; }
+    .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; }
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+    .b-confirmed { background: #dcfce7; color: #15803d; }
+    .b-conflict { background: #fee2e2; color: #b91c1c; }
+    .b-missing { background: #f1f5f9; color: #64748b; border: 1px dashed #94a3b8; }
+    .b-review { background: #fef3c7; color: #b45309; }
+    .annotation { flex-shrink: 0; background: #fffbea; border-top: 1px dashed #d97706; padding: 10px 20px; font-size: 11.5px; color: #78350f; font-style: italic; }
+    .btn { display: inline-block; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; border: 1px solid #94a3b8; background: #fff; color: #1e293b; }
+    .btn-primary { background: #1e293b; color: #fff; border-color: #1e293b; }
+    .side-item { padding: 9px 12px; border-radius: 4px; font-size: 12.5px; color: #475569; margin-bottom: 2px; }
+    .side-item.active { background: #e2e8f0; color: #1e293b; font-weight: 700; }
+    .fieldrow { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #f1f5f9; font-size: 12.5px; }
+    .fieldrow .fname { width: 160px; color: #64748b; font-weight: 600; }
+    .fieldrow .fval { flex: 1; }
+    .fieldrow .fsrc { width: 220px; color: #94a3b8; font-size: 11px; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="topbar">
+    <div style="display:flex; align-items:center; gap:32px;">
+      <div class="logo">SITEIQ</div>
+      <div class="nav"><span>Dashboard</span><span class="active">Sites</span><span>Reports</span><span>Users</span></div>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px;"><div class="ph" style="width:160px;height:24px;"></div><div class="user">JD</div></div>
+  </div>
+
+  <div class="siteheader">
+    <div style="font-size:10.5px; color:#94a3b8; margin-bottom:4px;">Sites &rsaquo; Worcester, MA</div>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <span style="font-size:18px; font-weight:700;">142 Elm St</span>
+        <span style="font-size:12.5px; color:#94a3b8; margin-left:8px;">Worcester, MA 01609 &middot; Parcel 04-112-0034</span>
+        <span class="badge b-confirmed" style="margin-left:10px;">parcel confirmed</span>
+        <span class="badge b-review" style="margin-left:6px;">needs review</span>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <div class="btn">Run Analysis</div>
+        <div class="btn btn-primary">Generate Report</div>
+      </div>
+    </div>
+    <div style="font-size:11px; color:#94a3b8; margin-top:6px;">Original input: <span style="color:#475569;">&ldquo;142 Elm Street&rdquo;</span> &middot; Matched &amp; confirmed: <strong style="color:#1e293b;">142 Elm St, Worcester, MA 01609</strong> (94% confidence, confirmed by J. Delgado &mdash; <u>view match evidence</u>)</div>
+    <div class="ph" style="margin-top:10px; padding:7px 10px; font-size:11px; color:#78350f; background:#fffbea; border-color:#d97706; display:inline-block;">
+      &#9888; This parcel's duplicate flag was reviewed at confirmation &mdash; kept as a separate site from <u>210 Elm St</u> (decision recorded)
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="sidebar">
+      <div class="side-item active">Overview</div>
+      <div class="side-item">Property / Parcel</div>
+      <div class="side-item">Zoning</div>
+      <div class="side-item">Map</div>
+      <div class="side-item">Documents</div>
+      <div class="side-item">Analysis</div>
+      <div class="side-item">Notes</div>
+      <div class="side-item">Activity / History</div>
+    </div>
+    <div class="main">
+      <div style="display:flex; gap:18px; margin-bottom:18px;">
+        <div class="box" style="flex:1; padding:14px 16px;">
+          <div class="label" style="margin-bottom:8px;">Confidence summary</div>
+          <div style="display:flex; gap:16px; font-size:12px;">
+            <div><span class="badge b-confirmed">5 confirmed</span></div>
+            <div><span class="badge b-review">2 needs review</span></div>
+            <div><span class="badge b-conflict">1 conflicting</span></div>
+            <div><span class="badge b-missing">1 missing</span></div>
+          </div>
+        </div>
+        <div class="box" style="flex:1; padding:14px 16px;">
+          <div class="label" style="margin-bottom:6px;">Investigation status</div>
+          <div style="font-size:13px; font-weight:600;">In progress &mdash; assigned to J. Delgado</div>
+          <div style="font-size:11px; color:#94a3b8; margin-top:4px;">Assignment is informational only &mdash; any analyst can edit this site.</div>
+        </div>
+      </div>
+
+      <div class="box" style="padding:14px 18px; margin-bottom:18px;">
+        <div class="label" style="margin-bottom:4px;">Overview &mdash; key fields</div>
+        <div class="fieldrow"><div class="fname">Lot size</div><div class="fval">25,000 sq ft <span class="badge b-conflict" style="margin-left:6px;">conflicting</span></div><div class="fsrc">2 sources disagree &mdash; <u>resolve &rarr;</u></div></div>
+        <div class="fieldrow"><div class="fname">Zoning district</div><div class="fval">R-2 (Residential) <span class="badge b-confirmed" style="margin-left:6px;">confirmed</span></div><div class="fsrc">MassGIS &middot; retrieved 2 hrs ago</div></div>
+        <div class="fieldrow"><div class="fname">Assessed value</div><div class="fval">$412,000 <span class="badge b-review" style="margin-left:6px;">needs review</span></div><div class="fsrc">low confidence (0.52) &mdash; <u>confirm &rarr;</u></div></div>
+        <div class="fieldrow"><div class="fname">Year built</div><div class="fval" style="color:#94a3b8;">&mdash; <span class="badge b-missing" style="margin-left:6px;">field unavailable</span></div><div class="fsrc">not published by source</div></div>
+        <div class="fieldrow" style="border-bottom:none;"><div class="fname">Municipality</div><div class="fval">Worcester <span class="badge b-confirmed" style="margin-left:6px;">confirmed</span></div><div class="fsrc">MassGIS &middot; retrieved 2 hrs ago</div></div>
+      </div>
+
+      <div class="box" style="padding:14px 18px;">
+        <div class="label" style="margin-bottom:8px;">Internal notes (latest)</div>
+        <div class="ph" style="padding:10px; font-size:12px; color:#475569;">&ldquo;Site looks promising for mixed-use redevelopment, pending zoning confirmation.&rdquo; &mdash; A. Chen, 2 days ago</div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>5&nbsp;&mdash;&nbsp;Site Details (Overview tab).</strong> One page per property, left rail switches sections (KT &sect;8). The header keeps original input and matched/confirmed address visibly separate, permanently (that decision was made on Screen&nbsp;4b and is never re-litigated silently here). Every field row below shows value + explicit status badge + source/reason. Clicking a conflicting/needs-review <em>field</em> opens Conflict Resolution (Screen&nbsp;6) &mdash; a different workflow from parcel-identity confirmation (Screen&nbsp;4b), never combined with it.
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

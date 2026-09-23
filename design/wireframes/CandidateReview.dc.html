@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #eef1f5; color: #1e293b; }
+    .frame { width: 1280px; height: 800px; display: flex; flex-direction: column; background: #f8fafc; border: 1px solid #cbd5e1; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 20px; background: #1e293b; color: #e2e8f0; flex-shrink: 0; }
+    .topbar .logo { font-weight: 700; font-size: 14px; letter-spacing: 0.6px; color: #fff; }
+    .siteheader { padding: 10px 24px 0; border-bottom: 1px solid #cbd5e1; background: #fff; flex-shrink: 0; }
+    .crumb { font-size: 12.5px; color: #94a3b8; margin-bottom: 8px; }
+    .stepper { display:flex; align-items:center; padding-bottom: 12px; }
+    .sdot { width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:800; border:2px solid #cbd5e1; color:#94a3b8; background:#fff; flex-shrink:0; }
+    .sdot.done { border-color:#15803d; background:#15803d; color:#fff; }
+    .sdot.now { border-color:#1d4ed8; background:#dbeafe; color:#1d4ed8; }
+    .sconn { width:42px; height:2px; background:#cbd5e1; margin:0 5px; }
+    .sconn.done { background:#15803d; }
+    .slabel { font-size:10px; color:#94a3b8; margin-left:5px; margin-right:5px; white-space:nowrap; }
+    .slabel.now { color:#1d4ed8; font-weight:700; }
+    .body { flex: 1; display: flex; overflow: hidden; }
+    .listpane { width: 660px; border-right: 1px solid #cbd5e1; padding: 16px 20px; overflow-y: auto; }
+    .mappane { flex: 1; position: relative; background:
+      repeating-linear-gradient(0deg, #dbe4ee, #dbe4ee 1px, #eef2f7 1px, #eef2f7 40px),
+      repeating-linear-gradient(90deg, #dbe4ee, #dbe4ee 1px, #eef2f7 1px, #eef2f7 40px); }
+    .box { border: 1px solid #cbd5e1; background: #fff; border-radius: 3px; }
+    .ph { border: 1px dashed #94a3b8; background: #f1f5f9; border-radius: 3px; }
+    .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; }
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+    .b-high { background: #dcfce7; color: #15803d; }
+    .b-review { background: #fef3c7; color: #b45309; }
+    .btn { display: inline-block; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; border: 1px solid #94a3b8; background: #fff; color: #1e293b; }
+    .btn-primary { background: #1e293b; color: #fff; border-color: #1e293b; }
+    .btn-sm { padding:5px 10px; font-size:11px; }
+    .candidate { border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px 16px; margin-bottom: 12px; }
+    .candidate.selected { border: 2px solid #1e293b; background: #f8fafc; }
+    .radio { width:16px; height:16px; border-radius:50%; border:2px solid #94a3b8; flex-shrink:0; }
+    .radio.on { border-color:#1e293b; background: radial-gradient(#1e293b 0 5px, transparent 6px); }
+    .evidence { font-size: 11.5px; color: #15803d; line-height:1.9; }
+    .evidence .no { color: #94a3b8; }
+    .toolbar { position:absolute; top:12px; left:12px; display:flex; gap:6px; }
+    .toolchip { background:#fff; border:1px solid #cbd5e1; border-radius:4px; padding:5px 9px; font-size:10.5px; font-weight:600; color:#1e293b; }
+    .layertoggle { position:absolute; top:12px; right:12px; background:#fff; border:1px solid #cbd5e1; border-radius:4px; overflow:hidden; display:flex; }
+    .layerbtn { padding:5px 10px; font-size:10.5px; font-weight:600; color:#64748b; }
+    .layerbtn.active { background:#1e293b; color:#fff; }
+    .pin { position:absolute; width:13px; height:13px; border-radius:50% 50% 50% 0; border:2px solid #fff; transform:rotate(-45deg); font-size:0; }
+    .pin-input { background:#dc2626; }
+    .pin-1 { background:#1e293b; }
+    .pin-2 { background:#64748b; }
+    .pin-3 { background:#64748b; }
+    .pinlabel { position:absolute; color:#1e293b; font-size:10px; font-weight:800; transform: rotate(45deg); }
+    .boundary1 { position:absolute; border:2px solid #1e293b; background:rgba(30,41,59,0.08); border-radius:2px; }
+    .boundary2 { position:absolute; border:2px dashed #94a3b8; border-radius:2px; }
+    .coordbar { position:absolute; bottom:12px; left:12px; background:#fff; border:1px solid #cbd5e1; border-radius:4px; padding:5px 9px; font-size:10px; color:#475569; font-family: monospace; }
+    .footer { flex-shrink:0; border-top:1px solid #cbd5e1; background:#fff; padding:12px 24px; display:flex; justify-content:space-between; align-items:center; }
+    .annotation { flex-shrink: 0; background: #fffbea; border-top: 1px dashed #d97706; padding: 10px 20px; font-size: 11.5px; color: #78350f; font-style: italic; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="topbar"><div class="logo">SITEIQ</div></div>
+  <div class="siteheader">
+    <div class="crumb">Sites &rsaquo; New investigation &rsaquo; <strong style="color:#1e293b;">Candidate Review</strong></div>
+    <div class="stepper">
+      <div class="sdot done">&#10003;</div><span class="slabel">Create Site</span><div class="sconn done"></div>
+      <div class="sdot done">&#10003;</div><span class="slabel">Automated Matching</span><div class="sconn done"></div>
+      <div class="sdot now">&#9679;</div><span class="slabel now">Candidate Review</span><div class="sconn"></div>
+      <div class="sdot">4</div><span class="slabel">Confirm Parcel</span><div class="sconn"></div>
+      <div class="sdot">5</div><span class="slabel">Parcel + Zoning Enrichment</span><div class="sconn"></div>
+      <div class="sdot">6</div><span class="slabel">Field Conflict Review</span><div class="sconn"></div>
+      <div class="sdot">7</div><span class="slabel">Analysis</span><div class="sconn"></div>
+      <div class="sdot">8</div><span class="slabel">Report</span>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="listpane">
+      <div class="ph" style="padding:10px 12px; margin-bottom:14px; background:#f1f5f9;">
+        <div class="label" style="margin-bottom:3px;">Original input <span style="text-transform:none; font-weight:400; color:#94a3b8;">(preserved, never overwritten)</span></div>
+        <div style="font-size:13px; font-weight:600;">142 Elm Street, Worcester, MA 01609</div>
+      </div>
+
+      <div style="font-size:12.5px; font-weight:700; margin-bottom:10px;">SiteIQ found 3 possible parcels &mdash; select the correct one</div>
+
+      <div class="candidate selected">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <div style="display:flex; gap:10px;">
+            <div class="radio on" style="margin-top:2px;"></div>
+            <div>
+              <div style="font-size:14px; font-weight:800;">#1 &middot; 142 Elm St</div>
+              <div style="font-size:11.5px; color:#64748b;">Parcel 04-112-0034 &middot; Worcester, MA</div>
+            </div>
+          </div>
+          <span class="badge b-high">94% &middot; High confidence</span>
+        </div>
+        <div class="evidence" style="margin-top:10px; margin-left:26px;">
+          &#10003; Street address match<br>
+          &#10003; Worcester municipality match<br>
+          &#10003; ZIP match (01609)<br>
+          &#10003; 18m from supplied location<br>
+          &#10003; Parcel ID confirmed &mdash; MassGIS parcel record
+        </div>
+        <div style="font-size:10.5px; color:#94a3b8; margin-left:26px; margin-top:6px;">Source: MassGIS &middot; retrieved Sep 3, 2026, 9:14 AM</div>
+
+        <div class="ph" style="margin-top:12px; margin-left:26px; padding:10px 12px; background:#fffbea; border-color:#d97706;">
+          <div style="font-size:11.5px; color:#78350f; font-weight:700; margin-bottom:4px;">&#9888; Possible duplicate</div>
+          <div style="font-size:11.5px; color:#78350f; margin-bottom:8px;">An active Site already exists for parcel <strong>04-112-0034</strong>: 210 Elm Street, Worcester, MA</div>
+          <div style="display:flex; gap:8px;">
+            <div class="btn btn-sm">Open existing site</div>
+            <div class="btn btn-sm btn-primary">Continue as separate site</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="candidate">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <div style="display:flex; gap:10px;">
+            <div class="radio" style="margin-top:2px;"></div>
+            <div>
+              <div style="font-size:14px; font-weight:800;">#2 &middot; 140 Elm St</div>
+              <div style="font-size:11.5px; color:#64748b;">Parcel 04-112-0033 &middot; Worcester, MA</div>
+            </div>
+          </div>
+          <span class="badge b-review">71% &middot; Needs review</span>
+        </div>
+        <div class="evidence" style="margin-top:10px; margin-left:26px;">
+          &#10003; Worcester municipality match<br>
+          &#10003; ZIP match (01609)<br>
+          <span class="no">&#9675; Address similar, not exact (house number off by 2)</span><br>
+          <span class="no">&#9675; 45m from supplied location</span>
+        </div>
+        <div style="font-size:10.5px; color:#94a3b8; margin-left:26px; margin-top:6px;">Source: MassGIS &middot; retrieved Sep 3, 2026, 9:14 AM</div>
+      </div>
+
+      <div class="candidate">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <div style="display:flex; gap:10px;">
+            <div class="radio" style="margin-top:2px;"></div>
+            <div>
+              <div style="font-size:14px; font-weight:800;">#3 &middot; 144 Elm St</div>
+              <div style="font-size:11.5px; color:#64748b;">Parcel 04-112-0035 &middot; Worcester, MA</div>
+            </div>
+          </div>
+          <span class="badge b-review">64% &middot; Needs review</span>
+        </div>
+        <div class="evidence" style="margin-top:10px; margin-left:26px;">
+          &#10003; Worcester municipality match<br>
+          <span class="no">&#9675; Address similarity low</span><br>
+          <span class="no">&#9675; 60m from supplied location</span><br>
+          <span class="no">&#9675; No parcel ID provided to compare</span>
+        </div>
+        <div style="font-size:10.5px; color:#94a3b8; margin-left:26px; margin-top:6px;">Source: MassGIS &middot; retrieved Sep 3, 2026, 9:14 AM</div>
+      </div>
+
+      <div style="text-align:center; font-size:11.5px; color:#1d4ed8; margin-top:6px;">None of these are correct &mdash; try another address / enter coordinates / search manually</div>
+    </div>
+
+    <div class="mappane">
+      <div class="toolbar">
+        <div class="toolchip">Candidates</div>
+        <div class="toolchip">&#128207; Measure</div>
+      </div>
+      <div class="layertoggle">
+        <div class="layerbtn active">Standard</div>
+        <div class="layerbtn">Satellite</div>
+      </div>
+
+      <div class="boundary1" style="top:300px; left:250px; width:150px; height:110px;"></div>
+      <div class="boundary2" style="top:300px; left:110px; width:120px; height:110px;"></div>
+      <div class="boundary2" style="top:280px; left:400px; width:130px; height:130px;"></div>
+
+      <div class="pin pin-input" style="top:260px; left:320px;"></div>
+      <div class="pin pin-1" style="top:345px; left:315px;"></div>
+      <div class="pinlabel" style="top:328px; left:330px;">1</div>
+      <div class="pin pin-2" style="top:345px; left:165px;"></div>
+      <div class="pinlabel" style="top:328px; left:180px;">2</div>
+      <div class="pin pin-3" style="top:335px; left:455px;"></div>
+      <div class="pinlabel" style="top:318px; left:470px;">3</div>
+
+      <div class="coordbar">Input: 42.2626&deg; N, 71.8023&deg; W &middot; candidate boundaries shown as drawn</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div style="font-size:11.5px; color:#94a3b8;">Candidate #1 selected &mdash; nothing is finalized until you confirm.</div>
+    <div style="display:flex; gap:10px;">
+      <div class="btn">Enter Manually Instead</div>
+      <div class="btn btn-primary">Confirm Selected Parcel</div>
+    </div>
+  </div>
+
+  <div class="annotation">
+    <strong>4b&nbsp;&mdash;&nbsp;Property Match / Candidate Review.</strong> Sits between Create Site and Site Details (discovery doc &sect;02, matching pipeline). Distinct from Conflict Resolution (Screen&nbsp;6): this is <em>property-identity</em> review (&ldquo;is this the right parcel?&rdquo;), not <em>field-value</em> review &mdash; the two are never combined. Every candidate shows its full evidence breakdown, not just a number; confidence never auto-confirms &mdash; the analyst must click. A candidate matching an already-active site's parcel surfaces the duplicate decision inline, and the choice is recorded. Original input stays visible and unedited throughout.
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

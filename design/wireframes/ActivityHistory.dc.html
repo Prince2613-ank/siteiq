@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #eef1f5; color: #1e293b; }
+    .frame { width: 1280px; height: 800px; display: flex; flex-direction: column; background: #f8fafc; border: 1px solid #cbd5e1; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 20px; background: #1e293b; color: #e2e8f0; flex-shrink: 0; }
+    .topbar .logo { font-weight: 700; font-size: 14px; letter-spacing: 0.6px; color: #fff; }
+    .siteheader { padding: 10px 24px; border-bottom: 1px solid #cbd5e1; background: #fff; flex-shrink: 0; font-size: 12.5px; color: #94a3b8; }
+    .body { flex: 1; display: flex; overflow: hidden; }
+    .sidebar { width: 190px; border-right: 1px solid #cbd5e1; background: #f8fafc; padding: 14px 10px; flex-shrink: 0; }
+    .side-item { padding: 9px 12px; border-radius: 4px; font-size: 12.5px; color: #475569; margin-bottom: 2px; }
+    .side-item.active { background: #e2e8f0; color: #1e293b; font-weight: 700; }
+    .main { flex: 1; padding: 20px 26px; overflow-y: auto; }
+    .box { border: 1px solid #cbd5e1; background: #fff; border-radius: 3px; }
+    .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; }
+    .timeline { position:relative; padding-left:26px; }
+    .timeline::before { content:""; position:absolute; left:9px; top:6px; bottom:6px; width:2px; background:#e2e8f0; }
+    .tlitem { position:relative; padding-bottom:20px; }
+    .tldot { position:absolute; left:-26px; top:2px; width:18px; height:18px; border-radius:50%; background:#fff; border:2px solid #1e293b; }
+    .tlitem.duplicate .tldot { border-color:#d97706; background:#fef3c7; }
+    .tlitem.conflict .tldot { border-color:#b91c1c; background:#fee2e2; }
+    .tlitem.doc .tldot { border-color:#0369a1; background:#dbeafe; }
+    .annotation { flex-shrink: 0; background: #fffbea; border-top: 1px dashed #d97706; padding: 10px 20px; font-size: 11.5px; color: #78350f; font-style: italic; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="topbar"><div class="logo">SITEIQ</div></div>
+  <div class="siteheader">Sites &rsaquo; 142 Elm Street, Worcester, MA &rsaquo; <strong style="color:#1e293b;">Activity / History</strong></div>
+  <div class="body">
+    <div class="sidebar">
+      <div class="side-item">Overview</div>
+      <div class="side-item">Property / Parcel</div>
+      <div class="side-item">Zoning</div>
+      <div class="side-item">Map</div>
+      <div class="side-item">Documents</div>
+      <div class="side-item">Analysis</div>
+      <div class="side-item">Notes</div>
+      <div class="side-item active">Activity / History</div>
+    </div>
+    <div class="main">
+      <div style="font-size:16px; font-weight:700; margin-bottom:16px;">Activity timeline</div>
+      <div class="box" style="padding:22px 24px;">
+        <div class="timeline">
+          <div class="tlitem"><div class="tldot"></div><div style="font-size:12.5px;"><strong>Note added</strong> by A. Chen</div><div style="font-size:11px; color:#94a3b8;">&ldquo;Site looks promising for mixed-use redevelopment&hellip;&rdquo; &middot; 2 days ago</div></div>
+          <div class="tlitem doc"><div class="tldot"></div><div style="font-size:12.5px;"><strong>Document uploaded</strong> &mdash; site-plan-worcester.pdf</div><div style="font-size:11px; color:#94a3b8;">by A. Chen &middot; 2 days ago</div></div>
+          <div class="tlitem conflict"><div class="tldot"></div><div style="font-size:12.5px;"><strong>Conflicting value detected</strong> &mdash; Lot size</div><div style="font-size:11px; color:#94a3b8;">MassGIS (27,500 sq ft) vs. Assessor (25,000 sq ft) &middot; 3 days ago</div></div>
+          <div class="tlitem"><div class="tldot"></div><div style="font-size:12.5px;"><strong>Zoning lookup performed</strong> &mdash; MassGIS</div><div style="font-size:11px; color:#94a3b8;">1 field matched, 1 field unavailable &middot; 3 days ago</div></div>
+          <div class="tlitem"><div class="tldot"></div><div style="font-size:12.5px;"><strong>Parcel lookup performed</strong> &mdash; MA Assessor Database</div><div style="font-size:11px; color:#94a3b8;">4 fields matched &middot; 3 days ago</div></div>
+          <div class="tlitem"><div class="tldot"></div><div style="font-size:12.5px;"><strong>User assignment changed</strong> &mdash; assigned to J. Delgado</div><div style="font-size:11px; color:#94a3b8;">by Admin &middot; 3 days ago</div></div>
+          <div class="tlitem duplicate"><div class="tldot"></div><div style="font-size:12.5px;"><strong>Potential duplicate detected</strong> &mdash; parcel also matches 210 Elm St</div><div style="font-size:11px; color:#94a3b8;">system &middot; 3 days ago</div></div>
+          <div class="tlitem" style="padding-bottom:0;"><div class="tldot"></div><div style="font-size:12.5px;"><strong>Site created</strong> by J. Delgado</div><div style="font-size:11px; color:#94a3b8;">via Address entry &middot; 3 days ago</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>10&nbsp;&mdash;&nbsp;Activity History.</strong> Every <code>ActivityEvent</code> row from KT &sect;13 rendered oldest-at-bottom, newest-at-top, each showing actor + timestamp. Conflict and duplicate-detection events get distinct dot colors so a reviewer can scan for "did something need my attention" without reading every line.
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

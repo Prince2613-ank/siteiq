@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #eef1f5; color: #1e293b; }
+    .frame { width: 1280px; height: 800px; display: flex; flex-direction: column; background: #f8fafc; border: 1px solid #cbd5e1; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 20px; background: #1e293b; color: #e2e8f0; flex-shrink: 0; }
+    .topbar .logo { font-weight: 700; font-size: 14px; letter-spacing: 0.6px; color: #fff; }
+    .topbar .nav { display: flex; gap: 22px; font-size: 12px; color: #94a3b8; }
+    .topbar .nav .active { color: #fff; font-weight: 600; }
+    .topbar .user { width: 26px; height: 26px; border-radius: 50%; background: #475569; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; }
+    .main { flex: 1; display: flex; justify-content: center; padding: 30px 28px; overflow-y: auto; }
+    .box { border: 1px solid #cbd5e1; background: #fff; border-radius: 3px; }
+    .ph { border: 1px dashed #94a3b8; background: #f1f5f9; border-radius: 3px; }
+    .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; }
+    .annotation { flex-shrink: 0; background: #fffbea; border-top: 1px dashed #d97706; padding: 10px 20px; font-size: 11.5px; color: #78350f; font-style: italic; }
+    .btn { display: inline-block; padding: 9px 16px; border-radius: 4px; font-size: 12.5px; font-weight: 600; border: 1px solid #94a3b8; background: #fff; color: #1e293b; }
+    .btn-primary { background: #1e293b; color: #fff; border-color: #1e293b; }
+    .tab { padding: 9px 16px; font-size: 12.5px; font-weight: 600; color: #64748b; border-bottom: 2px solid transparent; }
+    .tab.active { color: #1e293b; border-bottom: 2px solid #1e293b; }
+    .field { margin-bottom: 16px; }
+    .input { border: 1px solid #cbd5e1; border-radius: 4px; padding: 9px 10px; font-size: 13px; color: #64748b; background: #fff; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="topbar">
+    <div style="display:flex; align-items:center; gap:32px;">
+      <div class="logo">SITEIQ</div>
+      <div class="nav"><span>Dashboard</span><span class="active">Sites</span><span>Reports</span><span>Users</span></div>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px;"><div class="ph" style="width:160px;height:24px;"></div><div class="user">JD</div></div>
+  </div>
+  <div class="main">
+    <div class="box" style="width:620px; padding:28px 30px; height: fit-content;">
+      <div style="font-size:17px; font-weight:700; margin-bottom:2px;">Create a new site</div>
+      <div style="font-size:12px; color:#94a3b8; margin-bottom:20px;">Massachusetts only for this release. Any address can be entered even without a confirmed parcel match.</div>
+
+      <div style="display:flex; border-bottom:1px solid #e2e8f0; margin-bottom:20px;">
+        <div class="tab active">Address</div>
+        <div class="tab">Parcel ID</div>
+        <div class="tab">Coordinates</div>
+      </div>
+
+      <div class="field">
+        <div class="label" style="margin-bottom:6px;">Internal nickname <span style="color:#94a3b8; text-transform:none; font-weight:400;">(optional)</span></div>
+        <div class="input">e.g. &ldquo;Elm St. mixed-use parcel&rdquo;</div>
+      </div>
+      <div class="field">
+        <div class="label" style="margin-bottom:6px;">Street address</div>
+        <div class="input">142 Elm Street</div>
+      </div>
+      <div style="display:flex; gap:12px;">
+        <div class="field" style="flex:2;"><div class="label" style="margin-bottom:6px;">City / Municipality</div><div class="input">Worcester</div></div>
+        <div class="field" style="flex:1;"><div class="label" style="margin-bottom:6px;">State</div><div class="input">MA</div></div>
+        <div class="field" style="flex:1;"><div class="label" style="margin-bottom:6px;">ZIP</div><div class="input">01609</div></div>
+      </div>
+      <div class="field">
+        <div class="label" style="margin-bottom:6px;">Assign to analyst <span style="color:#94a3b8; text-transform:none; font-weight:400;">(optional, informational only)</span></div>
+        <div class="input" style="display:flex; justify-content:space-between;"><span>Unassigned</span><span>&#9662;</span></div>
+      </div>
+
+      <div class="box" style="padding:10px 12px; margin-bottom:20px; background:#f8fafc;">
+        <div class="label" style="margin-bottom:6px;">What happens after you submit</div>
+        <div style="display:flex; align-items:center; gap:6px; font-size:10.5px; color:#475569; flex-wrap:wrap;">
+          <span>Site created</span><span style="color:#cbd5e1;">&rarr;</span>
+          <span>Automated property matching</span><span style="color:#cbd5e1;">&rarr;</span>
+          <span style="font-weight:700; color:#1e293b;">You review &amp; confirm the parcel</span><span style="color:#cbd5e1;">&rarr;</span>
+          <span>Parcel + zoning enrichment</span>
+        </div>
+        <div style="font-size:11px; color:#94a3b8; margin-top:6px;">Nothing is finalized automatically &mdash; even a high-confidence match waits for your confirmation on the next screen.</div>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px;">
+        <div class="btn">Cancel</div>
+        <div class="btn btn-primary">Create Site &amp; Start Investigation</div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>4&nbsp;&mdash;&nbsp;Create Site.</strong> Three entry modes (address / parcel ID / coordinates) per KT&nbsp;&sect;4.2. No parcel match is required to create. Submitting starts the automated matching pipeline and routes to Candidate Review (Screen&nbsp;4b) &mdash; identification and human confirmation are deliberately separate steps, never implied as one automatic action. Possible-duplicate detection happens at confirmation time (Screen&nbsp;4b), not here.
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

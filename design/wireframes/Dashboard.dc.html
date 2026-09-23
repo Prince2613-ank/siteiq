@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #eef1f5; color: #1e293b; }
+    .frame { width: 1280px; height: 800px; display: flex; flex-direction: column; background: #f8fafc; border: 1px solid #cbd5e1; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 20px; background: #1e293b; color: #e2e8f0; flex-shrink: 0; }
+    .topbar .logo { font-weight: 700; font-size: 14px; letter-spacing: 0.6px; color: #fff; }
+    .topbar .nav { display: flex; gap: 22px; font-size: 12px; color: #94a3b8; }
+    .topbar .nav .active { color: #fff; font-weight: 600; }
+    .topbar .user { width: 26px; height: 26px; border-radius: 50%; background: #475569; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; }
+    .main { flex: 1; padding: 24px 28px; overflow-y: auto; }
+    .box { border: 1px solid #cbd5e1; background: #fff; border-radius: 3px; }
+    .ph { border: 1px dashed #94a3b8; background: #f1f5f9; border-radius: 3px; }
+    .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; }
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+    .b-confirmed { background: #dcfce7; color: #15803d; }
+    .b-conflict { background: #fee2e2; color: #b91c1c; }
+    .b-missing { background: #f1f5f9; color: #64748b; border: 1px dashed #94a3b8; }
+    .b-review { background: #fef3c7; color: #b45309; }
+    .annotation { flex-shrink: 0; background: #fffbea; border-top: 1px dashed #d97706; padding: 10px 20px; font-size: 11.5px; color: #78350f; font-style: italic; }
+    .btn { display: inline-block; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; border: 1px solid #94a3b8; background: #fff; color: #1e293b; }
+    .btn-primary { background: #1e293b; color: #fff; border-color: #1e293b; }
+    .stat { flex: 1; border: 1px solid #cbd5e1; background: #fff; border-radius: 4px; padding: 16px 18px; }
+    .stat .n { font-size: 26px; font-weight: 800; }
+    .stat .l { font-size: 11px; color: #64748b; margin-top: 4px; }
+    .row { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px; font-size: 12.5px; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="topbar">
+    <div style="display:flex; align-items:center; gap:32px;">
+      <div class="logo">SITEIQ</div>
+      <div class="nav"><span class="active">Dashboard</span><span>Sites</span><span>Reports</span><span>Users</span></div>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <div class="ph" style="width:160px;height:24px;"></div>
+      <div class="user">JD</div>
+    </div>
+  </div>
+  <div class="main">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+      <div style="font-size:20px; font-weight:700;">Welcome back, Jamie</div>
+      <div class="btn btn-primary">+ Create Site</div>
+    </div>
+
+    <div style="display:flex; gap:16px; margin-bottom:24px;">
+      <div class="stat"><div class="n">184</div><div class="l">Active sites</div></div>
+      <div class="stat"><div class="n">12</div><div class="l">Needs review <span class="badge b-review" style="margin-left:4px;">flagged</span></div></div>
+      <div class="stat"><div class="n">6</div><div class="l">Conflicting fields <span class="badge b-conflict" style="margin-left:4px;">conflict</span></div></div>
+      <div class="stat"><div class="n">3</div><div class="l">Analyses in progress</div></div>
+      <div class="stat"><div class="n">27</div><div class="l">Unassigned sites</div></div>
+    </div>
+
+    <div style="display:flex; gap:20px;">
+      <div class="box" style="flex:2; padding:16px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+          <div style="font-weight:700; font-size:13px;">Recently updated sites</div>
+          <div style="font-size:11px; color:#1d4ed8;">View all &rarr;</div>
+        </div>
+        <div class="row"><div class="ph" style="width:14px;height:14px;border-radius:3px;"></div><div style="flex:1;">142 Elm Street, Worcester, MA</div><span class="badge b-review">needs review</span><div style="width:90px;" class="label">2 hrs ago</div></div>
+        <div class="row"><div class="ph" style="width:14px;height:14px;border-radius:3px;"></div><div style="flex:1;">88 Harbor Rd, New Bedford, MA</div><span class="badge b-confirmed">confirmed</span><div style="width:90px;" class="label">5 hrs ago</div></div>
+        <div class="row"><div class="ph" style="width:14px;height:14px;border-radius:3px;"></div><div style="flex:1;">Parcel 04-112-0034, Springfield, MA</div><span class="badge b-conflict">conflict</span><div style="width:90px;" class="label">Yesterday</div></div>
+        <div class="row" style="border-bottom:none;"><div class="ph" style="width:14px;height:14px;border-radius:3px;"></div><div style="flex:1;">210 Commonwealth Ave, Boston, MA</div><span class="badge b-missing">no match</span><div style="width:90px;" class="label">2 days ago</div></div>
+      </div>
+      <div class="box" style="flex:1; padding:16px;">
+        <div style="font-weight:700; font-size:13px; margin-bottom:10px;">My assigned sites</div>
+        <div class="row"><div style="flex:1;">61 Bay State Rd</div><span class="badge b-confirmed">active</span></div>
+        <div class="row"><div style="flex:1;">14 Mill Pond Way</div><span class="badge b-review">review</span></div>
+        <div class="row" style="border-bottom:none;"><div style="flex:1;">7 Quarry Lane</div><span class="badge b-confirmed">active</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>2&nbsp;&mdash;&nbsp;Dashboard.</strong> Org-wide landing page after login. Stat tiles surface exactly the things that need attention (needs-review, conflicts) rather than vanity totals. &ldquo;Recently updated sites&rdquo; and &ldquo;My assigned sites&rdquo; both link into Site Details (Screen&nbsp;5); assignment here is informational, not an access boundary &mdash; any analyst can open any active site.
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

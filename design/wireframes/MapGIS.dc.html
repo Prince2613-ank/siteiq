@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #eef1f5; color: #1e293b; }
+    .frame { width: 1280px; height: 800px; display: flex; flex-direction: column; background: #f8fafc; border: 1px solid #cbd5e1; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 20px; background: #1e293b; color: #e2e8f0; flex-shrink: 0; }
+    .topbar .logo { font-weight: 700; font-size: 14px; letter-spacing: 0.6px; color: #fff; }
+    .siteheader { padding: 10px 24px; border-bottom: 1px solid #cbd5e1; background: #fff; flex-shrink: 0; font-size: 12.5px; color: #94a3b8; }
+    .body { flex: 1; display: flex; overflow: hidden; }
+    .sidebar { width: 190px; border-right: 1px solid #cbd5e1; background: #f8fafc; padding: 14px 10px; flex-shrink: 0; }
+    .side-item { padding: 9px 12px; border-radius: 4px; font-size: 12.5px; color: #475569; margin-bottom: 2px; }
+    .side-item.active { background: #e2e8f0; color: #1e293b; font-weight: 700; }
+    .mapmain { flex: 1; display: flex; }
+    .mapcanvas { flex: 1; position: relative; background:
+      repeating-linear-gradient(0deg, #dbe4ee, #dbe4ee 1px, #eef2f7 1px, #eef2f7 40px),
+      repeating-linear-gradient(90deg, #dbe4ee, #dbe4ee 1px, #eef2f7 1px, #eef2f7 40px); }
+    .toolbar { position:absolute; top:14px; left:14px; display:flex; gap:8px; }
+    .toolchip { background:#fff; border:1px solid #cbd5e1; border-radius:4px; padding:6px 10px; font-size:11px; font-weight:600; color:#1e293b; }
+    .toolchip.active { background:#1e293b; color:#fff; border-color:#1e293b; }
+    .layertoggle { position:absolute; top:14px; right:14px; background:#fff; border:1px solid #cbd5e1; border-radius:4px; overflow:hidden; display:flex; }
+    .layerbtn { padding:6px 12px; font-size:11px; font-weight:600; color:#64748b; }
+    .layerbtn.active { background:#1e293b; color:#fff; }
+    .parcel { position:absolute; top:280px; left:420px; width:220px; height:150px; border:2px dashed #1d4ed8; background:rgba(29,78,216,0.08); }
+    .marker { position:absolute; top:345px; left:520px; width:14px; height:14px; border-radius:50% 50% 50% 0; background:#dc2626; transform:rotate(-45deg); border:2px solid #fff; }
+    .nearby { position:absolute; width:8px; height:8px; border-radius:50%; background:#64748b; border:1.5px solid #fff; }
+    .coordbar { position:absolute; bottom:14px; left:14px; background:#fff; border:1px solid #cbd5e1; border-radius:4px; padding:6px 10px; font-size:10.5px; color:#475569; font-family: monospace; }
+    .citebar { position:absolute; bottom:14px; right:14px; background:#fff; border:1px solid #cbd5e1; border-radius:4px; padding:6px 10px; font-size:10.5px; color:#1d4ed8; }
+    .infopanel { width: 260px; border-left:1px solid #cbd5e1; background:#fff; padding:16px; }
+    .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; }
+    .box { border: 1px solid #cbd5e1; background: #fff; border-radius: 3px; }
+    .annotation { flex-shrink: 0; background: #fffbea; border-top: 1px dashed #d97706; padding: 10px 20px; font-size: 11.5px; color: #78350f; font-style: italic; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="topbar"><div class="logo">SITEIQ</div></div>
+  <div class="siteheader">Sites &rsaquo; 142 Elm Street, Worcester, MA &rsaquo; <strong style="color:#1e293b;">Map</strong></div>
+  <div class="body">
+    <div class="sidebar">
+      <div class="side-item">Overview</div>
+      <div class="side-item">Property / Parcel</div>
+      <div class="side-item">Zoning</div>
+      <div class="side-item active">Map</div>
+      <div class="side-item">Documents</div>
+      <div class="side-item">Analysis</div>
+      <div class="side-item">Notes</div>
+      <div class="side-item">Activity / History</div>
+    </div>
+    <div class="mapmain">
+      <div class="mapcanvas">
+        <div class="toolbar">
+          <div class="toolchip active">Marker</div>
+          <div class="toolchip">Boundary</div>
+          <div class="toolchip">&#128207; Measure</div>
+        </div>
+        <div class="layertoggle">
+          <div class="layerbtn active">Standard</div>
+          <div class="layerbtn">Satellite</div>
+        </div>
+        <div class="parcel"></div>
+        <div class="marker"></div>
+        <div class="nearby" style="top:160px; left:220px;"></div>
+        <div class="nearby" style="top:520px; left:760px;"></div>
+        <div class="nearby" style="top:200px; left:840px;"></div>
+        <div class="coordbar">42.2626&deg; N, 71.8023&deg; W</div>
+        <div class="citebar">Basemap: OpenStreetMap &middot; Parcel: MassGIS &middot; source link &rarr;</div>
+      </div>
+      <div class="infopanel">
+        <div class="label" style="margin-bottom:8px;">Selected: Parcel boundary</div>
+        <div class="box" style="padding:10px 12px; font-size:11.5px; margin-bottom:14px;">
+          Area (measured): <strong>25,120 sq ft</strong><br>
+          Perimeter: 645 ft<br>
+          <span style="color:#94a3b8;">Measured with the drawing tool &mdash; for reference only, not a survey.</span>
+        </div>
+        <div class="label" style="margin-bottom:8px;">Confirmed parcel boundary</div>
+        <div style="font-size:11px; color:#94a3b8; margin-bottom:14px;">Parcel 04-112-0034 &middot; source: MassGIS &middot; drawn from the confirmed match (Screen&nbsp;4b)</div>
+        <div class="label" style="margin-bottom:8px;">Nearby SiteIQ sites (0.5 mi)</div>
+        <div style="font-size:11.5px; line-height:2;">
+          <div>&#9679; 88 Harbor Rd &mdash; <span style="color:#94a3b8;">0.2 mi</span></div>
+          <div>&#9679; 61 Bay State Rd &mdash; <span style="color:#94a3b8;">0.4 mi</span></div>
+          <div>&#9679; 14 Mill Pond Way &mdash; <span style="color:#94a3b8;">0.5 mi</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>7&nbsp;&mdash;&nbsp;Map / GIS.</strong> Leaflet-based (discovery doc &sect;11): marker, confirmed parcel boundary, standard/satellite toggle, measurement tool, lat/lng readout, nearby-SiteIQ-sites panel, and source citation for both basemap and parcel data. This same map component is reused inside Candidate Review (Screen&nbsp;4b) to show input location + candidate boundaries/markers side by side &mdash; there, the map is part of the decision, not just a post-decision view. Dev build uses free OSM/Esri tiles; production tile provider to be confirmed (open item &sect;21).
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

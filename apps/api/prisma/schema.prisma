@@ -1,0 +1,560 @@
+// SiteIQ — Prisma schema proposal (Checkpoint 3)
+// Status: DESIGN PROPOSAL for client review — not yet migrated against a real database.
+// Companion narrative + API contract: docs/03-data-model-api-contract.md
+// PostGIS geometry columns and their GiST/GIN indexes are annotated below but finalized
+// as raw SQL in the first migration (see docs/03 §6) — Prisma's schema DSL alone can't
+// express extension-backed index types (GiST, GIN/pg_trgm).
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis, pg_trgm]
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────────────────────────────────────
+
+enum Role {
+  ADMIN
+  ANALYST
+  VIEWER
+}
+
+enum InvestigationStatus {
+  NEW
+  IN_PROGRESS
+  NEEDS_REVIEW
+  COMPLETED
+  ARCHIVED
+}
+
+/// Property-IDENTITY status — "do we know which parcel this is yet, and is
+/// that confirmed?" Deliberately separate from InvestigationStatus (which
+/// tracks the overall investigation) and from SiteDataField.status (which
+/// tracks individual field values) — see docs/02 §2 and docs/03 §2.
+enum IdentityStatus {
+  IDENTIFYING   // MatchAttempt queued/running, no candidates yet
+  NEEDS_REVIEW  // candidates exist, none accepted yet
+  CONFIRMED     // an analyst accepted a candidate
+  MANUAL        // analyst rejected all candidates / entered parcel data by hand
+  NO_MATCH      // matching pipeline found nothing within confidence/radius bounds
+}
+
+enum MatchStrategy {
+  EXACT
+  FUZZY
+  SPATIAL
+  PARCEL_ID
+}
+
+enum CandidateStatus {
+  PROPOSED
+  ACCEPTED
+  REJECTED
+  SUPERSEDED // produced by an older MatchAttempt, superseded by a later re-match
+}
+
+enum DuplicateDecision {
+  NONE
+  OPENED_EXISTING
+  CONTINUED_SEPARATE
+}
+
+enum FieldType {
+  NUMBER
+  STRING
+  BOOLEAN
+  DATE
+  GEO
+}
+
+enum FieldStatus {
+  MATCHED
+  PARTIAL
+  NO_MATCH
+  SOURCE_UNAVAILABLE
+  FIELD_UNAVAILABLE
+  CONFLICTING
+  NEEDS_REVIEW
+}
+
+enum AnalysisStatus {
+  QUEUED
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Organization & Users
+// ─────────────────────────────────────────────────────────────────────────
+
+model Organization {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+
+  users          User[]
+  sites          Site[]
+  activityEvents ActivityEvent[]
+}
+
+model User {
+  id             String   @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  email        String  @unique
+  passwordHash String
+  role         Role
+  isActive     Boolean @default(false)
+
+  // invitation / reset lifecycle — see doc 01 §6.2
+  inviteTokenHash String?
+  inviteExpiresAt DateTime?
+  resetTokenHash  String?
+  resetExpiresAt  DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sitesAssigned         Site[]                  @relation("AssignedAnalyst")
+  sitesCreated          Site[]                  @relation("CreatedBy")
+  matchAttemptsTriggered MatchAttempt[]
+  candidateDecisions    SiteMatchCandidate[]    @relation("CandidateDecidedBy")
+  fieldApprovals        SiteDataFieldApproval[]
+  documentsUploaded     Document[]
+  notes                 Note[]
+  activityEvents        ActivityEvent[]
+  analysisRunsTriggered AnalysisRun[]
+  reportsGenerated      Report[]
+
+  @@index([organizationId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Site — the investigation record. Confirmed/current values only; every
+// historical observation and decision lives in the tables below it.
+// ─────────────────────────────────────────────────────────────────────────
+
+model Site {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  name          String?
+  streetAddress String?
+  city          String?
+  state         String  @default("MA")
+  zip           String?
+
+  /// Exactly what the analyst typed/entered at creation — immutable forever.
+  /// Never overwritten by matching, correction, or re-match. See doc 02 §2.3.
+  originalInputType      String // address | parcel_id | coordinates | address_and_coordinates | location_clues
+  originalInputAddress   String?
+  originalInputParcelRef String?
+  originalInputLat       Float?
+  originalInputLng       Float?
+  /// Street/location clue as reported in source data when no exact address
+  /// is known (e.g. "Marston St") — immutable, same as the other
+  /// originalInput* fields. See docs/13 (location-based identification).
+  originalInputLocationText        String?
+  /// Free-text location description as reported (e.g. "0.25 mi S of
+  /// Methuen-Lawrence TL on Marston St") — preserved verbatim, never
+  /// overwritten. Deterministic clues are parsed FROM this at match time
+  /// (location-clues.ts); the text itself is provenance, not re-derived.
+  originalInputLocationDescription String?
+  /// Source system's own identifier for this record (e.g. "Facility ID"),
+  /// preserved for traceability back to the client's spreadsheet — never
+  /// used as a matching signal itself.
+  originalInputFacilityId          String?
+
+  /// Confirmed identity — denormalized from `confirmedCandidate` once one is
+  /// accepted (or entered manually). Fast-read copy only; the authoritative
+  /// history is MatchAttempt + SiteMatchCandidate below.
+  parcelRef     String?
+  latitude      Float?
+  longitude     Float?
+  /// PostGIS geometry — declared here for documentation; Prisma treats it as
+  /// Unsupported and all reads/writes go through GeoRepository raw SQL
+  /// (doc 01 ADR-0003).
+  parcelGeom    Unsupported("geometry(Geometry,4326)")?
+  lotSize       Float?
+  lotSizeUnit   String?
+  zoningCode    String?
+  zoningDistrict String?
+  municipality  String?
+
+  identityStatus       IdentityStatus @default(IDENTIFYING)
+  /// The SiteMatchCandidate that was accepted (or, for a manual entry, null
+  /// forever — identityStatus = MANUAL covers that case).
+  confirmedCandidateId String?             @unique
+  confirmedCandidate   SiteMatchCandidate? @relation("ConfirmedCandidate", fields: [confirmedCandidateId], references: [id])
+  matchConfidence      Int? // denormalized copy of confirmedCandidate.confidence at confirmation time
+  matchMethod          String? // denormalized copy of the MatchAttempt.strategyUsed that produced it
+
+  /// Field-collection-level status (distinct from identityStatus — see
+  /// IdentityStatus doc comment above).
+  matchStatus          String? // matched | partial | no_match | source_unavailable | needs_review
+  investigationStatus  InvestigationStatus @default(NEW)
+
+  assignedAnalystId String?
+  assignedAnalyst   User? @relation("AssignedAnalyst", fields: [assignedAnalystId], references: [id])
+
+  /// Duplicate reconciliation — see doc 01 §4.1
+  potentialDuplicateOfSiteId String?
+  potentialDuplicateOfSite   Site?  @relation("DuplicateFlag", fields: [potentialDuplicateOfSiteId], references: [id])
+  duplicateFlaggedSites      Site[] @relation("DuplicateFlag")
+
+  mergedIntoSiteId String?
+  mergedIntoSite   Site?  @relation("MergeTarget", fields: [mergedIntoSiteId], references: [id])
+  mergedSites      Site[] @relation("MergeTarget")
+
+  createdById String
+  createdBy   User   @relation("CreatedBy", fields: [createdById], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime? // soft delete — Admin only, see doc 01 §6.1
+
+  matchAttempts               MatchAttempt[]
+  matchCandidates              SiteMatchCandidate[]    @relation("SiteCandidates")
+  duplicateFlagOnCandidates    SiteMatchCandidate[]    @relation("DuplicateCandidateFlag")
+  dataFields                   SiteDataField[]
+  fieldApprovals                SiteDataFieldApproval[]
+  documents                     Document[]
+  analysisRuns                  AnalysisRun[]
+  notes                         Note[]
+  activityEvents                ActivityEvent[]
+  reports                       Report[]
+
+  @@index([organizationId, investigationStatus])
+  @@index([organizationId, parcelRef])
+  @@index([organizationId, deletedAt])
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Property matching — append-only provenance for "why did SiteIQ decide
+// this was the correct parcel, and who approved it?" (client requirement,
+// this checkpoint). See doc 02 §2/§4.
+// ─────────────────────────────────────────────────────────────────────────
+
+/// One row per matching run — the initial creation lookup, or any later
+/// explicit re-match. Never updated after insert.
+model MatchAttempt {
+  id     String @id @default(uuid())
+  siteId String
+  site   Site   @relation(fields: [siteId], references: [id])
+
+  /// Exactly what was searched for THIS attempt (address/parcelId/coords as
+  /// provided at the time — independent of Site.originalInput*, which never
+  /// changes even across re-matches).
+  inputSnapshot  Json
+  strategyUsed   MatchStrategy
+  candidateCount Int
+  topConfidence  Int?
+
+  triggeredById String
+  triggeredBy   User   @relation(fields: [triggeredById], references: [id])
+  createdAt     DateTime @default(now())
+
+  candidates SiteMatchCandidate[]
+
+  @@index([siteId, createdAt])
+}
+
+/// One row per candidate ever surfaced, for any attempt. Append-only except
+/// for the status/decision fields, which are set exactly once when an
+/// analyst accepts/rejects — never re-edited after a decision is made.
+model SiteMatchCandidate {
+  id         String       @id @default(uuid())
+  siteId     String
+  site       Site         @relation("SiteCandidates", fields: [siteId], references: [id])
+  attemptId  String
+  attempt    MatchAttempt @relation(fields: [attemptId], references: [id])
+
+  parcelRef      String?
+  matchedAddress String?
+  municipality   String?
+  candidateGeom  Unsupported("geometry(Geometry,4326)")?
+
+  /// 0–100. See docs/02 §2.1 for the weighted-signal formula.
+  confidence Int
+  /// { addressSimilarity, distanceMeters, distanceScore, parcelIdMatch,
+  ///   municipalityMatch, sourceName, sourceUrl, retrievedAt } — the full
+  /// evidence breakdown shown on Candidate Review (wireframe Screen 4b).
+  evidence   Json
+  rank       Int // 1 = top candidate within this attempt
+
+  status CandidateStatus @default(PROPOSED)
+
+  /// Confirmation record — set exactly once, at "Confirm Selected Parcel".
+  /// This IS the answer to "who confirmed it, when, and why" — see
+  /// docs/03 §2 for how the API populates every field atomically.
+  decidedById String?
+  decidedBy   User?     @relation("CandidateDecidedBy", fields: [decidedById], references: [id])
+  decidedAt   DateTime?
+  note        String? // optional analyst note captured at confirmation
+
+  /// duplicateOfSiteId is set by the WORKER at candidate-creation time (never
+  /// by a client request) whenever this candidate's parcelRef already
+  /// belongs to another active site. The confirm endpoint then REQUIRES
+  /// duplicateDecision != NONE iff duplicateOfSiteId is set, and REQUIRES
+  /// NONE otherwise — enforced server-side, not just in the UI. See
+  /// docs/03-data-model-api-contract.md §2.0.
+  duplicateDecision  DuplicateDecision @default(NONE)
+  duplicateOfSiteId  String?
+  duplicateOfSite    Site?             @relation("DuplicateCandidateFlag", fields: [duplicateOfSiteId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  /// Back-reference from Site.confirmedCandidateId — populated only for the
+  /// one candidate, across this site's entire history, that was accepted.
+  confirmedForSite Site? @relation("ConfirmedCandidate")
+
+  @@index([siteId, attemptId])
+  @@index([siteId, status])
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Field-level data — separate concept from property-identity matching
+// above. Never combined (client's explicit instruction). See doc 01 §4.2.
+// ─────────────────────────────────────────────────────────────────────────
+
+/// Append-only observation log. Only `isCurrent` is ever mutated after
+/// insert (a flag flip, not a data overwrite) — see doc 01 §4.2.
+model SiteDataField {
+  id     String @id @default(uuid())
+  siteId String
+  site   Site   @relation(fields: [siteId], references: [id])
+
+  fieldName String // e.g. "lot_size", "zoning_code", "assessed_value"
+  fieldType FieldType
+  /// Raw typed value: number, string, bool, ISO date, or {lat,lng}/GeoJSON.
+  value     Json
+  /// Populated only when fieldType = NUMBER — query/index aid, see doc 01 §4.2.
+  numericValue Float?
+
+  sourceName  String
+  sourceUrl   String?
+  retrievedAt DateTime
+
+  status     FieldStatus
+  confidence Float?
+  isCurrent  Boolean @default(false)
+
+  createdAt DateTime @default(now()) // immutable
+
+  approvalsAsApproved SiteDataFieldApproval[] @relation("ApprovedField")
+  approvalsAsPrevious SiteDataFieldApproval[] @relation("PreviousField")
+
+  @@index([siteId, fieldName, isCurrent])
+}
+
+/// Append-only decision log — every time a field's "current" value changed
+/// and who decided it. See doc 01 §4.2.
+model SiteDataFieldApproval {
+  id     String @id @default(uuid())
+  siteId String
+  site   Site   @relation(fields: [siteId], references: [id])
+
+  fieldName String
+
+  approvedFieldId String
+  approvedField   SiteDataField @relation("ApprovedField", fields: [approvedFieldId], references: [id])
+  previousFieldId String?
+  previousField   SiteDataField? @relation("PreviousField", fields: [previousFieldId], references: [id])
+
+  approvedById String
+  approvedBy   User     @relation(fields: [approvedById], references: [id])
+  approvedAt   DateTime @default(now())
+  note         String?
+
+  @@index([siteId, fieldName])
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Documents, Analysis, Notes, Activity, Reports — unchanged from doc 01 §4
+// ─────────────────────────────────────────────────────────────────────────
+
+model Document {
+  id     String @id @default(uuid())
+  siteId String
+  site   Site   @relation(fields: [siteId], references: [id])
+
+  filename   String
+  storageKey String
+  mimeType   String
+  sizeBytes  Int
+  /// Free-text category used by Checkpoint 9's investigation-completeness
+  /// check ("Site Plan", "Survey", ...) — defaults to "Other" when the
+  /// uploader doesn't specify one. Not an enum: the set of meaningful
+  /// document types is a business decision, not a schema one.
+  category   String @default("Other")
+
+  uploadedById String
+  uploadedBy   User     @relation(fields: [uploadedById], references: [id])
+  uploadedAt   DateTime @default(now())
+  deletedAt    DateTime?
+
+  @@index([siteId, deletedAt])
+}
+
+model AnalysisRun {
+  id     String @id @default(uuid())
+  siteId String
+  site   Site   @relation(fields: [siteId], references: [id])
+
+  status AnalysisStatus @default(QUEUED)
+  /// True if Site.identityStatus was not CONFIRMED when this run started —
+  /// drives the "Preliminary" banner (wireframe Screen 9). Never silently
+  /// treats an unconfirmed candidate as a confirmed property.
+  isPreliminary Boolean
+
+  triggeredById String
+  triggeredBy   User      @relation(fields: [triggeredById], references: [id])
+  startedAt     DateTime?
+  completedAt   DateTime?
+  errorMessage  String?
+  retryCount    Int       @default(0)
+  result        Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([siteId, status])
+}
+
+model Note {
+  id     String @id @default(uuid())
+  siteId String
+  site   Site   @relation(fields: [siteId], references: [id])
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+  body     String
+
+  createdAt DateTime @default(now())
+
+  @@index([siteId, createdAt])
+}
+
+model ActivityEvent {
+  id             String        @id @default(uuid())
+  organizationId String
+  organization   Organization  @relation(fields: [organizationId], references: [id])
+  siteId         String?
+  site           Site?         @relation(fields: [siteId], references: [id])
+  actorId        String?
+  actor          User?         @relation(fields: [actorId], references: [id])
+
+  eventType String // e.g. "parcel_confirmed", "conflict_detected", "document_uploaded"
+  metadata  Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([siteId, createdAt])
+  @@index([organizationId, createdAt])
+}
+
+model Report {
+  id     String @id @default(uuid())
+  siteId String
+  site   Site   @relation(fields: [siteId], references: [id])
+
+  generatedById String
+  generatedBy   User     @relation(fields: [generatedById], references: [id])
+  generatedAt   DateTime @default(now())
+
+  snapshotVersion Int
+  /// Deep, immutable copy taken at generation time — see doc 01 §4.3.
+  /// Never re-derived from live Site/SiteDataField data on read.
+  contentSnapshot Json
+  storageKey      String?
+
+  @@index([siteId, generatedAt])
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Local parcel mirror — the statewide MassGIS dataset, refreshed on a
+// schedule (doc 02 §8, ADR-0007). Matching queries run against THIS table,
+// never live against MassGIS on the user's request path.
+// ─────────────────────────────────────────────────────────────────────────
+
+model ParcelMirrorRecord {
+  id           String   @id @default(uuid())
+  parcelRef    String   @unique
+  address      String
+  municipality String
+  zip          String?
+  lotSize      Float?
+  lotSizeUnit  String?
+  /// Assessor-reported zoning code / land-use code — Checkpoint 7 addition.
+  /// Null when MassGIS genuinely has no value for this parcel (common —
+  /// not every town's assessor extract populates ZONING); surfaced to the
+  /// analyst as "Unavailable from MassGIS", never inferred from neighbors.
+  zoning       String?
+  useCode      String?
+  /// Full parcel boundary + a precomputed centroid for fast KNN search.
+  geom         Unsupported("geometry(Geometry,4326)")
+  centroid     Unsupported("geometry(Point,4326)")
+
+  sourceName        String   @default("MassGIS")
+  sourceRefreshedAt DateTime
+
+  @@index([municipality])
+  // GIN trigram index on `address` (pg_trgm) and GIST index on `geom`/
+  // `centroid` are added via raw SQL in the first migration — see
+  // docs/03-data-model-api-contract.md §6.
+}
+
+/// Second, INDEPENDENT zoning source (Checkpoint 8) — MassGIS's dedicated
+/// statewide "Zoning Districts" polygon layer (last comprehensively
+/// updated ~1999, per MassGIS's own documentation), distinct from the
+/// assessor-self-reported `ParcelMirrorRecord.zoning` field. Looked up by
+/// spatial point-in-polygon at field-enrichment time — a parcel's
+/// centroid either falls inside a district here or it doesn't. Real
+/// statewide coverage is genuinely incomplete (confirmed during this
+/// checkpoint's research — several municipalities have no data here at
+/// all), which is exactly the kind of "source unavailable" case KT asks
+/// SiteIQ to report honestly rather than paper over.
+model ZoningDistrictMirror {
+  id       String @id @default(uuid())
+  zone     String
+  zoneDesc String?
+  geom     Unsupported("geometry(Geometry,4326)")
+
+  sourceName        String   @default("MassGIS Zoning Districts")
+  sourceRefreshedAt DateTime
+}
+
+enum RefreshStatus {
+  SUCCESS
+  FAILED
+  PARTIAL
+}
+
+/// Checkpoint 11 — the "simple operational record" the client asked for:
+/// answers "when was this last successfully refreshed" and "did the last
+/// attempt succeed, fail, or partially succeed" per source/municipality,
+/// without needing a full monitoring platform. One row per ingestion run
+/// (npm run mirror:ingest), written by MassGisIngestionService whether the
+/// run succeeds or fails — a failed run is recorded as evidence, but (per
+/// the existing fetch-before-write safety design, doc 06) never touches
+/// the previously-ingested data for that source/municipality.
+model SourceRefreshLog {
+  id           String   @id @default(uuid())
+  source       String   // e.g. "MassGIS Parcels", "MassGIS Zoning Districts"
+  municipality String?  // null for statewide sources (e.g. Zoning Districts)
+  status       RefreshStatus
+  recordCount  Int?     // rows successfully ingested this run (null if it failed before counting)
+  errorMessage String?
+  startedAt    DateTime
+  completedAt  DateTime
+
+  @@index([source, municipality, completedAt])
+}

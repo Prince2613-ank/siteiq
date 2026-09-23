@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #eef1f5; color: #1e293b; }
+    .frame { width: 1280px; height: 800px; display: flex; flex-direction: column; background: #f8fafc; border: 1px solid #cbd5e1; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 20px; background: #1e293b; color: #e2e8f0; flex-shrink: 0; }
+    .topbar .logo { font-weight: 700; font-size: 14px; letter-spacing: 0.6px; color: #fff; }
+    .siteheader { padding: 10px 24px; border-bottom: 1px solid #cbd5e1; background: #fff; flex-shrink: 0; font-size: 12.5px; color: #94a3b8; }
+    .body { flex: 1; display: flex; overflow: hidden; }
+    .sidebar { width: 190px; border-right: 1px solid #cbd5e1; background: #f8fafc; padding: 14px 10px; flex-shrink: 0; }
+    .side-item { padding: 9px 12px; border-radius: 4px; font-size: 12.5px; color: #475569; margin-bottom: 2px; }
+    .side-item.active { background: #e2e8f0; color: #1e293b; font-weight: 700; }
+    .main { flex: 1; padding: 20px 26px; overflow-y: auto; }
+    .box { border: 1px solid #cbd5e1; background: #fff; border-radius: 3px; }
+    .ph { border: 1px dashed #94a3b8; background: #f1f5f9; border-radius: 3px; }
+    .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; }
+    .btn { display: inline-block; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; border: 1px solid #94a3b8; background: #fff; color: #1e293b; }
+    .btn-primary { background: #1e293b; color: #fff; border-color: #1e293b; }
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+    .b-confirmed { background: #dcfce7; color: #15803d; }
+    .b-queued { background: #e2e8f0; color: #475569; }
+    .b-processing { background: #dbeafe; color: #1d4ed8; }
+    .b-failed { background: #fee2e2; color: #b91c1c; }
+    .stepper { display:flex; align-items:center; margin-bottom:24px; }
+    .step { display:flex; align-items:center; gap:10px; }
+    .dot { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; border:2px solid #cbd5e1; color:#94a3b8; background:#fff; }
+    .dot.done { border-color:#15803d; background:#15803d; color:#fff; }
+    .dot.now { border-color:#1d4ed8; background:#dbeafe; color:#1d4ed8; }
+    .connector { width:90px; height:2px; background:#cbd5e1; margin:0 6px; }
+    .connector.done { background:#15803d; }
+    .checkitem { display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid #f1f5f9; font-size:12.5px; }
+    .annotation { flex-shrink: 0; background: #fffbea; border-top: 1px dashed #d97706; padding: 10px 20px; font-size: 11.5px; color: #78350f; font-style: italic; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="topbar"><div class="logo">SITEIQ</div></div>
+  <div class="siteheader">Sites &rsaquo; 88 Harbor Rd, New Bedford, MA &rsaquo; <strong style="color:#1e293b;">Analysis</strong></div>
+  <div class="body">
+    <div class="sidebar">
+      <div class="side-item">Overview</div>
+      <div class="side-item">Property / Parcel</div>
+      <div class="side-item">Zoning</div>
+      <div class="side-item">Map</div>
+      <div class="side-item">Documents</div>
+      <div class="side-item active">Analysis</div>
+      <div class="side-item">Notes</div>
+      <div class="side-item">Activity / History</div>
+    </div>
+    <div class="main">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div style="font-size:16px; font-weight:700;">Analysis run &middot; #A-2291</div>
+        <span class="badge b-processing">processing</span>
+      </div>
+
+      <div class="ph" style="padding:8px 12px; font-size:11.5px; color:#78350f; background:#fffbea; border-color:#d97706; margin-bottom:20px;">
+        &#9888; <strong>Preliminary &mdash; parcel identity pending confirmation.</strong> This site's candidate parcel hasn't been confirmed on Candidate Review (Screen&nbsp;4b) yet. Results below are labeled preliminary and a final property assessment won't be produced until the parcel is confirmed.
+      </div>
+
+      <div class="box" style="padding:24px 26px; margin-bottom:20px;">
+        <div class="stepper">
+          <div class="step"><div class="dot done">&#10003;</div><div style="font-size:11.5px; font-weight:600;">Queued</div></div>
+          <div class="connector done"></div>
+          <div class="step"><div class="dot now">&#9679;</div><div style="font-size:11.5px; font-weight:600; color:#1d4ed8;">Processing</div></div>
+          <div class="connector"></div>
+          <div class="step"><div class="dot">3</div><div style="font-size:11.5px; color:#94a3b8;">Completed</div></div>
+        </div>
+        <div style="font-size:11.5px; color:#94a3b8;">Started 09:41 AM &middot; running for 1m 12s &middot; polling for status every few seconds</div>
+      </div>
+
+      <div class="box" style="padding:16px 18px; margin-bottom:20px;">
+        <div class="label" style="margin-bottom:10px;">Checklist (running &mdash; preliminary)</div>
+        <div class="checkitem"><span class="badge b-confirmed">&#10003;</span> Lot size check</div>
+        <div class="checkitem"><span class="badge b-confirmed">&#10003;</span> Zoning information completeness</div>
+        <div class="checkitem"><span class="badge b-processing">&hellip;</span> Parcel / data match quality</div>
+        <div class="checkitem" style="color:#94a3b8;"><span class="badge b-queued">&mdash;</span> Presence of required documents</div>
+        <div class="checkitem" style="color:#94a3b8; border-bottom:none;"><span class="badge b-queued">&mdash;</span> Missing-data checklist &amp; overall status</div>
+      </div>
+
+      <div class="box" style="padding:14px 18px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:12.5px; font-weight:700; color:#b91c1c;">Previous run #A-2287 &mdash; Failed</div>
+          <div style="font-size:11px; color:#94a3b8;">&ldquo;Zoning source timed out after 30s (source_unavailable)&rdquo; &middot; Aug 30, 2026</div>
+        </div>
+        <div class="btn">Retry</div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>9&nbsp;&mdash;&nbsp;Analysis Progress.</strong> Reflects the BullMQ job lifecycle (discovery doc &sect;9): Queued &rarr; Processing &rarr; Completed/Failed, polled from the frontend, never blocking the UI. A failed run keeps its error message visible with a one-click Retry. Analysis can run before parcel confirmation, but is always clearly labeled preliminary until Candidate Review (Screen&nbsp;4b) is complete &mdash; it never treats an unconfirmed candidate as a confirmed property.
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

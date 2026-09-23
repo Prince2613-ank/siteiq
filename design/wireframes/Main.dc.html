@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #eef1f5; color: #1e293b; }
+    .frame { width: 1280px; height: 800px; display: flex; flex-direction: column; background: #f8fafc; border: 1px solid #cbd5e1; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 20px; background: #1e293b; color: #e2e8f0; flex-shrink: 0; }
+    .topbar .logo { font-weight: 700; font-size: 14px; letter-spacing: 0.6px; color: #fff; }
+    .body { flex: 1; display: flex; overflow: hidden; align-items: center; justify-content: center; background: repeating-linear-gradient(0deg, #eef1f5, #eef1f5 23px, #e2e8f0 24px), repeating-linear-gradient(90deg, #eef1f5, #eef1f5 23px, #e2e8f0 24px); }
+    .box { border: 1px solid #cbd5e1; background: #fff; border-radius: 3px; }
+    .ph { border: 1px dashed #94a3b8; background: #f1f5f9; border-radius: 3px; }
+    .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; }
+    .annotation { flex-shrink: 0; background: #fffbea; border-top: 1px dashed #d97706; padding: 10px 20px; font-size: 11.5px; color: #78350f; font-style: italic; }
+    .btn-primary { display: block; width: 100%; padding: 10px 14px; border-radius: 4px; font-size: 13px; font-weight: 700; border: 1px solid #1e293b; background: #1e293b; color: #fff; text-align: center; }
+    .field { margin-bottom: 16px; }
+    .input { border: 1px solid #cbd5e1; border-radius: 4px; padding: 9px 10px; font-size: 13px; color: #64748b; background: #fff; }
+    a { color: #1d4ed8; } a:hover { color: #1e40af; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="topbar"><div class="logo">SITEIQ</div></div>
+  <div class="body">
+    <div class="box" style="width:380px; padding:36px 32px;">
+      <div style="text-align:center; margin-bottom:6px;">
+        <div style="width:44px;height:44px;border:2px solid #1e293b;border-radius:8px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;">SQ</div>
+        <div style="font-size:18px;font-weight:700;">Sign in to SiteIQ</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">Internal site-investigation platform</div>
+      </div>
+      <div style="height:24px;"></div>
+      <div class="field">
+        <div class="label" style="margin-bottom:6px;">Email</div>
+        <div class="input">analyst@company.com</div>
+      </div>
+      <div class="field">
+        <div class="label" style="margin-bottom:6px;">Password</div>
+        <div class="input">••••••••••••</div>
+      </div>
+      <div style="display:flex; justify-content:flex-end; margin-bottom:18px;">
+        <span style="font-size:11.5px;"><u>Forgot password?</u></span>
+      </div>
+      <div class="btn-primary">Sign in</div>
+      <div style="text-align:center; font-size:11px; color:#94a3b8; margin-top:16px;">No selfsign-up &mdash; accounts are created by an Administrator invite.</div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>1&nbsp;&mdash;&nbsp;Login.</strong> Email + password only, no public sign-up (KT &sect;12) &mdash; accounts exist because an Admin invited them (see Screen&nbsp;12). &ldquo;Forgot password&rdquo; starts the reset-link flow (discovery doc &sect;6.2). On success, routes to the Dashboard (Screen&nbsp;2).
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

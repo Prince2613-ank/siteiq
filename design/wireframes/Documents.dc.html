@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #eef1f5; color: #1e293b; }
+    .frame { width: 1280px; height: 800px; display: flex; flex-direction: column; background: #f8fafc; border: 1px solid #cbd5e1; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 20px; background: #1e293b; color: #e2e8f0; flex-shrink: 0; }
+    .topbar .logo { font-weight: 700; font-size: 14px; letter-spacing: 0.6px; color: #fff; }
+    .siteheader { padding: 10px 24px; border-bottom: 1px solid #cbd5e1; background: #fff; flex-shrink: 0; font-size: 12.5px; color: #94a3b8; }
+    .body { flex: 1; display: flex; overflow: hidden; }
+    .sidebar { width: 190px; border-right: 1px solid #cbd5e1; background: #f8fafc; padding: 14px 10px; flex-shrink: 0; }
+    .side-item { padding: 9px 12px; border-radius: 4px; font-size: 12.5px; color: #475569; margin-bottom: 2px; }
+    .side-item.active { background: #e2e8f0; color: #1e293b; font-weight: 700; }
+    .main { flex: 1; padding: 20px 26px; overflow-y: auto; }
+    .box { border: 1px solid #cbd5e1; background: #fff; border-radius: 3px; }
+    .ph { border: 1px dashed #94a3b8; background: #f1f5f9; border-radius: 3px; }
+    .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; }
+    .btn { display: inline-block; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; border: 1px solid #94a3b8; background: #fff; color: #1e293b; }
+    .btn-primary { background: #1e293b; color: #fff; border-color: #1e293b; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.4px; color: #64748b; border-bottom: 1px solid #cbd5e1; padding: 8px 10px; }
+    td { padding: 10px 10px; border-bottom: 1px solid #e2e8f0; color: #1e293b; vertical-align: middle; }
+    .filetype { width: 30px; height: 34px; border: 1px solid #cbd5e1; border-radius: 3px; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:800; color:#fff; }
+    .progressbar { width: 100%; height: 6px; background: #e2e8f0; border-radius: 3px; overflow:hidden; }
+    .progressfill { height: 100%; background: #1d4ed8; }
+    .annotation { flex-shrink: 0; background: #fffbea; border-top: 1px dashed #d97706; padding: 10px 20px; font-size: 11.5px; color: #78350f; font-style: italic; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="topbar"><div class="logo">SITEIQ</div></div>
+  <div class="siteheader">Sites &rsaquo; 142 Elm Street, Worcester, MA &rsaquo; <strong style="color:#1e293b;">Documents</strong></div>
+  <div class="body">
+    <div class="sidebar">
+      <div class="side-item">Overview</div>
+      <div class="side-item">Property / Parcel</div>
+      <div class="side-item">Zoning</div>
+      <div class="side-item">Map</div>
+      <div class="side-item active">Documents</div>
+      <div class="side-item">Analysis</div>
+      <div class="side-item">Notes</div>
+      <div class="side-item">Activity / History</div>
+    </div>
+    <div class="main">
+      <div class="ph" style="padding:28px; text-align:center; margin-bottom:20px; border-color:#94a3b8;">
+        <div style="font-size:13px; font-weight:700; margin-bottom:4px;">Drag &amp; drop files here, or click to browse</div>
+        <div style="font-size:11px; color:#94a3b8;">PDF, images, spreadsheets &middot; up to 25 MB per file</div>
+      </div>
+
+      <div class="box" style="padding:12px 16px; margin-bottom:18px;">
+        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
+          <span>site-plan-rev3.pdf</span><span style="color:#94a3b8;">62%</span>
+        </div>
+        <div class="progressbar"><div class="progressfill" style="width:62%;"></div></div>
+      </div>
+
+      <div class="box">
+        <table>
+          <thead><tr><th></th><th>File</th><th>Type</th><th>Size</th><th>Uploaded by</th><th>Date</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td><div class="filetype" style="background:#b91c1c;">PDF</div></td>
+              <td>site-plan-worcester.pdf</td><td>Site Plan</td><td>4.2 MB</td><td>A. Chen</td><td>Sep 1, 2026</td>
+              <td style="text-align:right; white-space:nowrap;"><span style="color:#1d4ed8;">Open</span> &middot; <span style="color:#1d4ed8;">Download</span> &middot; <span style="color:#b91c1c;">Delete</span></td>
+            </tr>
+            <tr>
+              <td><div class="filetype" style="background:#0369a1;">IMG</div></td>
+              <td>street-view-north.jpg</td><td>Photo</td><td>1.8 MB</td><td>J. Delgado</td><td>Aug 30, 2026</td>
+              <td style="text-align:right; white-space:nowrap;"><span style="color:#1d4ed8;">Open</span> &middot; <span style="color:#1d4ed8;">Download</span> &middot; <span style="color:#b91c1c;">Delete</span></td>
+            </tr>
+            <tr>
+              <td><div class="filetype" style="background:#15803d;">XLS</div></td>
+              <td>comps-analysis.xlsx</td><td>Spreadsheet</td><td>340 KB</td><td>J. Delgado</td><td>Aug 28, 2026</td>
+              <td style="text-align:right; white-space:nowrap;"><span style="color:#1d4ed8;">Open</span> &middot; <span style="color:#1d4ed8;">Download</span> &middot; <span style="color:#b91c1c;">Delete</span></td>
+            </tr>
+            <tr>
+              <td><div class="filetype" style="background:#b91c1c;">PDF</div></td>
+              <td>zoning-letter-worcester.pdf</td><td>Correspondence</td><td>210 KB</td><td>A. Chen</td><td>Aug 12, 2026</td>
+              <td style="text-align:right; white-space:nowrap;"><span style="color:#1d4ed8;">Open</span> &middot; <span style="color:#1d4ed8;">Download</span> &middot; <span style="color:#b91c1c;">Delete</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>8&nbsp;&mdash;&nbsp;Documents.</strong> Direct-to-S3 presigned upload with a real progress bar (discovery doc &sect;10) &mdash; the API server never proxies file bytes. Each row records uploaded-by/date for the audit trail; Delete is a soft delete (recoverable) and is only shown to Admin/Analyst roles, never Viewer.
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

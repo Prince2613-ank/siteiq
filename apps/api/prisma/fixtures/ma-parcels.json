@@ -1,0 +1,12 @@
+[
+  { "parcelRef": "04-112-0034", "address": "142 Elm St", "municipality": "Worcester", "zip": "01609", "lotSize": 25000, "lotSizeUnit": "sqft", "lat": 42.2626, "lng": -71.8023 },
+  { "parcelRef": "04-112-0033", "address": "140 Elm St", "municipality": "Worcester", "zip": "01609", "lotSize": 24000, "lotSizeUnit": "sqft", "lat": 42.26268, "lng": -71.80252 },
+  { "parcelRef": "04-112-0035", "address": "144 Elm St", "municipality": "Worcester", "zip": "01609", "lotSize": 26000, "lotSizeUnit": "sqft", "lat": 42.26252, "lng": -71.80208 },
+  { "parcelRef": "04-112-0100", "address": "200 Elm St", "municipality": "Worcester", "zip": "01609", "lotSize": 30000, "lotSizeUnit": "sqft", "lat": 42.2650, "lng": -71.8050 },
+  { "parcelRef": "09-004-1122", "address": "88 Harbor Rd", "municipality": "New Bedford", "zip": "02740", "lotSize": 42300, "lotSizeUnit": "sqft", "lat": 41.6362, "lng": -70.9342 },
+  { "parcelRef": "12-055-0021", "address": "61 Bay State Rd", "municipality": "Boston", "zip": "02215", "lotSize": 8000, "lotSizeUnit": "sqft", "lat": 42.3496, "lng": -71.1015 },
+  { "parcelRef": "07-021-0456", "address": "14 Mill Pond Way", "municipality": "Andover", "zip": "01810", "lotSize": 15000, "lotSizeUnit": "sqft", "lat": 42.6584, "lng": -71.1368 },
+  { "parcelRef": "03-018-0789", "address": "7 Quarry Lane", "municipality": "Quincy", "zip": "02169", "lotSize": 12000, "lotSizeUnit": "sqft", "lat": 42.2529, "lng": -71.0023 },
+  { "parcelRef": "15-002-0011", "address": "1 Main Street", "municipality": "Springfield", "zip": "01103", "lotSize": 5000, "lotSizeUnit": "sqft", "lat": 42.1015, "lng": -72.5898 },
+  { "parcelRef": "15-002-0012", "address": "3 Main Street", "municipality": "Springfield", "zip": "01103", "lotSize": 5200, "lotSizeUnit": "sqft", "lat": 42.1016, "lng": -72.5897 }
+]

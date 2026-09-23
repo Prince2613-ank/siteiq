@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #eef1f5; color: #1e293b; }
+    .frame { width: 1280px; height: 800px; display: flex; flex-direction: column; background: #f8fafc; border: 1px solid #cbd5e1; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 20px; background: #1e293b; color: #e2e8f0; flex-shrink: 0; }
+    .topbar .logo { font-weight: 700; font-size: 14px; letter-spacing: 0.6px; color: #fff; }
+    .topbar .nav { display: flex; gap: 22px; font-size: 12px; color: #94a3b8; }
+    .topbar .nav .active { color: #fff; font-weight: 600; }
+    .topbar .user { width: 26px; height: 26px; border-radius: 50%; background: #475569; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; }
+    .main { flex: 1; padding: 20px 28px; overflow-y: auto; }
+    .box { border: 1px solid #cbd5e1; background: #fff; border-radius: 3px; }
+    .ph { border: 1px dashed #94a3b8; background: #f1f5f9; border-radius: 3px; }
+    .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; }
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+    .b-confirmed { background: #dcfce7; color: #15803d; }
+    .b-conflict { background: #fee2e2; color: #b91c1c; }
+    .b-missing { background: #f1f5f9; color: #64748b; border: 1px dashed #94a3b8; }
+    .b-review { background: #fef3c7; color: #b45309; }
+    .annotation { flex-shrink: 0; background: #fffbea; border-top: 1px dashed #d97706; padding: 10px 20px; font-size: 11.5px; color: #78350f; font-style: italic; }
+    .btn { display: inline-block; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; border: 1px solid #94a3b8; background: #fff; color: #1e293b; }
+    .btn-primary { background: #1e293b; color: #fff; border-color: #1e293b; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.4px; color: #64748b; border-bottom: 1px solid #cbd5e1; padding: 8px 10px; }
+    td { padding: 9px 10px; border-bottom: 1px solid #e2e8f0; color: #1e293b; }
+    .filter { border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 10px; font-size: 11.5px; color: #64748b; background: #fff; display:flex; align-items:center; gap:6px; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="topbar">
+    <div style="display:flex; align-items:center; gap:32px;">
+      <div class="logo">SITEIQ</div>
+      <div class="nav"><span>Dashboard</span><span class="active">Sites</span><span>Reports</span><span>Users</span></div>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <div class="ph" style="width:160px;height:24px;"></div>
+      <div class="user">JD</div>
+    </div>
+  </div>
+  <div class="main">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+      <div style="font-size:18px; font-weight:700;">Sites <span style="color:#94a3b8; font-weight:400; font-size:13px;">184 results</span></div>
+      <div class="btn btn-primary">+ Create Site</div>
+    </div>
+
+    <div class="box" style="padding:12px 14px; margin-bottom:14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+      <div class="ph" style="flex:1; min-width:220px; height:30px; display:flex; align-items:center; padding:0 10px; font-size:11.5px; color:#94a3b8;">Search by name or address&hellip;</div>
+      <div class="filter">Municipality &#9662;</div>
+      <div class="filter">Zoning district &#9662;</div>
+      <div class="filter">Investigation status &#9662;</div>
+      <div class="filter">Assigned analyst &#9662;</div>
+      <div class="filter">Match/data status &#9662;</div>
+      <div class="filter">Updated date &#9662;</div>
+    </div>
+
+    <div class="box">
+      <table>
+        <thead><tr>
+          <th>Site name / address</th><th>Municipality</th><th>Zoning</th><th>Investigation status</th><th>Data status</th><th>Assigned</th><th>Updated</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><strong>142 Elm Street</strong><br><span style="color:#94a3b8;">Worcester, MA 01609</span></td><td>Worcester</td><td>R-2</td><td>In progress</td><td><span class="badge b-review">needs review</span></td><td>J. Delgado</td><td>2 hrs ago</td></tr>
+          <tr><td><strong>88 Harbor Rd</strong><br><span style="color:#94a3b8;">New Bedford, MA 02740</span></td><td>New Bedford</td><td>Industrial</td><td>Completed</td><td><span class="badge b-confirmed">matched</span></td><td>A. Chen</td><td>5 hrs ago</td></tr>
+          <tr><td><strong>Parcel 04-112-0034</strong><br><span style="color:#94a3b8;">Springfield, MA</span></td><td>Springfield</td><td>&mdash;</td><td>New</td><td><span class="badge b-conflict">conflicting</span></td><td><span style="color:#94a3b8;">Unassigned</span></td><td>Yesterday</td></tr>
+          <tr><td><strong>210 Commonwealth Ave</strong><br><span style="color:#94a3b8;">Boston, MA 02116</span></td><td>Boston</td><td>&mdash;</td><td>New</td><td><span class="badge b-missing">no match</span></td><td>M. Alvarez</td><td>2 days ago</td></tr>
+          <tr><td><strong>61 Bay State Rd</strong><br><span style="color:#94a3b8;">Boston, MA 02215</span></td><td>Boston</td><td>BA-2</td><td>In progress</td><td><span class="badge b-confirmed">matched</span></td><td>J. Delgado</td><td>3 days ago</td></tr>
+          <tr><td><strong>14 Mill Pond Way</strong><br><span style="color:#94a3b8;">Andover, MA 01810</span></td><td>Andover</td><td>R-1</td><td>Needs review</td><td><span class="badge b-review">partial</span></td><td>J. Delgado</td><td>4 days ago</td></tr>
+          <tr><td><strong>7 Quarry Lane</strong><br><span style="color:#94a3b8;">Quincy, MA 02169</span></td><td>Quincy</td><td>Industrial</td><td>Completed</td><td><span class="badge b-confirmed">matched</span></td><td>J. Delgado</td><td>1 week ago</td></tr>
+          <tr><td colspan="7" style="text-align:center; color:#94a3b8; padding:14px;">&hellip; 177 more rows &hellip;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+      <div class="btn">&larr; Prev</div><div class="btn">Next &rarr;</div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>3&nbsp;&mdash;&nbsp;Site List.</strong> All KT&nbsp;&sect;11 filters exposed as chips (municipality, zoning district, investigation status, assigned analyst, updated date, match/data status) plus free-text search on name/address. Data-status badges reuse the same confirmed/conflict/missing/review vocabulary as Site Details. Row click &rarr; Site Details (Screen&nbsp;5).
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

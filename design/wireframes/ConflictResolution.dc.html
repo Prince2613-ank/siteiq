@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #eef1f5; color: #1e293b; }
+    .frame { width: 1280px; height: 800px; display: flex; flex-direction: column; background: #0f172a99; border: 1px solid #cbd5e1; position: relative; }
+    .backdrop { position:absolute; inset:0; background: rgba(15,23,42,0.55); display:flex; align-items:center; justify-content:center; }
+    .modal { width: 760px; background: #fff; border-radius: 6px; border: 1px solid #cbd5e1; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+    .box { border: 1px solid #cbd5e1; background: #fff; border-radius: 3px; }
+    .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; }
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+    .b-conflict { background: #fee2e2; color: #b91c1c; }
+    .btn { display: inline-block; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; border: 1px solid #94a3b8; background: #fff; color: #1e293b; }
+    .btn-primary { background: #1e293b; color: #fff; border-color: #1e293b; }
+    .option { border: 1px solid #cbd5e1; border-radius: 5px; padding: 14px 16px; }
+    .option.selected { border: 2px solid #1e293b; background: #f8fafc; }
+    .annotation { position:absolute; bottom:0; left:0; right:0; background: #fffbea; border-top: 1px dashed #d97706; padding: 10px 20px; font-size: 11.5px; color: #78350f; font-style: italic; z-index:2; }
+    .input { border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 10px; font-size: 12.5px; color: #94a3b8; background: #fff; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="backdrop">
+    <div class="modal">
+      <div style="padding:18px 22px; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:15px; font-weight:700;">Resolve conflicting value</div>
+          <div style="font-size:11.5px; color:#94a3b8; margin-top:2px;">Field: <strong>Lot size</strong> &middot; 142 Elm Street</div>
+        </div>
+        <span class="badge b-conflict">conflicting</span>
+      </div>
+
+      <div style="padding:20px 22px;">
+        <div class="label" style="margin-bottom:10px;">Every source observation is kept &mdash; choose which one is correct</div>
+
+        <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:16px;">
+          <div class="option selected">
+            <div style="display:flex; justify-content:space-between;">
+              <div style="font-size:16px; font-weight:800;">25,000 sq ft</div>
+              <div class="ph" style="width:16px;height:16px;border-radius:50%;border:2px solid #1e293b;"></div>
+            </div>
+            <div style="font-size:11.5px; color:#64748b; margin-top:6px;">Source: <strong>MA Assessor Database (Worcester)</strong></div>
+            <div style="font-size:11px; color:#94a3b8;">assessordb.worcesterma.gov/parcel/04-112-0034 &middot; retrieved Sep 1, 2026, 9:14 AM</div>
+          </div>
+          <div class="option">
+            <div style="display:flex; justify-content:space-between;">
+              <div style="font-size:16px; font-weight:800;">27,500 sq ft</div>
+              <div class="ph" style="width:16px;height:16px;border-radius:50%;"></div>
+            </div>
+            <div style="font-size:11.5px; color:#64748b; margin-top:6px;">Source: <strong>MassGIS Zoning Layer</strong></div>
+            <div style="font-size:11px; color:#94a3b8;">gis.mass.gov/zoning/parcels &middot; retrieved Sep 3, 2026, 7:02 AM</div>
+          </div>
+          <div class="ph" style="padding:10px 14px; font-size:11.5px; color:#78350f; background:#fffbea; border-color:#d97706;">
+            + 1 earlier observation (25,500 sq ft, MA Assessor Database, Aug 12, 2026) &mdash; view full field history
+          </div>
+        </div>
+
+        <div class="label" style="margin-bottom:6px;">Note (optional)</div>
+        <div class="input" style="margin-bottom:18px;">Assessor record is more current than the zoning layer&hellip;</div>
+
+        <div style="display:flex; justify-content:flex-end; gap:10px;">
+          <div class="btn">Cancel</div>
+          <div class="btn btn-primary">Approve Selected Value</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>6&nbsp;&mdash;&nbsp;Conflict Resolution.</strong> Opened from any conflicting/needs-review field on Site Details. Every historical observation stays visible (append-only &mdash; discovery doc &sect;4.2); approving one sets it current without deleting the others. The approval + optional note is written to the field's permanent approval history, viewable via &ldquo;view full field history.&rdquo;
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

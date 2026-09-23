@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #eef1f5; color: #1e293b; }
+    .frame { width: 1280px; height: 800px; display: flex; flex-direction: column; background: #f8fafc; border: 1px solid #cbd5e1; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 20px; background: #1e293b; color: #e2e8f0; flex-shrink: 0; }
+    .topbar .logo { font-weight: 700; font-size: 14px; letter-spacing: 0.6px; color: #fff; }
+    .siteheader { padding: 10px 24px; border-bottom: 1px solid #cbd5e1; background: #fff; flex-shrink: 0; font-size: 12.5px; color: #94a3b8; display:flex; justify-content:space-between; align-items:center; }
+    .main { flex: 1; padding: 20px 40px; overflow-y: auto; display:flex; justify-content:center; }
+    .box { border: 1px solid #cbd5e1; background: #fff; border-radius: 3px; }
+    .ph { border: 1px dashed #94a3b8; background: #f1f5f9; border-radius: 3px; }
+    .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; }
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+    .b-confirmed { background: #dcfce7; color: #15803d; }
+    .b-missing { background: #f1f5f9; color: #64748b; border: 1px dashed #94a3b8; }
+    .btn { display: inline-block; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; border: 1px solid #94a3b8; background: #fff; color: #1e293b; }
+    .btn-primary { background: #1e293b; color: #fff; border-color: #1e293b; }
+    .fieldrow { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 12.5px; }
+    .fieldrow .fname { width: 150px; color: #64748b; font-weight: 600; }
+    .annotation { flex-shrink: 0; background: #fffbea; border-top: 1px dashed #d97706; padding: 10px 20px; font-size: 11.5px; color: #78350f; font-style: italic; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="topbar"><div class="logo">SITEIQ</div></div>
+  <div class="siteheader">
+    <span>Sites &rsaquo; 88 Harbor Rd, New Bedford, MA &rsaquo; <strong style="color:#1e293b;">Report</strong></span>
+    <div style="display:flex; gap:8px;"><div class="btn">Export PDF</div><div class="btn btn-primary">+ Generate New Report</div></div>
+  </div>
+  <div class="main">
+    <div class="box" style="width:820px; padding:34px 40px; height: fit-content;">
+      <div class="ph" style="padding:8px 12px; font-size:11.5px; color:#78350f; background:#fffbea; border-color:#d97706; margin-bottom:20px; display:flex; align-items:center; gap:8px;">
+        &#128274; <strong>Snapshot &mdash; generated Sep 3, 2026, 11:04 AM by A. Chen.</strong> This report reflects data as of that moment and will not change even if the live site is updated later.
+      </div>
+
+      <div style="font-size:20px; font-weight:800; margin-bottom:2px;">Site Investigation Report</div>
+      <div style="font-size:13px; color:#64748b; margin-bottom:22px;">88 Harbor Rd, New Bedford, MA 02740 &middot; Parcel 09-004-1122</div>
+
+      <div class="label" style="margin-bottom:8px;">Property &amp; parcel findings (as of generation)</div>
+      <div class="fieldrow"><div class="fname">Lot size</div><div>42,300 sq ft <span class="badge b-confirmed" style="margin-left:6px;">confirmed</span></div></div>
+      <div class="fieldrow"><div class="fname">Zoning district</div><div>Industrial (I-1) <span class="badge b-confirmed" style="margin-left:6px;">confirmed</span></div></div>
+      <div class="fieldrow"><div class="fname">Assessed value</div><div>$1,180,000 <span class="badge b-confirmed" style="margin-left:6px;">confirmed</span></div></div>
+      <div class="fieldrow" style="border-bottom:none;"><div class="fname">Year built</div><div style="color:#94a3b8;">&mdash; <span class="badge b-missing" style="margin-left:6px;">unavailable</span></div></div>
+
+      <div style="height:20px;"></div>
+      <div class="label" style="margin-bottom:8px;">Map &amp; location summary</div>
+      <div class="ph" style="height:140px; margin-bottom:20px; display:flex; align-items:center; justify-content:center; color:#94a3b8; font-size:11.5px;">[ static map snapshot &mdash; marker + parcel boundary as captured at generation ]</div>
+
+      <div class="label" style="margin-bottom:8px;">Data gaps</div>
+      <div class="ph" style="padding:10px 12px; font-size:12px; margin-bottom:20px;">Year built not published by any configured source. No environmental assessment documents on file.</div>
+
+      <div class="label" style="margin-bottom:8px;">Documents included (3)</div>
+      <div style="font-size:12px; color:#475569; margin-bottom:20px;">site-plan.pdf &middot; harbor-photos.zip &middot; comps-analysis.xlsx</div>
+
+      <div class="label" style="margin-bottom:8px;">Analyst conclusion</div>
+      <div class="ph" style="padding:12px; font-size:12.5px; color:#1e293b;">Strong industrial redevelopment candidate given zoning and lot size. Recommend proceeding to Phase 2 feasibility review pending environmental assessment.</div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>11&nbsp;&mdash;&nbsp;Reports.</strong> Rendered strictly from the immutable <code>content_snapshot</code> (discovery doc &sect;4.3), never live-joined &mdash; the banner makes the point-in-time nature explicit. &ldquo;Generate New Report&rdquo; creates a fresh, independent snapshot rather than editing this one; old reports remain byte-for-byte stable.
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
