@@ -12,7 +12,7 @@ export function CandidateReview() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data: site } = useQuery({
+  const { data: site, error: siteError, refetch: reloadSite } = useQuery({
     queryKey: ['sites', siteId],
     queryFn: () => sitesApi.get(siteId!),
     enabled: !!siteId,
@@ -74,6 +74,11 @@ export function CandidateReview() {
     },
   });
 
+  if (siteError) return <div role="alert" className="p-8 text-sm text-slate-600">
+    <p>{siteError instanceof ApiError ? siteError.message : 'Site information could not be loaded.'}</p>
+    <button className="mt-3 btn" onClick={() => reloadSite()}>Try again</button>
+    <Link className="ml-3 text-blue-600" to="/sites">Back to Sites</Link>
+  </div>;
   if (!site) return <div className="p-8 text-sm text-slate-400">Loading…</div>;
 
   if (site.identityStatus === 'IDENTIFYING') {

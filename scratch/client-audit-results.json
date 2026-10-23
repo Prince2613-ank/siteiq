@@ -1,0 +1,478 @@
+{
+  "passed": 118,
+  "failed": 0,
+  "results": [
+    {
+      "name": "All 766 source parcels have unique town/parcel IDs",
+      "pass": true
+    },
+    {
+      "name": "Every parcel has valid screening and numeric land area",
+      "pass": true
+    },
+    {
+      "name": "All supplied source links use HTTP or HTTPS",
+      "pass": true
+    },
+    {
+      "name": "All rows option shows exactly 766 sites",
+      "pass": true
+    },
+    {
+      "name": "Qualified Sites filter matches source records",
+      "pass": true
+    },
+    {
+      "name": "Excluded Sites filter matches source records",
+      "pass": true
+    },
+    {
+      "name": "Listed Sites filter matches source records",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Commercial / AMESBURY / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Commercial / AMESBURY / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Commercial / AMESBURY / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Commercial / AMESBURY / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Commercial / SALISBURY / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Commercial / SALISBURY / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Commercial / SALISBURY / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Commercial / SALISBURY / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Commercial / SEABROOK / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Commercial / SEABROOK / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Commercial / SEABROOK / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Commercial / SEABROOK / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Non-developable / AMESBURY / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Non-developable / AMESBURY / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Non-developable / AMESBURY / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Non-developable / AMESBURY / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Non-developable / SALISBURY / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Non-developable / SALISBURY / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Non-developable / SALISBURY / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Non-developable / SALISBURY / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Non-developable / SEABROOK / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Non-developable / SEABROOK / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Non-developable / SEABROOK / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Non-developable / SEABROOK / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Developable / AMESBURY / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Developable / AMESBURY / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Developable / AMESBURY / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Developable / AMESBURY / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Developable / SALISBURY / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Developable / SALISBURY / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Developable / SALISBURY / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Developable / SALISBURY / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Developable / SEABROOK / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Developable / SEABROOK / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Developable / SEABROOK / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Developable / SEABROOK / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Industrial / AMESBURY / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Industrial / AMESBURY / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Industrial / AMESBURY / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Industrial / AMESBURY / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Industrial / SALISBURY / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Industrial / SALISBURY / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Industrial / SALISBURY / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Industrial / SALISBURY / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Industrial / SEABROOK / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Industrial / SEABROOK / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Industrial / SEABROOK / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Industrial / SEABROOK / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Built-up (other) / AMESBURY / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Built-up (other) / AMESBURY / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Built-up (other) / AMESBURY / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Built-up (other) / AMESBURY / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Built-up (other) / SALISBURY / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Built-up (other) / SALISBURY / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Built-up (other) / SALISBURY / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Built-up (other) / SALISBURY / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Built-up (other) / SEABROOK / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Built-up (other) / SEABROOK / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Built-up (other) / SEABROOK / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Built-up (other) / SEABROOK / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Paved land / AMESBURY / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Paved land / AMESBURY / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Paved land / AMESBURY / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Paved land / AMESBURY / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Paved land / SALISBURY / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Paved land / SALISBURY / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Paved land / SALISBURY / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Paved land / SALISBURY / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Paved land / SEABROOK / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Paved land / SEABROOK / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Paved land / SEABROOK / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Paved land / SEABROOK / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Public land / AMESBURY / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Public land / AMESBURY / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Public land / AMESBURY / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Public land / AMESBURY / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Public land / SALISBURY / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Public land / SALISBURY / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Public land / SALISBURY / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Public land / SALISBURY / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Public land / SEABROOK / Main St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Public land / SEABROOK / Macy St",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Public land / SEABROOK / Rabbit Rd",
+      "pass": true
+    },
+    {
+      "name": "Sites combination: Public land / SEABROOK / Pike St",
+      "pass": true
+    },
+    {
+      "name": "Pasted spaces and case do not break Sites search",
+      "pass": true
+    },
+    {
+      "name": "Sites sorting: qualified",
+      "pass": true
+    },
+    {
+      "name": "Sites sorting: usable_desc",
+      "pass": true
+    },
+    {
+      "name": "Sites sorting: gross_desc",
+      "pass": true
+    },
+    {
+      "name": "Sites sorting: val_desc",
+      "pass": true
+    },
+    {
+      "name": "Sites sorting: address_asc",
+      "pass": true
+    },
+    {
+      "name": "Sites sorting: owner_asc",
+      "pass": true
+    },
+    {
+      "name": "Pagination next/previous and filter reset",
+      "pass": true
+    },
+    {
+      "name": "Info dialog sections, missing footer, focus, and Escape",
+      "pass": true
+    },
+    {
+      "name": "Sites Map action opens requested parcel",
+      "pass": true
+    },
+    {
+      "name": "Dashboard search trims spaces and shows empty state",
+      "pass": true
+    },
+    {
+      "name": "Dashboard owner search matches the displayed owner name",
+      "pass": true
+    },
+    {
+      "name": "Responsive dashboard 390px",
+      "pass": true
+    },
+    {
+      "name": "Responsive dashboard 768px",
+      "pass": true
+    },
+    {
+      "name": "Responsive dashboard 1024px",
+      "pass": true
+    },
+    {
+      "name": "Responsive dashboard 1440px",
+      "pass": true
+    },
+    {
+      "name": "Responsive dashboard 1920px",
+      "pass": true
+    },
+    {
+      "name": "Parcel load failure http on /",
+      "pass": true
+    },
+    {
+      "name": "Parcel load failure http on /sites",
+      "pass": true
+    },
+    {
+      "name": "Parcel load failure malformed on /",
+      "pass": true
+    },
+    {
+      "name": "Parcel load failure malformed on /sites",
+      "pass": true
+    },
+    {
+      "name": "Parcel load failure network on /",
+      "pass": true
+    },
+    {
+      "name": "Parcel load failure network on /sites",
+      "pass": true
+    },
+    {
+      "name": "Listing source unavailable on /",
+      "pass": true
+    },
+    {
+      "name": "Listing source unavailable on /sites",
+      "pass": true
+    },
+    {
+      "name": "Unknown routes recover to dashboard",
+      "pass": true
+    },
+    {
+      "name": "No uncaught JavaScript errors in client workflows",
+      "pass": true
+    }
+  ]
+}

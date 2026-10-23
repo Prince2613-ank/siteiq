@@ -1,0 +1,49 @@
+{
+  "total": 766,
+  "legend": {
+    "Commercial": 270,
+    "Developable": 77,
+    "Vacant": 106,
+    "Mixed (Vacant + Built-up)": 160,
+    "Built-up": 480,
+    "Industrial": 36,
+    "Non-Developable": 76,
+    "Public Land": 34,
+    "Paved Land": 15,
+    "Built-up (other)": 258,
+    "Paved, no building": 20
+  },
+  "categories": {
+    "Commercial": 270,
+    "Non-developable": 76,
+    "Developable": 77,
+    "Industrial": 36,
+    "Built-up (other)": 258,
+    "Paved land": 15,
+    "Public land": 34
+  },
+  "statuses": {
+    "Mixed (vacant + built-up)": 160,
+    "Vacant": 106,
+    "Built-up": 480,
+    "Paved, no building": 20
+  },
+  "screening": {
+    "Y": 185,
+    "N": 581
+  },
+  "roads": {
+    "Main St": 264,
+    "Macy St": 224,
+    "Rabbit Rd": 133,
+    "Pike St": 145
+  },
+  "towns": {
+    "AMESBURY": 253,
+    "SALISBURY": 461,
+    "SEABROOK": 52
+  },
+  "wetlandFeatures": 72,
+  "buildingFeatures": 933,
+  "duplicateTownParcelIds": []
+}

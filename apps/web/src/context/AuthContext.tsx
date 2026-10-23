@@ -1,10 +1,15 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { authApi } from '../api/endpoints';
-import { setAccessToken, setUnauthorizedHandler } from '../api/client';
+import { createContext, useContext, ReactNode } from 'react';
 import type { AuthUser } from '../api/types';
 
+export const DEFAULT_USER: AuthUser = {
+  id: '00000000-0000-0000-0000-000000000001',
+  email: 'admin@siteiq.local',
+  role: 'ADMIN',
+  organizationId: '00000000-0000-0000-0000-000000000001',
+};
+
 interface AuthContextValue {
-  user: AuthUser | null;
+  user: AuthUser;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -13,40 +18,16 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setUnauthorizedHandler(() => setUser(null));
-    // Silent refresh on load — the httpOnly refresh cookie survives a page
-    // reload even though the in-memory access token doesn't (docs/01 §6).
-    authApi
-      .refresh()
-      .then(({ accessToken, user }) => {
-        setAccessToken(accessToken);
-        setUser(user);
-      })
-      .catch(() => setAccessToken(null))
-      .finally(() => setLoading(false));
-  }, []);
-
-  async function login(email: string, password: string) {
-    const { accessToken, user } = await authApi.login(email, password);
-    setAccessToken(accessToken);
-    setUser(user);
-  }
-
-  async function logout() {
-    try {
-      await authApi.logout();
-    } finally {
-      setAccessToken(null);
-      setUser(null);
-    }
-  }
-
+  // Always active admin user — no login/logout required
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        user: DEFAULT_USER,
+        loading: false,
+        login: async () => {},
+        logout: async () => {},
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -33,7 +33,7 @@ export function SiteDetails() {
   const [tab, setTab] = useState<Tab>('Overview');
   const queryClient = useQueryClient();
 
-  const { data: site, isLoading } = useQuery({
+  const { data: site, isLoading, error: siteError, refetch: reloadSite } = useQuery({
     queryKey: ['sites', id],
     queryFn: () => sitesApi.get(id!),
     enabled: !!id,
@@ -64,6 +64,11 @@ export function SiteDetails() {
 
   const canEdit = user?.role === 'ADMIN' || user?.role === 'ANALYST';
 
+  if (siteError) return <div role="alert" className="p-8 text-sm text-slate-600">
+    <p>{siteError instanceof ApiError ? siteError.message : 'Site information could not be loaded.'}</p>
+    <button className="mt-3 btn" onClick={() => reloadSite()}>Try again</button>
+    <Link className="ml-3 text-blue-600" to="/sites">Back to Sites</Link>
+  </div>;
   if (isLoading || !site) return <div className="p-8 text-sm text-slate-400">Loading…</div>;
 
   // A re-match that ran AFTER a confirmation flips identityStatus back to

@@ -1,0 +1,25 @@
+<USER_REQUEST>
+add  this
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-22T17:29:11+05:30.
+
+The user's current state is as follows:
+Active Document: c:\Users\princ\SiteIQ\apps\web\src\pages\Dashboard.tsx (LANGUAGE_TSX)
+Cursor is on line: 1181
+Other open documents:
+- c:\Users\princ\SiteIQ\scratch\read_cat_symbol.ps1 (LANGUAGE_POWERSHELL)
+- c:\Users\princ\SiteIQ\scratch\read_qgs_renderer.ps1 (LANGUAGE_POWERSHELL)
+- c:\Users\princ\SiteIQ\apps\web\vite.config.ts (LANGUAGE_TYPESCRIPT)
+- c:\Users\princ\SiteIQ\apps\api\.env (LANGUAGE_UNSPECIFIED)
+- c:\Users\princ\SiteIQ\apps\api\src\modules\fields\fields.module.ts (LANGUAGE_TYPESCRIPT)
+Browser State:
+  Page 9A2A01C3C7E9BD5EE4986B13095C931A (SiteIQ) - http://localhost:5173/
+    Viewport: 2133x1050, Page Height: 1050
+  Page 9FA67316E2B53C57FF3B7095B99A1ED5 (Meet - tyd-uejy-vbx) - https://meet.google.com/meet/tyd-uejy-vbx
+    Viewport: 1920x945, Page Height: 945
+  Page 0E56E209957617B9705C8A6148529F62 (SiteIQ) - http://localhost:5173/sites [ACTIVE]
+    Viewport: 2133x1050, Page Height: 4137
+Running terminal commands:
+- npm run dev:web (in c:\Users\princ\SiteIQ, running for 4h41m51s)
+</ADDITIONAL_METADATA>

@@ -1,0 +1,43 @@
+.dashboard-sidebar { background: #f6f8fb; scrollbar-width: thin; }
+.dashboard-sidebar-header { position: sticky; top: 0; z-index: 20; padding: 20px 18px 16px; background: #fff; border-bottom: 1px solid #e2e8f0; }
+.dashboard-eyebrow { color: #64748b; font-size: 9px; font-weight: 700; letter-spacing: .12em; }
+.dashboard-sidebar-header h2 { margin-top: 5px; color: #0f172a; font-size: 21px; font-weight: 800; letter-spacing: -.04em; }
+.dashboard-region { margin-top: 5px; color: #64748b; font-size: 12px; }
+.dashboard-total { padding: 5px 9px; border: 1px solid #dbeafe; border-radius: 7px; color: #1d4ed8; background: #eff6ff; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.dashboard-back { margin-top: 14px; color: #2563eb; font-size: 12px; font-weight: 600; }
+.dashboard-back:hover { text-decoration: underline; }
+.dashboard-overview-card, .dashboard-filter-card, .dashboard-section { border: 1px solid #e2e8f0; border-radius: 12px; background: #fff; box-shadow: 0 1px 2px #0f172a03; }
+.dashboard-overview-card, .dashboard-filter-card { padding: 14px; }
+.dashboard-card-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.dashboard-card-heading h3 { font-size: 13px; font-weight: 700; color: #0f172a; }
+.dashboard-card-heading > span { font-size: 10px; color: #64748b; }
+.dashboard-metrics { display: grid; grid-template-columns: 1fr 1fr; margin: 16px 0 12px; }
+.dashboard-metrics > div + div { border-left: 1px solid #e2e8f0; padding-left: 18px; }
+.dashboard-metrics strong { display: block; color: #0f172a; font-size: 27px; line-height: 1.2; letter-spacing: -.04em; font-weight: 800; }
+.dashboard-metrics strong small { color: #64748b; font-size: 13px; font-weight: 500; }
+.dashboard-metrics span { display: block; margin-top: 4px; color: #64748b; font-size: 11px; }
+.dashboard-overview-card > p { border-top: 1px solid #f1f5f9; padding-top: 10px; font-size: 11px; line-height: 1.6; color: #64748b; }
+.dashboard-filter-card > span, .dashboard-filter-card > div > span { color: #475569; }
+.dashboard-inspector > div:first-child { padding: 14px; border: 1px solid #dbeafe; border-radius: 12px; background: #fff; }
+.dashboard-inspector h3 { white-space: normal; line-height: 1.4; margin-top: 8px; font-size: 19px; }
+.dashboard-section > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px; cursor: pointer; list-style: none; }
+.dashboard-section > summary::-webkit-details-marker { display: none; }
+.dashboard-section > summary strong { display: block; color: #0f172a; font-size: 13px; font-weight: 700; }
+.dashboard-section > summary small { display: block; margin-top: 3px; color: #64748b; font-size: 10.5px; line-height: 1.5; }
+.dashboard-section-chevron { flex-shrink: 0; color: #94a3b8; transition: transform .15s; }
+.dashboard-section[open] > summary { border-bottom: 1px solid #f1f5f9; }
+.dashboard-section[open] .dashboard-section-chevron { transform: rotate(180deg); }
+.dashboard-section-content { padding: 12px 14px 14px; }
+.dashboard-section-content > div { background: transparent; padding: 0; border: 0; border-radius: 0; box-shadow: none; }
+.dashboard-section-content > div > div:first-child:empty { display: none; }
+.dashboard-section-content .grid > div { border-radius: 8px; box-shadow: none; background: #f8fafc; border-color: #edf1f5; }
+.dashboard-section-content .uppercase { text-transform: none; letter-spacing: normal; font-size: 11px; }
+.dashboard-section-content .grid > div > span:first-child { color: #64748b; font-weight: 500; }
+.dashboard-section-content .grid > div > span + span { font-size: 13px; font-weight: 650; color: #0f172a; }
+.dashboard-directory > div { padding: 12px; }
+.dashboard-sidebar button:focus-visible, .dashboard-section > summary:focus-visible { outline: 2px solid #2563eb; outline-offset: 3px; }
+.dashboard-map-legend { width: min(510px, calc(100% - 16px)); max-height: 48%; overflow-y: auto; scrollbar-width: thin; }
+.dashboard-legend-group { padding-top: 5px; margin-top: 4px; border-top: 1px solid #e2e8f0; }
+.dashboard-legend-group h4 { margin-bottom: 3px; color: #475569; font-size: 9px; font-weight: 700; }
+.dashboard-map-legend button:focus-visible { outline: 2px solid #2563eb; outline-offset: 1px; }
+@media (max-width: 1023px) { .dashboard-sidebar-header { padding: 14px 16px; } .dashboard-sidebar-header h2 { font-size: 18px; } }

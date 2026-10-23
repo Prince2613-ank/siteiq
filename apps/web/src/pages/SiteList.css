@@ -1,0 +1,21 @@
+.site-info-dialog { max-width: 620px; }
+.site-info-header { flex-shrink: 0; }
+.site-info-header h3 { line-height: 1.4; margin-top: 8px; }
+.site-info-body { background: #f6f8fb; scrollbar-width: thin; }
+.site-info-section { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; }
+.site-info-section > header { padding: 14px 16px; border-bottom: 1px solid #f1f5f9; }
+.site-info-section h4 { color: #0f172a; font-size: 13px; font-weight: 700; }
+.site-info-section > header p { margin-top: 3px; color: #64748b; font-size: 11px; line-height: 1.5; }
+.site-info-section-content { padding: 12px 16px 16px; }
+.site-info-section-content > div { padding: 0; border: 0; background: transparent; border-radius: 0; box-shadow: none; }
+.site-info-section-content .grid > div { background: #f8fafc; border-color: #edf1f5; border-radius: 8px; box-shadow: none; }
+.site-info-section-content .uppercase { text-transform: none; letter-spacing: normal; font-size: 11px; }
+.site-info-section-content .grid > div > span:first-child { color: #64748b; font-weight: 500; }
+.site-info-section-content .grid > div > span + span { color: #0f172a; font-size: 13px; font-weight: 650; }
+.site-info-dialog button:focus-visible, .site-info-dialog a:focus-visible { outline: 2px solid #2563eb; outline-offset: 3px; }
+@media (max-width: 480px) {
+  .site-info-header { padding: 16px; }
+  .site-info-body { padding: 12px; }
+  .site-info-section > header { padding: 12px; }
+  .site-info-section-content { padding: 10px 12px 12px; }
+}

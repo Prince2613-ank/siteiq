@@ -1,0 +1,4619 @@
+{
+  "source": "C:\\Users\\princ\\Downloads\\Road 250m parcels (4).xlsx",
+  "sheet": "Sheet1",
+  "columns": {
+    "open_mortgage": 41,
+    "lease_easement_restriction": 42
+  },
+  "source_rows": 766,
+  "matched": 766,
+  "total": 766,
+  "unmatched": [],
+  "ambiguous": [],
+  "populated": {
+    "open_mortgage": 766,
+    "lease_easement_restriction": 766
+  },
+  "maximum_text_length": {
+    "open_mortgage": 90,
+    "lease_easement_restriction": 138
+  },
+  "matches": [
+    {
+      "town": "AMESBURY",
+      "parcel_id": "42-15",
+      "source_row": 428,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "43-1",
+      "source_row": 668,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "43-10",
+      "source_row": 79,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "43-2",
+      "source_row": 161,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "43-3",
+      "source_row": 677,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "43-4",
+      "source_row": 87,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "43-5",
+      "source_row": 92,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "43-5A",
+      "source_row": 224,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "43-6",
+      "source_row": 102,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "43-7",
+      "source_row": 220,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "43-8",
+      "source_row": 213,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "43-9",
+      "source_row": 80,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "56-14",
+      "source_row": 84,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "56-15",
+      "source_row": 225,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "56-16",
+      "source_row": 312,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "56-17",
+      "source_row": 129,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "56-18",
+      "source_row": 93,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "56-19",
+      "source_row": 154,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "56-20",
+      "source_row": 645,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "56-21",
+      "source_row": 727,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "56-22",
+      "source_row": 156,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "56-23",
+      "source_row": 153,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "56-24",
+      "source_row": 157,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "56-26",
+      "source_row": 152,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "56-30",
+      "source_row": 636,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "64-73",
+      "source_row": 479,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "64-74",
+      "source_row": 599,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "65-21",
+      "source_row": 756,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "65-23",
+      "source_row": 437,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "65-24",
+      "source_row": 329,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "65-25",
+      "source_row": 742,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "65-26",
+      "source_row": 720,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "65-27",
+      "source_row": 627,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "65-58",
+      "source_row": 423,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "65-59",
+      "source_row": 420,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "65-60",
+      "source_row": 416,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "65-61",
+      "source_row": 424,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "65-62",
+      "source_row": 425,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "65-83",
+      "source_row": 619,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "65-84",
+      "source_row": 706,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "65-89",
+      "source_row": 643,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "66-14",
+      "source_row": 89,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "66-16",
+      "source_row": 752,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "66-17",
+      "source_row": 679,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "66-18",
+      "source_row": 672,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "66-51",
+      "source_row": 759,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "66-52",
+      "source_row": 346,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "66-53",
+      "source_row": 763,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "66-54",
+      "source_row": 338,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "66-55",
+      "source_row": 325,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "66-58",
+      "source_row": 327,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-119",
+      "source_row": 374,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-120",
+      "source_row": 406,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-121",
+      "source_row": 229,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-122",
+      "source_row": 126,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-123",
+      "source_row": 214,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-124",
+      "source_row": 236,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-125",
+      "source_row": 215,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-126",
+      "source_row": 227,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-128C",
+      "source_row": 396,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-134A",
+      "source_row": 139,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-135",
+      "source_row": 176,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-136",
+      "source_row": 216,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-137",
+      "source_row": 133,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-138",
+      "source_row": 323,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "67-139",
+      "source_row": 118,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "68-11",
+      "source_row": 462,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "68-13A",
+      "source_row": 53,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "68-14",
+      "source_row": 59,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "68-15",
+      "source_row": 657,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "68-16",
+      "source_row": 71,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "68-18",
+      "source_row": 262,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "68-20",
+      "source_row": 650,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "69-1",
+      "source_row": 33,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "69-2",
+      "source_row": 764,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "76-6",
+      "source_row": 740,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "76-7",
+      "source_row": 753,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-100",
+      "source_row": 311,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-101",
+      "source_row": 333,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-102",
+      "source_row": 414,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-103",
+      "source_row": 337,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-104",
+      "source_row": 715,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-105",
+      "source_row": 426,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-107",
+      "source_row": 370,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-108",
+      "source_row": 586,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-109",
+      "source_row": 671,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-16",
+      "source_row": 277,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-17",
+      "source_row": 241,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-18",
+      "source_row": 202,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-19",
+      "source_row": 207,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-20",
+      "source_row": 307,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-21",
+      "source_row": 707,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-22",
+      "source_row": 310,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-23",
+      "source_row": 415,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-24",
+      "source_row": 296,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-27",
+      "source_row": 604,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-28",
+      "source_row": 623,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-30",
+      "source_row": 357,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-31",
+      "source_row": 107,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-32",
+      "source_row": 303,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-33",
+      "source_row": 353,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-34",
+      "source_row": 304,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-35",
+      "source_row": 363,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-36",
+      "source_row": 172,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-37",
+      "source_row": 336,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-38",
+      "source_row": 354,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-49",
+      "source_row": 105,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-50",
+      "source_row": 350,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-50A",
+      "source_row": 386,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-51",
+      "source_row": 389,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-52",
+      "source_row": 345,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-52A",
+      "source_row": 709,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-53",
+      "source_row": 348,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-54",
+      "source_row": 375,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-55",
+      "source_row": 316,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-56",
+      "source_row": 704,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-57",
+      "source_row": 412,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-58",
+      "source_row": 401,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-59",
+      "source_row": 399,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-60",
+      "source_row": 376,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-61",
+      "source_row": 405,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-62",
+      "source_row": 86,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-63",
+      "source_row": 127,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-64",
+      "source_row": 122,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-65",
+      "source_row": 419,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-66",
+      "source_row": 104,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-67",
+      "source_row": 341,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-68",
+      "source_row": 385,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-69",
+      "source_row": 454,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-73",
+      "source_row": 509,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-74",
+      "source_row": 466,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-74A",
+      "source_row": 767,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-75",
+      "source_row": 532,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-76",
+      "source_row": 557,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-77",
+      "source_row": 517,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-78",
+      "source_row": 745,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-79",
+      "source_row": 367,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-80",
+      "source_row": 391,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-81",
+      "source_row": 407,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-82",
+      "source_row": 629,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-83",
+      "source_row": 326,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-84",
+      "source_row": 343,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-84-2",
+      "source_row": 381,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-84-4",
+      "source_row": 383,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-84A",
+      "source_row": 696,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-84B",
+      "source_row": 332,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-85",
+      "source_row": 646,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-86",
+      "source_row": 703,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-87",
+      "source_row": 427,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-88",
+      "source_row": 581,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-89",
+      "source_row": 613,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-90",
+      "source_row": 588,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-91",
+      "source_row": 469,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-92",
+      "source_row": 402,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-93",
+      "source_row": 369,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-94CM",
+      "source_row": 368,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-98",
+      "source_row": 352,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "77-99",
+      "source_row": 377,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-1",
+      "source_row": 171,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-10",
+      "source_row": 168,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-11",
+      "source_row": 72,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-12",
+      "source_row": 761,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-13",
+      "source_row": 762,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-14",
+      "source_row": 765,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-2",
+      "source_row": 674,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-29",
+      "source_row": 179,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-3",
+      "source_row": 698,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-30",
+      "source_row": 203,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-31",
+      "source_row": 125,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-38Z",
+      "source_row": 35,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-4",
+      "source_row": 335,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-5",
+      "source_row": 570,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-6",
+      "source_row": 608,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-7",
+      "source_row": 611,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "78-9",
+      "source_row": 549,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-1",
+      "source_row": 95,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-10",
+      "source_row": 737,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-11",
+      "source_row": 66,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-12",
+      "source_row": 748,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-12A",
+      "source_row": 757,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-13",
+      "source_row": 32,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-14",
+      "source_row": 523,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-15",
+      "source_row": 297,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-16",
+      "source_row": 239,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-17",
+      "source_row": 273,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-18",
+      "source_row": 628,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-19",
+      "source_row": 145,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-2",
+      "source_row": 144,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-20",
+      "source_row": 417,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-21",
+      "source_row": 421,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-22",
+      "source_row": 379,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-23",
+      "source_row": 321,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-27",
+      "source_row": 267,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-28",
+      "source_row": 96,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-3",
+      "source_row": 177,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-30",
+      "source_row": 339,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-4",
+      "source_row": 635,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-56",
+      "source_row": 662,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-57",
+      "source_row": 21,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-58",
+      "source_row": 680,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-59",
+      "source_row": 199,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-6",
+      "source_row": 17,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-62",
+      "source_row": 754,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-74",
+      "source_row": 422,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-75",
+      "source_row": 410,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-76",
+      "source_row": 90,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-77",
+      "source_row": 134,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-78",
+      "source_row": 110,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-79",
+      "source_row": 445,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-8",
+      "source_row": 546,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-80",
+      "source_row": 464,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-81",
+      "source_row": 46,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-82",
+      "source_row": 711,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-84",
+      "source_row": 217,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "79-9",
+      "source_row": 505,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-1",
+      "source_row": 47,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-10",
+      "source_row": 39,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-11",
+      "source_row": 601,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-12",
+      "source_row": 451,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-15",
+      "source_row": 712,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-16",
+      "source_row": 52,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-17",
+      "source_row": 568,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-18",
+      "source_row": 434,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-19",
+      "source_row": 234,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-2",
+      "source_row": 545,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-20",
+      "source_row": 263,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-21",
+      "source_row": 82,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-22",
+      "source_row": 204,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-23",
+      "source_row": 305,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-24",
+      "source_row": 98,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-25",
+      "source_row": 231,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-25A",
+      "source_row": 219,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-26",
+      "source_row": 685,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-27",
+      "source_row": 665,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-28",
+      "source_row": 5,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-3",
+      "source_row": 535,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-4",
+      "source_row": 616,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-5",
+      "source_row": 175,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-6",
+      "source_row": 578,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-7",
+      "source_row": 530,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-8",
+      "source_row": 76,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "80-9",
+      "source_row": 11,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "81-1",
+      "source_row": 436,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "81-2",
+      "source_row": 708,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "81-3",
+      "source_row": 760,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "81-4",
+      "source_row": 640,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "81-5",
+      "source_row": 537,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "81-6",
+      "source_row": 228,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "81-7A",
+      "source_row": 210,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "91-14",
+      "source_row": 55,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "92-2",
+      "source_row": 233,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "92-2A",
+      "source_row": 287,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "AMESBURY",
+      "parcel_id": "FEE",
+      "source_row": 723,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-1",
+      "source_row": 560,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-10",
+      "source_row": 610,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-104",
+      "source_row": 441,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-11",
+      "source_row": 536,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-12",
+      "source_row": 660,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-124",
+      "source_row": 14,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-13",
+      "source_row": 663,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-134",
+      "source_row": 468,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-136",
+      "source_row": 593,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-138",
+      "source_row": 583,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-139",
+      "source_row": 540,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-14",
+      "source_row": 328,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-140",
+      "source_row": 444,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-141",
+      "source_row": 148,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-142",
+      "source_row": 555,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-143",
+      "source_row": 63,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-144",
+      "source_row": 562,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-145",
+      "source_row": 472,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-147",
+      "source_row": 525,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-148",
+      "source_row": 552,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-15",
+      "source_row": 390,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-151",
+      "source_row": 480,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-152",
+      "source_row": 556,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-153",
+      "source_row": 163,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-154",
+      "source_row": 448,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-155",
+      "source_row": 48,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-156",
+      "source_row": 257,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-16",
+      "source_row": 358,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-17",
+      "source_row": 356,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-18",
+      "source_row": 208,
+      "method": "town + parcel ID + exact address"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-19",
+      "source_row": 409,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-190",
+      "source_row": 460,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-191",
+      "source_row": 112,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-192",
+      "source_row": 7,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-198",
+      "source_row": 550,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-2",
+      "source_row": 432,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-20",
+      "source_row": 340,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-203",
+      "source_row": 195,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-204",
+      "source_row": 137,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-205",
+      "source_row": 191,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-212",
+      "source_row": 190,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-213",
+      "source_row": 140,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-214",
+      "source_row": 187,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-216",
+      "source_row": 440,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-22",
+      "source_row": 109,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-23",
+      "source_row": 360,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-232",
+      "source_row": 449,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-233",
+      "source_row": 429,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-236",
+      "source_row": 507,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-238",
+      "source_row": 664,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-24",
+      "source_row": 108,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-248",
+      "source_row": 99,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-26",
+      "source_row": 298,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-261",
+      "source_row": 117,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-27",
+      "source_row": 692,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-275",
+      "source_row": 180,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-276",
+      "source_row": 113,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-28",
+      "source_row": 710,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-29",
+      "source_row": 625,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-292",
+      "source_row": 237,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-293",
+      "source_row": 253,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-294",
+      "source_row": 686,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-295",
+      "source_row": 713,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-3",
+      "source_row": 564,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-30",
+      "source_row": 155,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-31",
+      "source_row": 675,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-32",
+      "source_row": 695,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-33",
+      "source_row": 689,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-34",
+      "source_row": 744,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-4",
+      "source_row": 554,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-5",
+      "source_row": 595,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-6",
+      "source_row": 717,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-7",
+      "source_row": 519,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-77",
+      "source_row": 209,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-78",
+      "source_row": 394,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-79",
+      "source_row": 136,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-8",
+      "source_row": 502,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-80",
+      "source_row": 3,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-81",
+      "source_row": 26,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-82",
+      "source_row": 718,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-84",
+      "source_row": 614,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "10-9",
+      "source_row": 576,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-1",
+      "source_row": 653,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-12",
+      "source_row": 446,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-13",
+      "source_row": 13,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-14",
+      "source_row": 62,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-16",
+      "source_row": 16,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-17",
+      "source_row": 8,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-18",
+      "source_row": 571,
+      "method": "town + parcel ID + exact address"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-19",
+      "source_row": 218,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-2",
+      "source_row": 651,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-20",
+      "source_row": 183,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-21",
+      "source_row": 654,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-22",
+      "source_row": 648,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-28",
+      "source_row": 655,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-29",
+      "source_row": 119,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-3",
+      "source_row": 659,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-30",
+      "source_row": 211,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-31",
+      "source_row": 652,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-32",
+      "source_row": 299,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-35",
+      "source_row": 45,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-36",
+      "source_row": 516,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-37",
+      "source_row": 475,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-38",
+      "source_row": 461,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-4",
+      "source_row": 658,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-40",
+      "source_row": 496,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-41",
+      "source_row": 463,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-42",
+      "source_row": 58,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-43",
+      "source_row": 41,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-47",
+      "source_row": 73,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-48",
+      "source_row": 50,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-49",
+      "source_row": 490,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-5",
+      "source_row": 470,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-50",
+      "source_row": 534,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-52",
+      "source_row": 75,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-53",
+      "source_row": 56,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-55",
+      "source_row": 65,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-56",
+      "source_row": 64,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-57",
+      "source_row": 442,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-58",
+      "source_row": 647,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-59",
+      "source_row": 81,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-6",
+      "source_row": 458,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-60",
+      "source_row": 194,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-61",
+      "source_row": 288,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "11-7",
+      "source_row": 602,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-100",
+      "source_row": 198,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-101",
+      "source_row": 182,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-12",
+      "source_row": 738,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-27",
+      "source_row": 138,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-32",
+      "source_row": 649,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-33",
+      "source_row": 120,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-45",
+      "source_row": 670,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-46",
+      "source_row": 681,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-47",
+      "source_row": 85,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-48",
+      "source_row": 758,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-49",
+      "source_row": 527,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-50",
+      "source_row": 522,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-53",
+      "source_row": 606,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-54",
+      "source_row": 30,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "12-79",
+      "source_row": 188,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-1",
+      "source_row": 661,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-10",
+      "source_row": 621,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-106",
+      "source_row": 150,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-107",
+      "source_row": 83,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-108",
+      "source_row": 322,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-109",
+      "source_row": 232,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-11",
+      "source_row": 68,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-110",
+      "source_row": 473,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-111",
+      "source_row": 639,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-112",
+      "source_row": 682,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-113",
+      "source_row": 697,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-116",
+      "source_row": 615,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-117",
+      "source_row": 597,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-118",
+      "source_row": 582,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-119",
+      "source_row": 515,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-120",
+      "source_row": 467,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-121",
+      "source_row": 67,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-123",
+      "source_row": 169,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-124",
+      "source_row": 4,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-125",
+      "source_row": 170,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-126",
+      "source_row": 644,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-127",
+      "source_row": 149,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-129",
+      "source_row": 642,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-134",
+      "source_row": 632,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-136",
+      "source_row": 631,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-137",
+      "source_row": 162,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-138",
+      "source_row": 160,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-139",
+      "source_row": 724,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-14",
+      "source_row": 565,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-140",
+      "source_row": 728,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-141",
+      "source_row": 755,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-142",
+      "source_row": 749,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-15",
+      "source_row": 730,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-16",
+      "source_row": 531,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-17",
+      "source_row": 726,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-18",
+      "source_row": 617,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-19",
+      "source_row": 618,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-2",
+      "source_row": 743,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-20",
+      "source_row": 584,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-206",
+      "source_row": 192,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-208",
+      "source_row": 634,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-209",
+      "source_row": 158,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-21",
+      "source_row": 22,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-218",
+      "source_row": 751,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-219",
+      "source_row": 750,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-22",
+      "source_row": 497,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-220",
+      "source_row": 637,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-221",
+      "source_row": 641,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-226",
+      "source_row": 159,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-227",
+      "source_row": 580,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-232",
+      "source_row": 482,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-233",
+      "source_row": 630,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-234",
+      "source_row": 439,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-235",
+      "source_row": 114,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-236",
+      "source_row": 181,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-237",
+      "source_row": 44,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-238",
+      "source_row": 438,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-24",
+      "source_row": 450,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-243",
+      "source_row": 88,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-246",
+      "source_row": 716,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-247",
+      "source_row": 633,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-25",
+      "source_row": 315,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-26",
+      "source_row": 351,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-27",
+      "source_row": 342,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-28",
+      "source_row": 330,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-29",
+      "source_row": 331,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-3",
+      "source_row": 15,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-30",
+      "source_row": 347,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-31",
+      "source_row": 249,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-32",
+      "source_row": 301,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-33",
+      "source_row": 291,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-34",
+      "source_row": 361,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-35",
+      "source_row": 116,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-36",
+      "source_row": 196,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-37",
+      "source_row": 714,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-38",
+      "source_row": 539,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-39",
+      "source_row": 542,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-40",
+      "source_row": 501,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-41",
+      "source_row": 456,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-5",
+      "source_row": 453,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-7",
+      "source_row": 455,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "18-9",
+      "source_row": 561,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-100",
+      "source_row": 746,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-101",
+      "source_row": 533,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-104",
+      "source_row": 43,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-105",
+      "source_row": 430,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-107",
+      "source_row": 508,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-108",
+      "source_row": 741,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-109",
+      "source_row": 524,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-110",
+      "source_row": 729,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-111",
+      "source_row": 638,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-112",
+      "source_row": 547,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-113",
+      "source_row": 612,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-114",
+      "source_row": 574,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-115",
+      "source_row": 603,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-116",
+      "source_row": 278,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-117",
+      "source_row": 260,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-118",
+      "source_row": 270,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-119",
+      "source_row": 294,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-120",
+      "source_row": 319,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-121",
+      "source_row": 240,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-122",
+      "source_row": 245,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-123",
+      "source_row": 272,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-124",
+      "source_row": 256,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-125",
+      "source_row": 251,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-126",
+      "source_row": 678,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-127",
+      "source_row": 666,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-128",
+      "source_row": 242,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-129",
+      "source_row": 246,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-13",
+      "source_row": 293,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-130",
+      "source_row": 248,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-131",
+      "source_row": 265,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-132",
+      "source_row": 205,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-133",
+      "source_row": 223,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-134",
+      "source_row": 235,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-135",
+      "source_row": 254,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-136",
+      "source_row": 252,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-137",
+      "source_row": 306,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-138",
+      "source_row": 282,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-139",
+      "source_row": 295,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-14",
+      "source_row": 290,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-140",
+      "source_row": 705,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-141",
+      "source_row": 700,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-142",
+      "source_row": 693,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-143",
+      "source_row": 691,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-147",
+      "source_row": 504,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-148",
+      "source_row": 506,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-149",
+      "source_row": 481,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-15",
+      "source_row": 313,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-150",
+      "source_row": 193,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-151",
+      "source_row": 184,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-152",
+      "source_row": 51,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-154",
+      "source_row": 587,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-155",
+      "source_row": 594,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-156",
+      "source_row": 551,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-157",
+      "source_row": 598,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-158",
+      "source_row": 607,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-159",
+      "source_row": 526,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-16",
+      "source_row": 269,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-160",
+      "source_row": 54,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-161",
+      "source_row": 667,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-162",
+      "source_row": 572,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-163",
+      "source_row": 596,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-164",
+      "source_row": 512,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-165",
+      "source_row": 683,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-166",
+      "source_row": 528,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-167",
+      "source_row": 513,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-168",
+      "source_row": 74,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-169",
+      "source_row": 37,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-17",
+      "source_row": 243,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-170",
+      "source_row": 483,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-172",
+      "source_row": 563,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-173",
+      "source_row": 514,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-174",
+      "source_row": 238,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-175",
+      "source_row": 130,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-177",
+      "source_row": 739,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-18",
+      "source_row": 538,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-180",
+      "source_row": 9,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-181",
+      "source_row": 590,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-182",
+      "source_row": 499,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-183",
+      "source_row": 457,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-184",
+      "source_row": 57,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-185",
+      "source_row": 487,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-186",
+      "source_row": 18,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-187",
+      "source_row": 566,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-188",
+      "source_row": 577,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-189",
+      "source_row": 397,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-190",
+      "source_row": 387,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-191",
+      "source_row": 382,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-192",
+      "source_row": 403,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-193",
+      "source_row": 384,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-194",
+      "source_row": 308,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-195",
+      "source_row": 94,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-196",
+      "source_row": 314,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-197",
+      "source_row": 400,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-198",
+      "source_row": 392,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-199",
+      "source_row": 408,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-200",
+      "source_row": 380,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-201",
+      "source_row": 366,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-202",
+      "source_row": 569,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-203",
+      "source_row": 24,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-204",
+      "source_row": 34,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-205",
+      "source_row": 491,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-206",
+      "source_row": 28,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-207",
+      "source_row": 42,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-208",
+      "source_row": 20,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-209",
+      "source_row": 498,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-21",
+      "source_row": 690,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-210",
+      "source_row": 725,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-211",
+      "source_row": 447,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-212",
+      "source_row": 36,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-213",
+      "source_row": 279,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-215",
+      "source_row": 484,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-216",
+      "source_row": 687,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-217",
+      "source_row": 10,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-224",
+      "source_row": 573,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-225",
+      "source_row": 609,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-227",
+      "source_row": 511,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-228",
+      "source_row": 591,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-229",
+      "source_row": 431,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-23",
+      "source_row": 688,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-230",
+      "source_row": 544,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-231",
+      "source_row": 268,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-232",
+      "source_row": 495,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-233",
+      "source_row": 503,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-236",
+      "source_row": 733,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-237",
+      "source_row": 558,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-238",
+      "source_row": 492,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-239",
+      "source_row": 488,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-24",
+      "source_row": 699,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-240",
+      "source_row": 476,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-241",
+      "source_row": 486,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-242",
+      "source_row": 494,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-25",
+      "source_row": 701,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-261",
+      "source_row": 60,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-262",
+      "source_row": 600,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-263",
+      "source_row": 185,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-264",
+      "source_row": 115,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-265",
+      "source_row": 197,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-266",
+      "source_row": 128,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-269",
+      "source_row": 173,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-27",
+      "source_row": 702,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-272",
+      "source_row": 477,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-273",
+      "source_row": 285,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-274",
+      "source_row": 275,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-275",
+      "source_row": 281,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-276",
+      "source_row": 255,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-277",
+      "source_row": 289,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-28",
+      "source_row": 722,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-283",
+      "source_row": 276,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-284",
+      "source_row": 286,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-285",
+      "source_row": 274,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-286",
+      "source_row": 266,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-287",
+      "source_row": 271,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-288",
+      "source_row": 264,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-289",
+      "source_row": 520,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-29",
+      "source_row": 721,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-290",
+      "source_row": 19,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-292",
+      "source_row": 132,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-293",
+      "source_row": 174,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-30",
+      "source_row": 719,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-32",
+      "source_row": 585,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-33",
+      "source_row": 471,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-34",
+      "source_row": 435,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-35",
+      "source_row": 250,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-36",
+      "source_row": 485,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-37",
+      "source_row": 465,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-39",
+      "source_row": 605,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-40",
+      "source_row": 70,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-41",
+      "source_row": 732,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-45",
+      "source_row": 302,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-46",
+      "source_row": 189,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-47",
+      "source_row": 97,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-48",
+      "source_row": 146,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-49",
+      "source_row": 141,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-50",
+      "source_row": 142,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-51",
+      "source_row": 221,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-52",
+      "source_row": 143,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-53",
+      "source_row": 212,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-54",
+      "source_row": 135,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-55",
+      "source_row": 206,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-56",
+      "source_row": 100,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-57",
+      "source_row": 244,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-58",
+      "source_row": 398,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-59",
+      "source_row": 478,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-60",
+      "source_row": 418,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-61",
+      "source_row": 747,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-62",
+      "source_row": 378,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-63",
+      "source_row": 123,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-67",
+      "source_row": 541,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-68",
+      "source_row": 493,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-69",
+      "source_row": 518,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-70",
+      "source_row": 23,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-71",
+      "source_row": 589,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-73",
+      "source_row": 592,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-74",
+      "source_row": 395,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-76",
+      "source_row": 673,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-77",
+      "source_row": 684,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-78",
+      "source_row": 694,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-80",
+      "source_row": 258,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-81",
+      "source_row": 320,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-82",
+      "source_row": 230,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-83",
+      "source_row": 364,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-84",
+      "source_row": 362,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-85",
+      "source_row": 365,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-86",
+      "source_row": 259,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-87",
+      "source_row": 373,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-88",
+      "source_row": 404,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-89",
+      "source_row": 349,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-90",
+      "source_row": 388,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-91",
+      "source_row": 411,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-92",
+      "source_row": 372,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-93",
+      "source_row": 676,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-94",
+      "source_row": 324,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-95",
+      "source_row": 284,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-96",
+      "source_row": 292,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-97",
+      "source_row": 131,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-98",
+      "source_row": 344,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "19-99",
+      "source_row": 443,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "23-1",
+      "source_row": 766,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "23-17",
+      "source_row": 731,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "23-18",
+      "source_row": 38,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "23-19",
+      "source_row": 735,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "23-20",
+      "source_row": 77,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "23-21",
+      "source_row": 106,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "23-22",
+      "source_row": 178,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "23-39",
+      "source_row": 2,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "23-40",
+      "source_row": 27,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "23-41",
+      "source_row": 656,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "23-73",
+      "source_row": 200,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "23-77",
+      "source_row": 124,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "23-78",
+      "source_row": 103,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "23-81",
+      "source_row": 6,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "9-46",
+      "source_row": 31,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "9-47",
+      "source_row": 553,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "9-50",
+      "source_row": 622,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "9-51",
+      "source_row": 12,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "9-59",
+      "source_row": 626,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "9-60",
+      "source_row": 734,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "9-61",
+      "source_row": 489,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SALISBURY",
+      "parcel_id": "FEE",
+      "source_row": 736,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-10-0",
+      "source_row": 283,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-11-0",
+      "source_row": 91,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-11-1",
+      "source_row": 624,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-11-2",
+      "source_row": 309,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-12-0",
+      "source_row": 167,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-13-0",
+      "source_row": 29,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-14-15",
+      "source_row": 40,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-18-0",
+      "source_row": 61,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-19-0",
+      "source_row": 543,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-20-0",
+      "source_row": 620,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-20-100",
+      "source_row": 521,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-21-0",
+      "source_row": 166,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-22-0",
+      "source_row": 413,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-23-0",
+      "source_row": 579,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-24-0",
+      "source_row": 575,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-25-0",
+      "source_row": 529,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-27-0",
+      "source_row": 548,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-28-0",
+      "source_row": 334,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-29-1",
+      "source_row": 300,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-29-2",
+      "source_row": 222,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-29-903",
+      "source_row": 280,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-4-0",
+      "source_row": 78,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-45-0",
+      "source_row": 147,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-46-0",
+      "source_row": 121,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-47-0",
+      "source_row": 101,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-48-0",
+      "source_row": 111,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-49-0",
+      "source_row": 510,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-5-0",
+      "source_row": 459,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-50-0",
+      "source_row": 567,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-51-0",
+      "source_row": 164,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-51-1",
+      "source_row": 165,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-6-0",
+      "source_row": 559,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-7-0",
+      "source_row": 69,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-8-0",
+      "source_row": 474,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-9-0",
+      "source_row": 201,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "10-9-1",
+      "source_row": 226,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-152-0",
+      "source_row": 500,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-153-0",
+      "source_row": 25,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-154-0",
+      "source_row": 452,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-155-0",
+      "source_row": 49,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-156-0",
+      "source_row": 433,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-157-0",
+      "source_row": 371,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-158-0",
+      "source_row": 393,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-159-0",
+      "source_row": 359,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-160-0",
+      "source_row": 318,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-161-0",
+      "source_row": 355,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-161-1",
+      "source_row": 261,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-162-0",
+      "source_row": 247,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-163-0",
+      "source_row": 186,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-164-0",
+      "source_row": 317,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-165-0",
+      "source_row": 151,
+      "method": "town + parcel ID"
+    },
+    {
+      "town": "SEABROOK",
+      "parcel_id": "9-168-0",
+      "source_row": 669,
+      "method": "town + parcel ID"
+    }
+  ]
+}

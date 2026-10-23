@@ -1,0 +1,219 @@
+[
+  {
+    "town": "AMESBURY",
+    "parcel_id": "42-15",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land in a Developable, Industrial or Commercial category"
+  },
+  {
+    "town": "AMESBURY",
+    "parcel_id": "43-1",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "AMESBURY",
+    "parcel_id": "68-15",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "AMESBURY",
+    "parcel_id": "68-20",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "AMESBURY",
+    "parcel_id": "78-2",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "AMESBURY",
+    "parcel_id": "78-38Z",
+    "from": "Y",
+    "to": "N",
+    "reason": "Condominium unit: the land is not independently available"
+  },
+  {
+    "town": "AMESBURY",
+    "parcel_id": "79-56",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "AMESBURY",
+    "parcel_id": "80-27",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "AMESBURY",
+    "parcel_id": "80-28",
+    "from": "Y",
+    "to": "N",
+    "reason": "Condominium unit: the land is not independently available"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "10-13",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "10-233",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land in a Developable, Industrial or Commercial category"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "11-1",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "11-2",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "11-21",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "11-22",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "11-28",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "11-3",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "11-31",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "11-4",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "12-32",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "12-45",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "18-1",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "19-105",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land in a Developable, Industrial or Commercial category"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "19-127",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "19-161",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SALISBURY",
+    "parcel_id": "19-76",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  },
+  {
+    "town": "SEABROOK",
+    "parcel_id": "10-12-0",
+    "from": "Y",
+    "to": "N",
+    "reason": "Public land: town or state owned"
+  },
+  {
+    "town": "SEABROOK",
+    "parcel_id": "10-21-0",
+    "from": "Y",
+    "to": "N",
+    "reason": "Public land: town or state owned"
+  },
+  {
+    "town": "SEABROOK",
+    "parcel_id": "10-51-0",
+    "from": "Y",
+    "to": "N",
+    "reason": "Public land: town or state owned"
+  },
+  {
+    "town": "SEABROOK",
+    "parcel_id": "10-51-1",
+    "from": "Y",
+    "to": "N",
+    "reason": "Public land: town or state owned"
+  },
+  {
+    "town": "SEABROOK",
+    "parcel_id": "9-168-0",
+    "from": "N",
+    "to": "Y",
+    "reason": "Vacant or mixed land; check zoning and wetland conditions"
+  }
+]

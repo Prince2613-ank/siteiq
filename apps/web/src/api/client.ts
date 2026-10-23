@@ -1,4 +1,4 @@
-export const API_BASE = 'http://localhost:3000/api/v1';
+export const API_BASE = (import.meta.env.VITE_API_BASE ?? '/api/v1').replace(/\/$/, '');
 
 let accessToken: string | null = null;
 let onUnauthorized: (() => void) | null = null;
@@ -22,11 +22,25 @@ export class ApiError extends Error {
   }
 }
 
+async function fetchWithTimeout(url: string, options: RequestInit): Promise<Response> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } catch (error) {
+    throw new ApiError(0, controller.signal.aborted
+      ? 'The server took too long to respond. Please try again.'
+      : 'Could not reach the server. Check your connection and try again.');
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 let refreshPromise: Promise<boolean> | null = null;
 
 async function tryRefresh(): Promise<boolean> {
   if (!refreshPromise) {
-    refreshPromise = fetch(`${API_BASE}/auth/refresh`, {
+    refreshPromise = fetchWithTimeout(`${API_BASE}/auth/refresh`, {
       method: 'POST',
       credentials: 'include',
     })
@@ -52,7 +66,7 @@ interface RequestOptions {
 
 export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const doFetch = () =>
-    fetch(`${API_BASE}${path}`, {
+    fetchWithTimeout(`${API_BASE}${path}`, {
       method: options.method ?? 'GET',
       credentials: 'include',
       headers: {
@@ -68,9 +82,6 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
     const refreshed = await tryRefresh();
     if (refreshed) {
       res = await doFetch();
-    } else {
-      onUnauthorized?.();
-      throw new ApiError(401, 'Session expired — please sign in again.');
     }
   }
 
@@ -94,7 +105,7 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
  * boundary), never a manual 'application/json' header. */
 export async function apiUpload<T>(path: string, formData: FormData): Promise<T> {
   const doFetch = () =>
-    fetch(`${API_BASE}${path}`, {
+    fetchWithTimeout(`${API_BASE}${path}`, {
       method: 'POST',
       credentials: 'include',
       headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
@@ -105,10 +116,6 @@ export async function apiUpload<T>(path: string, formData: FormData): Promise<T>
   if (res.status === 401) {
     const refreshed = await tryRefresh();
     if (refreshed) res = await doFetch();
-    else {
-      onUnauthorized?.();
-      throw new ApiError(401, 'Session expired — please sign in again.');
-    }
   }
   if (!res.ok) {
     let message = `Upload failed (${res.status})`;

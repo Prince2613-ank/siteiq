@@ -151,9 +151,16 @@ export class CandidateConfirmationService {
         // re-enrichment can be retried later — but confirmation, the thing
         // the analyst actually clicked, still succeeds.
         if (candidate.parcelRef) {
+          // A SQL failure aborts a PostgreSQL transaction even when JavaScript
+          // catches the error. Isolate enrichment so confirmation can survive
+          // a database error and any partial enrichment writes are discarded.
+          await tx.$executeRawUnsafe('SAVEPOINT field_enrichment');
           try {
             await this.enrichment.enrich(tx, siteId, candidate.parcelRef, actor.userId, actor.organizationId);
+            await tx.$executeRawUnsafe('RELEASE SAVEPOINT field_enrichment');
           } catch (err) {
+            await tx.$executeRawUnsafe('ROLLBACK TO SAVEPOINT field_enrichment');
+            await tx.$executeRawUnsafe('RELEASE SAVEPOINT field_enrichment');
             const message = (err as Error).message;
             this.logger.error(`Field enrichment failed for site ${siteId} (parcel ${candidate.parcelRef}): ${message}`);
             await tx.activityEvent.create({

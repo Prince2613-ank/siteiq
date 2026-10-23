@@ -176,6 +176,33 @@ describe('CandidateConfirmationService (integration)', () => {
     spy.mockRestore();
   });
 
+  it('preserves confirmation after a real SQL error during enrichment', async () => {
+    const { site, attempt, candidates } = await seedSiteWithCandidates([
+      { parcelRef: 'ENRICH-SQL-FAIL-001', confidence: 90 },
+    ]);
+    const spy = jest.spyOn(FieldEnrichmentService.prototype, 'enrich').mockImplementationOnce(async (tx) => {
+      await tx.siteDataField.create({
+        data: {
+          siteId: site.id, fieldName: 'lot_size', fieldType: 'NUMBER',
+          value: 123, sourceName: 'Failure injection', retrievedAt: new Date(),
+          status: 'MATCHED', isCurrent: true,
+        },
+      });
+      await tx.$executeRawUnsafe('SELECT 1 / 0');
+    });
+    try {
+      const result = await service.confirm(actor, site.id, attempt.id, candidates[0].id, {});
+      expect(result.site.identityStatus).toBe('CONFIRMED');
+      expect(result.site.parcelRef).toBe('ENRICH-SQL-FAIL-001');
+      const events = await prisma.activityEvent.findMany({ where: { siteId: site.id } });
+      expect(events.some((event) => event.eventType === 'enrichment_failed')).toBe(true);
+      expect(events.some((event) => event.eventType === 'parcel_confirmed')).toBe(true);
+      expect(await prisma.siteDataField.count({ where: { siteId: site.id } })).toBe(0);
+    } finally {
+      spy.mockRestore();
+    }
+  });
+
   it('confirms a LOWER-ranked candidate when the analyst deliberately picks it — proves no silent auto-confirm of the top score', async () => {
     const { site, attempt, candidates } = await seedSiteWithCandidates([
       { parcelRef: 'HIGH-CONF', confidence: 96 },
