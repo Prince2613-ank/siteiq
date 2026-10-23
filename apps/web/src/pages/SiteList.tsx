@@ -419,43 +419,6 @@ export function SiteList() {
 
   return (
     <div className="min-h-full bg-slate-50/50 p-2.5 sm:p-3.5 lg:p-4 w-full space-y-3">
-      {/* Top KPI Metric Ribbon */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Lots</span>
-          <span className="text-xl font-black text-slate-900 tracking-tight block mt-0.5">{stats.totalSites}</span>
-          <span className="text-[10px] text-slate-400 font-medium">Study corridor</span>
-        </div>
-        <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs">
-          <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider block">Qualified</span>
-          <span className="text-xl font-black text-emerald-700 tracking-tight block mt-0.5">{stats.keepCount}</span>
-          <span className="text-[10px] text-slate-400 font-medium">Meets screening criteria</span>
-        </div>
-        <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs">
-          <span className="text-[10px] font-bold text-rose-500 uppercase tracking-wider block">Excluded</span>
-          <span className="text-xl font-black text-rose-600 tracking-tight block mt-0.5">{stats.dropCount}</span>
-          <span className="text-[10px] text-slate-400 font-medium">Screened out</span>
-        </div>
-        <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs">
-          <span className="text-[10px] font-bold text-red-600 uppercase tracking-wider block">Listed Lots</span>
-          <span className="text-xl font-black text-red-600 tracking-tight block mt-0.5 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
-            {stats.listedCount}
-          </span>
-          <span className="text-[10px] text-slate-400 font-medium">Active listings</span>
-        </div>
-        <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs">
-          <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider block">Gross Acreage</span>
-          <span className="text-xl font-black text-slate-900 tracking-tight block mt-0.5">{stats.totalAcres}</span>
-          <span className="text-[10px] text-slate-400 font-medium">Acres total</span>
-        </div>
-        <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs">
-          <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider block">Usable Land</span>
-          <span className="text-xl font-black text-indigo-700 tracking-tight block mt-0.5">{stats.usableAcres}</span>
-          <span className="text-[10px] text-slate-400 font-medium">Acres developable</span>
-        </div>
-      </div>
-
       {/* Search & Filter Controls */}
       <div className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-sm space-y-3">
         {/* Search row */}
@@ -626,7 +589,6 @@ export function SiteList() {
         <div className="px-4 py-3 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center gap-2 justify-between text-xs bg-slate-50/70">
           <span className="font-medium text-slate-600">
             Showing <span className="font-bold text-slate-900 font-mono">{totalItems === 0 ? 0 : (page - 1) * pageSize + 1}–{pageSize === 0 ? totalItems : Math.min(page * pageSize, totalItems)}</span> of <span className="font-bold text-slate-900 font-mono">{totalItems}</span> sites
-            <span className="block sm:inline sm:ml-3 text-[10px] text-slate-400">Rank is across all {parcels.length} sites; equal scores use address order. Scores use recorded data only.</span>
           </span>
           <div className="flex items-center gap-2">
             <span className="text-slate-400 text-[11px]">Rows per page:</span>

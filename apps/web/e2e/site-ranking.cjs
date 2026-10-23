@@ -4,9 +4,10 @@ const fs=require('node:fs');
 const path=require('node:path');
 const ts=require('typescript');
 const root=path.resolve(__dirname,'../../..');
-const data=JSON.parse(fs.readFileSync(path.join(root,'apps/web/public/geojson/parcels_250m.geojson'))).features.map(f=>f.properties);
 const code=ts.transpileModule(fs.readFileSync(path.join(root,'apps/web/src/utils/parcelScoring.ts'),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
 const api={};new Function('exports',code)(api);
+// The app scores each record with its nearby-industry count from parcel geometry.
+const data=api.withNearbyIndustry(JSON.parse(fs.readFileSync(path.join(root,'apps/web/public/geojson/parcels_250m.geojson'))).features);
 const expected=[...data].sort((a,b)=>api.scoreParcel(b).score-api.scoreParcel(a).score ||
  (a.address||a.parcel_id||'').localeCompare(b.address||b.parcel_id||'','en',{numeric:true,sensitivity:'base'}) || api.scoringStorageKey(a).localeCompare(api.scoringStorageKey(b),'en'));
 const ranks=new Map(expected.map((p,i)=>[api.scoringStorageKey(p),i+1]));

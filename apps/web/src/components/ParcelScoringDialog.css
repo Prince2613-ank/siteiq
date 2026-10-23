@@ -18,7 +18,7 @@ button.parcel-score-badge:focus-visible { outline:2px solid #2563eb; outline-off
 .parcel-scoring-total-row p { margin-top:4px; font-size:11px; color:#64748b; }
 .parcel-scoring-total { font-size:36px; color:#1e3a8a; white-space:nowrap; font-variant-numeric:tabular-nums; }
 .parcel-scoring-total small { font-size:12px; color:#64748b; font-weight:500; }
-.parcel-scoring-metrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; padding:16px; border-bottom:1px solid #f1f5f9; }
+.parcel-scoring-metrics { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; padding:16px; border-bottom:1px solid #f1f5f9; }
 .parcel-scoring-metrics span { display:block; font-size:11px; color:#64748b; }
 .parcel-scoring-metrics strong { display:block; margin-top:4px; font-size:22px; }
 .parcel-scoring-metrics small { font-size:11px; font-weight:500; color:#64748b; }

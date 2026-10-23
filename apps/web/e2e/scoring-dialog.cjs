@@ -4,9 +4,10 @@ const path=require('node:path');
 const root=path.resolve(__dirname,'../../..');
 const fs=require('node:fs');
 const ts=require('typescript');
-const source=JSON.parse(fs.readFileSync(path.join(root,'apps/web/public/geojson/parcels_250m.geojson'))).features.map(f=>f.properties);
 const code=ts.transpileModule(fs.readFileSync(path.join(root,'apps/web/src/utils/parcelScoring.ts'),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
 const api={};new Function('exports',code)(api);
+// The app scores each record with its nearby-industry count from parcel geometry.
+const source=api.withNearbyIndustry(JSON.parse(fs.readFileSync(path.join(root,'apps/web/public/geojson/parcels_250m.geojson'))).features);
 (async()=>{
  const browser=await chromium.launch({headless:true});
  try {
@@ -22,7 +23,7 @@ const api={};new Function('exports',code)(api);
   const dialog=page.locator('.parcel-scoring-dialog');await dialog.waitFor();
   assert.equal(await dialog.getByRole('heading',{level:2}).innerText(),address);
   assert.equal(await page.locator('.site-info-dialog').count(),0,'score click must not open property information');
-  assert.equal(await dialog.locator('.parcel-scoring-factor').count(),15);
+  assert.equal(await dialog.locator('.parcel-scoring-factor').count(),16);
   assert.equal(await dialog.locator('.parcel-scoring-group').count(),3);
   assert.equal(await dialog.locator('select,input,textarea').count(),0,'score details are read-only');
   assert.equal(await dialog.getByRole('button').count(),1,'only close control remains');
@@ -61,7 +62,7 @@ const api={};new Function('exports',code)(api);
   const dashboardScore=page.locator('.dashboard-directory button.parcel-score-badge').first();
   await dashboardScore.focus();await page.keyboard.press('Enter');await dialog.waitFor();
   assert.equal(await page.locator('.dashboard-inspector').count(),0,'keyboard score click must not select the map parcel');
-  assert.equal(await dialog.locator('.parcel-scoring-factor').count(),15);
+  assert.equal(await dialog.locator('.parcel-scoring-factor').count(),16);
   await page.keyboard.press('Escape');assert.ok(await dashboardScore.evaluate(e=>e===document.activeElement));
   await page.keyboard.press('Space');await dialog.waitFor();
   assert.equal(await page.locator('.dashboard-inspector').count(),0);
@@ -83,6 +84,6 @@ const api={};new Function('exports',code)(api);
   await page.keyboard.press('Escape');assert.equal(await info.count(),0);
   assert.deepEqual(errors,[]);
   await context.close();
-  console.log('Separate scoring cards passed: all 766 scores clickable, correct parcel identity, 15 read-only factors, automatic source scores for all 766, ignored legacy overrides, independent property cards, no row/map click bubbling, keyboard/focus, close/Escape/backdrop, desktop/mobile.');
+  console.log('Separate scoring cards passed: all 766 scores clickable, correct parcel identity, 16 read-only factors, automatic source scores for all 766, ignored legacy overrides, independent property cards, no row/map click bubbling, keyboard/focus, close/Escape/backdrop, desktop/mobile.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
