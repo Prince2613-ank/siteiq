@@ -1,3 +1,4 @@
+import { useSessionState, useRememberScroll } from '../utils/sessionState';
 import { isUnderOneUsableAcre } from '../utils/parcelScreening';
 import { ScoreBadge } from '../components/ParcelScore';
 import { ParcelScoringDialog } from '../components/ParcelScoringDialog';
@@ -7,7 +8,7 @@ import { PropertyRecords } from '../components/PropertyRecords';
 import { useEffect, useState, useMemo, useRef } from 'react';
 import type { ReactNode } from 'react';
 import './SiteList.css';
-import { loadParcels, loadGeoJson, loadListingCheck } from '../utils/dataLoading';
+import { loadParcels, loadGeoJson, loadListingCheck, parcelKey } from '../utils/dataLoading';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   formatDistance,
@@ -139,29 +140,32 @@ export function SiteList() {
   const [loadVersion, setLoadVersion] = useState(0);
 
   // Filters & Search
-  const [search, setSearch] = useState('');
-  const [keepFilter, setKeepFilter] = useState<'ALL' | 'Y' | 'N' | 'LISTED'>(
+  const [search, setSearch] = useSessionState('sites:search', '');
+  const [keepFilter, setKeepFilter] = useSessionState<'ALL' | 'Y' | 'N' | 'LISTED'>('sites:keepFilter',
     searchParams.get('filter') === 'listed' ? 'LISTED' : 'ALL'
   );
-  const [categoryFilter, setCategoryFilter] = useState('ALL');
-  const [townFilter, setTownFilter] = useState('ALL');
-  const [roadFilter, setRoadFilter] = useState('ALL');
-  const [lifeEventFilter, setLifeEventFilter] = useState<'ALL' | 'HAS_SIGNAL' | 'ESTATE' | 'OLDER_OWNER' | 'SENIOR'>('ALL');
-  const [sortBy, setSortBy] = useState<'qualified' | 'score_desc' | 'usable_desc' | 'gross_desc' | 'val_desc' | 'address_asc' | 'owner_asc'>('qualified');
+  const [categoryFilter, setCategoryFilter] = useSessionState('sites:categoryFilter', 'ALL');
+  const [townFilter, setTownFilter] = useSessionState('sites:townFilter', 'ALL');
+  const [roadFilter, setRoadFilter] = useSessionState('sites:roadFilter', 'ALL');
+  const [lifeEventFilter, setLifeEventFilter] = useSessionState<'ALL' | 'HAS_SIGNAL' | 'ESTATE' | 'OLDER_OWNER' | 'SENIOR'>('sites:lifeEventFilter', 'ALL');
+  const [sortBy, setSortBy] = useSessionState<'qualified' | 'score_desc' | 'usable_desc' | 'gross_desc' | 'val_desc' | 'address_asc' | 'owner_asc'>('sites:sortBy', 'qualified');
 
   // Pagination
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState<number>(50);
+  const [page, setPage] = useSessionState('sites:page', 1);
+  const [pageSize, setPageSize] = useSessionState<number>('sites:pageSize', 50);
 
   const dialogRef = useRef<HTMLDivElement>(null);
 
   // Detail Modal
-  const [selectedSite, setSelectedSite] = useState<ParcelProperties | null>(null);
-  const [selectedScoringSite, setSelectedScoringSite] = useState<ParcelProperties | null>(null);
-  const [expandedNote, setExpandedNote] = useState<boolean>(false);
+  const [selectedSite, setSelectedSite] = useSessionState<ParcelProperties | null>('sites:selectedSite', null);
+  const [selectedScoringSite, setSelectedScoringSite] = useSessionState<ParcelProperties | null>('sites:selectedScoringSite', null);
+  const [expandedNote, setExpandedNote] = useSessionState<boolean>('sites:expandedNote', false);
 
+  const previousSite = useRef(selectedSite ? parcelKey(selectedSite) : null);
   useEffect(() => {
-    setExpandedNote(false);
+    const key = selectedSite ? parcelKey(selectedSite) : null;
+    if (previousSite.current !== key) setExpandedNote(false);
+    previousSite.current = key;
     if (!selectedSite) return;
     const previousFocus = document.activeElement as HTMLElement | null;
     const previousOverflow = document.body.style.overflow;
@@ -254,10 +258,17 @@ export function SiteList() {
     };
   }, [loadVersion]);
 
-  // Reset to page 1 on filter changes
+  // Refresh keeps the saved page; actual filter changes start at page 1.
+  const filterSignature = JSON.stringify([search, keepFilter, categoryFilter, townFilter, roadFilter, lifeEventFilter, sortBy, pageSize]);
+  const previousFilters = useRef(filterSignature);
   useEffect(() => {
-    setPage(1);
-  }, [search, keepFilter, categoryFilter, townFilter, roadFilter, lifeEventFilter, sortBy, pageSize]);
+    if (previousFilters.current !== filterSignature) setPage(1);
+    previousFilters.current = filterSignature;
+  }, [filterSignature]);
+
+  useRememberScroll('sites:scroll', undefined, !loading);
+  useRememberScroll(`sites:info-scroll:${selectedSite ? parcelKey(selectedSite) : ''}`, '.site-info-body', Boolean(selectedSite));
+  useRememberScroll(`sites:score-scroll:${selectedScoringSite ? parcelKey(selectedScoringSite) : ''}`, '.parcel-scoring-body', Boolean(selectedScoringSite) && !loading);
 
   // Sites Stats
   const stats = useMemo(() => {
@@ -995,7 +1006,7 @@ export function SiteList() {
                 <SiteInfoSection title="Property overview" description="Land, zoning, access and screening results">
                 {/* Grid metrics (Property Display) */}
                 <div className="space-y-1.5">
-                  
+
                   <div className="grid grid-cols-2 gap-2 text-xs">
                     <div className="bg-white p-2.5 rounded-xl border border-slate-200/90 shadow-2xs">
                       <span className="text-[10.5px] text-slate-500 block font-semibold uppercase tracking-wider">Category</span>
@@ -1085,7 +1096,7 @@ export function SiteList() {
                       {/* Header row: "Listing Check" + status badge */}
                       <div className="flex items-center justify-between gap-2 border-b border-slate-200/60 pb-1.5">
                         <div>
-                          
+
                           {listingCheckData?.checked_on && (
                             <span className="text-[10px] text-slate-500 block mt-0.5 font-semibold">
                               Checked {listingCheckData.checked_on}
@@ -1199,7 +1210,7 @@ export function SiteList() {
                   return (
                     <div className="bg-slate-50/90 border border-slate-200/90 rounded-xl p-3.5 space-y-2.5 shadow-2xs">
                       <div className="flex items-center justify-between border-b border-slate-200/60 pb-1.5">
-                        
+
                         {selectedSite.tax_check_link && (
                           <a
                             href={selectedSite.tax_check_link}
@@ -1265,7 +1276,7 @@ export function SiteList() {
                 {/* Owner Details & Location Card */}
                 <div className="bg-slate-50/80 border border-slate-200/80 rounded-xl p-3 space-y-2">
                   <div className="flex items-center justify-between gap-1 flex-wrap">
-                    
+
                     <div className="flex items-center gap-1 flex-wrap">
                       {selectedSite.owner_type && (
                         <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-700">
@@ -1381,7 +1392,7 @@ export function SiteList() {
                 {/* Ownership & Sale History Card */}
                 <div className="bg-slate-50/90 border border-slate-200/90 rounded-xl p-3.5 space-y-2.5 shadow-2xs">
                   <div className="flex items-center justify-between border-b border-slate-200/60 pb-1.5">
-                    
+
                     {selectedSite.town_record_link && (
                       <a
                         href={selectedSite.town_record_link}
@@ -1451,7 +1462,7 @@ export function SiteList() {
                       <div className="flex items-center justify-between border-b border-purple-100 pb-1.5">
                         <div className="flex items-center gap-1.5">
                           <span className="text-sm">⚖️</span>
-                          
+
                         </div>
                         {lifeInfo.hasSignal ? (
                           <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-bold border shadow-2xs ${lifeInfo.badgeClass}`}>
@@ -1538,7 +1549,7 @@ export function SiteList() {
                   return (
                     <div className="bg-slate-50/90 border border-slate-200/90 rounded-xl p-3.5 space-y-2.5 shadow-2xs">
                       <div className="flex items-center justify-between gap-2 border-b border-slate-200/60 pb-1.5">
-                        
+
                         {attempts.length > 0 && (
                           <span className="bg-blue-50 text-blue-800 border border-blue-200 px-2 py-0.5 rounded-full font-bold text-[10px] shadow-2xs">
                             {attempts.length} {attempts.length === 1 ? 'record' : 'records'}

@@ -1,3 +1,4 @@
+import { readSession, writeSession } from '../utils/sessionState';
 import { WETLAND_FILTERS, matchesWetlandCoverage } from '../utils/parcelWetlands';
 import { isUnderOneUsableAcre } from '../utils/parcelScreening';
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
@@ -265,12 +266,13 @@ interface DashboardReturnState {
   zoom: number;
   minZoom: number;
   scrollTop: number;
+  listingScrollTop?: number;
 }
 
 export function Dashboard() {
   const navigate = useNavigate();
   const location = useLocation();
-  const returnState = useRef<DashboardReturnState | undefined>(location.state?.dashboardReturn).current;
+  const returnState = useRef<DashboardReturnState | undefined>(readSession<DashboardReturnState>('dashboard') ?? location.state?.dashboardReturn).current;
   const restorePending = useRef(Boolean(returnState));
   // Layers data states
   const [parcelsData, setParcelsData] = useState<any>(null);
@@ -430,6 +432,7 @@ export function Dashboard() {
     // Center on Amesbury / Salisbury corridor
     const map = L.map(mapContainerRef.current, {
       zoomControl: false,
+      zoomAnimation: false,
       attributionControl: false,
       minZoom: 3,
       maxZoom: 19,
@@ -450,7 +453,13 @@ export function Dashboard() {
     mapRef.current = map;
 
     const resizeObserver = new ResizeObserver(() => {
-      map.invalidateSize();
+      map.invalidateSize({ pan: false });
+      map.eachLayer(layer => {
+        if (layer instanceof L.Popup) {
+          const anchor = layer.getLatLng();
+          if (anchor) map.setView(anchor, map.getZoom(), { animate: false });
+        }
+      });
     });
     if (mapContainerRef.current) {
       resizeObserver.observe(mapContainerRef.current);
@@ -486,8 +495,12 @@ export function Dashboard() {
       const bounds = (layer as any).getBounds?.();
       if (bounds && bounds.isValid()) {
         const center = bounds.getCenter();
-        const zoom = Math.max(map.getZoom(), targetZoom);
-        map.setView(center, zoom, { animate: true });
+        // Use one anchor for the map and popup; popup auto-pan must not move the parcel away.
+        const fittingZoom = map.getBoundsZoom(bounds, false, L.point(64, 180));
+        const zoom = Math.max(map.getMinZoom(), Math.min(Math.max(map.getZoom(), targetZoom), fittingZoom));
+        map.stop();
+        map.setView(center, zoom, { animate: false });
+        (layer as L.Path).openPopup(center);
       }
     } catch {
       // fallback
@@ -550,7 +563,9 @@ export function Dashboard() {
               selectedZonings, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, keepFilter,
               parcel: parcelKey(p), center: [center.lat, center.lng], zoom: map.getZoom(),
               minZoom: map.getMinZoom(), scrollTop: sidebarRef.current?.scrollTop ?? 0,
+              listingScrollTop: sidebarRef.current?.querySelector('.dashboard-listing-results')?.scrollTop ?? 0,
             };
+            writeSession('dashboard', snapshot);
             navigate(`${location.pathname}${location.search}`, {
               replace: true, state: { ...location.state, dashboardReturn: snapshot },
             });
@@ -560,16 +575,18 @@ export function Dashboard() {
           l.bindPopup(card, {
             maxWidth: 260,
             minWidth: 210,
-            autoPan: true,
+            autoPan: false,
             closeButton: true,
             offset: L.point(0, -6),
           });
+
+          l.on('popupopen', () => setFocusedParcelKey(parcelKey(p)));
+          l.on('popupclose', () => setFocusedParcelKey(current => current === parcelKey(p) ? null : current));
 
           // Click on lot: centers the lot dead-center in the map and opens the card pointing directly to it
           l.on('click', () => {
             setFocusedParcelKey(parcelKey(p));
             centerMapOnParcelAndPopup(l, 17);
-            l.openPopup();
           });
         },
       }).addTo(map);
@@ -578,9 +595,14 @@ export function Dashboard() {
       if (restorePending.current && returnState) {
         restorePending.current = false;
         hasFittedInitialRef.current = true;
-        (parcelLayerMapRef.current.get(returnState.parcel) as L.Path | undefined)?.openPopup();
-        map.setView(returnState.center, returnState.zoom, { animate: false });
-        requestAnimationFrame(() => sidebarRef.current?.scrollTo({ top: returnState.scrollTop }));
+        const selectedLayer = parcelLayerMapRef.current.get(returnState.parcel);
+        if (selectedLayer) centerMapOnParcelAndPopup(selectedLayer, returnState.zoom);
+        else map.setView(returnState.center, returnState.zoom, { animate: false });
+        requestAnimationFrame(() => {
+          sidebarRef.current?.scrollTo({ top: returnState.scrollTop });
+          const list = sidebarRef.current?.querySelector<HTMLElement>('.dashboard-listing-results');
+          if (list) list.scrollTop = returnState.listingScrollTop ?? 0;
+        });
         return;
       }
       if (!hasFittedInitialRef.current && !selectedParcel && !window.location.search.includes('parcel=')) {
@@ -647,7 +669,6 @@ export function Dashboard() {
       mapRef.current.stop();
       if (window.matchMedia('(max-width: 1023px)').matches) mapContainerRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
       centerMapOnParcelAndPopup(layer, 17);
-      (layer as any).openPopup?.();
     }
   }, [centerMapOnParcelAndPopup]);
 
@@ -707,6 +728,32 @@ export function Dashboard() {
       mapRef.current.setMinZoom(3);
     }
   };
+
+  // Save the live view, rather than an older snapshot from a Details navigation.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !parcelsData || restorePending.current) return;
+    const save = () => {
+      const center = map.getCenter();
+      const snapshot: DashboardReturnState = {
+        selectedZonings, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, keepFilter,
+        parcel: focusedParcelKey ?? '', center: [center.lat, center.lng], zoom: map.getZoom(), minZoom: 3,
+        scrollTop: sidebarRef.current?.scrollTop ?? 0,
+        listingScrollTop: sidebarRef.current?.querySelector('.dashboard-listing-results')?.scrollTop ?? 0,
+      };
+      writeSession('dashboard', snapshot);
+    };
+    save();
+    map.on('moveend zoomend', save);
+    const sidebar = sidebarRef.current;
+    sidebar?.addEventListener('scroll', save, true);
+    window.addEventListener('pagehide', save);
+    return () => {
+      map.off('moveend zoomend', save);
+      sidebar?.removeEventListener('scroll', save, true);
+      window.removeEventListener('pagehide', save);
+    };
+  }, [parcelsData, selectedZonings, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, keepFilter, focusedParcelKey]);
 
   const ownerTypes = [...new Set(parcelsList.map(f => f.properties.owner_type?.trim() || 'Unknown'))].sort();
 
@@ -805,7 +852,7 @@ export function Dashboard() {
                   className={`flex-1 rounded-lg px-2 py-2 text-xs font-semibold transition-colors ${selectedListing === option.value ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
                 >{option.label} ({loading || !listingData ? '--' : listingCounts[option.value].toLocaleString()})</button>)}
               </div>
-              {selectedListing !== 'ALL' && <div className="space-y-3 max-h-96 overflow-y-auto" role="region" aria-label="Matching listing records" tabIndex={0}>
+              {selectedListing !== 'ALL' && <div className="dashboard-listing-results space-y-3 max-h-96 overflow-y-auto" role="region" aria-label="Matching listing records" tabIndex={0}>
                 {filteredParcels.map(({ properties: p }) => {
                   const listing = listingData?.lots[parcelKey(p)];
                   if (!listing) return null;
