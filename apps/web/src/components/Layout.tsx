@@ -6,8 +6,8 @@ export function Layout() {
       <header className="h-14 bg-slate-900 border-b border-slate-800 text-white flex items-center px-6 flex-shrink-0 sticky top-0 z-40">
         <div className="flex items-center gap-8">
           <Link to="/" className="flex items-center group">
-            <span className="font-extrabold tracking-widest text-base text-white hover:text-blue-400 transition-colors uppercase">
-              SITEIQ
+            <span className="font-extrabold tracking-widest text-base text-white hover:text-blue-400 transition-colors">
+              SiteIQ
             </span>
           </Link>
 
