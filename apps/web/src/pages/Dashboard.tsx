@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { readSession, writeSession } from '../utils/sessionState';
 import { WETLAND_FILTERS, matchesWetlandCoverage } from '../utils/parcelWetlands';
 import { isUnderOneUsableAcre } from '../utils/parcelScreening';
@@ -7,7 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 import { loadParcels, loadListingCheck, loadGeoJson, parcelKey } from '../utils/dataLoading';
 import 'leaflet/dist/leaflet.css';
-import { ZONING_DISTRICTS, zoningCode, zoningColor } from '../utils/parcelZoning';
+import { ZONING_DISTRICTS, ZONING_GROUPS, zoningCode, zoningColor } from '../utils/parcelZoning';
 import type { ScoringInput } from '../utils/parcelScoring';
 
 export interface ParcelProperties extends ScoringInput {
@@ -262,6 +263,7 @@ function listingGroup(listing?: ListingLot): 'LISTED' | 'NOT_LISTED' | null {
 interface DashboardReturnState {
   selectedZoning?: string;
   selectedZonings?: string[];
+  expandedZoningGroups?: string[];
   selectedStatus: string;
   selectedOwnerType: string;
   selectedWetland?: string;
@@ -294,7 +296,11 @@ export function Dashboard() {
   const [focusedParcelKey, setFocusedParcelKey] = useState<string | null>(returnState?.parcel ?? null);
   const [selectedZonings, setSelectedZonings] = useState<string[]>(() => returnState?.selectedZonings ??
     (returnState?.selectedZoning && returnState.selectedZoning !== 'ALL' ? [returnState.selectedZoning] : []));
-  const [selectedStatus, setSelectedStatus] = useState(returnState?.selectedStatus ?? 'Vacant');
+  const [expandedZoningGroups, setExpandedZoningGroups] = useState<string[]>(() => (returnState?.expandedZoningGroups ??
+    ZONING_GROUPS.filter(group => group.codes.some(code => selectedZonings.includes(code))).map(group => group.id)).slice(-1));
+  const expandedGroupsRef = useRef(expandedZoningGroups);
+  expandedGroupsRef.current = expandedZoningGroups;
+  const [selectedStatus, setSelectedStatus] = useState(returnState?.selectedStatus ?? 'ALL');
   const [selectedOwnerType, setSelectedOwnerType] = useState(returnState?.selectedOwnerType ?? 'ALL');
   const [selectedWetland, setSelectedWetland] = useState(returnState?.selectedWetland ?? 'ALL');
   const [selectedListing, setSelectedListing] = useState(returnState?.selectedListing ?? 'ALL');
@@ -337,9 +343,10 @@ export function Dashboard() {
   }, [loadVersion]);
 
   const matchesListing = useCallback((p: ParcelProperties) => {
-    if (!listingData) return selectedListing === 'ALL';
+    if (selectedListing === 'ALL') return true;
+    if (!listingData) return false;
     const group = listingGroup(listingData.lots[parcelKey(p)]);
-    return group !== null && (selectedListing === 'ALL' || selectedListing === group);
+    return group === selectedListing;
   }, [listingData, selectedListing]);
 
   // Compute analytics from parcel data
@@ -399,10 +406,10 @@ export function Dashboard() {
       if (selectedOwnerType !== 'ALL' && (p.owner_type?.trim() || 'Unknown') !== selectedOwnerType) continue;
       if (!matchesWetlandCoverage(p.wetland_pct, selectedWetland)) continue;
       const group = listingGroup(listingData?.lots[parcelKey(p)]);
-      if (!group) continue;
-      counts.ALL++;
-      counts[group]++;
+      if (group) counts[group]++;
     }
+    // Listing totals cover the two visible groups; screening retains all parcels.
+    counts.ALL = counts.LISTED + counts.NOT_LISTED;
     return counts;
   }, [parcelsList, listingData, keepFilter, selectedZonings, selectedStatus, selectedOwnerType, selectedWetland]);
 
@@ -437,7 +444,7 @@ export function Dashboard() {
       zoomControl: false,
       zoomAnimation: false,
       attributionControl: false,
-      minZoom: 3,
+      minZoom: 14,
       maxZoom: 19,
     }).setView(returnState?.center ?? [42.86, -70.9], returnState?.zoom ?? 13);
 
@@ -485,7 +492,7 @@ export function Dashboard() {
     const layers: L.GeoJSON[] = [];
     if (roadsData) layers.push(L.geoJSON(roadsData, {
       interactive: false,
-      style: { className: 'dashboard-road-overlay', color: '#334155', weight: 3, opacity: 0.85 },
+      style: { className: 'dashboard-road-overlay', color: '#0f172a', weight: 4, opacity: 0.85 },
     }).addTo(map));
     return () => { layers.forEach(layer => layer.remove()); };
   }, [roadsData]);
@@ -534,10 +541,9 @@ export function Dashboard() {
         },
         style: (feature) => {
           const p = feature?.properties as ParcelProperties;
-          const category = getParcelCategoryStyle(p);
-          const color = selectedZonings.length > 0 ? zoningColor(p.zoning) : category.fill;
+          const color = zoningColor(p.zoning);
           return {
-            color: '#334155',
+            color,
             weight: 1.5,
             opacity: 1,
             fillColor: color,
@@ -563,7 +569,7 @@ export function Dashboard() {
             map.stop();
             const center = map.getCenter();
             const snapshot: DashboardReturnState = {
-              selectedZonings, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, keepFilter,
+              selectedZonings, expandedZoningGroups: expandedGroupsRef.current, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, keepFilter,
               parcel: parcelKey(p), center: [center.lat, center.lng], zoom: map.getZoom(),
               minZoom: map.getMinZoom(), scrollTop: sidebarRef.current?.scrollTop ?? 0,
               listingScrollTop: sidebarRef.current?.querySelector('.dashboard-listing-results')?.scrollTop ?? 0,
@@ -653,7 +659,7 @@ export function Dashboard() {
         const hLayer = L.geoJSON(matchFeature, {
           interactive: false,
           style: {
-            color: '#334155',
+            color: zoningColor(matchFeature.properties.zoning),
             weight: 4,
             fillColor: '#64748b',
             fillOpacity: 0,
@@ -703,7 +709,8 @@ export function Dashboard() {
     setSelectedParcel(null);
     setFocusedParcelKey(null);
     setSelectedZonings([]);
-    setSelectedStatus('Vacant');
+    setExpandedZoningGroups([]);
+    setSelectedStatus('ALL');
     setSelectedOwnerType('ALL');
     setSelectedWetland('ALL');
     setSelectedListing('ALL');
@@ -728,7 +735,7 @@ export function Dashboard() {
         ],
         { padding: [30, 30] },
       );
-      mapRef.current.setMinZoom(3);
+      mapRef.current.setMinZoom(14);
     }
   };
 
@@ -739,8 +746,8 @@ export function Dashboard() {
     const save = () => {
       const center = map.getCenter();
       const snapshot: DashboardReturnState = {
-        selectedZonings, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, keepFilter,
-        parcel: focusedParcelKey ?? '', center: [center.lat, center.lng], zoom: map.getZoom(), minZoom: 3,
+        selectedZonings, expandedZoningGroups: expandedGroupsRef.current, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, keepFilter,
+        parcel: focusedParcelKey ?? '', center: [center.lat, center.lng], zoom: map.getZoom(), minZoom: 14,
         scrollTop: sidebarRef.current?.scrollTop ?? 0,
         listingScrollTop: sidebarRef.current?.querySelector('.dashboard-listing-results')?.scrollTop ?? 0,
       };
@@ -756,7 +763,7 @@ export function Dashboard() {
       sidebar?.removeEventListener('scroll', save, true);
       window.removeEventListener('pagehide', save);
     };
-  }, [parcelsData, selectedZonings, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, keepFilter, focusedParcelKey]);
+  }, [parcelsData, selectedZonings, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, keepFilter, focusedParcelKey, expandedZoningGroups]);
 
   const ownerTypes = [...new Set(parcelsList.map(f => f.properties.owner_type?.trim() || 'Unknown'))].sort();
 
@@ -792,19 +799,36 @@ export function Dashboard() {
           <div className="dashboard-filter-card">
             <fieldset className="space-y-2">
               <legend className="text-xs font-semibold text-slate-600">Zoning</legend>
-              <div className="dashboard-zoning-filters">
-                {ZONING_DISTRICTS.map(district => <button
-                  key={district.code}
-                  type="button"
-                  aria-pressed={selectedZonings.includes(district.code)}
-                  onClick={() => setSelectedZonings(current => current.includes(district.code)
-                    ? current.filter(code => code !== district.code) : [...current, district.code])}
-                  className="dashboard-zoning-option"
-                  title={`${district.name} (${district.code})`}
-                >
-                  <span className="dashboard-zoning-swatch" style={{ backgroundColor: district.color }} />
-                  <span><strong>{district.name} ({district.code})</strong></span>
-                </button>)}
+              <div className="dashboard-zoning-groups">
+                {ZONING_GROUPS.map(group => {
+                  const expanded = expandedZoningGroups.includes(group.id);
+                  const selectedCount = group.codes.filter(code => selectedZonings.includes(code)).length;
+                  return <div key={group.id} className="dashboard-zoning-group" style={{ '--zoning-color': group.color } as CSSProperties}>
+                    <button type="button" className="dashboard-zoning-group-toggle"
+                      aria-expanded={expanded} aria-controls={`zoning-group-${group.id}`}
+                      onClick={() => setExpandedZoningGroups(current => current.includes(group.id)
+                        ? [] : [group.id])}>
+                      <span className="dashboard-zoning-swatch" style={{ backgroundColor: group.color }} />
+                      <span className="dashboard-zoning-group-name">{group.name}</span>
+                      {selectedCount > 0 && <span className="dashboard-zoning-selected-count">{selectedCount} selected</span>}
+                      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                        style={{ transform: expanded ? 'rotate(180deg)' : undefined }}><path d="m6 9 6 6 6-6" /></svg>
+                    </button>
+                    <div id={`zoning-group-${group.id}`} hidden={!expanded}>
+                      <div className="dashboard-zoning-filters">
+                        {ZONING_DISTRICTS.filter(district => (group.codes as readonly string[]).includes(district.code)).map(district => <button
+                          key={district.code} type="button"
+                          aria-pressed={selectedZonings.includes(district.code)}
+                          onClick={() => setSelectedZonings(current => current.includes(district.code)
+                            ? current.filter(code => code !== district.code) : [...current, district.code])}
+                          className="dashboard-zoning-option" title={`${district.name} (${district.code})`}>
+                          <span className="dashboard-zoning-swatch" style={{ backgroundColor: district.color }} />
+                          <span><strong>{district.name} ({district.code})</strong></span>
+                        </button>)}
+                      </div>
+                    </div>
+                  </div>;
+                })}
               </div>
             </fieldset>
           </div>

@@ -17,7 +17,19 @@
 .dashboard-zoning-filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
 .dashboard-zoning-filters button { display: flex; align-items: flex-start; gap: 7px; min-width: 0; padding: 8px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; text-align: left; color: #475569; }
 .dashboard-zoning-filters button:hover { background: #f8fafc; border-color: #94a3b8; }
-.dashboard-zoning-filters button[aria-pressed="true"] { border-color: #2563eb; background: #eff6ff; box-shadow: inset 0 0 0 1px #2563eb; }
+.dashboard-zoning-filters button[aria-pressed="true"] { border-color: var(--zoning-color, #4589cc); background: color-mix(in srgb, var(--zoning-color, #4589cc) 12%, white); box-shadow: inset 0 0 0 1px var(--zoning-color, #4589cc); }
 .dashboard-zoning-swatch { width: 12px; height: 12px; flex-shrink: 0; margin-top: 2px; border: 1px solid #0f172a33; border-radius: 3px; }
 .dashboard-zoning-option strong { display: block; color: #0f172a; font-size: 11px; }
 .dashboard-zoning-option strong + span { display: block; margin-top: 2px; font-size: 10px; line-height: 1.4; overflow-wrap: anywhere; }
+
+.dashboard-zoning-groups { display: flex; flex-direction: column; gap: 8px; }
+.dashboard-zoning-group { border: 1px solid #e2e8f0; border-radius: 9px; overflow: hidden; }
+.dashboard-zoning-group-toggle { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 44px; padding: 10px; background: #fff; text-align: left; }
+.dashboard-zoning-group-toggle:hover, .dashboard-zoning-group-toggle[aria-expanded="true"] { background: #f8fafc; }
+.dashboard-zoning-group-name { flex: 1; color: #0f172a; font-size: 12px; font-weight: 600; }
+.dashboard-zoning-group-toggle svg { flex-shrink: 0; color: #64748b; }
+.dashboard-zoning-selected-count { padding: 2px 5px; border-radius: 5px; background: color-mix(in srgb, var(--zoning-color) 16%, white); color: #334155; font-size: 10px; }
+.dashboard-zoning-group .dashboard-zoning-filters { padding: 0 8px 8px; background: #f8fafc; }
+
+.dashboard-zoning-group-toggle[aria-expanded="true"] { background: color-mix(in srgb, var(--zoning-color) 7%, white); }
+.dashboard-zoning-group .dashboard-zoning-swatch { border-color: #0f172a22; }

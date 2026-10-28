@@ -1,37 +1,18 @@
-import { useSessionState, useRememberScroll } from '../utils/sessionState';
+import { parcelReportPath } from '../utils/parcelReports';
+import { useSessionState, useRememberScroll, writeSession, readSession } from '../utils/sessionState';
 import { isUnderOneUsableAcre } from '../utils/parcelScreening';
 import { ScoreBadge } from '../components/ParcelScore';
 import { ParcelScoringDialog } from '../components/ParcelScoringDialog';
 import { useParcelScores } from '../utils/useParcelScores';
 import { scoringStorageKey, type ScoringInput } from '../utils/parcelScoring';
-import { PropertyRecords } from '../components/PropertyRecords';
 import { useEffect, useState, useMemo, useRef } from 'react';
-import type { ReactNode } from 'react';
 import './SiteList.css';
-import { loadParcels, loadGeoJson, loadListingCheck, parcelKey } from '../utils/dataLoading';
+import { loadParcels, loadListingCheck, parcelKey } from '../utils/dataLoading';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import {
-  formatDistance,
-  formatYearsOwned,
-  formatSaleDate,
-  formatSalePrice,
-  formatDeedBookPage,
-  isAbsenteeOwner,
-  parseTaxSignal,
   parseLifeEventSignal,
-  LifeEventDisplay,
   getListingAttempts,
-  hasListingAttempt,
 } from '../utils/parcelFormatters';
-
-function SiteInfoSection({ title, description, children }: {
-  title: string; description: string; children: ReactNode;
-}) {
-  return <section className="site-info-section">
-    <header><h4>{title}</h4><p>{description}</p></header>
-    <div className="site-info-section-content">{children}</div>
-  </section>;
-}
 
 export interface ParcelProperties extends ScoringInput {
   town?: string;
@@ -130,7 +111,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 export function SiteList() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [parcels, setParcels] = useState<ParcelFeature[]>([]);
   const ranking = useParcelScores(parcels);
   const [listingCheckData, setListingCheckData] = useState<ListingCheckData | null>(null);
@@ -146,36 +127,29 @@ export function SiteList() {
   );
   const [categoryFilter, setCategoryFilter] = useSessionState('sites:categoryFilter', 'ALL');
   const [townFilter, setTownFilter] = useSessionState('sites:townFilter', 'ALL');
-  const [roadFilter, setRoadFilter] = useSessionState('sites:roadFilter', 'ALL');
   const [lifeEventFilter, setLifeEventFilter] = useSessionState<'ALL' | 'HAS_SIGNAL' | 'ESTATE' | 'OLDER_OWNER' | 'SENIOR'>('sites:lifeEventFilter', 'ALL');
-  const [sortBy, setSortBy] = useSessionState<'qualified' | 'score_desc' | 'usable_desc' | 'gross_desc' | 'val_desc' | 'address_asc' | 'owner_asc'>('sites:sortBy', 'qualified');
+  const [sortBy, setSortBy] = useSessionState<'qualified' | 'score_desc' | 'usable_desc' | 'gross_desc' | 'val_desc' | 'address_asc' | 'owner_asc'>('sites:sortBy:v2', 'score_desc');
 
   // Pagination
-  const [page, setPage] = useSessionState('sites:page', 1);
+  const [page, setPage] = useSessionState('sites:page:v2', 1);
   const [pageSize, setPageSize] = useSessionState<number>('sites:pageSize', 50);
 
-  const dialogRef = useRef<HTMLDivElement>(null);
 
   // Detail Modal
-  const [selectedSite, setSelectedSite] = useSessionState<ParcelProperties | null>('sites:selectedSite', null);
+  const legacySelectedSite = useRef(readSession<ParcelProperties | null>('sites:selectedSite')).current;
   const [selectedScoringSite, setSelectedScoringSite] = useSessionState<ParcelProperties | null>('sites:selectedScoringSite', null);
-  const [expandedNote, setExpandedNote] = useSessionState<boolean>('sites:expandedNote', false);
 
-  const previousSite = useRef(selectedSite ? parcelKey(selectedSite) : null);
+  const openSite = (parcel: ParcelProperties) => {
+    writeSession('sites:selectedSite', null);
+    navigate(parcelReportPath(parcel), { state: location.state });
+  };
+
   useEffect(() => {
-    const key = selectedSite ? parcelKey(selectedSite) : null;
-    if (previousSite.current !== key) setExpandedNote(false);
-    previousSite.current = key;
-    if (!selectedSite) return;
-    const previousFocus = document.activeElement as HTMLElement | null;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    dialogRef.current?.querySelector<HTMLButtonElement>('button')?.focus();
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      previousFocus?.focus();
-    };
-  }, [selectedSite]);
+    if (legacySelectedSite && !searchParams.has('parcel')) {
+      writeSession('sites:selectedSite', null);
+      navigate(parcelReportPath(legacySelectedSite), { replace: true, state: location.state });
+    }
+  }, []);
 
   useEffect(() => {
     const id = searchParams.get('parcel');
@@ -183,19 +157,12 @@ export function SiteList() {
     if (!id || !parcels.length) return;
     const matches = parcels.filter(({ properties: p }) => p.parcel_id === id &&
       (!town || p.town?.toUpperCase() === town.toUpperCase()));
-    if (matches.length === 1) setSelectedSite(matches[0].properties);
+    if (matches.length === 1) {
+      writeSession('sites:selectedSite', null);
+      navigate(parcelReportPath(matches[0].properties), { replace: true, state: location.state });
+    }
     else setDataWarning(matches.length > 1 ? 'Select a town to identify the linked parcel.' : 'The linked parcel was not found.');
   }, [parcels, searchParams]);
-
-  const dismissSite = () => {
-    setSelectedSite(null);
-    if (searchParams.has('parcel')) {
-      const params = new URLSearchParams(searchParams);
-      params.delete('parcel');
-      params.delete('town');
-      setSearchParams(params, { replace: true });
-    }
-  };
 
   const renderBadge = (status?: string) => {
     if (!status || status === 'Not listed') {
@@ -259,7 +226,7 @@ export function SiteList() {
   }, [loadVersion]);
 
   // Refresh keeps the saved page; actual filter changes start at page 1.
-  const filterSignature = JSON.stringify([search, keepFilter, categoryFilter, townFilter, roadFilter, lifeEventFilter, sortBy, pageSize]);
+  const filterSignature = JSON.stringify([search, keepFilter, categoryFilter, townFilter, lifeEventFilter, sortBy, pageSize]);
   const previousFilters = useRef(filterSignature);
   useEffect(() => {
     if (previousFilters.current !== filterSignature) setPage(1);
@@ -267,7 +234,6 @@ export function SiteList() {
   }, [filterSignature]);
 
   useRememberScroll('sites:scroll', undefined, !loading);
-  useRememberScroll(`sites:info-scroll:${selectedSite ? parcelKey(selectedSite) : ''}`, '.site-info-body', Boolean(selectedSite));
   useRememberScroll(`sites:score-scroll:${selectedScoringSite ? parcelKey(selectedScoringSite) : ''}`, '.parcel-scoring-body', Boolean(selectedScoringSite) && !loading);
 
   // Sites Stats
@@ -357,7 +323,6 @@ export function SiteList() {
         if (!isUnderOneUsableAcre(p)) return false;
       } else if (categoryFilter !== 'ALL' && p.category !== categoryFilter) return false;
       if (townFilter !== 'ALL' && p.town !== townFilter) return false;
-      if (roadFilter !== 'ALL' && p.road !== roadFilter) return false;
 
       if (lifeEventFilter === 'HAS_SIGNAL') {
         const lInfo = parseLifeEventSignal(p.life_event_signal, p.estate_record_detail, p.town, p.state);
@@ -419,7 +384,7 @@ export function SiteList() {
       }
       return 0;
     });
-  }, [parcels, search, keepFilter, categoryFilter, townFilter, roadFilter, lifeEventFilter, sortBy, listingCheckData, parcelRanks]);
+  }, [parcels, search, keepFilter, categoryFilter, townFilter, lifeEventFilter, sortBy, listingCheckData, parcelRanks]);
 
   // Paginated Sites
   const totalItems = filteredSites.length;
@@ -435,19 +400,11 @@ export function SiteList() {
     setKeepFilter('ALL');
     setCategoryFilter('ALL');
     setTownFilter('ALL');
-    setRoadFilter('ALL');
     setLifeEventFilter('ALL');
-    setSortBy('qualified');
-  };
-
-  const handleRankAll = () => {
-    handleResetFilters();
     setSortBy('score_desc');
-    setPage(1);
   };
-  const allSitesRanked = sortBy === 'score_desc' && !search.trim() && keepFilter === 'ALL' && categoryFilter === 'ALL' && townFilter === 'ALL' && roadFilter === 'ALL' && lifeEventFilter === 'ALL';
 
-  const hasActiveFilters = search || keepFilter !== 'ALL' || categoryFilter !== 'ALL' || townFilter !== 'ALL' || roadFilter !== 'ALL' || lifeEventFilter !== 'ALL' || sortBy !== 'qualified';
+  const hasActiveFilters = search || keepFilter !== 'ALL' || categoryFilter !== 'ALL' || townFilter !== 'ALL' || lifeEventFilter !== 'ALL' || sortBy !== 'score_desc';
 
   return (
     <div className="min-h-full bg-slate-50/50 p-2.5 sm:p-3.5 lg:p-4 w-full space-y-3">
@@ -511,14 +468,13 @@ export function SiteList() {
                 keepFilter === 'LISTED' ? 'bg-red-600 text-white shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <span className={`w-1.5 h-1.5 rounded-full ${keepFilter === 'LISTED' ? 'bg-white' : 'bg-red-500 animate-pulse'}`} />
               Listed ({stats.listedCount})
             </button>
           </div>
         </div>
 
         {/* Dropdowns Row */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 text-xs">
+        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-2.5 text-xs">
           <div>
             <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Category</label>
             <select aria-label="Category"
@@ -548,19 +504,6 @@ export function SiteList() {
             </select>
           </div>
 
-          <div>
-            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Road Corridor</label>
-            <select aria-label="Road corridor"
-              value={roadFilter}
-              onChange={(e) => setRoadFilter(e.target.value)}
-              className="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-            >
-              <option value="ALL">All Roads</option>
-              {stats.roads.map((r) => (
-                <option key={r} value={r}>{r}</option>
-              ))}
-            </select>
-          </div>
 
           <div>
             <label className="block text-[10px] font-bold text-purple-700 uppercase tracking-wider mb-1">Life Events</label>
@@ -584,8 +527,8 @@ export function SiteList() {
               onChange={(e: any) => setSortBy(e.target.value)}
               className="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
             >
-              <option value="qualified">Qualified First, Usable Ac</option>
               <option value="score_desc">Rank by Score (High to Low)</option>
+              <option value="qualified">Qualified First, Usable Ac</option>
               <option value="usable_desc">Usable Acres (High → Low)</option>
               <option value="gross_desc">Gross Acres (High → Low)</option>
               <option value="val_desc">Assessed Value (High → Low)</option>
@@ -595,12 +538,6 @@ export function SiteList() {
           </div>
 
           <div className="flex items-end gap-2">
-            <button type="button" onClick={handleRankAll} disabled={loading || parcels.length === 0}
-              aria-pressed={allSitesRanked}
-              title="Clear filters and rank every site by opportunity score"
-              className={`flex-[1.5] min-w-0 h-9 px-2 rounded-xl border text-[11px] leading-tight font-bold transition-colors disabled:opacity-40 ${allSitesRanked ? 'bg-blue-600 text-white border-blue-600' : 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100'}`}>
-              Rank all {stats.totalSites}<span className="sr-only"> sites</span>
-            </button>
             {hasActiveFilters && (
               <button
                 onClick={handleResetFilters}
@@ -656,20 +593,19 @@ export function SiteList() {
                 <th className="px-2 py-2.5 text-right whitespace-nowrap">Acres (Usable/Gross)</th>
                 <th className="px-2 py-2.5 text-right whitespace-nowrap">Assessed Value</th>
                 <th className="px-2 py-2.5 whitespace-nowrap">Road Corridor</th>
-                <th className="px-3 py-2.5 text-center whitespace-nowrap sticky right-0 bg-slate-50/95 z-20 shadow-[-3px_0_6px_-2px_rgba(0,0,0,0.08)] min-w-[140px]">Actions</th>
               </tr>
             </thead>
             <tbody>
               {loading && (
                 <tr>
-                  <td colSpan={14} className="px-4 py-12 text-center text-slate-400 font-medium">
+                  <td colSpan={13} className="px-4 py-12 text-center text-slate-400 font-medium">
                     Loading sites…
                   </td>
                 </tr>
               )}
               {!loading && !loadError && currentSites.length === 0 && (
                 <tr>
-                  <td colSpan={14} className="px-4 py-12 text-center text-slate-400">
+                  <td colSpan={13} className="px-4 py-12 text-center text-slate-400">
                     No sites match your search and filter criteria.
                     <div className="mt-2">
                       <button
@@ -696,7 +632,9 @@ export function SiteList() {
                   <tr
                     key={`${p.town || ''}_${p.parcel_id || p.address}`}
                     className="bg-white hover:bg-slate-50 transition-colors group cursor-pointer [&>td]:border-y [&>td]:border-slate-200/80 [&>td:first-child]:border-l [&>td:first-child]:rounded-l-lg [&>td:last-child]:border-r [&>td:last-child]:rounded-r-lg"
-                    onClick={() => setSelectedSite(p)}
+                    onClick={() => openSite(p)}
+                    tabIndex={0}
+                    onKeyDown={event => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); openSite(p); } }}
                   >
                     {/* Site / Address (Sticky left) */}
                     <td className="px-3 py-1.5 sticky left-0 bg-white group-hover:bg-slate-50/95 z-10 shadow-[1px_0_0_0_rgba(226,232,240,0.8)]">
@@ -887,30 +825,6 @@ export function SiteList() {
                       </div>
                     </td>
 
-                    {/* Actions (Sticky Right) */}
-                    <td className="px-3 py-1.5 text-center whitespace-nowrap sticky right-0 bg-white group-hover:bg-slate-50/95 z-10 shadow-[-3px_0_6px_-2px_rgba(0,0,0,0.08)] min-w-[100px]" onClick={(e) => e.stopPropagation()}>
-                      <div className="flex items-center justify-center gap-1.5">
-                        <button
-                          onClick={() => {
-                            if (p.parcel_id) {
-                              navigate(`/?parcel=${encodeURIComponent(p.parcel_id)}&town=${encodeURIComponent(p.town || '')}`);
-                            }
-                          }}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-bold rounded-lg transition-all shadow-2xs active:scale-95"
-                          title="Open parcel in Corridor Map"
-                        >
-                          <span>🗺️</span>
-                          <span>Map</span>
-                        </button>
-                        <button
-                          onClick={() => setSelectedSite(p)}
-                          className="inline-flex items-center px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-semibold rounded-lg border border-slate-200 transition-all active:scale-95"
-                          title="View site details"
-                        >
-                          Info
-                        </button>
-                      </div>
-                    </td>
                   </tr>
                 );
               })}
@@ -944,673 +858,6 @@ export function SiteList() {
         )}
       </div>
 
-      {/* Selected Site Detail Modal */}
-      {selectedSite && (() => {
-        const lotKey = selectedSite.town && selectedSite.parcel_id
-          ? `${selectedSite.town.toUpperCase().trim()}|${selectedSite.parcel_id.trim()}`
-          : '';
-        const listingInfo = listingCheckData?.lots ? listingCheckData.lots[lotKey] : undefined;
-        return (
-          <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
-            <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="site-info-title" onKeyDown={(event) => {
-              if (event.key === 'Escape') dismissSite();
-              if (event.key === 'Tab') {
-                const controls = dialogRef.current?.querySelectorAll<HTMLElement>('button, a[href], input, select, textarea, [tabindex="0"]');
-                if (!controls?.length) return;
-                const first = controls[0];
-                const last = controls[controls.length - 1];
-                if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-                else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-              }
-            }} className="site-info-dialog bg-white rounded-2xl max-w-xl w-full shadow-2xl border border-slate-200/80 overflow-hidden animate-fadeIn flex flex-col max-h-[90vh]">
-              {location.state?.fromDashboard && <div className="site-info-navigation">
-                <button type="button" onClick={() => navigate(-1)} className="site-back-to-map">
-                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19-7-7 7-7M5 12h14" /></svg>
-                  Go back to map
-                </button>
-                <button type="button" aria-label="Dismiss property information" onClick={dismissSite} className="site-info-dismiss">
-                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="m6 6 12 12M6 18 18 6" /></svg>
-                </button>
-              </div>}
-              {/* Modal Header */}
-              <div className="site-info-header p-5 border-b border-slate-200 flex items-start justify-between bg-white gap-3">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200/60 uppercase tracking-wider">
-                      Property information
-                    </span>
-                    {listingInfo ? renderBadge(listingInfo.status) : (
-                      <span className="text-[10px] text-slate-400 italic">Listing not checked</span>
-                    )}
-                  </div>
-                  <h3 id="site-info-title" className="text-xl font-extrabold text-slate-900 tracking-tight break-words">
-                    {selectedSite.address || selectedSite.parcel_id}
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    {selectedSite.town}, {selectedSite.state} · ID: <span className="font-mono font-bold text-slate-700">{selectedSite.parcel_id}</span>
-                  </p>
-                </div>
-                {!location.state?.fromDashboard && <>
-                <button
-                  aria-label="Dismiss property information"
-                  onClick={dismissSite}
-                  className="w-7 h-7 flex items-center justify-center text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-200/60 transition-all font-bold text-xs"
-                >
-                  ✕
-                </button>
-                </>}
-              </div>
-
-              {/* Modal Body */}
-              <div className="site-info-body p-4 space-y-3.5 text-xs overflow-y-auto">
-                <SiteInfoSection title="Property overview" description="Land, zoning, access and screening results">
-                {/* Grid metrics (Property Display) */}
-                <div className="space-y-1.5">
-
-                  <div className="grid grid-cols-2 gap-2 text-xs">
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/90 shadow-2xs">
-                      <span className="text-[10.5px] text-slate-500 block font-semibold uppercase tracking-wider">Category</span>
-                      <span className="font-extrabold text-slate-900 block mt-0.5 text-xs">{selectedSite.category || '—'}</span>
-                    </div>
-
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/90 shadow-2xs">
-                      <span className="text-[10.5px] text-slate-500 block font-semibold uppercase tracking-wider">Development Status</span>
-                      <span className="font-extrabold text-emerald-800 block mt-0.5 text-xs">{selectedSite.status || '—'}</span>
-                    </div>
-
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/90 shadow-2xs">
-                      <span className="text-[10.5px] text-slate-500 block font-semibold uppercase tracking-wider">Screening</span>
-                      <div className="mt-0.5 flex flex-col gap-1">
-                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10.5px] font-bold w-fit ${
-                          selectedSite.keep === 'Y' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
-                        }`}>
-                          {selectedSite.keep === 'Y' ? '✓ Qualified' : '✕ Excluded'}
-                        </span>
-                        {selectedSite.screening_reason && (
-                          <div className="text-[10.5px] text-slate-600 font-medium leading-relaxed pt-0.5">
-                            <span className="font-semibold">Screening reason: </span>
-                            <span>{selectedSite.screening_reason}</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/90 shadow-2xs">
-                      <span className="text-[10.5px] text-slate-500 block font-semibold uppercase tracking-wider">Land area: total / usable</span>
-                      <span className="font-black text-slate-900 block mt-0.5 text-xs">
-                        {selectedSite.acres ?? '—'} <span className="text-slate-400 font-normal">/</span> {selectedSite.usable_acres ?? '—'} ac
-                      </span>
-                    </div>
-
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/90 shadow-2xs">
-                      <span className="text-[10.5px] text-slate-500 block font-semibold uppercase tracking-wider">Zoning Code</span>
-                      <span className="font-extrabold text-indigo-700 block mt-0.5 text-xs">{selectedSite.zoning || '—'}</span>
-                    </div>
-
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/90 shadow-2xs">
-                      <span className="text-[10.5px] text-slate-500 block font-semibold uppercase tracking-wider">Units</span>
-                      <span className="font-black text-slate-900 block mt-0.5 text-xs">{selectedSite.units != null ? selectedSite.units : '\u2014'}</span>
-                    </div>
-
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/90 shadow-2xs col-span-2">
-                      <span className="text-[10.5px] text-slate-500 block font-semibold uppercase tracking-wider">Wetland Coverage</span>
-                      <span className="font-extrabold text-cyan-800 block mt-0.5 text-xs">{selectedSite.wetland_pct != null ? `${selectedSite.wetland_pct}%` : 'Not recorded'}</span>
-                    </div>
-
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/90 shadow-2xs col-span-2">
-                      <span className="text-[10.5px] text-slate-500 block font-semibold uppercase tracking-wider">Nearest Road & Distance</span>
-                      <span className="font-extrabold text-slate-900 block mt-0.5 truncate text-xs">
-                        {selectedSite.road || '—'} ({selectedSite.road_dist_m != null ? `${selectedSite.road_dist_m}m` : 'distance not recorded'}) {selectedSite.pct_in_250m != null ? `· ${selectedSite.pct_in_250m}% in 250m buffer` : ''}
-                      </span>
-                    </div>
-
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/90 shadow-2xs col-span-2">
-                      <span className="text-[10.5px] text-slate-500 block font-semibold uppercase tracking-wider">Land Use</span>
-                      <span className="font-bold text-slate-900 block mt-0.5 text-xs leading-snug break-words" title={selectedSite.use}>
-                        {selectedSite.use || '—'}
-                      </span>
-                    </div>
-
-                    {selectedSite.site_address_town_record && (
-                      <div className="bg-white p-2.5 rounded-xl border border-slate-200/90 shadow-2xs col-span-2">
-                        <span className="text-[10.5px] text-slate-500 block font-semibold uppercase tracking-wider">Site Address (Town Record)</span>
-                        <span className="font-extrabold text-slate-900 block mt-0.5 text-xs leading-snug">
-                          {selectedSite.site_address_town_record}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                </SiteInfoSection>
-                <SiteInfoSection title="Current listing status" description="Availability, last checked date and source links">
-                {/* Listing Check Section */}
-                {(() => {
-                  const lotKey = selectedSite.town && selectedSite.parcel_id
-                    ? `${selectedSite.town.toUpperCase().trim()}|${selectedSite.parcel_id.trim()}`
-                    : '';
-                  const listingInfo = listingCheckData?.lots ? listingCheckData.lots[lotKey] : undefined;
-
-                  return (
-                    <div className="bg-slate-50/90 border border-slate-200/90 rounded-xl p-3.5 space-y-2.5 shadow-2xs">
-                      {/* Header row: "Listing Check" + status badge */}
-                      <div className="flex items-center justify-between gap-2 border-b border-slate-200/60 pb-1.5">
-                        <div>
-
-                          {listingCheckData?.checked_on && (
-                            <span className="text-[10px] text-slate-500 block mt-0.5 font-semibold">
-                              Checked {listingCheckData.checked_on}
-                            </span>
-                          )}
-                        </div>
-                        {listingInfo ? renderBadge(listingInfo.status) : (
-                          <span className="text-xs text-slate-500 font-semibold italic">
-                            Listing not checked
-                          </span>
-                        )}
-                      </div>
-
-                      {!listingInfo ? (
-                        <div className="text-xs text-slate-500 font-medium italic py-1">
-                          No data
-                        </div>
-                      ) : (
-                        <>
-                          {/* If listed or has note/proof: callout box */}
-                          {(listingInfo.proof || (listingInfo.status && listingInfo.status !== 'Not listed')) && (
-                            <div className="bg-gradient-to-br from-rose-50/90 to-amber-50/40 border border-rose-200 rounded-xl p-3 text-xs space-y-2 shadow-2xs">
-                              {listingInfo.note && (
-                                <div>
-                                  <p className={`text-xs text-slate-900 leading-relaxed font-medium ${expandedNote ? '' : 'line-clamp-2'}`}>
-                                    {listingInfo.note}
-                                  </p>
-                                  {listingInfo.note.length > 80 && (
-                                    <button
-                                      type="button"
-                                      onClick={() => setExpandedNote(!expandedNote)}
-                                      className="text-xs text-blue-600 font-bold hover:underline mt-1 inline-block"
-                                    >
-                                      {expandedNote ? 'Show less' : 'more'}
-                                    </button>
-                                  )}
-                                </div>
-                              )}
-                              {listingInfo.proof && (
-                                <div>
-                                  <a
-                                    href={listingInfo.proof}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all shadow-sm hover:shadow active:scale-95"
-                                  >
-                                    Open listing ↗
-                                  </a>
-                                </div>
-                              )}
-                            </div>
-                          )}
-
-                          {/* "Verify on" row: wrap of small pill buttons ONLY for sites present in links */}
-                          {(() => {
-                            const linksObj = listingInfo.links || {};
-                            const linkKeys = Object.keys(linksObj).filter(k => Boolean(linksObj[k]));
-                            const VERIFY_ORDER = ['Zillow', 'Redfin', 'LoopNet', 'Crexi'];
-                            const orderedKeys = [
-                              ...VERIFY_ORDER.filter(k => linkKeys.includes(k)),
-                              ...linkKeys.filter(k => !VERIFY_ORDER.includes(k))
-                            ];
-
-                            if (orderedKeys.length === 0) {
-                              return (
-                                <div className="pt-1">
-                                  <span className="text-xs text-slate-500 font-medium italic">
-                                    No data
-                                  </span>
-                                </div>
-                              );
-                            }
-
-                            return (
-                              <div className="space-y-1.5 pt-1">
-                                <span className="text-[10.5px] font-extrabold text-slate-600 uppercase tracking-wider block">
-                                  Verify on
-                                </span>
-                                <div className="flex flex-wrap gap-1.5">
-                                  {orderedKeys.map((name) => (
-                                    <a
-                                      key={name}
-                                      href={linksObj[name]}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="inline-flex items-center gap-1 px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200/90 hover:border-slate-300 rounded-lg text-xs font-bold text-slate-800 transition-all shadow-2xs hover:shadow-xs active:scale-95"
-                                    >
-                                      <span>{name}</span>
-                                      <span className="text-[9px] text-slate-500 font-bold">↗</span>
-                                    </a>
-                                  ))}
-                                </div>
-                              </div>
-                            );
-                          })()}
-                        </>
-                      )}
-                    </div>
-                  );
-                })()}
-
-                </SiteInfoSection>
-                <SiteInfoSection title="Tax & public records" description="Recorded tax signals and registry checks">
-                {/* Tax Status & Takings (Money) */}
-                {(() => {
-                  const taxSignalInfo = parseTaxSignal(selectedSite.unpaid_tax_signal, selectedSite.town, selectedSite.state);
-                  const hasTakings = selectedSite.tax_takings_found != null || selectedSite.last_tax_taking || taxSignalInfo != null;
-
-                  if (!hasTakings) return null;
-
-                  return (
-                    <div className="bg-slate-50/90 border border-slate-200/90 rounded-xl p-3.5 space-y-2.5 shadow-2xs">
-                      <div className="flex items-center justify-between border-b border-slate-200/60 pb-1.5">
-
-                        {selectedSite.tax_check_link && (
-                          <a
-                            href={selectedSite.tax_check_link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[11px] font-bold text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-0.5"
-                          >
-                            Registry Tax Check ↗
-                          </a>
-                        )}
-                      </div>
-
-                      {taxSignalInfo && (
-                        <div>
-                          <div
-                            className={`p-2.5 rounded-xl border text-xs font-semibold leading-relaxed shadow-2xs ${
-                              taxSignalInfo.boxColor === 'red'
-                                ? 'bg-rose-50/90 text-rose-900 border-rose-200'
-                                : taxSignalInfo.boxColor === 'amber'
-                                ? 'bg-amber-50/90 text-amber-900 border-amber-200'
-                                : taxSignalInfo.boxColor === 'green'
-                                ? 'bg-emerald-50/90 text-emerald-900 border-emerald-200'
-                                : 'bg-slate-100 text-slate-800 border-slate-200'
-                            }`}
-                          >
-                            <div className="flex items-start gap-1.5">
-                              {taxSignalInfo.icon && (
-                                <span className="shrink-0 text-sm leading-tight">{taxSignalInfo.icon}</span>
-                              )}
-                              <span className="font-bold">{taxSignalInfo.mainText}</span>
-                            </div>
-                          </div>
-                          {taxSignalInfo.condoNote && (
-                            <div className="text-[10.5px] text-slate-600 font-medium italic mt-1 px-1">
-                              [condo unit, not the whole lot]
-                            </div>
-                          )}
-                        </div>
-                      )}
-
-                      <div className="grid grid-cols-2 gap-2 text-xs">
-                        <div className="bg-white p-2.5 rounded-xl border border-slate-200/80 shadow-2xs col-span-2">
-                          <span className="text-[10.5px] text-slate-500 block font-semibold uppercase tracking-wider">Tax Takings Found</span>
-                          <span className="font-black text-slate-900 block mt-0.5 text-xs">
-                            {selectedSite.tax_takings_found != null ? `${selectedSite.tax_takings_found} recorded` : '0 recorded'}
-                          </span>
-                        </div>
-                        {selectedSite.last_tax_taking && (
-                          <div className="bg-white p-2.5 rounded-xl border border-slate-200/80 shadow-2xs col-span-2">
-                            <span className="text-[10.5px] text-slate-500 block font-semibold uppercase tracking-wider">Last Recorded Tax Taking</span>
-                            <span className="font-bold text-slate-900 block mt-0.5 text-xs">
-                              {selectedSite.last_tax_taking}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })()}
-
-                </SiteInfoSection>
-                <SiteInfoSection title="Owner & contact" description="Recorded owner, mailing address and related people">
-                {/* Owner Details & Location Card */}
-                <div className="bg-slate-50/80 border border-slate-200/80 rounded-xl p-3 space-y-2">
-                  <div className="flex items-center justify-between gap-1 flex-wrap">
-
-                    <div className="flex items-center gap-1 flex-wrap">
-                      {selectedSite.owner_type && (
-                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-700">
-                          {selectedSite.owner_type}
-                        </span>
-                      )}
-                      {selectedSite.owner_lives_on_lot === 'Y' && (
-                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">
-                          Lives on lot
-                        </span>
-                      )}
-                      {isAbsenteeOwner(selectedSite.owner_lives_on_lot, selectedSite.owner_distance_group, selectedSite.owner_type) && (
-                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800">
-                          Absentee owner
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="font-bold text-slate-900 text-sm break-words">
-                    {selectedSite.owner_name || selectedSite.owner || 'Owner not on file'}
-                  </div>
-
-                  {selectedSite.owner_mailing_address && (
-                    <div className="text-[11px] text-slate-600 flex items-start gap-1.5 bg-white/70 p-2 rounded-lg border border-slate-200/50">
-                      <span className="text-slate-400 shrink-0">📍</span>
-                      <span className="break-words">{selectedSite.owner_mailing_address}</span>
-                    </div>
-                  )}
-
-                  {(selectedSite.owner_distance_group || selectedSite.owner_distance_miles != null) && (
-                    <div className="flex items-center justify-between text-[10.5px] bg-white/70 px-2 py-1 rounded-lg border border-slate-200/50 text-slate-600">
-                      <span>
-                        Distance: <b className="text-slate-800">{formatDistance(selectedSite.owner_distance_miles) ?? '—'}</b>
-                      </span>
-                      <span className="text-slate-400 font-medium">
-                        {selectedSite.owner_distance_group || ''}
-                      </span>
-                    </div>
-                  )}
-
-                  {selectedSite.children_count_estate_owner && (
-                    <div className="bg-white p-2.5 rounded-xl border border-purple-200/90 shadow-2xs space-y-1.5">
-                      <div className="flex items-center justify-between flex-wrap gap-1">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-xs">👨‍👩‍👧‍👦</span>
-                          <span className="text-[10.5px] font-extrabold text-purple-900 uppercase tracking-wider block">
-                            Estate Owner Children / Heirs
-                          </span>
-                        </div>
-                        {(() => {
-                          const val = selectedSite.children_count_estate_owner;
-                          const match = val.match(/^(\d+)\s+child/i);
-                          if (match) {
-                            return (
-                              <span className="text-[9.5px] font-bold px-2 py-0.5 rounded-md bg-purple-100 text-purple-900 border border-purple-200">
-                                {match[1]} {Number(match[1]) === 1 ? 'Child' : 'Children'}
-                              </span>
-                            );
-                          }
-                          if (val.toLowerCase().includes('no children')) {
-                            return (
-                              <span className="text-[9.5px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 border border-slate-200">
-                                0 Children Named
-                              </span>
-                            );
-                          }
-                          return null;
-                        })()}
-                      </div>
-                      <div className="text-xs font-bold text-slate-900 leading-snug">
-                        {selectedSite.children_count_estate_owner}
-                      </div>
-                    </div>
-                  )}
-
-                  {(() => {
-                    const cp = selectedSite.company_people;
-                    const link = selectedSite.company_record_link;
-                    const isBlockedOrGeneric =
-                      !cp ||
-                      cp.toLowerCase().includes('blocked') ||
-                      cp.toLowerCase().includes('not looked up');
-                    if (isBlockedOrGeneric) return null;
-
-                    return (
-                      <div className="pt-2 border-t border-slate-200/60 text-xs space-y-1">
-                        <div className="text-[11px] text-slate-600 leading-snug">
-                          <span className="font-bold text-slate-700 block text-[10px] uppercase">Company Officers / Agent:</span>
-                          {cp}
-                        </div>
-                        {link && (
-                          <a
-                            href={link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-600 hover:text-blue-800 hover:underline pt-0.5"
-                          >
-                            <span>Secretary of State Corporate Filing</span>
-                            <span>↗</span>
-                          </a>
-                        )}
-                      </div>
-                    );
-                  })()}
-                </div>
-
-                </SiteInfoSection>
-                <SiteInfoSection title="Mortgage & property restrictions" description="Mortgage, lease, easement and restriction records">
-                  <PropertyRecords openMortgage={selectedSite.open_mortgage} leaseEasementRestriction={selectedSite.lease_easement_restriction} />
-                </SiteInfoSection>
-                <SiteInfoSection title="Ownership & sale history" description="Purchase date, price and deed reference">
-                {/* Ownership & Sale History Card */}
-                <div className="bg-slate-50/90 border border-slate-200/90 rounded-xl p-3.5 space-y-2.5 shadow-2xs">
-                  <div className="flex items-center justify-between border-b border-slate-200/60 pb-1.5">
-
-                    {selectedSite.town_record_link && (
-                      <a
-                        href={selectedSite.town_record_link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[11px] font-bold text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-0.5"
-                      >
-                        Town Record ↗
-                      </a>
-                    )}
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 text-xs">
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/80 shadow-2xs">
-                      <span className="text-[10.5px] text-slate-500 block font-semibold">Years Owned</span>
-                      <span className="font-black text-slate-900 block mt-0.5 text-xs">
-                        {formatYearsOwned(selectedSite.years_owned)}
-                      </span>
-                    </div>
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/80 shadow-2xs">
-                      <span className="text-[10.5px] text-slate-500 block font-semibold">Last Sale Date</span>
-                      <span className="font-black text-slate-900 block mt-0.5 text-xs">
-                        {formatSaleDate(selectedSite.last_sale_date)}
-                      </span>
-                    </div>
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/80 shadow-2xs">
-                      <span className="text-[10.5px] text-slate-500 block font-semibold">Last Sale Price</span>
-                      <span className="font-black text-slate-900 block mt-0.5 text-xs">
-                        {formatSalePrice(selectedSite.last_sale_price)}
-                      </span>
-                    </div>
-                    <div className="bg-emerald-50/60 p-2.5 rounded-xl border border-emerald-200 shadow-2xs">
-                      <span className="text-[10.5px] text-emerald-800 block font-bold">Assessed Value</span>
-                      <span className="font-black text-emerald-950 block mt-0.5 text-xs">
-                        {(() => {
-                          const val = selectedSite.total_val;
-                          if (val == null || String(val).trim() === '' || isNaN(Number(val)) || Number(val) <= 0) {
-                            return 'Not available';
-                          }
-                          return `$${Number(val).toLocaleString()}`;
-                        })()}
-                      </span>
-                    </div>
-                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/80 shadow-2xs col-span-2">
-                      <span className="text-[10.5px] text-slate-500 block font-semibold">Deed Book / Page</span>
-                      <span className="font-mono font-bold text-slate-900 block mt-0.5 text-xs">
-                        {formatDeedBookPage(selectedSite.deed_book_page, selectedSite.town, selectedSite.state)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                </SiteInfoSection>
-                <SiteInfoSection title="Estate & ownership signals" description="Registry findings and supporting records">
-                {/* Life Events & Estate Records Section */}
-                {(() => {
-                  const lifeInfo = parseLifeEventSignal(
-                    selectedSite.life_event_signal,
-                    selectedSite.estate_record_detail,
-                    selectedSite.town,
-                    selectedSite.state
-                  );
-
-                  return (
-                    <div className="bg-gradient-to-b from-purple-50/80 to-white border border-purple-200/90 rounded-xl p-3.5 space-y-2.5 shadow-2xs">
-                      {/* Header */}
-                      <div className="flex items-center justify-between border-b border-purple-100 pb-1.5">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-sm">⚖️</span>
-
-                        </div>
-                        {lifeInfo.hasSignal ? (
-                          <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-bold border shadow-2xs ${lifeInfo.badgeClass}`}>
-                            {lifeInfo.icon} {lifeInfo.badgeText}
-                          </span>
-                        ) : (
-                          <span className="text-[10px] px-2.5 py-0.5 rounded-full font-semibold bg-slate-100 text-slate-600 border border-slate-200">
-                            No signal recorded
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Main Signal Display */}
-                      <div
-                        className={`p-2.5 rounded-xl border text-xs leading-relaxed shadow-2xs ${
-                          lifeInfo.boxColor === 'purple'
-                            ? 'bg-purple-50/90 text-purple-950 border-purple-200'
-                            : lifeInfo.boxColor === 'amber'
-                            ? 'bg-amber-50/90 text-amber-950 border-amber-200'
-                            : lifeInfo.boxColor === 'blue'
-                            ? 'bg-blue-50/90 text-blue-950 border-blue-200'
-                            : 'bg-slate-50 text-slate-700 border-slate-200/80'
-                        }`}
-                      >
-                        <div className="flex items-start gap-2">
-                          <span className="shrink-0 text-base leading-tight">{lifeInfo.icon}</span>
-                          <div className="space-y-0.5">
-                            <span className="block font-black text-slate-900 text-xs">
-                              {lifeInfo.hasSignal ? 'Observed Life Event Signal' : 'Registry Status'}
-                            </span>
-                            <span className="block text-xs font-semibold text-slate-800 leading-snug">{lifeInfo.mainText}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Estate Record Detail (Official Registry Instrument) */}
-                      {selectedSite.estate_record_detail && (
-                        <div className="bg-white p-2.5 rounded-xl border border-purple-200/90 shadow-2xs space-y-1">
-                          <div className="flex items-center justify-between">
-                            <span className="text-[10.5px] text-purple-900 block font-black uppercase tracking-wider">
-                              Registry Estate Record Detail
-                            </span>
-                            <span className="text-[9.5px] font-mono text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200 font-bold">
-                              Official Instrument
-                            </span>
-                          </div>
-                          <p className="font-bold text-slate-900 text-xs leading-relaxed">
-                            {selectedSite.estate_record_detail}
-                          </p>
-                        </div>
-                      )}
-
-                      {/* Estate Owner Children / Heirs */}
-                      {selectedSite.children_count_estate_owner && (
-                        <div className="bg-white p-2.5 rounded-xl border border-purple-200/90 shadow-2xs space-y-1">
-                          <div className="flex items-center justify-between">
-                            <span className="text-[10.5px] text-purple-900 block font-black uppercase tracking-wider">
-                              Estate Owner Children / Heirs
-                            </span>
-                            <span className="text-[9.5px] font-mono text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200 font-bold">
-                              Obituary Record
-                            </span>
-                          </div>
-                          <p className="font-bold text-slate-900 text-xs leading-relaxed">
-                            {selectedSite.children_count_estate_owner}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })()}
-
-                </SiteInfoSection>
-                <SiteInfoSection title="Listing history" description="Previous activity from Zillow and Redfin">
-                {/* Past Listing Attempts & History Section (Separate Container) */}
-                {(() => {
-                  const attempts = getListingAttempts(
-                    selectedSite.zillow_past_attempt,
-                    selectedSite.zillow_link,
-                    selectedSite.redfin_past_attempt,
-                    selectedSite.redfin_link
-                  );
-
-                  return (
-                    <div className="bg-slate-50/90 border border-slate-200/90 rounded-xl p-3.5 space-y-2.5 shadow-2xs">
-                      <div className="flex items-center justify-between gap-2 border-b border-slate-200/60 pb-1.5">
-
-                        {attempts.length > 0 && (
-                          <span className="bg-blue-50 text-blue-800 border border-blue-200 px-2 py-0.5 rounded-full font-bold text-[10px] shadow-2xs">
-                            {attempts.length} {attempts.length === 1 ? 'record' : 'records'}
-                          </span>
-                        )}
-                      </div>
-
-                      {attempts.length === 0 ? (
-                        <div className="text-xs text-slate-500 font-medium italic py-0.5">
-                          No history
-                        </div>
-                      ) : (
-                        <div className="space-y-2">
-                          {attempts.map((att) => (
-                            <div
-                              key={att.source}
-                              className={`p-2.5 rounded-lg border ${
-                                att.source === 'Zillow'
-                                  ? 'bg-blue-50/70 border-blue-200 text-blue-950'
-                                  : 'bg-rose-50/70 border-rose-200 text-rose-950'
-                              }`}
-                            >
-                              <div className="flex items-center justify-between mb-1">
-                                <span className={`text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded leading-none ${
-                                  att.source === 'Zillow' ? 'bg-blue-100 text-blue-800' : 'bg-rose-100 text-rose-800'
-                                }`}>
-                                  {att.source}
-                                </span>
-                                {att.link && (
-                                  <a
-                                    href={att.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={`inline-flex items-center gap-1 text-[11px] font-bold hover:underline ${
-                                      att.source === 'Zillow' ? 'text-blue-700' : 'text-rose-700'
-                                    }`}
-                                  >
-                                    <span>View on {att.source}</span>
-                                    <span>↗</span>
-                                  </a>
-                                )}
-                              </div>
-                              <p className="text-xs text-slate-800 leading-relaxed font-medium">
-                                {att.text}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })()}
-
-                </SiteInfoSection>
-              </div>
-
-
-            </div>
-          </div>
-        );
-      })()}
       {selectedScoringSite && ranking.scores.has(scoringStorageKey(selectedScoringSite)) && <ParcelScoringDialog
         parcel={selectedScoringSite} score={ranking.scores.get(scoringStorageKey(selectedScoringSite))!}
         onClose={() => setSelectedScoringSite(null)} />}
