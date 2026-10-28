@@ -259,7 +259,6 @@ interface DashboardReturnState {
   selectedOwnerType: string;
   selectedWetland?: string;
   selectedListing?: string;
-  filtersTouched?: boolean;
   keepFilter: 'ALL' | 'Y' | 'N';
   parcel: string;
   center: [number, number];
@@ -287,11 +286,10 @@ export function Dashboard() {
   const [focusedParcelKey, setFocusedParcelKey] = useState<string | null>(returnState?.parcel ?? null);
   const [selectedZonings, setSelectedZonings] = useState<string[]>(() => returnState?.selectedZonings ??
     (returnState?.selectedZoning && returnState.selectedZoning !== 'ALL' ? [returnState.selectedZoning] : []));
-  const [selectedStatus, setSelectedStatus] = useState(returnState?.selectedStatus ?? 'ALL');
+  const [selectedStatus, setSelectedStatus] = useState(returnState?.selectedStatus ?? 'Vacant');
   const [selectedOwnerType, setSelectedOwnerType] = useState(returnState?.selectedOwnerType ?? 'ALL');
   const [selectedWetland, setSelectedWetland] = useState(returnState?.selectedWetland ?? 'ALL');
   const [selectedListing, setSelectedListing] = useState(returnState?.selectedListing ?? 'ALL');
-  const [filtersTouched, setFiltersTouched] = useState(returnState?.filtersTouched ?? false);
   const [keepFilter, setKeepFilter] = useState<'ALL' | 'Y' | 'N'>(returnState?.keepFilter ?? 'ALL');
 
 
@@ -408,7 +406,7 @@ export function Dashboard() {
     return keepFilter !== 'ALL' || selectedZonings.length > 0 || selectedStatus !== 'ALL' || selectedOwnerType !== 'ALL' || selectedWetland !== 'ALL' || selectedListing !== 'ALL';
   }, [keepFilter, selectedZonings, selectedStatus, selectedOwnerType, selectedWetland, selectedListing]);
 
-  const showParcelColors = filtersTouched && isFiltered;
+  const showParcelColors = isFiltered;
 
   // Preserve the returning parcel on mount; later filter changes clear it.
   useEffect(() => {
@@ -549,7 +547,7 @@ export function Dashboard() {
             map.stop();
             const center = map.getCenter();
             const snapshot: DashboardReturnState = {
-              selectedZonings, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, filtersTouched, keepFilter,
+              selectedZonings, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, keepFilter,
               parcel: parcelKey(p), center: [center.lat, center.lng], zoom: map.getZoom(),
               minZoom: map.getMinZoom(), scrollTop: sidebarRef.current?.scrollTop ?? 0,
             };
@@ -681,8 +679,7 @@ export function Dashboard() {
     setSelectedParcel(null);
     setFocusedParcelKey(null);
     setSelectedZonings([]);
-    setSelectedStatus('ALL');
-    setFiltersTouched(false);
+    setSelectedStatus('Vacant');
     setSelectedOwnerType('ALL');
     setSelectedWetland('ALL');
     setSelectedListing('ALL');
@@ -724,9 +721,7 @@ export function Dashboard() {
           {(loadError || dataWarning) && <div role="alert" className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">
             <p>{loadError || dataWarning}</p><button className="mt-2 font-bold underline" onClick={() => setLoadVersion(value => value + 1)}>Retry data load</button>
           </div>}
-          <div className="dashboard-filter-card"
-            onClickCapture={event => { if ((event.target as HTMLElement).closest('button')) setFiltersTouched(true); }}
-            onChangeCapture={() => setFiltersTouched(true)}>
+          <div className="dashboard-filter-card">
             <fieldset className="space-y-2">
               <legend className="text-xs font-semibold text-slate-600">Screening results</legend>
               <div className="flex gap-1 rounded-xl border border-slate-200 bg-slate-100 p-1">
@@ -744,9 +739,7 @@ export function Dashboard() {
               </div>
             </fieldset>
           </div>
-          <div className="dashboard-filter-card"
-            onClickCapture={event => { if ((event.target as HTMLElement).closest('button')) setFiltersTouched(true); }}
-            onChangeCapture={() => setFiltersTouched(true)}>
+          <div className="dashboard-filter-card">
             <fieldset className="space-y-2">
               <legend className="text-xs font-semibold text-slate-600">Zoning</legend>
               <div className="dashboard-zoning-filters">
@@ -765,9 +758,7 @@ export function Dashboard() {
               </div>
             </fieldset>
           </div>
-          <div className="dashboard-filter-card"
-            onClickCapture={event => { if ((event.target as HTMLElement).closest('button')) setFiltersTouched(true); }}
-            onChangeCapture={() => setFiltersTouched(true)}>
+          <div className="dashboard-filter-card">
             <fieldset className="space-y-2">
               <legend className="text-xs font-semibold text-slate-600">Development status</legend>
               <div className="flex gap-1 rounded-xl border border-slate-200 bg-slate-100 p-1">
@@ -785,9 +776,7 @@ export function Dashboard() {
               </div>
             </fieldset>
           </div>
-          <div className="dashboard-filter-card"
-            onClickCapture={event => { if ((event.target as HTMLElement).closest('button')) setFiltersTouched(true); }}
-            onChangeCapture={() => setFiltersTouched(true)}>
+          <div className="dashboard-filter-card">
             <label className="dashboard-filter-field">Owner type
               <select aria-label="Owner type" value={selectedOwnerType} onChange={e => setSelectedOwnerType(e.target.value)}>
                 <option value="ALL">All owner types ({loading || loadError ? '--' : facetCounts.allOwners.toLocaleString()})</option>
@@ -795,18 +784,14 @@ export function Dashboard() {
               </select>
             </label>
           </div>
-          <div className="dashboard-filter-card"
-            onClickCapture={event => { if ((event.target as HTMLElement).closest('button')) setFiltersTouched(true); }}
-            onChangeCapture={() => setFiltersTouched(true)}>
+          <div className="dashboard-filter-card">
             <label className="dashboard-filter-field">Wetland coverage
               <select aria-label="Wetland coverage" value={selectedWetland} onChange={e => setSelectedWetland(e.target.value)}>
                 {WETLAND_FILTERS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
               </select>
             </label>
           </div>
-          <div className="dashboard-filter-card"
-            onClickCapture={event => { if ((event.target as HTMLElement).closest('button')) setFiltersTouched(true); }}
-            onChangeCapture={() => setFiltersTouched(true)}>
+          <div className="dashboard-filter-card">
             <fieldset className="space-y-3" disabled={loading || !listingData}>
               <legend className="text-xs font-semibold text-slate-600">Listing status</legend>
               <div className="flex gap-1 rounded-xl border border-slate-200 bg-slate-100 p-1">
