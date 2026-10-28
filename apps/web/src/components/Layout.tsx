@@ -18,8 +18,8 @@ export function Layout() {
               className={({ isActive }) =>
                 `text-sm tracking-wide font-medium transition-colors ${
                   isActive
-                    ? 'text-white font-bold'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'text-slate-400'
+                    : 'text-white font-bold hover:text-slate-200'
                 }`
               }
             >
@@ -30,8 +30,8 @@ export function Layout() {
               className={({ isActive }) =>
                 `text-sm tracking-wide font-medium transition-colors ${
                   isActive
-                    ? 'text-white font-bold'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'text-slate-400'
+                    : 'text-white font-bold hover:text-slate-200'
                 }`
               }
             >

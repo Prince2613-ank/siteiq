@@ -8,7 +8,7 @@ import { useEffect, useState, useMemo, useRef } from 'react';
 import type { ReactNode } from 'react';
 import './SiteList.css';
 import { loadParcels, loadGeoJson, loadListingCheck } from '../utils/dataLoading';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   formatDistance,
   formatYearsOwned,
@@ -128,7 +128,8 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 export function SiteList() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [parcels, setParcels] = useState<ParcelFeature[]>([]);
   const ranking = useParcelScores(parcels);
   const [listingCheckData, setListingCheckData] = useState<ListingCheckData | null>(null);
@@ -171,6 +172,26 @@ export function SiteList() {
       previousFocus?.focus();
     };
   }, [selectedSite]);
+
+  useEffect(() => {
+    const id = searchParams.get('parcel');
+    const town = searchParams.get('town');
+    if (!id || !parcels.length) return;
+    const matches = parcels.filter(({ properties: p }) => p.parcel_id === id &&
+      (!town || p.town?.toUpperCase() === town.toUpperCase()));
+    if (matches.length === 1) setSelectedSite(matches[0].properties);
+    else setDataWarning(matches.length > 1 ? 'Select a town to identify the linked parcel.' : 'The linked parcel was not found.');
+  }, [parcels, searchParams]);
+
+  const dismissSite = () => {
+    setSelectedSite(null);
+    if (searchParams.has('parcel')) {
+      const params = new URLSearchParams(searchParams);
+      params.delete('parcel');
+      params.delete('town');
+      setSearchParams(params, { replace: true });
+    }
+  };
 
   const renderBadge = (status?: string) => {
     if (!status || status === 'Not listed') {
@@ -419,6 +440,8 @@ export function SiteList() {
 
   return (
     <div className="min-h-full bg-slate-50/50 p-2.5 sm:p-3.5 lg:p-4 w-full space-y-3">
+      {location.state?.fromDashboard && <button type="button" onClick={() => navigate(-1)}
+        className="site-back-to-map mb-3">&larr; Go back to map</button>}
       {/* Search & Filter Controls */}
       <div className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-sm space-y-3">
         {/* Search row */}
@@ -919,7 +942,7 @@ export function SiteList() {
         return (
           <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
             <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="site-info-title" onKeyDown={(event) => {
-              if (event.key === 'Escape') setSelectedSite(null);
+              if (event.key === 'Escape') dismissSite();
               if (event.key === 'Tab') {
                 const controls = dialogRef.current?.querySelectorAll<HTMLElement>('button, a[href], input, select, textarea, [tabindex="0"]');
                 if (!controls?.length) return;
@@ -929,6 +952,15 @@ export function SiteList() {
                 else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
               }
             }} className="site-info-dialog bg-white rounded-2xl max-w-xl w-full shadow-2xl border border-slate-200/80 overflow-hidden animate-fadeIn flex flex-col max-h-[90vh]">
+              {location.state?.fromDashboard && <div className="site-info-navigation">
+                <button type="button" onClick={() => navigate(-1)} className="site-back-to-map">
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19-7-7 7-7M5 12h14" /></svg>
+                  Go back to map
+                </button>
+                <button type="button" aria-label="Dismiss property information" onClick={dismissSite} className="site-info-dismiss">
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="m6 6 12 12M6 18 18 6" /></svg>
+                </button>
+              </div>}
               {/* Modal Header */}
               <div className="site-info-header p-5 border-b border-slate-200 flex items-start justify-between bg-white gap-3">
                 <div className="min-w-0">
@@ -947,13 +979,15 @@ export function SiteList() {
                     {selectedSite.town}, {selectedSite.state} · ID: <span className="font-mono font-bold text-slate-700">{selectedSite.parcel_id}</span>
                   </p>
                 </div>
+                {!location.state?.fromDashboard && <>
                 <button
                   aria-label="Dismiss property information"
-                  onClick={() => setSelectedSite(null)}
+                  onClick={dismissSite}
                   className="w-7 h-7 flex items-center justify-center text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-200/60 transition-all font-bold text-xs"
                 >
                   ✕
                 </button>
+                </>}
               </div>
 
               {/* Modal Body */}
