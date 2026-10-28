@@ -253,6 +253,12 @@ function hasListingLinks(listing?: ListingLot): boolean {
   return Object.values(listing?.links ?? {}).some(url => /^https?:\/\//i.test(url));
 }
 
+function listingGroup(listing?: ListingLot): 'LISTED' | 'NOT_LISTED' | null {
+  if (!listing?.status) return null;
+  if (listing.status !== 'Not listed') return 'LISTED';
+  return hasListingLinks(listing) ? 'NOT_LISTED' : null;
+}
+
 interface DashboardReturnState {
   selectedZoning?: string;
   selectedZonings?: string[];
@@ -331,11 +337,9 @@ export function Dashboard() {
   }, [loadVersion]);
 
   const matchesListing = useCallback((p: ParcelProperties) => {
-    if (selectedListing === 'ALL') return true;
-    const listing = listingData?.lots[parcelKey(p)];
-    if (!listing?.status) return false;
-    return selectedListing === 'LISTED' ? listing.status !== 'Not listed'
-      : listing.status === 'Not listed' && hasListingLinks(listing);
+    if (!listingData) return selectedListing === 'ALL';
+    const group = listingGroup(listingData.lots[parcelKey(p)]);
+    return group !== null && (selectedListing === 'ALL' || selectedListing === group);
   }, [listingData, selectedListing]);
 
   // Compute analytics from parcel data
@@ -394,11 +398,10 @@ export function Dashboard() {
       if (selectedStatus !== 'ALL' && p.status !== selectedStatus) continue;
       if (selectedOwnerType !== 'ALL' && (p.owner_type?.trim() || 'Unknown') !== selectedOwnerType) continue;
       if (!matchesWetlandCoverage(p.wetland_pct, selectedWetland)) continue;
+      const group = listingGroup(listingData?.lots[parcelKey(p)]);
+      if (!group) continue;
       counts.ALL++;
-      const listing = listingData?.lots[parcelKey(p)];
-      if (listing?.status === 'Not listed') {
-        if (hasListingLinks(listing)) counts.NOT_LISTED++;
-      } else if (listing?.status) counts.LISTED++;
+      counts[group]++;
     }
     return counts;
   }, [parcelsList, listingData, keepFilter, selectedZonings, selectedStatus, selectedOwnerType, selectedWetland]);
