@@ -5,7 +5,6 @@ export const WETLAND_FILTERS = [
   { value: 'MODERATE', label: '10% to under 25%' },
   { value: 'HIGH', label: '25% to 50%' },
   { value: 'VERY_HIGH', label: 'More than 50%' },
-  { value: 'UNKNOWN', label: 'Unknown' },
 ] as const;
 
 export function matchesWetlandCoverage(value: unknown, filter: string): boolean {
@@ -13,7 +12,6 @@ export function matchesWetlandCoverage(value: unknown, filter: string): boolean 
   const numeric = typeof value === 'number' || (typeof value === 'string' && value.trim() !== '');
   const percent = numeric ? Number(value) : NaN;
   const known = Number.isFinite(percent) && percent >= 0 && percent <= 100;
-  if (filter === 'UNKNOWN') return !known;
   if (!known) return false;
   switch (filter) {
     case 'NONE': return percent === 0;

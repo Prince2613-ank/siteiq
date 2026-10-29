@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
+    "test:dashboard": "node e2e/dashboard-filter-flow.cjs",
+    "test:loans": "node e2e/parcel-loans.cjs",
     "test:client": "node e2e/parcel-scoring.cjs && node e2e/parcel-scoring-ui.cjs && node e2e/scoring-dialog.cjs && node e2e/site-ranking.cjs && node e2e/screening-rules.cjs && node e2e/client-audit.cjs && node e2e/edge-audit.cjs && node e2e/industrial-layer.cjs && node e2e/acreage-filter.cjs",
     "test:scoring": "node e2e/parcel-scoring.cjs && node e2e/parcel-scoring-ui.cjs && node e2e/scoring-dialog.cjs && node e2e/site-ranking.cjs"
   },

@@ -1,4 +1,5 @@
 import { screenParcel } from './parcelScreening';
+import { loadParcelLoans } from './parcelLoans';
 
 async function fetchJson(url: string) {
   const controller = new AbortController();
@@ -30,12 +31,14 @@ export async function loadListingCheck() {
 }
 
 export async function loadParcels() {
-  const data = await loadGeoJson('/geojson/parcels_250m.geojson');
+  const [data, loans] = await Promise.all([loadGeoJson('/geojson/parcels_250m.geojson'), loadParcelLoans()]);
   return {
     ...data,
-    features: data.features.map((feature: any) => ({
-      ...feature, properties: { ...feature.properties, ...screenParcel(feature.properties) },
-    })),
+    features: data.features.map((feature: any) => {
+      const loan = loans.parcels[parcelKey(feature.properties)];
+      if (!loan) throw new Error('A parcel has no matching loan record');
+      return { ...feature, properties: { ...feature.properties, ...screenParcel(feature.properties), loan } };
+    }),
   };
 }
 

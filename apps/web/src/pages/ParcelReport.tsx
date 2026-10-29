@@ -6,6 +6,7 @@ import { useRememberScroll, readSession, writeSession } from '../utils/sessionSt
 import { loadParcelReport, type ParcelReportData } from '../utils/parcelReports';
 import { parcelKey } from '../utils/dataLoading';
 import { ZONING_DISTRICTS, zoningCode } from '../utils/parcelZoning';
+import { formatLoanMoney, formatLoanPercent, loanCategoryLabel } from '../utils/parcelLoans';
 import './ParcelReport.css';
 
 const SQFT_PER_ACRE = 43560;
@@ -27,10 +28,10 @@ function titleCase(value: string): string { return value.toLowerCase().replace(/
 function ArrowLeft() {
   return <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="m12 19-7-7 7-7M5 12h14" /></svg>;
 }
-function RecordSection({ title, fields }: { title: string; fields: [string, unknown][] }) {
-  const visible = fields.filter(([, value]) => available(value));
+function RecordSection({ title, fields, showNotChecked = false, className = '' }: { title: string; fields: [string, unknown][]; showNotChecked?: boolean; className?: string }) {
+  const visible = fields.filter(([, value]) => available(value) || (showNotChecked && /^not checked\b/i.test(String(value))));
   if (!visible.length) return null;
-  return <section className="report-section"><h2>{title}</h2><dl className="report-identity-grid">
+  return <section className={`report-section ${className}`}><h2>{title}</h2><dl className="report-identity-grid">
     {visible.map(([label, value]) => <div key={label} className={String(value).length > 45 ? 'report-full-row' : undefined}><dt>{label}</dt><dd>{String(value)}</dd></div>)}
   </dl></section>;
 }
@@ -54,9 +55,11 @@ function ReportMap({ data }: { data: ParcelReportData }) {
     L.geoJSON(data.buildings, { interactive: false, style: { className: 'report-building-overlay', color: '#f0525c', weight: 2, fillColor: '#f8787b', fillOpacity: 0.7 } }).addTo(map);
     const bounds = subject.getBounds();
     const center = bounds.getCenter();
-    const viewKey = `report:${parcelKey(data.subject.properties)}:map`;
+    const propertyZoom = Math.max(REPORT_MIN_ZOOM, Math.min(REPORT_MAX_ZOOM,
+      map.getBoundsZoom(bounds, false, L.point(64, 96))));
+    const viewKey = `report:${parcelKey(data.subject.properties)}:map:v2`;
     const savedZoom = readSession<{ zoom: number }>(viewKey)?.zoom;
-    map.setView(center, typeof savedZoom === 'number' && Number.isFinite(savedZoom) ? Math.max(REPORT_MIN_ZOOM, Math.min(REPORT_MAX_ZOOM, savedZoom)) : REPORT_MIN_ZOOM, { animate: false });
+    map.setView(center, typeof savedZoom === 'number' && Number.isFinite(savedZoom) ? Math.max(REPORT_MIN_ZOOM, Math.min(REPORT_MAX_ZOOM, savedZoom)) : propertyZoom, { animate: false });
     writeSession(viewKey, { zoom: map.getZoom() });
     map.on('zoomend', () => writeSession(viewKey, { zoom: map.getZoom() }));
     const resize = new ResizeObserver(() => {
@@ -179,6 +182,16 @@ export function ParcelReport() {
           ['Years owned', number(p.years_owned) !== null ? `${format(Number(p.years_owned), 1)} years` : null],
           ['Last transfer', p.last_sale_date], ['Transfer price', p.last_sale_price], ['Deed reference', p.deed_book_page], ['Company people', p.company_people],
         ]} />
+        {data.loan && <RecordSection title="Loan information" className="report-loan-section" fields={data.loan.loan_signal === 'Not checked' ? [
+          ['Loan category', loanCategoryLabel(data.loan.loan_signal)],
+        ] : [
+          ['Loan category', loanCategoryLabel(data.loan.loan_signal)], ['Loan status', data.loan.loan_status],
+          ['Open loans', data.loan.open_loans_count], ['Latest open-loan lender', data.loan.latest_open_loan_lender],
+          ['Latest loan amount', formatLoanMoney(data.loan.latest_loan_amount_usd)], ['Latest loan date', data.loan.latest_loan_date],
+          ['Loan age', data.loan.loan_age_years === null ? null : `${format(data.loan.loan_age_years, 1)} years`],
+          ['Loan to value', formatLoanPercent(data.loan.loan_to_value_pct)],
+          ['Estimated current balance', formatLoanMoney(data.loan.est_balance_now_usd)],
+        ]} />}
         <RecordSection title="Mortgage & restrictions" fields={[
           ['Open mortgage', p.open_mortgage], ['Leases, easements & restrictions', p.lease_easement_restriction],
         ]} />
