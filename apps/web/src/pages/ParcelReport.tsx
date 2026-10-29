@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useRememberScroll, readSession, writeSession } from '../utils/sessionState';
@@ -10,6 +10,9 @@ import './ParcelReport.css';
 
 const SQFT_PER_ACRE = 43560;
 const M2_PER_ACRE = 4046.8564224;
+// At the parcel locations, level 15 shows a 300 m / 1000 ft scale bar.
+const REPORT_MIN_ZOOM = 15;
+const REPORT_MAX_ZOOM = 20;
 const format = (value: number, digits = 0) => value.toLocaleString('en-US', { maximumFractionDigits: digits, minimumFractionDigits: digits });
 function number(value: unknown): number | null {
   if (value == null || typeof value === 'boolean' || (typeof value === 'string' && !value.trim())) return null;
@@ -38,7 +41,7 @@ function ReportMap({ data }: { data: ParcelReportData }) {
   useEffect(() => {
     if (!container.current) return;
     setImageryUnavailable(false);
-    const map = L.map(container.current, { zoomControl: false, zoomAnimation: false, minZoom: 10, maxZoom: 20 });
+    const map = L.map(container.current, { zoomControl: false, zoomAnimation: false, minZoom: REPORT_MIN_ZOOM, maxZoom: REPORT_MAX_ZOOM });
     L.control.zoom({ position: 'bottomleft' }).addTo(map);
     L.control.scale({ position: 'bottomleft', imperial: true, metric: true, maxWidth: 100 }).addTo(map);
     const imagery = L.tileLayer(data.sources.imagery_url, { attribution: data.sources.imagery_attribution, maxZoom: 20 }).addTo(map);
@@ -51,10 +54,10 @@ function ReportMap({ data }: { data: ParcelReportData }) {
     L.geoJSON(data.buildings, { interactive: false, style: { className: 'report-building-overlay', color: '#f0525c', weight: 2, fillColor: '#f8787b', fillOpacity: 0.7 } }).addTo(map);
     const bounds = subject.getBounds();
     const center = bounds.getCenter();
-    const defaultZoom = () => Math.min(15, map.getBoundsZoom(bounds, false, L.point(48, 72)));
     const viewKey = `report:${parcelKey(data.subject.properties)}:map`;
     const savedZoom = readSession<{ zoom: number }>(viewKey)?.zoom;
-    map.setView(center, typeof savedZoom === 'number' && Number.isFinite(savedZoom) ? Math.max(10, Math.min(20, savedZoom)) : defaultZoom(), { animate: false });
+    map.setView(center, typeof savedZoom === 'number' && Number.isFinite(savedZoom) ? Math.max(REPORT_MIN_ZOOM, Math.min(REPORT_MAX_ZOOM, savedZoom)) : REPORT_MIN_ZOOM, { animate: false });
+    writeSession(viewKey, { zoom: map.getZoom() });
     map.on('zoomend', () => writeSession(viewKey, { zoom: map.getZoom() }));
     const resize = new ResizeObserver(() => {
       map.invalidateSize({ pan: false });
@@ -95,10 +98,18 @@ export function ParcelReport() {
     }).catch(error => { if (!controller.signal.aborted) setFailed(error.message); });
     return () => controller.abort();
   }, [identity, town, parcelId]);
-  if (!data) return <div className="parcel-report-loading"><Link to="/sites"><ArrowLeft /> Back to Sites</Link>
+  const topbar = <header className="parcel-report-topbar">
+    <div className="report-breadcrumbs"><button type="button" onClick={() => {
+      writeSession('sites:selectedSite', null);
+      navigate('/sites');
+    }}><ArrowLeft /><span>Sites</span></button><span className="report-breadcrumb-divider">/</span><span>Parcel report</span></div>
+    {location.state?.fromDashboard && <button type="button" className="report-return-map" onClick={() => navigate('/')}><ArrowLeft />Go back to map</button>}
+    <span className="report-record-reference">{titleCase(town)}{data?.subject.properties.state ? `, ${data.subject.properties.state}` : ''}<span>{parcelId}</span></span>
+  </header>;
+  if (!data) return <div className="parcel-report-page">{topbar}<div className="parcel-report-loading">
     <p role={failed ? 'alert' : 'status'}>{failed ? 'The parcel report could not be loaded.' : 'Opening parcel report...'}</p>
     {failed && <button type="button" onClick={() => window.location.reload()} className="report-retry">Try again</button>}
-  </div>;
+  </div></div>;
   const p = data.subject.properties;
   const address = p.address || p.site_address_town_record;
   const heading = address ? titleCase(address) : `Parcel ${p.parcel_id}`;
@@ -131,11 +142,7 @@ export function ParcelReport() {
     Zillow: p.zillow_link, Redfin: p.redfin_link, ...data.listing?.links,
   })) if (typeof url === 'string' && /^https?:\/\//i.test(url)) propertyLinks.set(label, url);
   return <div className="parcel-report-page">
-    <header className="parcel-report-topbar">
-      <div className="report-breadcrumbs"><button type="button" onClick={() => navigate('/sites', { state: location.state })}><ArrowLeft /><span>Sites</span></button><span className="report-breadcrumb-divider">/</span><span>Parcel report</span></div>
-      {location.state?.fromDashboard && <button type="button" className="report-return-map" onClick={() => navigate('/')}><ArrowLeft />Go back to map</button>}
-      <span className="report-record-reference">{city}, {p.state}<span>{p.parcel_id}</span></span>
-    </header>
+    {topbar}
     <div className="parcel-report-workspace">
       <ReportMap key={identity} data={data} />
       <article className="parcel-report-content" aria-label={`Parcel report for ${heading}`}>

@@ -141,7 +141,7 @@ export function SiteList() {
 
   const openSite = (parcel: ParcelProperties) => {
     writeSession('sites:selectedSite', null);
-    navigate(parcelReportPath(parcel), { state: location.state });
+    navigate(parcelReportPath(parcel));
   };
 
   useEffect(() => {
@@ -408,8 +408,6 @@ export function SiteList() {
 
   return (
     <div className="min-h-full bg-slate-50/50 p-2.5 sm:p-3.5 lg:p-4 w-full space-y-3">
-      {location.state?.fromDashboard && <button type="button" onClick={() => navigate(-1)}
-        className="site-back-to-map mb-3">&larr; Go back to map</button>}
       {/* Search & Filter Controls */}
       <div className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-sm space-y-3">
         {/* Search row */}

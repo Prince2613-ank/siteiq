@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import { readSession, writeSession } from '../utils/sessionState';
+import { parcelReportPath } from '../utils/parcelReports';
 import { WETLAND_FILTERS, matchesWetlandCoverage } from '../utils/parcelWetlands';
 import { isUnderOneUsableAcre } from '../utils/parcelScreening';
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
@@ -564,7 +565,6 @@ export function Dashboard() {
           details.type = 'button';
           details.textContent = 'Details';
           details.addEventListener('click', () => {
-            const params = new URLSearchParams({ parcel: p.parcel_id || '', town: p.town || '' });
             const map = mapRef.current!;
             map.stop();
             const center = map.getCenter();
@@ -578,7 +578,7 @@ export function Dashboard() {
             navigate(`${location.pathname}${location.search}`, {
               replace: true, state: { ...location.state, dashboardReturn: snapshot },
             });
-            navigate(`/sites?${params}`, { state: { fromDashboard: true } });
+            navigate(parcelReportPath(p), { state: { fromDashboard: true } });
           });
           card.append(address, details);
           l.bindPopup(card, {
