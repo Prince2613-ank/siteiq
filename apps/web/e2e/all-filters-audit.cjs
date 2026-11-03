@@ -82,7 +82,7 @@ let checks = 0;
         checks++;
       };
       const chooseSingle = async (label, value, expected) => {
-        if (sites || label === 'Wetland coverage') {
+        if (sites || label === 'Years owned' || label === 'Wetland coverage') {
           const select = page.getByRole('combobox', { name: label, exact: true });
           const count = textCount(await select.locator(`option[value="${value}"]`).textContent());
           assert.equal(count, expected.length, `${label} ${value} displayed count`);
@@ -122,7 +122,7 @@ let checks = 0;
       }
       for (const option of yearsOptions) {
         await reset(); const expected = records.filter(option.matches);
-        await chooseMulti('Years owned', option, expected);
+        await chooseSingle('Years owned', option.value, expected);
         await result(expected, `years ${option.value}`);
       }
       for (const option of wetlandOptions) {

@@ -1,5 +1,5 @@
 import { SiteFilterDropdown } from '../components/SiteFilterDropdown';
-import { YEARS_OWNED_FILTERS, LISTING_STATUS_FILTERS, countFacet, matchesDashboardFilters, matchesYearsOwned, type DashboardFilters } from '../utils/dashboardFilters';
+import { YEARS_OWNED_FILTERS, LISTING_STATUS_FILTERS, countFacet, matchesDashboardFilters, type DashboardFilters } from '../utils/dashboardFilters';
 import { ZONING_GROUPS, ZONING_DISTRICTS } from '../utils/parcelZoning';
 import { LOAN_FILTER_OPTIONS, type ParcelLoanData } from '../utils/parcelLoans';
 import { WETLAND_FILTERS } from '../utils/parcelWetlands';
@@ -157,8 +157,8 @@ export function SiteList() {
   const [developmentSelection, setDevelopment] = useSessionState<string[] | string>('sites:development', 'ALL');
   const development = Array.isArray(developmentSelection) ? developmentSelection.at(-1) ?? 'ALL' : developmentSelection;
   const [owners, setOwners] = useSessionState<string[]>('sites:owners', []);
-  const [yearsSelection, setYearsOwned] = useSessionState<string | string[]>('sites:yearsOwned', []);
-  const yearsOwned = useMemo(() => (Array.isArray(yearsSelection) ? yearsSelection : [yearsSelection]).filter(value => value !== 'ALL'), [yearsSelection]);
+  const [yearsSelection, setYearsOwned] = useSessionState<string | string[]>('sites:yearsOwned', 'ALL');
+  const yearsOwned = Array.isArray(yearsSelection) ? yearsSelection.at(-1) ?? 'ALL' : yearsSelection;
   const [loanCategories, setLoanCategories] = useSessionState<string[]>('sites:loanCategories', []);
   const [listingFilter, setListingFilter] = useSessionState('sites:listingFilter', 'ALL');
   const [wetlands, setWetlands] = useSessionState('sites:wetlands', 'ALL');
@@ -169,7 +169,7 @@ export function SiteList() {
       const selected = zoningDistricts.filter(code => (group.codes as readonly string[]).includes(code));
       return selected.length > 0 ? selected : [...group.codes];
     }),
-    status: development, owner: owners, years: 'ALL', loan: loanCategories, wetland: wetlands, listing: listingFilter,
+    status: development, owner: owners, years: yearsOwned, loan: loanCategories, wetland: wetlands, listing: listingFilter,
   }), [keepFilter, zoningGroups, zoningDistricts, development, owners, yearsOwned, loanCategories, wetlands, listingFilter]);
   const ownerTypes = useMemo(() => [...new Set(parcels.map(({ properties }) => properties.owner_type?.trim() || 'Unknown'))].sort(), [parcels]);
   const developmentStatuses = useMemo(() => [...new Set(parcels.map(({ properties }) => properties.status).filter((status): status is string => Boolean(status)))].sort(), [parcels]);
@@ -177,15 +177,13 @@ export function SiteList() {
     matchesSiteSearch(properties, search) && matchesSiteLifeEvent(properties, lifeEventFilter)), [parcels, search, lifeEventFilter]);
   const lifeCounts = useMemo(() => {
     const base = parcels.filter(({ properties }) => matchesSiteSearch(properties, search)
-      && matchesDashboardFilters(properties, filters, listingCheckData?.lots ?? {})
-      && (yearsOwned.length === 0 || yearsOwned.some(value => matchesYearsOwned(properties.years_owned, value))));
+      && matchesDashboardFilters(properties, filters, listingCheckData?.lots ?? {}));
     return Object.fromEntries(['ALL', 'HAS_SIGNAL', 'ESTATE', 'OLDER_OWNER', 'SENIOR'].map(value =>
       [value, base.filter(({ properties }) => matchesSiteLifeEvent(properties, value)).length]));
   }, [parcels, search, filters, yearsOwned, listingCheckData]);
   const filterCounts = useMemo(() => {
-    const tenureParcels = contextParcels.filter(({ properties }) => yearsOwned.length === 0 || yearsOwned.some(value => matchesYearsOwned(properties.years_owned, value)));
     const facet = (key: keyof DashboardFilters | 'zoningGroups', values: readonly string[], omit: (keyof DashboardFilters)[] = []) =>
-      countFacet(key === 'years' ? contextParcels : tenureParcels, filters, listingCheckData?.lots ?? {}, key, values.map(value => ({ value })), omit);
+      countFacet(contextParcels, filters, listingCheckData?.lots ?? {}, key, values.map(value => ({ value })), omit);
     return {
       screening: facet('screening', ['ALL', 'Y', 'N']),
       groups: facet('zoningGroups', ZONING_GROUPS.map(group => group.id), ['districts']),
@@ -381,7 +379,6 @@ export function SiteList() {
     const list = contextParcels.filter((f) => {
       const p = f.properties;
       if (!matchesDashboardFilters(p, filters, listingCheckData?.lots ?? {})) return false;
-      if (yearsOwned.length > 0 && !yearsOwned.some(value => matchesYearsOwned(p.years_owned, value))) return false;
       return true;
     });
 
@@ -433,7 +430,7 @@ export function SiteList() {
     setZoningDistricts([]);
     setDevelopment('ALL');
     setOwners([]);
-    setYearsOwned([]);
+    setYearsOwned('ALL');
     setLoanCategories([]);
     setWetlands('ALL');
     setListingFilter('ALL');
@@ -441,7 +438,7 @@ export function SiteList() {
     setSortBy('score_desc');
   };
 
-  const hasActiveFilters = search || yearsOwned.length > 0 || Object.values(filters).some(value => Array.isArray(value) ? value.length > 0 : value !== 'ALL') || lifeEventFilter !== 'ALL' || sortBy !== 'score_desc';
+  const hasActiveFilters = search || Object.values(filters).some(value => Array.isArray(value) ? value.length > 0 : value !== 'ALL') || lifeEventFilter !== 'ALL' || sortBy !== 'score_desc';
 
   return (
     <div className="min-h-full bg-slate-50/50 p-2.5 sm:p-3.5 lg:p-4 w-full space-y-3">
@@ -512,8 +509,11 @@ export function SiteList() {
           </label>
           <SiteFilterDropdown label="Owner type" allLabel="All owner types" selected={owners} onChange={setOwners}
             options={ownerTypes.map(value => ({ value, label: value, count: filterCounts.owners[value] }))} />
-          <SiteFilterDropdown label="Years owned" allLabel="All ownership durations" selected={yearsOwned} onChange={setYearsOwned}
-            options={YEARS_OWNED_FILTERS.filter(option => option.value !== 'ALL').map(option => ({ ...option, count: filterCounts.years[option.value] }))} />
+          <label className="site-filter-field"><span className="site-filter-label">Years owned</span>
+            <select className="site-filter-select" aria-label="Years owned" data-active={yearsOwned !== 'ALL'} value={yearsOwned} onChange={event => setYearsOwned(event.target.value)}>
+              {YEARS_OWNED_FILTERS.map(option => <option key={option.value} value={option.value}>{option.label} ({filterCounts.years[option.value]})</option>)}
+            </select>
+          </label>
           <SiteFilterDropdown label="Loan category" allLabel="All categories" selected={loanCategories} onChange={setLoanCategories}
             options={LOAN_FILTER_OPTIONS.filter(option => option.value !== 'ALL').map(option => ({ ...option, count: filterCounts.loans[option.value] }))} />
           <label className="site-filter-field"><span className="site-filter-label">Wetland coverage</span>

@@ -114,13 +114,9 @@ const count = locator => locator.textContent().then(text => Number(text.match(/\
     assert.equal(await count(owners.getByRole('button', { name: /^Individual \(/ })), expected.filter(p => p.owner_type === 'Individual').length);
     await owners.getByRole('button', { name: /^Individual \(/ }).click();
     const tenureBase = expected.filter(p => p.owner_type === 'Individual');
-    const yearsTrigger = page.getByRole('button', { name: /^Years owned:/ });
-    await yearsTrigger.click();
-    const yearsGroup = page.getByRole('group', { name: 'Years owned', exact: true });
-    await yearsGroup.getByRole('button', { name: /^20 to under 30 years/ }).click();
-    await yearsGroup.getByRole('button', { name: /^30 years or more/ }).click();
-    await page.keyboard.press('Escape');
-    expected = tenureBase.filter(p => p.years_owned != null && p.years_owned >= 20);
+    const yearsSelect = page.getByRole('combobox', { name: 'Years owned', exact: true });
+    await yearsSelect.selectOption('20_30');
+    expected = tenureBase.filter(p => p.years_owned != null && p.years_owned >= 20 && p.years_owned < 30);
     assert.equal(await paths.count(), expected.length);
     await page.reload();
     await page.getByRole('button', { name: 'Reset filters', exact: true }).waitFor();
@@ -128,15 +124,12 @@ const count = locator => locator.textContent().then(text => Number(text.match(/\
     assert.equal(await paths.count(), expected.length);
     assert.equal(await r1.getAttribute('aria-pressed'), 'true');
     assert.equal(await r2.getAttribute('aria-pressed'), 'true');
-    assert.equal(await yearsTrigger.getAttribute('aria-label'), 'Years owned: 2 selected');
-    await yearsTrigger.click();
-    assert.equal(await yearsGroup.locator('.site-filter-choice[aria-pressed="true"]').count(), 2);
-    await yearsGroup.getByRole('button', { name: /^30 years or more/ }).click();
-    expected = tenureBase.filter(p => p.years_owned != null && p.years_owned >= 20 && p.years_owned < 30);
-    assert.equal(await paths.count(), expected.length);
-    await yearsGroup.getByRole('button', { name: 'All ownership durations', exact: true }).click();
+    assert.equal(await yearsSelect.inputValue(), '20_30');
+    assert.equal(await yearsSelect.getAttribute('multiple'), null);
+    await yearsSelect.selectOption('30_PLUS');
+    assert.equal(await paths.count(), tenureBase.filter(p => p.years_owned != null && p.years_owned >= 30).length);
+    await yearsSelect.selectOption('ALL');
     assert.equal(await paths.count(), tenureBase.length);
-    await page.keyboard.press('Escape');
     await page.getByRole('button', { name: 'Reset filters', exact: true }).click();
     assert.equal(await paths.count(), 766);
     assert.equal(await districts.count(), 0);
@@ -144,7 +137,7 @@ const count = locator => locator.textContent().then(text => Number(text.match(/\
     const resetSnapshot = await page.evaluate(() => JSON.parse(sessionStorage.getItem('siteiq:view:v1:dashboard')));
     assert.deepEqual(resetSnapshot.selectedZoningGroups, []);
     assert.deepEqual(resetSnapshot.selectedZonings, []);
-    assert.deepEqual(resetSnapshot.selectedYearsOwned, []);
+    assert.equal(resetSnapshot.selectedYearsOwned, 'ALL');
     assert.equal(resetSnapshot.parcel, '');
     assert.equal(resetSnapshot.zoom, initialSnapshot.zoom);
     assert.ok(Math.abs(resetSnapshot.center[0] - initialSnapshot.center[0]) < 0.00001, JSON.stringify({ initialSnapshot, resetSnapshot }));
@@ -211,6 +204,6 @@ const count = locator => locator.textContent().then(text => Number(text.match(/\
     assert.equal(await minus.getAttribute('aria-disabled'), 'true');
     assert.deepEqual(await page.locator('.leaflet-control-scale-line').allTextContents(), ['300 m', '1000 ft']);
     assert.deepEqual(errors, []);
-    console.log('PASS: immediate zoning groups; persistent subfilters; owner/loan/years multiselect and intersections; listing filter present; refresh/reset; mobile layout; report framing.');
+    console.log('PASS: immediate zoning groups; persistent subfilters; owner/loan multiselect; years single-select and intersections; listing filter present; refresh/reset; mobile layout; report framing.');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

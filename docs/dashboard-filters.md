@@ -43,9 +43,11 @@ Unknown wetland filter; legacy saved Unknown selections reset to All. Missing
 values would remain in All rather than being interpreted as zero. Years-owned
 ranges use the recorded ownership duration, including durations over 100 years.
 The 25 records without that value remain in All but do not match a duration band.
-Years owned uses a multiselect dropdown on both pages. Selected ranges combine
-with OR, persist on refresh, and clear through All ownership durations or Reset
-filters. Legacy saved single ranges restore as one selected range.
+Only Zoning (including districts), Owner type, and Loan category support multiple
+selections on either page. Years owned, Screening results, Development status,
+Wetland coverage, and Listing status use one selection at a time; Sites Life
+Events and Sort by are also single-select. A saved Years owned multiselection
+restores only its last range. Reset filters restores All ownership durations.
 
 Parcels have zoning-colored fills by default. Roads use a separate pane above
 parcel fills and highlights, with pointer events disabled to preserve parcel
@@ -63,7 +65,7 @@ covers real-data counts, combined filters, persistence, reset, road stacking,
 parcel fills, owner/loan multiselect, mobile layout and report framing.
 
 Sites uses dropdown filters, with multiselect for zoning groups/districts, owner
-type, loan category and years owned. Development status is single-select. Search
+type and loan category. Development status is single-select. Search
 and Life Events narrow both the displayed sites and the other option counts.
 Life Events counts respect the other filters while omitting its own selection.
 Run `npm run test:all-filters --workspace=apps/web` for every current option on

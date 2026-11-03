@@ -1,4 +1,4 @@
-import { SiteFilterDropdown } from '../components/SiteFilterDropdown';
+import '../components/SiteFilterDropdown.css';
 import type { CSSProperties } from 'react';
 import { readSession, writeSession } from '../utils/sessionState';
 import { parcelReportPath } from '../utils/parcelReports';
@@ -308,7 +308,7 @@ export function Dashboard() {
       ZONING_GROUPS.filter(group => selectedZonings.some(code => (group.codes as readonly string[]).includes(code))).map(group => group.id))).slice(-1));
   const [fullZoningGroups, setFullZoningGroups] = useState<string[]>(() => returnState?.fullZoningGroups ??
     (selectedZonings.length === 0 ? selectedZoningGroups : []));
-  const [selectedYearsOwned, setSelectedYearsOwned] = useState<string[]>(() => restoreMultiSelection(returnState?.selectedYearsOwned));
+  const [selectedYearsOwned, setSelectedYearsOwned] = useState<string>(() => Array.isArray(returnState?.selectedYearsOwned) ? returnState.selectedYearsOwned.at(-1) ?? 'ALL' : returnState?.selectedYearsOwned ?? 'ALL');
   const [selectedLoanCategory, setSelectedLoanCategory] = useState<string[]>(() => restoreMultiSelection(returnState?.selectedLoanCategory));
   const zoningGroupsRef = useRef(selectedZoningGroups);
   zoningGroupsRef.current = selectedZoningGroups;
@@ -662,7 +662,7 @@ export function Dashboard() {
     setSelectedZonings([]);
     setSelectedZoningGroups([]);
     setFullZoningGroups([]);
-    setSelectedYearsOwned([]);
+    setSelectedYearsOwned('ALL');
     setSelectedLoanCategory([]);
     setSelectedStatus('ALL');
     setSelectedOwnerType([]);
@@ -822,8 +822,11 @@ export function Dashboard() {
             </fieldset>
           </div>
           <div className="dashboard-filter-card">
-            <SiteFilterDropdown label="Years owned" allLabel="All ownership durations" selected={selectedYearsOwned} onChange={setSelectedYearsOwned}
-              options={YEARS_OWNED_FILTERS.filter(option => option.value !== 'ALL').map(option => ({ ...option, count: counts.years[option.value] }))} />
+            <label className="site-filter-field"><span className="site-filter-label">Years owned</span>
+              <select className="site-filter-select" aria-label="Years owned" data-active={selectedYearsOwned !== 'ALL'} value={selectedYearsOwned} onChange={event => setSelectedYearsOwned(event.target.value)}>
+                {YEARS_OWNED_FILTERS.map(option => <option key={option.value} value={option.value}>{option.label} ({counts.years[option.value]})</option>)}
+              </select>
+            </label>
           </div>
           <div className="dashboard-filter-card">
             <fieldset className="space-y-2" disabled={loading || Boolean(loadError)}>

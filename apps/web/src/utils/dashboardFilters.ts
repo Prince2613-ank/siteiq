@@ -26,7 +26,7 @@ export interface DashboardFilters {
   owner: string[];
   wetland: string;
   listing: string;
-  years: string | string[];
+  years: string;
   loan: string[];
 }
 type FilterParcel = {
