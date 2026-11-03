@@ -1,3 +1,4 @@
+import { SiteFilterDropdown } from '../components/SiteFilterDropdown';
 import type { CSSProperties } from 'react';
 import { readSession, writeSession } from '../utils/sessionState';
 import { parcelReportPath } from '../utils/parcelReports';
@@ -260,7 +261,7 @@ interface DashboardReturnState {
   selectedZoningGroup?: string;
   selectedZoningGroups?: string[];
   fullZoningGroups?: string[];
-  selectedYearsOwned?: string;
+  selectedYearsOwned?: string | string[];
   selectedLoanCategory?: string | string[];
   selectedStatus: string;
   selectedOwnerType: string | string[];
@@ -305,7 +306,7 @@ export function Dashboard() {
       ZONING_GROUPS.filter(group => selectedZonings.some(code => (group.codes as readonly string[]).includes(code))).map(group => group.id))).slice(-1));
   const [fullZoningGroups, setFullZoningGroups] = useState<string[]>(() => returnState?.fullZoningGroups ??
     (selectedZonings.length === 0 ? selectedZoningGroups : []));
-  const [selectedYearsOwned, setSelectedYearsOwned] = useState(returnState?.selectedYearsOwned ?? 'ALL');
+  const [selectedYearsOwned, setSelectedYearsOwned] = useState<string[]>(() => restoreMultiSelection(returnState?.selectedYearsOwned));
   const [selectedLoanCategory, setSelectedLoanCategory] = useState<string[]>(() => restoreMultiSelection(returnState?.selectedLoanCategory));
   const zoningGroupsRef = useRef(selectedZoningGroups);
   zoningGroupsRef.current = selectedZoningGroups;
@@ -655,7 +656,7 @@ export function Dashboard() {
     setSelectedZonings([]);
     setSelectedZoningGroups([]);
     setFullZoningGroups([]);
-    setSelectedYearsOwned('ALL');
+    setSelectedYearsOwned([]);
     setSelectedLoanCategory([]);
     setSelectedStatus('ALL');
     setSelectedOwnerType([]);
@@ -706,7 +707,7 @@ export function Dashboard() {
       <aside ref={sidebarRef} className="dashboard-sidebar w-full lg:w-1/3 lg:shrink-0 h-[48vh] lg:h-full overflow-y-auto border-t lg:border-t-0 lg:border-r border-slate-200 order-2 lg:order-1">
         <header className="dashboard-sidebar-header flex items-center justify-between">
           <h2>Filters</h2>
-          <button className="text-xs font-semibold text-blue-600" onClick={handleResetView}>Reset filters</button>
+          <button type="button" className="reset-filters-button" onClick={handleResetView}>Reset filters</button>
         </header>
         <div className="p-4 space-y-4">
           {(loadError || dataWarning) && <div role="alert" className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">
@@ -814,11 +815,8 @@ export function Dashboard() {
             </fieldset>
           </div>
           <div className="dashboard-filter-card">
-            <label className="dashboard-filter-field">Years owned
-              <select aria-label="Years owned" value={selectedYearsOwned} onChange={e => setSelectedYearsOwned(e.target.value)}>
-                {YEARS_OWNED_FILTERS.map(option => <option key={option.value} value={option.value}>{option.label} ({counts.years[option.value]})</option>)}
-              </select>
-            </label>
+            <SiteFilterDropdown label="Years owned" allLabel="All ownership durations" selected={selectedYearsOwned} onChange={setSelectedYearsOwned}
+              options={YEARS_OWNED_FILTERS.filter(option => option.value !== 'ALL').map(option => ({ ...option, count: counts.years[option.value] }))} />
           </div>
           <div className="dashboard-filter-card">
             <fieldset className="space-y-2" disabled={loading || Boolean(loadError)}>

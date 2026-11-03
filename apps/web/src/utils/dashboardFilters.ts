@@ -19,7 +19,7 @@ export interface DashboardFilters {
   owner: string[];
   wetland: string;
   listing: string;
-  years: string;
+  years: string | string[];
   loan: string[];
 }
 type FilterParcel = {
@@ -35,7 +35,8 @@ export function listingGroup(listing?: ListingRecord): 'LISTED' | 'NOT_LISTED' |
   return Object.values(listing?.links ?? {}).some(url => /^https?:\/\//i.test(url)) ? 'NOT_LISTED' : 'NO_LINKS';
 }
 
-export function matchesYearsOwned(value: unknown, filter: string): boolean {
+export function matchesYearsOwned(value: unknown, filter: string | string[]): boolean {
+  if (Array.isArray(filter)) return filter.length === 0 || filter.some(option => matchesYearsOwned(value, option));
   if (filter === 'ALL') return true;
   if ((typeof value !== 'number' && typeof value !== 'string') || String(value).trim() === '') return false;
   const years = Number(value);

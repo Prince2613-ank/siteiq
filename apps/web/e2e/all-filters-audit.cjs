@@ -76,7 +76,7 @@ let checks = 0;
         checks++;
       };
       const chooseSingle = async (label, value, expected) => {
-        if (sites || label === 'Years owned' || label === 'Wetland coverage') {
+        if (sites || label === 'Wetland coverage') {
           const select = page.getByRole('combobox', { name: label, exact: true });
           const count = textCount(await select.locator(`option[value="${value}"]`).textContent());
           assert.equal(count, expected.length, `${label} ${value} displayed count`);
@@ -90,11 +90,11 @@ let checks = 0;
         }
       };
       const chooseMulti = async (label, option, expected) => {
-        if (sites) await open(label);
+        if (sites || label === 'Years owned') await open(label);
         const button = page.getByRole('group', { name: label, exact: true }).getByRole('button', { name: new RegExp(`^${escape(option.label)} \\(`) });
         assert.equal(textCount(await button.textContent()), expected.length, `${label} ${option.value} count`);
         await button.click();
-        if (sites) await close();
+        if (sites || label === 'Years owned') await close();
       };
       for (const value of ['Y', 'N']) {
         await reset(); const expected = records.filter(p => p.keep === value);
@@ -115,7 +115,7 @@ let checks = 0;
       }
       for (const option of yearsOptions) {
         await reset(); const expected = records.filter(option.matches);
-        if (sites) await chooseMulti('Years owned', option, expected); else await chooseSingle('Years owned', option.value, expected);
+        await chooseMulti('Years owned', option, expected);
         await result(expected, `years ${option.value}`);
       }
       for (const option of wetlandOptions) {

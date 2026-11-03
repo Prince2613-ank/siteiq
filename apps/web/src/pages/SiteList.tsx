@@ -551,13 +551,13 @@ export function SiteList() {
             </select>
           </div>
 
-          <div className="flex items-end gap-2">
+          <div className="col-span-full flex justify-end">
             {hasActiveFilters && (
               <button
                 onClick={handleResetFilters}
-                className="flex-1 min-w-0 h-9 px-2 text-[11px] leading-tight font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200/80 border border-slate-200 rounded-xl transition-all"
+                type="button" className="reset-filters-button"
               >
-                ✕ Reset Filters
+                Reset Filters
               </button>
             )}
           </div>
@@ -624,7 +624,7 @@ export function SiteList() {
                     <div className="mt-2">
                       <button
                         onClick={handleResetFilters}
-                        className="text-xs text-blue-600 font-semibold hover:underline"
+                        type="button" className="reset-filters-button"
                       >
                         Clear all filters
                       </button>

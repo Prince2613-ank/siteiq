@@ -1,3 +1,4 @@
+import './SiteFilterDropdown.css';
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 
 export interface SiteFilterOption { value: string; label: string; count?: number; color?: string; detail?: string }

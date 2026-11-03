@@ -39,6 +39,9 @@ Unknown wetland filter; legacy saved Unknown selections reset to All. Missing
 values would remain in All rather than being interpreted as zero. Years-owned
 ranges use the recorded ownership duration, including durations over 100 years.
 The 25 records without that value remain in All but do not match a duration band.
+Years owned uses a multiselect dropdown on both pages. Selected ranges combine
+with OR, persist on refresh, and clear through All ownership durations or Reset
+filters. Legacy saved single ranges restore as one selected range.
 
 Parcels have zoning-colored fills by default. Roads use a separate pane above
 parcel fills and highlights, with pointer events disabled to preserve parcel
