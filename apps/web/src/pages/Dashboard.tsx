@@ -1,4 +1,3 @@
-import '../components/SiteFilterDropdown.css';
 import type { CSSProperties } from 'react';
 import { readSession, writeSession } from '../utils/sessionState';
 import { parcelReportPath } from '../utils/parcelReports';
@@ -822,8 +821,8 @@ export function Dashboard() {
             </fieldset>
           </div>
           <div className="dashboard-filter-card">
-            <label className="site-filter-field"><span className="site-filter-label">Years owned</span>
-              <select className="site-filter-select" aria-label="Years owned" data-active={selectedYearsOwned !== 'ALL'} value={selectedYearsOwned} onChange={event => setSelectedYearsOwned(event.target.value)}>
+            <label className="dashboard-filter-field">Years owned
+              <select aria-label="Years owned" value={selectedYearsOwned} onChange={event => setSelectedYearsOwned(event.target.value)}>
                 {YEARS_OWNED_FILTERS.map(option => <option key={option.value} value={option.value}>{option.label} ({counts.years[option.value]})</option>)}
               </select>
             </label>
