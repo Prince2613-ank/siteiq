@@ -16,11 +16,11 @@ export interface DashboardFilters {
   screening: string;
   districts: string[];
   status: string;
-  owner: string;
+  owner: string[];
   wetland: string;
   listing: string;
   years: string;
-  loan: string;
+  loan: string[];
 }
 type FilterParcel = {
   town?: string; parcel_id?: string; zoning?: string; keep?: string;
@@ -59,10 +59,10 @@ export function matchesDashboardFilters(p: FilterParcel, filters: DashboardFilte
   return (!check('screening') || filters.screening === 'ALL' || p.keep === filters.screening)
     && (!check('districts') || filters.districts.length === 0 || filters.districts.includes(zone))
     && (!check('status') || filters.status === 'ALL' || p.status === filters.status)
-    && (!check('owner') || filters.owner === 'ALL' || (p.owner_type?.trim() || 'Unknown') === filters.owner)
+    && (!check('owner') || filters.owner.length === 0 || filters.owner.includes(p.owner_type?.trim() || 'Unknown'))
     && (!check('wetland') || matchesWetlandCoverage(p.wetland_pct, filters.wetland))
     && (!check('years') || matchesYearsOwned(p.years_owned, filters.years))
-    && (!check('loan') || filters.loan === 'ALL' || p.loan?.loan_signal === filters.loan)
+    && (!check('loan') || filters.loan.length === 0 || filters.loan.includes(p.loan?.loan_signal ?? ''))
     && (!check('listing') || filters.listing === 'ALL' || listingGroup(listings[parcelKey(p)]) === filters.listing);
 }
 
@@ -74,5 +74,5 @@ export function countFacet<T extends { properties: FilterParcel }>(parcels: T[],
   return Object.fromEntries(options.map(({ value }) => [value, value === 'ALL' ? base.length : base.filter(({ properties }) =>
     facet === 'districts' ? zoningCode(properties.zoning) === value :
       facet === 'zoningGroups' ? ZONING_GROUPS.find(group => group.id === value)?.codes.some(code => code === zoningCode(properties.zoning)) :
-        matchesDashboardFilters(properties, { ...filters, [facet]: value }, listings, extraOmit)).length]));
+        matchesDashboardFilters(properties, { ...filters, [facet]: facet === 'owner' || facet === 'loan' ? [value] : value }, listings, extraOmit)).length]));
 }

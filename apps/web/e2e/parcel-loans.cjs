@@ -42,7 +42,10 @@ assert.equal(Object.values(expectedCounts).reduce((sum, n) => sum + n, 0), 766);
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(baseURL);
     const filter = page.getByRole('group', { name: 'Loan category', exact: true });
-    const choose = value => filter.getByRole('button', { name: value === 'ALL' ? /^All categories \(/ : filterLabel(value) + ' (' }).click();
+    const choose = async value => {
+      await filter.getByRole('button', { name: /^All categories \(/ }).click();
+      if (value !== 'ALL') await filter.getByRole('button', { name: filterLabel(value) + ' (' }).click();
+    };
     await filter.getByRole('button', { name: 'All categories (766)', exact: true }).waitFor();
     const paths = page.locator('.dashboard-parcel-overlay');
     for (const [category, count] of Object.entries(expectedCounts)) {

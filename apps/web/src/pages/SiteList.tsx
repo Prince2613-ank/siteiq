@@ -1,11 +1,15 @@
+import { SiteFilterDropdown } from '../components/SiteFilterDropdown';
+import { YEARS_OWNED_FILTERS, countFacet, matchesDashboardFilters, matchesYearsOwned, type DashboardFilters } from '../utils/dashboardFilters';
+import { ZONING_GROUPS, ZONING_DISTRICTS } from '../utils/parcelZoning';
+import { LOAN_FILTER_OPTIONS, type ParcelLoanData } from '../utils/parcelLoans';
+import { WETLAND_FILTERS } from '../utils/parcelWetlands';
 import { parcelReportPath } from '../utils/parcelReports';
 import { useSessionState, useRememberScroll, writeSession, readSession } from '../utils/sessionState';
-import { isUnderOneUsableAcre } from '../utils/parcelScreening';
 import { ScoreBadge } from '../components/ParcelScore';
 import { ParcelScoringDialog } from '../components/ParcelScoringDialog';
 import { useParcelScores } from '../utils/useParcelScores';
 import { scoringStorageKey, type ScoringInput } from '../utils/parcelScoring';
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useState, useMemo, useRef, type CSSProperties } from 'react';
 import './SiteList.css';
 import { loadParcels, loadListingCheck, parcelKey } from '../utils/dataLoading';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
@@ -15,6 +19,7 @@ import {
 } from '../utils/parcelFormatters';
 
 export interface ParcelProperties extends ScoringInput {
+  loan?: ParcelLoanData;
   town?: string;
   state?: string;
   parcel_id?: string;
@@ -108,6 +113,25 @@ const CATEGORY_COLORS: Record<string, string> = {
   'Paved, no building': '#94a3b8',
 };
 
+function matchesSiteLifeEvent(p: ParcelProperties, filter: string): boolean {
+  if (filter === 'ALL') return true;
+  const signal = parseLifeEventSignal(p.life_event_signal, p.estate_record_detail, p.town, p.state);
+  switch (filter) {
+    case 'HAS_SIGNAL': return signal.hasSignal;
+    case 'ESTATE': return ['estate_death', 'estate_filed', 'life_estate'].includes(signal.type) || Boolean(p.estate_record_detail);
+    case 'OLDER_OWNER': return signal.type === 'older_owner';
+    case 'SENIOR': return signal.type === 'senior_deferral';
+    default: return false;
+  }
+}
+
+function matchesSiteSearch(p: ParcelProperties, search: string): boolean {
+  const query = search.trim().toLowerCase();
+  return !query || [p.address, p.parcel_id, p.owner_name || p.owner, p.use, p.zoning,
+    p.children_count_estate_owner, p.estate_record_detail, p.zillow_past_attempt, p.redfin_past_attempt]
+    .some(value => (value || '').toLowerCase().includes(query));
+}
+
 export function SiteList() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -125,10 +149,53 @@ export function SiteList() {
   const [keepFilter, setKeepFilter] = useSessionState<'ALL' | 'Y' | 'N' | 'LISTED'>('sites:keepFilter',
     searchParams.get('filter') === 'listed' ? 'LISTED' : 'ALL'
   );
-  const [categoryFilter, setCategoryFilter] = useSessionState('sites:categoryFilter', 'ALL');
-  const [townFilter, setTownFilter] = useSessionState('sites:townFilter', 'ALL');
   const [lifeEventFilter, setLifeEventFilter] = useSessionState<'ALL' | 'HAS_SIGNAL' | 'ESTATE' | 'OLDER_OWNER' | 'SENIOR'>('sites:lifeEventFilter', 'ALL');
   const [sortBy, setSortBy] = useSessionState<'qualified' | 'score_desc' | 'usable_desc' | 'gross_desc' | 'val_desc' | 'address_asc' | 'owner_asc'>('sites:sortBy:v2', 'score_desc');
+
+  const [zoningGroups, setZoningGroups] = useSessionState<string[]>('sites:zoningGroups', []);
+  const [zoningDistricts, setZoningDistricts] = useSessionState<string[]>('sites:zoningDistricts', []);
+  const [developmentSelection, setDevelopment] = useSessionState<string[] | string>('sites:development', 'ALL');
+  const development = Array.isArray(developmentSelection) ? developmentSelection.at(-1) ?? 'ALL' : developmentSelection;
+  const [owners, setOwners] = useSessionState<string[]>('sites:owners', []);
+  const [yearsSelection, setYearsOwned] = useSessionState<string | string[]>('sites:yearsOwned', []);
+  const yearsOwned = useMemo(() => (Array.isArray(yearsSelection) ? yearsSelection : [yearsSelection]).filter(value => value !== 'ALL'), [yearsSelection]);
+  const [loanCategories, setLoanCategories] = useSessionState<string[]>('sites:loanCategories', []);
+  const [wetlands, setWetlands] = useSessionState('sites:wetlands', 'ALL');
+  useEffect(() => { if (keepFilter === 'LISTED') setKeepFilter('ALL'); }, [keepFilter]);
+  const filters = useMemo<DashboardFilters>(() => ({
+    screening: keepFilter === 'LISTED' ? 'ALL' : keepFilter,
+    districts: ZONING_GROUPS.filter(group => zoningGroups.includes(group.id)).flatMap(group => {
+      const selected = zoningDistricts.filter(code => (group.codes as readonly string[]).includes(code));
+      return selected.length > 0 ? selected : [...group.codes];
+    }),
+    status: development, owner: owners, years: 'ALL', loan: loanCategories, wetland: wetlands, listing: 'ALL',
+  }), [keepFilter, zoningGroups, zoningDistricts, development, owners, yearsOwned, loanCategories, wetlands]);
+  const ownerTypes = useMemo(() => [...new Set(parcels.map(({ properties }) => properties.owner_type?.trim() || 'Unknown'))].sort(), [parcels]);
+  const developmentStatuses = useMemo(() => [...new Set(parcels.map(({ properties }) => properties.status).filter((status): status is string => Boolean(status)))].sort(), [parcels]);
+  const contextParcels = useMemo(() => parcels.filter(({ properties }) =>
+    matchesSiteSearch(properties, search) && matchesSiteLifeEvent(properties, lifeEventFilter)), [parcels, search, lifeEventFilter]);
+  const lifeCounts = useMemo(() => {
+    const base = parcels.filter(({ properties }) => matchesSiteSearch(properties, search)
+      && matchesDashboardFilters(properties, filters, {})
+      && (yearsOwned.length === 0 || yearsOwned.some(value => matchesYearsOwned(properties.years_owned, value))));
+    return Object.fromEntries(['ALL', 'HAS_SIGNAL', 'ESTATE', 'OLDER_OWNER', 'SENIOR'].map(value =>
+      [value, base.filter(({ properties }) => matchesSiteLifeEvent(properties, value)).length]));
+  }, [parcels, search, filters, yearsOwned]);
+  const filterCounts = useMemo(() => {
+    const tenureParcels = contextParcels.filter(({ properties }) => yearsOwned.length === 0 || yearsOwned.some(value => matchesYearsOwned(properties.years_owned, value)));
+    const facet = (key: keyof DashboardFilters | 'zoningGroups', values: readonly string[], omit: (keyof DashboardFilters)[] = []) =>
+      countFacet(key === 'years' ? contextParcels : tenureParcels, filters, {}, key, values.map(value => ({ value })), omit);
+    return {
+      screening: facet('screening', ['ALL', 'Y', 'N']),
+      groups: facet('zoningGroups', ZONING_GROUPS.map(group => group.id), ['districts']),
+      districts: facet('districts', ZONING_DISTRICTS.map(district => district.code)),
+      status: facet('status', developmentStatuses),
+      owners: facet('owner', ownerTypes),
+      years: facet('years', YEARS_OWNED_FILTERS.map(option => option.value)),
+      loans: facet('loan', LOAN_FILTER_OPTIONS.map(option => option.value)),
+      wetlands: facet('wetland', WETLAND_FILTERS.map(option => option.value)),
+    };
+  }, [contextParcels, filters, ownerTypes, yearsOwned, developmentStatuses]);
 
   // Pagination
   const [page, setPage] = useSessionState('sites:page:v2', 1);
@@ -226,7 +293,7 @@ export function SiteList() {
   }, [loadVersion]);
 
   // Refresh keeps the saved page; actual filter changes start at page 1.
-  const filterSignature = JSON.stringify([search, keepFilter, categoryFilter, townFilter, lifeEventFilter, sortBy, pageSize]);
+  const filterSignature = JSON.stringify([search, filters, yearsOwned, lifeEventFilter, sortBy, pageSize]);
   const previousFilters = useRef(filterSignature);
   useEffect(() => {
     if (previousFilters.current !== filterSignature) setPage(1);
@@ -281,7 +348,6 @@ export function SiteList() {
 
     return {
       totalSites: parcels.length,
-      underOneAcreCount: parcels.filter((feature) => isUnderOneUsableAcre(feature.properties)).length,
       keepCount,
       dropCount,
       listedCount,
@@ -310,47 +376,10 @@ export function SiteList() {
 
   // Filtered & Sorted parcels
   const filteredSites = useMemo(() => {
-    const list = parcels.filter((f) => {
+    const list = contextParcels.filter((f) => {
       const p = f.properties;
-      if (keepFilter === 'Y' && p.keep !== 'Y') return false;
-      if (keepFilter === 'N' && p.keep !== 'N') return false;
-      if (keepFilter === 'LISTED') {
-        const key = `${(p.town || '').toUpperCase().trim()}|${(p.parcel_id || '').trim()}`;
-        const lInfo = listingCheckData?.lots?.[key];
-        if (!lInfo || !lInfo.status || lInfo.status === 'Not listed') return false;
-      }
-      if (categoryFilter === 'UNDER_1_USABLE_ACRE') {
-        if (!isUnderOneUsableAcre(p)) return false;
-      } else if (categoryFilter !== 'ALL' && p.category !== categoryFilter) return false;
-      if (townFilter !== 'ALL' && p.town !== townFilter) return false;
-
-      if (lifeEventFilter === 'HAS_SIGNAL') {
-        const lInfo = parseLifeEventSignal(p.life_event_signal, p.estate_record_detail, p.town, p.state);
-        if (!lInfo.hasSignal) return false;
-      } else if (lifeEventFilter === 'ESTATE') {
-        const lInfo = parseLifeEventSignal(p.life_event_signal, p.estate_record_detail, p.town, p.state);
-        if (!['estate_death', 'estate_filed', 'life_estate'].includes(lInfo.type) && !p.estate_record_detail) return false;
-      } else if (lifeEventFilter === 'OLDER_OWNER') {
-        const lInfo = parseLifeEventSignal(p.life_event_signal, p.estate_record_detail, p.town, p.state);
-        if (lInfo.type !== 'older_owner') return false;
-      } else if (lifeEventFilter === 'SENIOR') {
-        const lInfo = parseLifeEventSignal(p.life_event_signal, p.estate_record_detail, p.town, p.state);
-        if (lInfo.type !== 'senior_deferral') return false;
-      }
-
-      if (search.trim()) {
-        const q = search.trim().toLowerCase();
-        const addr = (p.address || '').toLowerCase();
-        const pid = (p.parcel_id || '').toLowerCase();
-        const own = (p.owner_name || p.owner || '').toLowerCase();
-        const use = (p.use || '').toLowerCase();
-        const zon = (p.zoning || '').toLowerCase();
-        const child = (p.children_count_estate_owner || '').toLowerCase();
-        const estate = (p.estate_record_detail || '').toLowerCase();
-        const zAtt = (p.zillow_past_attempt || '').toLowerCase();
-        const rAtt = (p.redfin_past_attempt || '').toLowerCase();
-        return addr.includes(q) || pid.includes(q) || own.includes(q) || use.includes(q) || zon.includes(q) || child.includes(q) || estate.includes(q) || zAtt.includes(q) || rAtt.includes(q);
-      }
+      if (!matchesDashboardFilters(p, filters, {})) return false;
+      if (yearsOwned.length > 0 && !yearsOwned.some(value => matchesYearsOwned(p.years_owned, value))) return false;
       return true;
     });
 
@@ -384,7 +413,7 @@ export function SiteList() {
       }
       return 0;
     });
-  }, [parcels, search, keepFilter, categoryFilter, townFilter, lifeEventFilter, sortBy, listingCheckData, parcelRanks]);
+  }, [contextParcels, filters, yearsOwned, sortBy, parcelRanks]);
 
   // Paginated Sites
   const totalItems = filteredSites.length;
@@ -398,13 +427,18 @@ export function SiteList() {
   const handleResetFilters = () => {
     setSearch('');
     setKeepFilter('ALL');
-    setCategoryFilter('ALL');
-    setTownFilter('ALL');
+    setZoningGroups([]);
+    setZoningDistricts([]);
+    setDevelopment('ALL');
+    setOwners([]);
+    setYearsOwned([]);
+    setLoanCategories([]);
+    setWetlands('ALL');
     setLifeEventFilter('ALL');
     setSortBy('score_desc');
   };
 
-  const hasActiveFilters = search || keepFilter !== 'ALL' || categoryFilter !== 'ALL' || townFilter !== 'ALL' || lifeEventFilter !== 'ALL' || sortBy !== 'score_desc';
+  const hasActiveFilters = search || yearsOwned.length > 0 || Object.values(filters).some(value => Array.isArray(value) ? value.length > 0 : value !== 'ALL') || lifeEventFilter !== 'ALL' || sortBy !== 'score_desc';
 
   return (
     <div className="min-h-full bg-slate-50/50 p-2.5 sm:p-3.5 lg:p-4 w-full space-y-3">
@@ -434,96 +468,78 @@ export function SiteList() {
             )}
           </div>
 
-          {/* Screening Filter Pills */}
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200/80 text-xs font-semibold flex-wrap">
-            <button
-              onClick={() => setKeepFilter('ALL')}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
-                keepFilter === 'ALL' ? 'bg-white text-slate-900 shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              All ({stats.totalSites})
-            </button>
-            <button
-              onClick={() => setKeepFilter('Y')}
-              className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 ${
-                keepFilter === 'Y' ? 'bg-emerald-600 text-white shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <span>✓</span> Qualified ({stats.keepCount})
-            </button>
-            <button
-              onClick={() => setKeepFilter('N')}
-              className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 ${
-                keepFilter === 'N' ? 'bg-rose-600 text-white shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <span>✕</span> Excluded ({stats.dropCount})
-            </button>
-            <button
-              onClick={() => setKeepFilter('LISTED')}
-              className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
-                keepFilter === 'LISTED' ? 'bg-red-600 text-white shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              Listed ({stats.listedCount})
-            </button>
-          </div>
         </div>
 
         {/* Dropdowns Row */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-2.5 text-xs">
-          <div>
-            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Category</label>
-            <select aria-label="Category"
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              className="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-            >
-              <option value="ALL">All Categories</option>
-              <option value="UNDER_1_USABLE_ACRE">Under 1 usable acre ({stats.underOneAcreCount})</option>
-              {stats.categories.map((c) => (
-                <option key={c} value={c}>{c}</option>
-              ))}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs">
+          <label className="site-filter-field"><span className="site-filter-label">Screening results</span>
+            <select className="site-filter-select" aria-label="Screening results" data-active={filters.screening !== 'ALL'} value={filters.screening} onChange={event => setKeepFilter(event.target.value as 'ALL' | 'Y' | 'N')}>
+              {[['ALL', 'All'], ['Y', 'Qualified'], ['N', 'Excluded']].map(([value, label]) => <option key={value} value={value}>{label} ({filterCounts.screening[value]})</option>)}
             </select>
-          </div>
-
-          <div>
-            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Municipality</label>
-            <select aria-label="Municipality"
-              value={townFilter}
-              onChange={(e) => setTownFilter(e.target.value)}
-              className="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-            >
-              <option value="ALL">All Towns</option>
-              {stats.towns.map((t) => (
-                <option key={t} value={t}>{t}</option>
-              ))}
+          </label>
+          <SiteFilterDropdown label="Zoning" allLabel="All zoning groups" selected={zoningGroups}
+            selectionCount={zoningDistricts.length || zoningGroups.length}
+            summaryText={zoningDistricts.length > 0 ? `${zoningGroups.length === 1 ? ZONING_GROUPS.find(group => group.id === zoningGroups[0])?.name : `${zoningGroups.length} groups`} · ${zoningDistricts.length} selected` : undefined}
+            options={ZONING_GROUPS.map(group => ({
+              value: group.id, label: group.name, color: group.color, count: filterCounts.groups[group.id],
+              detail: zoningDistricts.some(code => (group.codes as readonly string[]).includes(code))
+                ? `${zoningDistricts.filter(code => (group.codes as readonly string[]).includes(code)).length} selected` : undefined,
+            }))}
+            onChange={values => {
+              setZoningGroups(values);
+              const codes: string[] = ZONING_GROUPS.filter(group => values.includes(group.id)).flatMap(group => [...group.codes]);
+              setZoningDistricts(current => current.filter(code => codes.includes(code)));
+            }}
+            sideContent={zoningGroups.length > 0 ? ZONING_GROUPS.filter(group => zoningGroups.includes(group.id)).map(group =>
+              <fieldset key={group.id} className="site-zoning-district-group">
+                <legend><span className="site-filter-color" style={{ backgroundColor: group.color }} aria-hidden="true" />{group.name} districts</legend>
+                {ZONING_DISTRICTS.filter(district => (group.codes as readonly string[]).includes(district.code)).map(district =>
+                  <button key={district.code} type="button" className="site-filter-choice site-filter-choice--zoning" aria-pressed={zoningDistricts.includes(district.code)}
+                    style={{ '--zoning-color': district.color } as CSSProperties}
+                    onClick={() => setZoningDistricts(current => current.includes(district.code) ? current.filter(code => code !== district.code) : [...current, district.code])}>
+                    <span className="site-filter-color" style={{ backgroundColor: district.color }} aria-hidden="true" />
+                    <span>{district.name} ({district.code}) ({filterCounts.districts[district.code]})</span>
+                  </button>)}
+              </fieldset>) : undefined} />
+          <label className="site-filter-field"><span className="site-filter-label">Development status</span>
+            <select className="site-filter-select" aria-label="Development status" data-active={development !== 'ALL'} value={development} onChange={event => setDevelopment(event.target.value)}>
+              <option value="ALL">All development statuses</option>
+              {developmentStatuses.map(value => <option key={value} value={value}>{value} ({filterCounts.status[value]})</option>)}
             </select>
-          </div>
-
+          </label>
+          <SiteFilterDropdown label="Owner type" allLabel="All owner types" selected={owners} onChange={setOwners}
+            options={ownerTypes.map(value => ({ value, label: value, count: filterCounts.owners[value] }))} />
+          <SiteFilterDropdown label="Years owned" allLabel="All ownership durations" selected={yearsOwned} onChange={setYearsOwned}
+            options={YEARS_OWNED_FILTERS.filter(option => option.value !== 'ALL').map(option => ({ ...option, count: filterCounts.years[option.value] }))} />
+          <SiteFilterDropdown label="Loan category" allLabel="All categories" selected={loanCategories} onChange={setLoanCategories}
+            options={LOAN_FILTER_OPTIONS.filter(option => option.value !== 'ALL').map(option => ({ ...option, count: filterCounts.loans[option.value] }))} />
+          <label className="site-filter-field"><span className="site-filter-label">Wetland coverage</span>
+            <select className="site-filter-select" aria-label="Wetland coverage" data-active={wetlands !== 'ALL'} value={wetlands} onChange={event => setWetlands(event.target.value)}>
+              {WETLAND_FILTERS.map(option => <option key={option.value} value={option.value}>{option.label} ({filterCounts.wetlands[option.value]})</option>)}
+            </select>
+          </label>
 
           <div>
-            <label className="block text-[10px] font-bold text-purple-700 uppercase tracking-wider mb-1">Life Events</label>
-            <select aria-label="Life events"
+            <label className="site-filter-label">Life Events</label>
+            <select aria-label="Life events" data-active={lifeEventFilter !== 'ALL'}
               value={lifeEventFilter}
               onChange={(e: any) => setLifeEventFilter(e.target.value)}
-              className="w-full p-2 bg-purple-50/60 border border-purple-200 rounded-xl font-medium text-purple-950 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
+              className="site-filter-select"
             >
-              <option value="ALL">All Life Events ({stats.totalSites})</option>
-              <option value="HAS_SIGNAL">Any Signal ({stats.lifeEventCount})</option>
-              <option value="ESTATE">Estate / Heirs ({stats.estateCount})</option>
-              <option value="OLDER_OWNER">Older Owner (30+ yrs)</option>
-              <option value="SENIOR">Senior Tax Deferral</option>
+              <option value="ALL">All Life Events ({lifeCounts.ALL})</option>
+              <option value="HAS_SIGNAL">Any Signal ({lifeCounts.HAS_SIGNAL})</option>
+              <option value="ESTATE">Estate / Heirs ({lifeCounts.ESTATE})</option>
+              <option value="OLDER_OWNER">Older Owner (30+ yrs) ({lifeCounts.OLDER_OWNER})</option>
+              <option value="SENIOR">Senior Tax Deferral ({lifeCounts.SENIOR})</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Sort By</label>
-            <select aria-label="Sort by"
+            <label className="site-filter-label">Sort By</label>
+            <select aria-label="Sort by" data-active={sortBy !== 'score_desc'}
               value={sortBy}
               onChange={(e: any) => setSortBy(e.target.value)}
-              className="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+              className="site-filter-select"
             >
               <option value="score_desc">Rank by Score (High to Low)</option>
               <option value="qualified">Qualified First, Usable Ac</option>
