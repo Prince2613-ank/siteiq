@@ -18,7 +18,7 @@ for (const [n,expected] of [[0,0],[9.99,0],[10,-5],[24.99,-5],[25,-10],[50,-10],
 for (const value of [null,undefined,'',' ',NaN,Infinity,-1,'unknown']) {
   for(const [field,factor] of [['usable_acres','size'],['highway_exit_road_miles','highway'],['years_owned','tenure'],['industrial_lots_within_quarter_mile','industry']]) eq(points({[field]:value},factor),null,`invalid ${field}: ${value}`);
 }
-for (const [category,expected] of [['Industrial',10],['Developable',10],['Commercial',5],['Paved land',5],['Built-up (other)',0],['Non-developable',0],['Public land',0],['Other',null]]) eq(points({category},'land'),expected,`land ${category}`);
+for (const [category,expected] of [['Industrial',10],['Developable',10],['Commercial',10],['Paved land',5],['Built-up (other)',0],['Non-developable',0],['Public land',0],['Other',null]]) eq(points({category},'land'),expected,`land ${category}`);
 eq(points({road_dist_m:1},'highway'),null,'road proximity is not highway driving distance');
 const sameSurname='Estate record for owner or a family member with the same surname (death) - heirs may now hold the land';
 eq(points({life_event_signal:sameSurname},'estate'),40,'same-name family estate');
@@ -58,24 +58,38 @@ const leaseAndUtility={lease_easement_restriction:'Lease x1 (latest 2024, to ALV
 eq([points({...checkedMortgage,...leaseAndUtility},'lease'),points({...checkedMortgage,...leaseAndUtility},'restriction')],[-10,-5],'lease and utility easement both apply');
 for(const [value,expected] of [['Easement x2 (to BOSTON GAS CO; MASS ELECTRIC CO; latest 2012, Bk/Pg 31989/591)',-5],['Easement x1 (to VERIZON NEW ENGLAND INC; latest 2015, Bk/Pg 34585/370)',-5],['Easement x1 (to CHIRAG REALTY LLC; latest 2025, Bk/Pg 43095/509)',0],['Easement x1 (latest 2015, Bk/Pg 34474/356)',null],['None found',0]]) eq(points({...checkedMortgage,lease_easement_restriction:value},'restriction'),expected,value);
 const townLoan=count=>({open_mortgage:`${count} open: latest Town housing rehab loan on 2022-07-20 (Bk/Pg 41076/405)`,lease_easement_restriction:'None found'});
-eq([points(townLoan(1),'restriction'),points(townLoan(1),'mortgage')],[-5,0],'single town housing loan is not also a mortgage deduction');
-eq([points(townLoan(2),'restriction'),points(townLoan(2),'mortgage')],[-5,-5],'town housing loan plus another open loan');
+eq(points(townLoan(1),'restriction'),-5,'town housing restriction is retained separately');
+eq(points(townLoan(2),'restriction'),-5,'multiple loans do not add mortgage deductions');
 eq(points({...townLoan(1),...leaseAndUtility},'restriction'),-5,'town loan and utility easement deduct once');
-eq([points({open_mortgage:'2 open: latest BANK $500,000',lease_easement_restriction:'None found'},'restriction'),points({open_mortgage:'2 open: latest BANK $500,000'},'mortgage')],[0,-5],'one mortgage deduction for multiple mortgages');
-for(const value of ['No mortgage by current owner on record','No mortgage on record','No open mortgage (2 discharged)']) eq(points({open_mortgage:value},'mortgage'),0,value);
-eq([points({open_mortgage:'Not checked (NH lot)'},'mortgage'),points({open_mortgage:'Not checked (NH lot)',lease_easement_restriction:'Not checked (NH lot)'},'restriction')],[null,null],'mortgage unknown');
+eq(score({open_mortgage:'2 open: latest BANK $500,000',lease_easement_restriction:'None found'}).deductions,0,'a mortgage alone is no longer a blocker');
+eq(score({open_mortgage:'1 open: latest BANK $100,000'}).factors.some(f=>f.id==='mortgage'),false,'old mortgage factor removed');
+for (const [signal, expected] of [
+  ['No open loan - likely free & clear',0],
+  ['Low leverage - strong equity',2],
+  ['Moderate leverage',5],
+  ['High leverage (loan >= 80% of value)',10],
+  ['Recent loan (<2 yrs) - unlikely to sell soon',5],
+  ['Not checked',null],['',null],['Unexpected category',null],
+]) {
+  eq(points({loan:{loan_signal:signal,open_loans_count:2}},'loan'),expected,`loan ${signal}`);
+}
+eq(points({},'loan'),null,'missing loan record does not earn points');
+eq(points({open_mortgage:'2 open: latest BANK $500,000'},'loan'),null,'mortgage text does not invent a loan category');
+eq([score({loan:{loan_signal:'High leverage (loan >= 80% of value)',open_loans_count:4}}).seller,score({loan:{loan_signal:'High leverage (loan >= 80% of value)',open_loans_count:4}}).deductions],[10,0],'loan points awarded once, with no mortgage deduction');
+eq(points({open_mortgage:'Not checked (NH lot)',lease_easement_restriction:'Not checked (NH lot)'},'restriction'),null,'restriction unknown');
 for(const [d,expected] of [['2023-10-22',0],['2023-10-23',0],['2023-10-24',-10],['2026-10-23',-10],['2026-10-24',null],['2026-02-30',null],['Feb 30, 2026',null],['unknown',null]]) eq(points({last_sale_date:d},'recent'),expected,`purchase ${d}`);
 eq(points({last_sale_date:'2026-01-01',last_sale_price:'$100 (nominal, family or trust transfer)'},'recent'),null,'nominal recent transfer needs review');
 const maximumInput={highway_exit_road_miles:.3,category:'Industrial',usable_acres:5,industrial_lots_within_quarter_mile:5,life_event_signal:sameSurname,unpaid_tax_signal:'Recent tax taking (2025), no redemption found: possible unpaid tax',zillow_past_attempt:withdrawn,years_owned:45,owner_lives_on_lot:'N',owner_distance_miles:60,owner_distance_group:'Over 50 miles',last_sale_date:'Mar 02, 1981',last_sale_price:nominal,owner_type:'Individual',lawsuit_on_title:false,lease_easement_restriction:'None found',wetland_pct:0,open_mortgage:'No mortgage on record'};
+maximumInput.loan={loan_signal:'High leverage (loan >= 80% of value)',open_loans_count:1};
 const full=score(maximumInput);
 eq([full.score,full.site,full.seller,full.deductions],[100,40,60,0],'maximum from recorded inputs');
-eq(full.factors.filter(f=>f.group==='seller').reduce((sum,f)=>sum+f.points,0),165,'seller factors are shown in full');
+eq(full.factors.filter(f=>f.group==='seller').reduce((sum,f)=>sum+f.points,0),175,'seller factors including loan are shown in full');
 eq(score({life_event_signal:sameSurname,unpaid_tax_signal:'Recent tax taking (2025), no redemption found: possible unpaid tax'}).seller,60,'seller likelihood counts up to 60');
 const blockers={lawsuit_on_title:true,lease_easement_restriction:leaseAndUtility.lease_easement_restriction,wetland_pct:30,last_sale_date:'2026-01-01',last_sale_price:'$500,000',open_mortgage:townLoan(2).open_mortgage};
-eq([score(blockers).deductions,score(blockers).score],[-50,0],'all recorded penalties stack and floor at zero');
+eq([score(blockers).deductions,score(blockers).score],[-45,0],'all recorded penalties stack and floor at zero');
 eq(score({}).factors.every(f=>f.points===0&&!f.hasData),true,'all absent data contributes numeric zero');
 eq(score({}).score,0,'missing records do not earn points');
-eq(score({category:'Commercial',usable_acres:2,wetland_pct:12}).score,10,'only recorded supported points');
+eq(score({category:'Commercial',usable_acres:2,wetland_pct:12}).score,15,'only recorded supported points');
 eq(api.FACTORS.filter(f=>f.group==='site').reduce((sum,f)=>sum+f.max,0),40,'site quality max');
 eq(api.SELLER_CAP,60,'seller likelihood cap');
 eq(api.readScoreOverrides,undefined,'manual override reader removed');
@@ -87,10 +101,11 @@ const square=(eastMetres,category)=>{const x=-70.9+eastMetres/81620,y=42.85,d=0.
 eq(api.withNearbyIndustry([square(0,'Industrial'),square(300,'Industrial'),square(500,'Commercial'),square(1000,'Industrial')]).map(p=>p.industrial_lots_within_quarter_mile),[1,1,1,0],'industrial lots within a quarter mile, excluding the lot itself');
 eq(api.withNearbyIndustry([{properties:{category:'Industrial'},geometry:null}])[0].industrial_lots_within_quarter_mile,null,'missing geometry is not counted');
 const records = JSON.parse(fs.readFileSync(path.join(__dirname,'../public/geojson/parcels_250m.geojson'))).features;
-const inputs=api.withNearbyIndustry(records);
+const loans=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/geojson/parcel_loans.json'),'utf8')).parcels;
+const inputs=api.withNearbyIndustry(records.map(f=>({...f,properties:{...f.properties,loan:loans[`${f.properties.town.trim().toUpperCase()}|${f.properties.parcel_id.trim()}`]}})));
 const snapshots=inputs.map(p=>({town:p.town,parcel_id:p.parcel_id,address:p.address,...score(p)}));
 const distribution=id=>{const counts={};for(const result of snapshots){const f=result.factors.find(f=>f.id===id);const key=f.hasData?f.points:'no data';counts[key]=(counts[key]||0)+1;}return counts;};
-eq(distribution('land'),{10:113,5:285,0:368},'land type across 766');
+eq(distribution('land'),{10:383,5:15,0:368},'land type across 766');
 eq(distribution('size'),{15:63,10:68,5:177,0:458},'usable size across 766');
 eq(distribution('industry'),{5:240,0:526},'industry nearby across 766');
 eq(distribution('estate'),{40:24,30:1,20:32,0:666,'no data':43},'estate across 766');
@@ -101,10 +116,11 @@ eq(distribution('distance'),{15:31,10:70,5:66,0:588,'no data':11},'owner distanc
 eq(distribution('family'),{10:136,0:616,'no data':14},'family transfer across 766');
 eq(distribution('highway'),{'no data':766},'highway exit distance not in source');
 eq(distribution('lawsuit'),{'no data':766},'lawsuit search not in source');
-eq([distribution('lease')[-10],distribution('recent')[-10],distribution('wetland')[-10],distribution('wetland')[-5],distribution('mortgage')[-5],distribution('restriction')[-5]],[13,48,67,52,227,36],'deal blockers across 766');
+eq(distribution('loan'),{0:444,2:92,5:93,10:47,'no data':90},'loan points across 766');
+eq([distribution('lease')[-10],distribution('recent')[-10],distribution('wetland')[-10],distribution('wetland')[-5],distribution('restriction')[-5]],[13,48,67,52,36],'non-loan deal blockers across 766');
 for (const result of snapshots) {
   assert.ok(Number.isFinite(result.score)&&result.score>=0&&result.score<=100);
-  assert.ok(result.site<=40&&result.seller<=60&&result.deductions>=-50);
+  assert.ok(result.site<=40&&result.seller<=60&&result.deductions>=-45);
   assert.equal(result.factors.length,16);
   assert.ok(result.factors.every(f=>typeof f.points==='number'&&Number.isFinite(f.points)));
   assert.ok(result.factors.filter(f=>!f.hasData).every(f=>f.points===0));
@@ -112,5 +128,5 @@ for (const result of snapshots) {
 }
 eq(snapshots.length,766,'all parcel scores computed');
 eq(records.filter(f=>f.properties.keep==='Y').length,185,'qualification unchanged');
-fs.writeFileSync(path.resolve(__dirname,'../../../scratch/parcel-ranking-audit.json'),JSON.stringify({asOf:full.asOf,version:api.SCORING_VERSION,checks,records:snapshots},null,2));
+fs.writeFileSync(path.resolve(__dirname,'../../../scratch/parcel-ranking-v5-audit.json'),JSON.stringify({asOf:full.asOf,version:api.SCORING_VERSION,checks,records:snapshots},null,2));
 console.log(`${checks} scoring assertions and all 766 parcel scores passed. Qualified remains 185.`);

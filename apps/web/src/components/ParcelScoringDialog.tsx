@@ -67,7 +67,7 @@ export function ParcelScoringDialog({ parcel, score, onClose }: {
           </div>)}
         </section>)}
         <footer className="parcel-scoring-footer">
-          <p>Calculated automatically using the scoring table and recorded data. Missing or unsupported factors contribute 0 points. No estimates or manual point adjustments are included.</p>
+          <p>Calculated automatically using the scoring table and recorded data. Missing or unsupported factors contribute 0 points. Loan points count toward the 60-point seller limit.</p>
         </footer>
       </div>
     </div>

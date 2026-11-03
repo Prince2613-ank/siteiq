@@ -1,3 +1,5 @@
+import type { ParcelLoanData } from './parcelLoans';
+
 // Refined ranking model, independent of the parcel qualification rules.
 export interface ScoringInput {
   category?: string; acres?: number | string | null; usable_acres?: number | string | null; wetland_pct?: number | string | null;
@@ -7,22 +9,30 @@ export interface ScoringInput {
   life_event_signal?: string; unpaid_tax_signal?: string;
   past_listing_attempt?: string; zillow_past_attempt?: string; redfin_past_attempt?: string;
   open_mortgage?: string | null; lease_easement_restriction?: string | null;
+  loan?: Pick<ParcelLoanData, 'loan_signal' | 'open_loans_count'> | null;
   // Derived from parcel geometry by withNearbyIndustry().
   industrial_lots_within_quarter_mile?: number | null;
   // Structured findings can be supplied by a later data import.
   highway_exit_road_miles?: number | string | null; lawsuit_on_title?: boolean;
 }
 
-export type FactorId = 'highway' | 'land' | 'size' | 'industry' | 'estate' | 'tax' | 'listing' | 'tenure' | 'distance' | 'family' | 'lawsuit' | 'lease' | 'wetland' | 'recent' | 'mortgage' | 'restriction';
+export type FactorId = 'highway' | 'land' | 'size' | 'industry' | 'estate' | 'tax' | 'listing' | 'tenure' | 'distance' | 'family' | 'loan' | 'lawsuit' | 'lease' | 'wetland' | 'recent' | 'restriction';
 export interface ScoreFactor {
   id: FactorId; label: string; group: 'site' | 'seller' | 'blocker'; max: number;
   options: readonly (readonly [number, string])[];
   points: number; evidence: string; hasData: boolean;
 }
 
-export const SCORING_VERSION = 'ranking-v4';
+export const SCORING_VERSION = 'ranking-v5-loans';
 // Seller factors can add up to more than 60; only the first 60 count.
 export const SELLER_CAP = 60;
+export const LOAN_SCORE_BANDS = [
+  { signal: 'No open loan - likely free & clear', label: 'No open loan', points: 0 },
+  { signal: 'Low leverage - strong equity', label: 'Low loan-to-value', points: 2 },
+  { signal: 'Moderate leverage', label: 'Moderate loan-to-value', points: 5 },
+  { signal: 'High leverage (loan >= 80% of value)', label: 'High loan-to-value (80%+)', points: 10 },
+  { signal: 'Recent loan (<2 yrs) - unlikely to sell soon', label: 'Recent loan (under 2 years)', points: 5 },
+] as const;
 // Usable (dry, open) acres. Exact endpoints enter the higher band.
 export const SIZE_SCORE_BANDS = [
   { minimum: 3, points: 15, label: '3+ usable acres' },
@@ -32,7 +42,7 @@ export const SIZE_SCORE_BANDS = [
 ] as const;
 export const FACTORS: readonly Omit<ScoreFactor, 'points' | 'evidence' | 'hasData'>[] = [
   { id: 'highway', label: 'Distance to highway exit', group: 'site', max: 10, options: [[10, 'Under 0.5 mile'], [5, '0.5 to 1 mile'], [0, 'Over 1 mile']] },
-  { id: 'land', label: 'Land type', group: 'site', max: 10, options: [[10, 'Industrial or developable'], [5, 'Commercial or paved lot'], [0, 'House lot, non-developable or public']] },
+  { id: 'land', label: 'Land type', group: 'site', max: 10, options: [[10, 'Commercial, industrial or developable'], [5, 'Paved lot'], [0, 'House lot, non-developable or public']] },
   { id: 'size', label: 'Usable size (dry, open land)', group: 'site', max: 15, options: SIZE_SCORE_BANDS.map(band => [band.points, band.label] as const) },
   { id: 'industry', label: 'Industry nearby', group: 'site', max: 5, options: [[5, '2+ industrial lots within ¼ mile'], [0, 'Fewer']] },
   { id: 'estate', label: 'Estate after a death', group: 'seller', max: 40, options: [[40, 'Estate record for owner or same-name family'], [30, 'Life estate on deed'], [20, 'Estate record after purchase, to check'], [0, 'No estate record']] },
@@ -41,11 +51,11 @@ export const FACTORS: readonly Omit<ScoreFactor, 'points' | 'evidence' | 'hasDat
   { id: 'tenure', label: 'Years owned', group: 'seller', max: 25, options: [[25, '40+ years'], [20, '30 to 39'], [15, '20 to 29'], [5, '10 to 19'], [0, 'Under 10']] },
   { id: 'distance', label: 'Owner lives far away', group: 'seller', max: 15, options: [[15, '50+ miles'], [10, '10 to 50 miles'], [5, 'Other town within 10 miles'], [0, 'Same town or on the lot']] },
   { id: 'family', label: 'Passed within the family', group: 'seller', max: 10, options: [[10, '$0–$100 family deed, held 10+ years'], [0, 'No qualifying family transfer']] },
+  { id: 'loan', label: 'Loan category', group: 'seller', max: 10, options: [...LOAN_SCORE_BANDS.map(band => [band.points, band.label] as const), [0, 'Loan details unavailable']] },
   { id: 'lawsuit', label: 'Lawsuit on title', group: 'blocker', max: 10, options: [[-10, 'Lawsuit recorded'], [0, 'No lawsuit recorded']] },
   { id: 'lease', label: 'Lease on the lot', group: 'blocker', max: 10, options: [[-10, 'Lease recorded'], [0, 'No lease recorded']] },
   { id: 'recent', label: 'Bought in last 3 years', group: 'blocker', max: 10, options: [[-10, 'Bought within last 3 years'], [0, 'Not bought within last 3 years']] },
   { id: 'wetland', label: 'Wetlands', group: 'blocker', max: 10, options: [[-10, '25%+ of lot'], [-5, '10 to under 25%'], [0, 'Under 10%']] },
-  { id: 'mortgage', label: 'Open mortgage', group: 'blocker', max: 5, options: [[-5, 'Open mortgage recorded'], [0, 'No open mortgage recorded']] },
   { id: 'restriction', label: 'Resale restriction or easement', group: 'blocker', max: 5, options: [[-5, 'Town housing loan or utility easement recorded'], [0, 'None recorded']] },
 ];
 
@@ -82,7 +92,7 @@ export function scoreParcel(parcel: ScoringInput, asOf = new Date()) {
   set('highway', miles === null ? null : miles < 0.5 ? 10 : miles <= 1 ? 5 : 0,
     miles === null ? 'Highway exit driving distance is not recorded. Corridor distance is not highway distance.' : `${miles} road miles to a highway exit.`);
   const category = text(parcel.category).toLowerCase();
-  const landPoints: Record<string, number> = { industrial: 10, developable: 10, commercial: 5, 'paved land': 5, 'built-up (other)': 0, 'non-developable': 0, 'public land': 0 };
+  const landPoints: Record<string, number> = { industrial: 10, developable: 10, commercial: 10, 'paved land': 5, 'built-up (other)': 0, 'non-developable': 0, 'public land': 0 };
   set('land', category in landPoints ? landPoints[category] : null, `Recorded category: ${parcel.category || 'Not provided'}.`);
   const usable = number(parcel.usable_acres);
   const sizeBand = usable === null ? undefined : SIZE_SCORE_BANDS.find(band => usable >= band.minimum);
@@ -134,6 +144,15 @@ export function scoreParcel(parcel: ScoringInput, asOf = new Date()) {
   set('family', nominal === null ? null : nominal && personOrTrust && years === null ? null : nominal && personOrTrust && years !== null && years >= 10 ? 10 : 0,
     nominal === null ? 'Last transfer price is not recorded.' : `Last transfer ${price![0]} to ${parcel.owner_type || 'unknown owner type'}${years !== null ? `, held ${years} years` : ''}.`);
 
+  // Loan categories add seller points once, rather than deducting for a mortgage.
+  // Use the imported source category directly; do not infer equity or selling intent.
+  const loanSignal = text(parcel.loan?.loan_signal);
+  const loanBand = LOAN_SCORE_BANDS.find(band => band.signal === loanSignal);
+  const loanCount = number(parcel.loan?.open_loans_count);
+  set('loan', loanBand?.points ?? null, loanBand
+    ? `${loanBand.label}${loanCount === null ? '' : `; ${loanCount} open loan${loanCount === 1 ? '' : 's'} recorded`}.`
+    : 'Loan details unavailable; no loan points applied.');
+
   set('lawsuit', typeof parcel.lawsuit_on_title === 'boolean' ? (parcel.lawsuit_on_title ? -10 : 0) : null,
     typeof parcel.lawsuit_on_title === 'boolean' ? 'Title-litigation search recorded.' : 'No lawsuit (lis pendens) search recorded.');
   const restrictions = text(parcel.lease_easement_restriction);
@@ -151,10 +170,6 @@ export function scoreParcel(parcel: ScoringInput, asOf = new Date()) {
   const mortgage = text(parcel.open_mortgage);
   const mortgageChecked = mortgage && !/^not checked/i.test(mortgage);
   const townLoan = /town housing rehab loan/i.test(mortgage);
-  const openLoans = Number(mortgage.match(/^(\d+)\s+open\b/i)?.[1] ?? 0);
-  // A single open town housing loan is the resale restriction, not a second deduction.
-  set('mortgage', openLoans > (townLoan ? 1 : 0) ? -5 : openLoans || /^no (?:open )?mortgage\b/i.test(mortgage) ? 0 : null,
-    openLoans === 1 && townLoan ? 'Only open loan is the town housing loan, deducted as a resale restriction.' : mortgage || 'Open mortgage status has not been checked.');
   // A town housing loan and a utility easement together still deduct once.
   const grantees = Array.from(restrictions.matchAll(/Easement x\d+ \(([^)]*)\)/gi)).map(match => match[1].match(/^to ([^;]+)/i)?.[1] ?? '');
   const utility = grantees.find(name => UTILITY.test(name));

@@ -1,17 +1,17 @@
 # Parcel opportunity ranking
 
-Implemented from the client's ranking model (version `ranking-v4`, 23 October 2026), which replaces the Ranking model on page 2 of the Off-Market Land Channel business plan. This ranking is separate from property identity confidence and from Qualified / Excluded screening. Neither screening rules nor source GeoJSON records are changed by scoring.
+Uses the client's 23 October 2026 ranking model, updated on 3 November 2026 as `ranking-v5-loans`. Loan categories now add seller points and replace the former open-mortgage deduction. Commercial land now earns 10 points, matching the supplied business plan. Other factor rules are retained from `ranking-v4` (commit `0d36733`). This ranking is separate from property identity confidence and from Qualified / Excluded screening. Neither screening rules nor source GeoJSON records are changed by scoring.
 
 `score = clamp(site quality + min(seller likelihood, 60) + deductions, 0, 100)`
 
-Site quality contributes up to 40 points. Seller factors can add up to 165, but only the first 60 count. The six blockers stack and can deduct up to 50. This is an ordinal research score, not a probability that an owner will sell. Listed and excluded parcels may have scores; their existing eligibility and listing labels remain visible.
+Site quality contributes up to 40 points. Seller factors can add up to 175, but only the first 60 count. The five blockers stack and can deduct up to 45. This is an ordinal research score, not a probability that an owner will sell. Listed and excluded parcels may have scores; their existing eligibility and listing labels remain visible.
 
 ## Site quality (max 40)
 
 | Factor | Points | Parcels (of 766) |
 | --- | --- | --- |
 | Distance to highway exit | Under 0.5 mile: 10; 0.5 to 1 mile: 5; over 1 mile: 0 | Not in source data |
-| Land type | Industrial or Developable: 10; Commercial or Paved land: 5; Built-up (house lot), Non-developable or Public land: 0 | 113 / 285 / 368 |
+| Land type | Commercial, Industrial or Developable: 10; Paved land: 5; Built-up (house lot), Non-developable or Public land: 0 | 383 / 15 / 368 |
 | Usable size (dry, open land) | 3+ acres: 15; 1.5 to under 3: 10; 0.75 to under 1.5: 5; under 0.75: 0 | 63 / 68 / 177 / 458 |
 | Industry nearby | 2+ industrial lots within ¼ mile: 5; fewer: 0 | 240 / 526 |
 
@@ -25,6 +25,7 @@ Site quality contributes up to 40 points. Seller factors can add up to 165, but 
 | Years owned | 40+: 25; 30 to 39: 20; 20 to 29: 15; 10 to 19: 5 | 65 / 65 / 117 / 184 |
 | Owner lives far away | 50+ miles: 15; 10 to under 50: 10; other town within 10 miles: 5; same town or on the lot: 0 | 31 / 70 / 66 |
 | Passed within the family | Last transfer $0–$100 to an individual or trust, held 10+ years: 10 | 136 |
+| Loan category | Low loan-to-value: +2; moderate: +5; high (80%+): +10; recent (under 2 years): +5; no open loan: 0; unavailable: 0 | 92 / 56 / 47 / 37 / 444 / 90 |
 
 11 parcels have seller factors above 60; each is counted as 60. The scoring dialog still lists every seller factor's points.
 
@@ -36,7 +37,6 @@ Site quality contributes up to 40 points. Seller factors can add up to 165, but 
 | Lease on the lot | -10 | 13 |
 | Bought in the last 3 years | -10 | 48 |
 | Wetland 25%+ / 10 to under 25% of lot | -10 / -5 | 67 / 52 |
-| Open mortgage | -5 | 227 |
 | Resale restriction (town housing rehab loan) or utility easement | -5, once even if both | 36 |
 
 
@@ -48,15 +48,25 @@ Site quality contributes up to 40 points. Seller factors can add up to 165, but 
 - **Wetlands over 50%** take the 25%+ deduction. All 29 such parcels are already excluded by screening.
 - **Old listings** take the best signal across the Redfin, Zillow and past-attempt columns. There is no 5-year window. A "never sold" listing that began before the current owner's priced purchase was the seller's attempt and earns the previous-owner 5 points (2 MACY ST, 297 ELM ST, 238 LAFAYETTE RD). After a $0–$100 family or trust transfer, the same family still holds the land, so the attempt keeps 35.
 - **Owner distance** uses lives-on-lot first, then recorded miles (50+, 10 to 50), then the town grouping.
-- **Resale restriction and mortgage**: a lot whose only open loan is a town housing rehab loan takes the -5 restriction deduction but not the -5 mortgage deduction. Another open loan adds the mortgage deduction. Several open mortgages deduct -5 once.
+- **Loan category** uses the imported `loan.loan_signal` from the workbook, once per parcel. The agreed business weights are positive even for recent loans. No open loan contributes a supported 0; unavailable, missing or unrecognized categories contribute 0 without claiming verified absence. The source categories are not reclassified and multiple open loans do not multiply the award. Loan points enter the existing seller cap of 60. There is no separate mortgage deduction.
+- **Resale restrictions** remain independent: a town housing rehab restriction still deducts 5, as does a utility easement. Both together deduct only 5. This is a restriction deduction, not a loan penalty.
 - **Utility easements** are easements granted to an electric, gas, telephone or water utility. Easements to people or companies deduct nothing; an easement with no recorded grantee is shown as unverified.
 - **Purchased within 3 years** excludes the exact anniversary. Recent nominal/family transfers do not establish a purchase.
 
 ## Missing evidence
 
-Every parcel receives one calculated score from source records only. No proportional rescaling, manual points, estimates or possible-score ranges are used. Missing support contributes numeric zero, with the source reason displayed; a zero from missing evidence does not assert that a property issue is absent. Clicking a list score opens a separate, read-only Scoring details dialog with all 16 factors, points, deductions, evidence and the scoring table's rules.
+Every parcel receives one calculated score from source records only. No proportional rescaling, manual points or possible-score ranges are used. Missing support contributes numeric zero, with the source reason displayed; a zero from missing evidence does not assert that a property issue is absent. Clicking a list score opens a separate, read-only Scoring details dialog with all 16 factors, points, deductions, evidence and the scoring table's rules.
 
-The current dataset has no highway driving distances and no title-litigation search, so no parcel earns highway points or a lawsuit deduction. The highest achievable score from current data is therefore 90, and the highest actual score is 80 (250 MAIN ST, Amesbury). Road corridor distance is never substituted for highway distance. "Not checked" source values (mainly the 52 Seabrook, NH lots) contribute zero.
+The current dataset has no highway driving distances and no title-litigation search, so no parcel earns highway points or a lawsuit deduction. The highest achievable score from current data is therefore 90, and the highest actual score is 85 (133 MAIN ST, Salisbury). Road corridor distance is never substituted for highway distance. "Not checked" source values (mainly the 52 Seabrook, NH lots) contribute zero.
+
+## Loan rescoring comparison
+
+Using the same calculation date (3 November 2026) and the same 766 parcel records,
+415 scores increased and 351 stayed the same compared with `ranking-v4`; none
+fell. Apart from Commercial land receiving 10 rather than 5 and removal of the mortgage blocker, the pre-existing factors retain the same points and evidence availability.
+232 parcels receive positive loan-factor points, subject to the seller cap.
+The score and rank UI remains unchanged: 133 MAIN ST, Salisbury now ranks first
+at 85, followed by 250 MAIN ST, Amesbury at 80.
 
 ## Automatic calculation
 
@@ -66,11 +76,17 @@ Scores are consistent across browsers using the same source records and calculat
 
 ## Sites ranks
 
-Every parcel has a global display position among all 766 records, calculated before filtering and pagination. Higher scores come first. Equal scores use natural address order, then town/parcel identity, so positions are deterministic; different positions do not imply different scores. The Rank column preserves those global positions when filtering or sorting by other fields. Rank all clears search and filters, selects score order and returns to page 1; the chosen page size is retained. All 766 records are ranked even when only 50 rows are shown at a time.
+Every parcel has a global display position among all 766 records, calculated before filtering and pagination. Higher scores come first. Equal scores use natural address order, then town/parcel identity, so positions are deterministic; different positions do not imply different scores. The Rank column preserves those global positions when filtering or sorting by other fields. The Sites page defaults to score order; Reset Filters returns to score order. All 766 records are ranked even when only 50 rows are shown at a time.
 
 ## Verification
 
 `node apps/web/e2e/parcel-scoring.cjs` checks every band boundary, source-text mapping, the nearby-industry count, stacked penalties, missing evidence and the per-factor counts across all 766 records.
+
+`npm run test:loan-ranking --workspace=apps/web` runs the scoring checks and a
+browser check on port 5174 (override with `SITEIQ_URL`). It verifies all 766
+displayed scores/ranks, each loan category's positive points under Seller
+likelihood, removal of the mortgage blocker, the seller cap, refresh behavior,
+ignored legacy browser overrides and desktop/mobile scoring dialogs.
 
 `node apps/web/e2e/parcel-scoring-ui.cjs` checks that both information cards retain the original eight sections without scoring or Unverified content, while list scores/sorting and ranks remain available. It also checks desktop/mobile layout and Escape with the local app running on port 5173.
 
