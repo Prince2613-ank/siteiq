@@ -31,8 +31,12 @@ selected options means all records for that filter. Selections persist on refres
 and when returning from a report. Legacy saved single choices restore as one
 selected option. Reset filters clears both groups.
 
-Listing status is no longer shown in the dashboard filters. Saved listing-status
-choices do not restrict dashboard results.
+Listing status is available on both pages as a single selection: All listing
+statuses, Listed, Not listed, or No links. Listed includes recorded active,
+pending and partial listings. Not listed contains other parcels with an HTTP(S)
+listing link; No links contains the remainder. It combines with the other filters,
+persists on refresh, and clears through Reset filters. Counts omit only the
+listing selection while respecting all other active filters.
 
 All current parcel records have valid recorded wetland percentages. There is no
 Unknown wetland filter; legacy saved Unknown selections reset to All. Missing

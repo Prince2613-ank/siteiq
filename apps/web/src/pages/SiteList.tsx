@@ -1,5 +1,5 @@
 import { SiteFilterDropdown } from '../components/SiteFilterDropdown';
-import { YEARS_OWNED_FILTERS, countFacet, matchesDashboardFilters, matchesYearsOwned, type DashboardFilters } from '../utils/dashboardFilters';
+import { YEARS_OWNED_FILTERS, LISTING_STATUS_FILTERS, countFacet, matchesDashboardFilters, matchesYearsOwned, type DashboardFilters } from '../utils/dashboardFilters';
 import { ZONING_GROUPS, ZONING_DISTRICTS } from '../utils/parcelZoning';
 import { LOAN_FILTER_OPTIONS, type ParcelLoanData } from '../utils/parcelLoans';
 import { WETLAND_FILTERS } from '../utils/parcelWetlands';
@@ -160,6 +160,7 @@ export function SiteList() {
   const [yearsSelection, setYearsOwned] = useSessionState<string | string[]>('sites:yearsOwned', []);
   const yearsOwned = useMemo(() => (Array.isArray(yearsSelection) ? yearsSelection : [yearsSelection]).filter(value => value !== 'ALL'), [yearsSelection]);
   const [loanCategories, setLoanCategories] = useSessionState<string[]>('sites:loanCategories', []);
+  const [listingFilter, setListingFilter] = useSessionState('sites:listingFilter', 'ALL');
   const [wetlands, setWetlands] = useSessionState('sites:wetlands', 'ALL');
   useEffect(() => { if (keepFilter === 'LISTED') setKeepFilter('ALL'); }, [keepFilter]);
   const filters = useMemo<DashboardFilters>(() => ({
@@ -168,23 +169,23 @@ export function SiteList() {
       const selected = zoningDistricts.filter(code => (group.codes as readonly string[]).includes(code));
       return selected.length > 0 ? selected : [...group.codes];
     }),
-    status: development, owner: owners, years: 'ALL', loan: loanCategories, wetland: wetlands, listing: 'ALL',
-  }), [keepFilter, zoningGroups, zoningDistricts, development, owners, yearsOwned, loanCategories, wetlands]);
+    status: development, owner: owners, years: 'ALL', loan: loanCategories, wetland: wetlands, listing: listingFilter,
+  }), [keepFilter, zoningGroups, zoningDistricts, development, owners, yearsOwned, loanCategories, wetlands, listingFilter]);
   const ownerTypes = useMemo(() => [...new Set(parcels.map(({ properties }) => properties.owner_type?.trim() || 'Unknown'))].sort(), [parcels]);
   const developmentStatuses = useMemo(() => [...new Set(parcels.map(({ properties }) => properties.status).filter((status): status is string => Boolean(status)))].sort(), [parcels]);
   const contextParcels = useMemo(() => parcels.filter(({ properties }) =>
     matchesSiteSearch(properties, search) && matchesSiteLifeEvent(properties, lifeEventFilter)), [parcels, search, lifeEventFilter]);
   const lifeCounts = useMemo(() => {
     const base = parcels.filter(({ properties }) => matchesSiteSearch(properties, search)
-      && matchesDashboardFilters(properties, filters, {})
+      && matchesDashboardFilters(properties, filters, listingCheckData?.lots ?? {})
       && (yearsOwned.length === 0 || yearsOwned.some(value => matchesYearsOwned(properties.years_owned, value))));
     return Object.fromEntries(['ALL', 'HAS_SIGNAL', 'ESTATE', 'OLDER_OWNER', 'SENIOR'].map(value =>
       [value, base.filter(({ properties }) => matchesSiteLifeEvent(properties, value)).length]));
-  }, [parcels, search, filters, yearsOwned]);
+  }, [parcels, search, filters, yearsOwned, listingCheckData]);
   const filterCounts = useMemo(() => {
     const tenureParcels = contextParcels.filter(({ properties }) => yearsOwned.length === 0 || yearsOwned.some(value => matchesYearsOwned(properties.years_owned, value)));
     const facet = (key: keyof DashboardFilters | 'zoningGroups', values: readonly string[], omit: (keyof DashboardFilters)[] = []) =>
-      countFacet(key === 'years' ? contextParcels : tenureParcels, filters, {}, key, values.map(value => ({ value })), omit);
+      countFacet(key === 'years' ? contextParcels : tenureParcels, filters, listingCheckData?.lots ?? {}, key, values.map(value => ({ value })), omit);
     return {
       screening: facet('screening', ['ALL', 'Y', 'N']),
       groups: facet('zoningGroups', ZONING_GROUPS.map(group => group.id), ['districts']),
@@ -194,8 +195,9 @@ export function SiteList() {
       years: facet('years', YEARS_OWNED_FILTERS.map(option => option.value)),
       loans: facet('loan', LOAN_FILTER_OPTIONS.map(option => option.value)),
       wetlands: facet('wetland', WETLAND_FILTERS.map(option => option.value)),
+      listing: facet('listing', LISTING_STATUS_FILTERS.map(option => option.value)),
     };
-  }, [contextParcels, filters, ownerTypes, yearsOwned, developmentStatuses]);
+  }, [contextParcels, filters, ownerTypes, yearsOwned, developmentStatuses, listingCheckData]);
 
   // Pagination
   const [page, setPage] = useSessionState('sites:page:v2', 1);
@@ -378,7 +380,7 @@ export function SiteList() {
   const filteredSites = useMemo(() => {
     const list = contextParcels.filter((f) => {
       const p = f.properties;
-      if (!matchesDashboardFilters(p, filters, {})) return false;
+      if (!matchesDashboardFilters(p, filters, listingCheckData?.lots ?? {})) return false;
       if (yearsOwned.length > 0 && !yearsOwned.some(value => matchesYearsOwned(p.years_owned, value))) return false;
       return true;
     });
@@ -413,7 +415,7 @@ export function SiteList() {
       }
       return 0;
     });
-  }, [contextParcels, filters, yearsOwned, sortBy, parcelRanks]);
+  }, [contextParcels, filters, yearsOwned, sortBy, parcelRanks, listingCheckData]);
 
   // Paginated Sites
   const totalItems = filteredSites.length;
@@ -434,6 +436,7 @@ export function SiteList() {
     setYearsOwned([]);
     setLoanCategories([]);
     setWetlands('ALL');
+    setListingFilter('ALL');
     setLifeEventFilter('ALL');
     setSortBy('score_desc');
   };
@@ -519,6 +522,12 @@ export function SiteList() {
             </select>
           </label>
 
+          <label className="site-filter-field"><span className="site-filter-label">Listing status</span>
+            <select className="site-filter-select" aria-label="Listing status" data-active={listingFilter !== 'ALL'} value={listingFilter}
+              disabled={loading || !listingCheckData} onChange={event => setListingFilter(event.target.value)}>
+              {LISTING_STATUS_FILTERS.map(option => <option key={option.value} value={option.value}>{option.label} ({filterCounts.listing[option.value]})</option>)}
+            </select>
+          </label>
           <div>
             <label className="site-filter-label">Life Events</label>
             <select aria-label="Life events" data-active={lifeEventFilter !== 'ALL'}

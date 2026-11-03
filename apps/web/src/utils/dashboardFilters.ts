@@ -12,6 +12,13 @@ export const YEARS_OWNED_FILTERS = [
   { value: '30_PLUS', label: '30 years or more' },
 ] as const;
 
+export const LISTING_STATUS_FILTERS = [
+  { value: 'ALL', label: 'All listing statuses' },
+  { value: 'LISTED', label: 'Listed' },
+  { value: 'NOT_LISTED', label: 'Not listed' },
+  { value: 'NO_LINKS', label: 'No links' },
+] as const;
+
 export interface DashboardFilters {
   screening: string;
   districts: string[];

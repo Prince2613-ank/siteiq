@@ -17,8 +17,14 @@ const zoning = moduleExports('parcelZoning.ts');
 const screening = moduleExports('parcelScreening.ts');
 const loanOptions = moduleExports('parcelLoans.ts').LOAN_FILTER_OPTIONS.filter(o => o.value !== 'ALL');
 const loans = json('parcel_loans.json').parcels;
+const listings = json('listing_check.json').lots;
 const key = p => `${p.town}|${p.parcel_id}`;
 const records = json('parcels_250m.geojson').features.map(({ properties: p }) => ({ ...p, ...screening.screenParcel(p), loan: loans[key(p)] }));
+const listingCategory = p => {
+  const listing = listings[key(p)];
+  if (listing?.status && listing.status !== 'Not listed') return 'LISTED';
+  return Object.values(listing?.links || {}).some(url => /^https?:\/\//i.test(url)) ? 'NOT_LISTED' : 'NO_LINKS';
+};
 const ownerOptions = [...new Set(records.map(p => p.owner_type?.trim() || 'Unknown'))].sort().map(value => ({ value, label: value }));
 const yearsOptions = [
   ['UNDER_5', 'Under 5 years', 0, 5], ['5_10', '5 to under 10 years', 5, 10],
@@ -83,7 +89,8 @@ let checks = 0;
           await select.selectOption(value);
         } else {
           const group = page.getByRole('group', { name: label, exact: true });
-          const optionName = label === 'Screening results' ? { Y: 'Qualified', N: 'Excluded' }[value] : value;
+          const optionName = label === 'Screening results' ? { Y: 'Qualified', N: 'Excluded' }[value] : label === 'Listing status'
+            ? { LISTED: 'Listed', NOT_LISTED: 'Not listed', NO_LINKS: 'No links' }[value] : value;
           const button = group.getByRole('button', { name: new RegExp(`^${escape(optionName)} \\(`) });
           assert.equal(textCount(await button.textContent()), expected.length, `${label} ${value} count`);
           await button.click();
@@ -121,6 +128,18 @@ let checks = 0;
       for (const option of wetlandOptions) {
         await reset(); const expected = records.filter(option.matches);
         await chooseSingle('Wetland coverage', option.value, expected); await result(expected, `wetland ${option.value}`);
+      }
+      for (const value of ['LISTED', 'NOT_LISTED', 'NO_LINKS']) {
+        await reset();
+        const expected = records.filter(p => listingCategory(p) === value);
+        await chooseSingle('Listing status', value, expected);
+        await result(expected, `listing ${value}`);
+        await page.reload();
+        await page.waitForFunction(() => !document.body.textContent.includes('Loading'));
+        await result(expected, `listing ${value} refresh`);
+        const qualified = expected.filter(p => p.keep === 'Y');
+        await chooseSingle('Screening results', 'Y', qualified);
+        await result(qualified, `listing ${value} + qualified`);
       }
       for (const group of zoning.ZONING_GROUPS) {
         await reset();

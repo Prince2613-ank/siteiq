@@ -4,13 +4,13 @@ import { readSession, writeSession } from '../utils/sessionState';
 import { parcelReportPath } from '../utils/parcelReports';
 import { LOAN_CATEGORIES, LOAN_FILTER_OPTIONS, type ParcelLoanData } from '../utils/parcelLoans';
 import { WETLAND_FILTERS } from '../utils/parcelWetlands';
-import { YEARS_OWNED_FILTERS, countFacet, matchesDashboardFilters, type DashboardFilters } from '../utils/dashboardFilters';
+import { YEARS_OWNED_FILTERS, LISTING_STATUS_FILTERS, countFacet, matchesDashboardFilters, type DashboardFilters } from '../utils/dashboardFilters';
 import { isUnderOneUsableAcre } from '../utils/parcelScreening';
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import L from 'leaflet';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Dashboard.css';
-import { loadParcels, loadGeoJson, parcelKey } from '../utils/dataLoading';
+import { loadParcels, loadListingCheck, loadGeoJson, parcelKey } from '../utils/dataLoading';
 import 'leaflet/dist/leaflet.css';
 import { ZONING_DISTRICTS, ZONING_GROUPS, zoningColor } from '../utils/parcelZoning';
 import type { ScoringInput } from '../utils/parcelScoring';
@@ -266,6 +266,7 @@ interface DashboardReturnState {
   selectedStatus: string;
   selectedOwnerType: string | string[];
   selectedWetland?: string;
+  selectedListing?: string;
   keepFilter: 'ALL' | 'Y' | 'N';
   parcel: string;
   center: [number, number];
@@ -291,6 +292,7 @@ export function Dashboard() {
   // Layers data states
   const [parcelsData, setParcelsData] = useState<any>(null);
   const [roadsData, setRoadsData] = useState<any>(null);
+  const [listingData, setListingData] = useState<ListingCheckData | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [dataWarning, setDataWarning] = useState<string | null>(null);
@@ -313,6 +315,7 @@ export function Dashboard() {
   const [selectedStatus, setSelectedStatus] = useState(returnState?.selectedStatus ?? 'ALL');
   const [selectedOwnerType, setSelectedOwnerType] = useState<string[]>(() => restoreMultiSelection(returnState?.selectedOwnerType));
   const [selectedWetland, setSelectedWetland] = useState(WETLAND_FILTERS.some(option => option.value === returnState?.selectedWetland) ? returnState!.selectedWetland! : 'ALL');
+  const [selectedListing, setSelectedListing] = useState(returnState?.selectedListing ?? 'ALL');
   const [keepFilter, setKeepFilter] = useState<'ALL' | 'Y' | 'N'>(returnState?.keepFilter ?? 'ALL');
 
 
@@ -332,12 +335,14 @@ export function Dashboard() {
     setLoading(true);
     setLoadError(null);
     setDataWarning(null);
-    Promise.allSettled([loadParcels(), loadGeoJson('/geojson/roads.geojson')]).then(([parcels, roads]) => {
+    Promise.allSettled([loadParcels(), loadGeoJson('/geojson/roads.geojson'), loadListingCheck()]).then(([parcels, roads, listings]) => {
       if (!active) return;
       setRoadsData(roads.status === 'fulfilled' ? roads.value : null);
       if (roads.status === 'rejected') setDataWarning('Road data could not be loaded. Retry data load.');
       if (parcels.status === 'fulfilled') setParcelsData(parcels.value);
       else setLoadError('Parcel data could not be loaded. Check your connection and try again.');
+      setListingData(listings.status === 'fulfilled' ? listings.value : null);
+      if (listings.status === 'rejected') setDataWarning('Listing data could not be loaded. Retry to use the listing status filter.');
       setLoading(false);
     });
 
@@ -352,13 +357,13 @@ export function Dashboard() {
     screening: keepFilter, districts: [...selectedZonings,
       ...ZONING_GROUPS.filter(group => fullZoningGroups.includes(group.id)).flatMap(group => [...group.codes])],
     status: selectedStatus, owner: selectedOwnerType, wetland: selectedWetland,
-    listing: 'ALL', years: selectedYearsOwned, loan: selectedLoanCategory,
-  }), [keepFilter, selectedZonings, fullZoningGroups, selectedStatus, selectedOwnerType, selectedWetland, selectedYearsOwned, selectedLoanCategory]);
+    listing: selectedListing, years: selectedYearsOwned, loan: selectedLoanCategory,
+  }), [keepFilter, selectedZonings, fullZoningGroups, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, selectedYearsOwned, selectedLoanCategory]);
   const filteredParcels = useMemo(() => parcelsList.filter(({ properties }) =>
-    matchesDashboardFilters(properties, filters, {})), [parcelsList, filters]);
+    matchesDashboardFilters(properties, filters, listingData?.lots ?? {})), [parcelsList, filters, listingData]);
   const counts = useMemo(() => {
     const facet = (key: keyof DashboardFilters | 'zoningGroups', values: string[], extra: (keyof DashboardFilters)[] = []) =>
-      countFacet(parcelsList, filters, {}, key, values.map(value => ({ value })), extra);
+      countFacet(parcelsList, filters, listingData?.lots ?? {}, key, values.map(value => ({ value })), extra);
     return {
       screening: facet('screening', ['ALL', 'Y', 'N']),
       groups: facet('zoningGroups', ['ALL', ...ZONING_GROUPS.map(group => group.id)], ['districts']),
@@ -368,8 +373,9 @@ export function Dashboard() {
       wetlands: facet('wetland', WETLAND_FILTERS.map(option => option.value)),
       years: facet('years', YEARS_OWNED_FILTERS.map(option => option.value)),
       loans: facet('loan', LOAN_CATEGORIES.map(option => option.value)),
+      listing: facet('listing', LISTING_STATUS_FILTERS.map(option => option.value)),
     };
-  }, [parcelsList, filters, ownerTypes]);
+  }, [parcelsList, filters, ownerTypes, listingData]);
   const isFiltered = Object.values(filters).some(value => Array.isArray(value) ? value.length > 0 : value !== 'ALL');
 
   // Preserve the returning parcel on mount; later filter changes clear it.
@@ -384,7 +390,7 @@ export function Dashboard() {
     if (mapRef.current) {
       mapRef.current.closePopup();
     }
-  }, [keepFilter, selectedZonings, fullZoningGroups, selectedStatus, selectedOwnerType, selectedWetland, selectedYearsOwned, selectedLoanCategory]);
+  }, [keepFilter, selectedZonings, fullZoningGroups, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, selectedYearsOwned, selectedLoanCategory]);
 
 
   // Initialize Map
@@ -514,7 +520,7 @@ export function Dashboard() {
             map.stop();
             const center = map.getCenter();
             const snapshot: DashboardReturnState = {
-              selectedZonings, fullZoningGroups, selectedZoningGroups: zoningGroupsRef.current, selectedYearsOwned, selectedLoanCategory, selectedStatus, selectedOwnerType, selectedWetland, keepFilter,
+              selectedZonings, fullZoningGroups, selectedZoningGroups: zoningGroupsRef.current, selectedYearsOwned, selectedLoanCategory, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, keepFilter,
               parcel: parcelKey(p), center: [center.lat, center.lng], zoom: map.getZoom(),
               minZoom: map.getMinZoom(), scrollTop: sidebarRef.current?.scrollTop ?? 0,
               listingScrollTop: sidebarRef.current?.querySelector('.dashboard-listing-results')?.scrollTop ?? 0,
@@ -662,6 +668,7 @@ export function Dashboard() {
     setSelectedOwnerType([]);
     setSelectedWetland('ALL');
     setKeepFilter('ALL');
+    setSelectedListing('ALL');
     const map = mapRef.current;
     if (map) {
       map.stop();
@@ -682,7 +689,7 @@ export function Dashboard() {
     const save = () => {
       const center = map.getCenter();
       const snapshot: DashboardReturnState = {
-        selectedZonings, selectedZoningGroups, fullZoningGroups, selectedYearsOwned, selectedLoanCategory, selectedStatus, selectedOwnerType, selectedWetland, keepFilter,
+        selectedZonings, selectedZoningGroups, fullZoningGroups, selectedYearsOwned, selectedLoanCategory, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, keepFilter,
         parcel: focusedParcelKey ?? '', center: [center.lat, center.lng], zoom: map.getZoom(), minZoom: 14,
         scrollTop: sidebarRef.current?.scrollTop ?? 0,
         listingScrollTop: sidebarRef.current?.querySelector('.dashboard-listing-results')?.scrollTop ?? 0,
@@ -699,7 +706,7 @@ export function Dashboard() {
       sidebar?.removeEventListener('scroll', save, true);
       window.removeEventListener('pagehide', save);
     };
-  }, [parcelsData, selectedZonings, selectedZoningGroups, fullZoningGroups, selectedYearsOwned, selectedLoanCategory, selectedStatus, selectedOwnerType, selectedWetland, keepFilter, focusedParcelKey]);
+  }, [parcelsData, selectedZonings, selectedZoningGroups, fullZoningGroups, selectedYearsOwned, selectedLoanCategory, selectedStatus, selectedOwnerType, selectedWetland, selectedListing, keepFilter, focusedParcelKey]);
 
 
   return (
@@ -836,6 +843,17 @@ export function Dashboard() {
                 {WETLAND_FILTERS.map(option => <option key={option.value} value={option.value}>{option.label} ({counts.wetlands[option.value]})</option>)}
               </select>
             </label>
+          </div>
+          <div className="dashboard-filter-card">
+            <fieldset className="space-y-2" disabled={loading || !listingData}>
+              <legend className="text-xs font-semibold text-slate-600">Listing status</legend>
+              <div className="dashboard-filter-pills">
+                {LISTING_STATUS_FILTERS.map(option => <button key={option.value} type="button"
+                  aria-pressed={selectedListing === option.value} onClick={() => setSelectedListing(option.value)}>
+                  {option.label} ({counts.listing[option.value]})
+                </button>)}
+              </div>
+            </fieldset>
           </div>
           {loading && <p role="status" className="text-xs text-slate-500">Loading parcels...</p>}
           {!loading && !loadError && filteredParcels.length === 0 && <p role="status" className="text-xs text-slate-500">No parcels match your filters.</p>}

@@ -40,7 +40,7 @@ const count = locator => locator.textContent().then(text => Number(text.match(/\
     assert.ok(wetlandCounts.every(text => /\(\d+\)$/.test(text)));
     assert.equal(wetlandCounts.slice(1).reduce((sum, text) => sum + Number(text.match(/\((\d+)\)$/)[1]), 0), 766);
 
-    assert.equal(await page.getByRole('group', { name: 'Listing status', exact: true }).count(), 0);
+    assert.equal(await page.getByRole('group', { name: 'Listing status', exact: true }).count(), 1);
     const initialSnapshot = await page.evaluate(() => JSON.parse(sessionStorage.getItem('siteiq:view:v1:dashboard')));
 
     const groups = page.getByRole('group', { name: 'Zoning groups', exact: true });
@@ -211,6 +211,6 @@ const count = locator => locator.textContent().then(text => Number(text.match(/\
     assert.equal(await minus.getAttribute('aria-disabled'), 'true');
     assert.deepEqual(await page.locator('.leaflet-control-scale-line').allTextContents(), ['300 m', '1000 ft']);
     assert.deepEqual(errors, []);
-    console.log('PASS: immediate zoning groups; persistent subfilters; owner/loan multiselect and intersections; listing filter removed; refresh/reset; mobile layout; report framing.');
+    console.log('PASS: immediate zoning groups; persistent subfilters; owner/loan/years multiselect and intersections; listing filter present; refresh/reset; mobile layout; report framing.');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });
