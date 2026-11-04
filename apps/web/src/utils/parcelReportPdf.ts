@@ -50,8 +50,10 @@ async function captureParcelMap(container: HTMLElement): Promise<{ map: string; 
   // zoom or navigation cannot combine tiles and boundaries from different views.
   const tiles = [...container.querySelectorAll<HTMLImageElement>('.leaflet-tile-pane img.leaflet-tile')]
     .filter(image => image.src && image.getBoundingClientRect().width > 0)
-    .map(image => ({ url: image.src, ...rectangle(image),
-      order: Number((image.closest('.leaflet-tile-container') as HTMLElement | null)?.style.zIndex || 0) }))
+    .map(image => ({
+      url: image.src, ...rectangle(image),
+      order: Number((image.closest('.leaflet-tile-container') as HTMLElement | null)?.style.zIndex || 0)
+    }))
     .sort((a, b) => a.order - b.order);
   if (!tiles.length) throw new Error('Aerial imagery is still loading. Please try exporting again.');
   const overlays = [...container.querySelectorAll<SVGSVGElement>('.leaflet-overlay-pane svg')].map(element => {
@@ -119,13 +121,14 @@ export async function snapshotParcelReport(article: HTMLElement, data: ParcelRep
   }
 
   const lifeEvents = [...article.querySelectorAll('.report-life-events .report-life-event-badge')].map(badge => text(badge.textContent)).filter(Boolean);
+  const rankPart = data.rank && data.rank > 0 ? `${data.rank}-` : data.rank === 0 ? 'Unranked-' : '';
   const snapshot: ParcelReportPdfSnapshot = {
     title: text(article.querySelector('h1')?.textContent), location: text(article.querySelector('.report-location')?.textContent),
     rank: data.rank ?? null,
     rankText: data.rank && data.rank > 0 ? `#${data.rank}` : (p.keep === 'Y' ? null : 'Unranked (Excluded)'),
     lifeEvents,
     tags: [...article.querySelectorAll('.report-property-tags > span')].map(tag => text(tag.textContent)).join(' | '),
-    filename: `SiteIQ-Rank-${p.town}-${p.parcel_id}.pdf`.replace(/[<>:"/\\|?*\x00-\x1f]/g, '-'),
+    filename: `SiteIQ-Rank-${rankPart}${p.town}-${p.parcel_id}.pdf`.replace(/[<>:"/\\|?*\x00-\x1f]/g, '-'),
     sections, mapAttribution: text(mapElement.querySelector('.leaflet-control-attribution')?.textContent || data.sources.imagery_attribution),
     mapLegend: `Yellow: parcel boundary | Green: subject land${data.wetlands.features.length ? ' | Teal: mapped wetland' : ''}${data.buildings.features.length ? ' | Red: building footprint' : ''}`,
     map: '', mapWidth: 0, mapHeight: 0,
@@ -161,6 +164,11 @@ export async function downloadParcelReportPdf(snapshot: ParcelReportPdfSnapshot)
   paragraph('SiteIQ / PROPERTY REPORT', 9, true, '#287156');
   paragraph(snapshot.title, 23, true);
   paragraph(snapshot.location, 10);
+  if (snapshot.rank != null && snapshot.rank > 0) {
+    paragraph(`SiteIQ Rank: #${snapshot.rank}`, 11, true, '#1d4ed8');
+  } else if (snapshot.rank === 0) {
+    paragraph('SiteIQ Rank: Unranked (Excluded)', 11, true, '#64748b');
+  }
   if (snapshot.lifeEvents && snapshot.lifeEvents.length > 0) {
     paragraph(snapshot.lifeEvents.join('   |   '), 8.5, true, '#6b21a8');
   }
