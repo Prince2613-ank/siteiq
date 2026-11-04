@@ -8,3 +8,6 @@ build/
 .DS_Store
 apps/api/prisma/dev.db
 apps/api/uploads/
+__pycache__/
+*.pyc
+

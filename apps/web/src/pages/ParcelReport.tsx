@@ -7,7 +7,7 @@ import { loadParcelReport, parcelReportPath, type ParcelReportData } from '../ut
 import { downloadParcelReportPdf, snapshotParcelReport } from '../utils/parcelReportPdf';
 import { parcelKey } from '../utils/dataLoading';
 import { listingGroup } from '../utils/dashboardFilters';
-import { parcelListingLinks, type ParcelListingLink } from '../utils/parcelListing';
+import { parcelListingLinks, listingSourceLogo, type ParcelListingLink } from '../utils/parcelListing';
 import { areaMeasurements, vacantLandMeasurements, pavedLandMeasurements, M2_PER_ACRE } from '../utils/parcelAreas';
 import { ZONING_DISTRICTS, zoningCode } from '../utils/parcelZoning';
 import { formatLoanMoney, formatLoanPercent, loanCategoryLabel } from '../utils/parcelLoans';
@@ -39,7 +39,10 @@ function RecordSection({ title, fields, showNotChecked = false, className = '', 
     {visible.map(([label, value]) => <div key={label} className={String(value).length > 45 ? 'report-full-row' : undefined}><dt>{label}</dt><dd>{String(value)}</dd></div>)}
   </dl>
     {links && (links.length ? <div className="report-listing-links" aria-label="Listing source links">{links.map(link =>
-      <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>
+      <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
+        {listingSourceLogo(link.href) && <img src={listingSourceLogo(link.href)} alt="" aria-hidden="true" width="20.16" height="20.16" onError={event => { event.currentTarget.style.display = 'none'; }} />}
+        <span>{link.label}</span>
+      </a>
     )}</div> : <p className="report-no-listing-links">No listing links found.</p>)}
   </section>;
 }

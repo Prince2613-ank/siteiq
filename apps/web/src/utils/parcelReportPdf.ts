@@ -1,7 +1,7 @@
 import type { jsPDF } from 'jspdf';
 import type { ParcelReportData } from './parcelReports';
 
-type Section = { title: string; head?: string[]; rows: string[][]; links?: string[]; notes?: string[]; description?: string };
+type Section = { title: string; head?: string[]; rows: string[][]; links?: string[]; logos?: string[]; notes?: string[]; description?: string };
 export type ParcelReportPdfSnapshot = {
   title: string; location: string; tags: string; filename: string;
   sections: Section[]; map: string; mapWidth: number; mapHeight: number; mapLegend: string; mapAttribution: string;
@@ -12,6 +12,21 @@ export type ParcelReportPdfSnapshot = {
 const text = (value: string | null | undefined) => (value ?? '').replace(/\s+/g, ' ').trim()
   .replace(/[\u2010-\u2015]/g, '-').replace(/[\u2018\u2019]/g, "'")
   .replace(/[\u201c\u201d]/g, '"').replace(/[\u2192\u2197]/g, '').replace(/\u2026/g, '...').trim();
+
+async function listingLogo(link: HTMLAnchorElement): Promise<string> {
+  const image = link.querySelector('img');
+  if (!image) return '';
+  try {
+    if (!image.complete) await image.decode();
+    if (!image.naturalWidth) return '';
+    const canvas = document.createElement('canvas');
+    canvas.width = 48; canvas.height = 48;
+    const context = canvas.getContext('2d');
+    if (!context) return '';
+    context.drawImage(image, 0, 0, 48, 48);
+    return canvas.toDataURL('image/png');
+  } catch { return ''; }
+}
 
 async function captureParcelMap(container: HTMLElement): Promise<{ map: string; mapWidth: number; mapHeight: number }> {
   const bounds = container.getBoundingClientRect();
@@ -92,6 +107,7 @@ export async function snapshotParcelReport(article: HTMLElement, data: ParcelRep
       sections.push({ title, description: text(section.querySelector('[data-report-description]')?.textContent),
         rows: [...fields, ...links.map(link => [text(link.textContent), link.href])],
         links: [...fields.map(() => ''), ...links.map(link => link.href)],
+        logos: [...fields.map(() => ''), ...await Promise.all(links.map(listingLogo))],
       });
     } else {
       const links = [...section.querySelectorAll<HTMLAnchorElement>('a')].filter(link => /^https?:/i.test(link.href));
@@ -141,9 +157,19 @@ export async function downloadParcelReportPdf(snapshot: ParcelReportPdfSnapshot)
       headStyles: { fillColor: '#edf4ee', fontStyle: 'bold' },
       columnStyles: section.head ? {} : { 0: { cellWidth: 150, textColor: '#576d60' }, 1: { cellWidth: width - 150 } },
       rowPageBreak: 'avoid',
+      didParseCell: cell => {
+        if (cell.section === 'body' && cell.column.index === 0 && section.logos?.[cell.row.index]) {
+          cell.cell.styles.cellPadding = { top: 5, right: 5, bottom: 5, left: 26 };
+          cell.cell.styles.minCellHeight = 26;
+        }
+      },
       didDrawCell: cell => {
         const url = section.links?.[cell.row.index];
-        if (url && cell.section === 'body' && cell.column.index === 1) doc.link(cell.cell.x, cell.cell.y, cell.cell.width, cell.cell.height, { url });
+        const logo = section.logos?.[cell.row.index];
+        if (logo && cell.section === 'body' && cell.column.index === 0) {
+          doc.addImage(logo, 'PNG', cell.cell.x + 5, cell.cell.y + (cell.cell.height - 15.12) / 2, 15.12, 15.12);
+        }
+        if (url && cell.section === 'body') doc.link(cell.cell.x, cell.cell.y, cell.cell.width, cell.cell.height, { url });
       },
     });
     y = (doc as jsPDF & { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 21;

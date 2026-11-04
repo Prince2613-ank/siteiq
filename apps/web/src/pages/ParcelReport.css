@@ -45,7 +45,8 @@
 .report-area-section { padding-top: 23px; border-top: 1px solid #e5ebe7; }
 .report-source-note { margin: -3px 0 16px; color: #657367; font-size: 10px; font-style: italic; line-height: 1.6; }
 .report-listing-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
-.report-listing-links a { padding: 8px 12px; border: 1px solid #cfe0d7; border-radius: 7px; background: #f5faf7; color: #285f3c; font-size: 11px; font-weight: 600; }
+.report-listing-links a { display: inline-flex; align-items: center; gap: 7.2px; min-height: 34.56px; padding: 7.2px 11.52px; border: 1px solid #cfe0d7; border-radius: 5.76px; background: #f5faf7; color: #285f3c; font-size: 10.08px; font-weight: 600; }
+.report-listing-links img { width: 20.16px; height: 20.16px; object-fit: contain; flex-shrink: 0; }
 .report-listing-links a:hover { background: #e8f4ed; }
 .report-listing-links a:focus-visible { outline: 2px solid #285f3c; outline-offset: 3px; }
 .report-no-listing-links { margin-top: 16px; color: #657367; font-size: 11px; }

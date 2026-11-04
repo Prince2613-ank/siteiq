@@ -7,6 +7,8 @@ const root = path.resolve(__dirname, '../../..');
 const api = {};
 new Function('exports', ts.transpileModule(fs.readFileSync(path.join(root, 'apps/web/src/utils/parcelListing.ts'), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText)(api);
 const links = api.parcelListingLinks;
+assert.equal(api.listingSourceLogo('https://www.zillow.com/homedetails/1/'), '/source-logos/zillow.ico');
+assert.equal(api.listingSourceLogo('https://notzillow.com/'), undefined);
 assert.deepEqual(links({ links: { Zillow: 'https://example.com/p' }, proof: 'https://example.com/p' }, { zillow_link: 'https://example.com/p' }), [{ label: 'Zillow', href: 'https://example.com/p' }]);
 assert.deepEqual(links({ links: { Bad: 'javascript:alert(1)', Missing: 'No page' } }), []);
 assert.deepEqual(links(null, { redfin_link: ' https://example.com/redfin ' }), [{ label: 'Redfin', href: 'https://example.com/redfin' }]);
@@ -18,6 +20,7 @@ for (const p of parcels) {
   const result = links(listings[`${p.town}|${p.parcel_id}`], p);
   assert.equal(result.length, new Set(result.map(link => new URL(link.href).href.replace(/\/$/, ''))).size);
   assert.ok(result.every(link => /^https?:\/\//i.test(link.href)));
+  assert.ok(result.every(link => api.listingSourceLogo(link.href)), 'Every recorded listing source has a logo');
   count += result.length;
   noLinks += result.length === 0;
 }
@@ -33,6 +36,8 @@ assert.equal(noLinks, 227);
       const section = page.getByRole('heading', { name: 'Listing & history', exact: true }).locator('..');
       await section.waitFor();
       assert.deepEqual(await section.locator('a').evaluateAll(elements => elements.map(a => ({ href: a.href, target: a.target, rel: a.rel }))), expected.map(link => ({ href: new URL(link.href).href, target: '_blank', rel: 'noopener noreferrer' })));
+      await page.waitForFunction(() => [...document.querySelectorAll('.report-listing-links img')].every(img => img.complete && img.naturalWidth > 0));
+      assert.equal(await section.locator('a > img:first-child').count(), expected.length, 'Show each official logo before its link label');
       if (!expected.length) await section.getByText('No listing links found.', { exact: true }).waitFor();
       await page.setViewportSize({ width: 390, height: 844 });
       await section.scrollIntoViewIfNeeded();

@@ -5,6 +5,16 @@ export function isListedForSale(status?: string | null): boolean {
 }
 
 export type ParcelListingLink = { label: string; href: string };
+export function listingSourceLogo(href: string): string | undefined {
+  try {
+    const host = new URL(href).hostname.toLowerCase();
+    for (const source of ['zillow', 'redfin', 'loopnet', 'crexi']) {
+      if (host === `${source}.com` || host.endsWith(`.${source}.com`)) return `/source-logos/${source}.ico`;
+    }
+  } catch { /* An unknown source can still display its text label. */ }
+  return undefined;
+}
+
 export function parcelListingLinks(
   listing?: { links?: Record<string, string>; proof?: string | null } | null,
   parcel?: { zillow_link?: string | null; redfin_link?: string | null },
