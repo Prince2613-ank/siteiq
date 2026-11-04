@@ -556,8 +556,8 @@ export function SiteList() {
               className="site-filter-select"
             >
               <option value="score_desc">Rank by Score (High to Low)</option>
-              <option value="qualified">Qualified First, Usable Ac</option>
-              <option value="usable_desc">Usable Acres (High → Low)</option>
+              <option value="qualified">Qualified First, Vacant Ac</option>
+              <option value="usable_desc">Vacant Acres (High → Low)</option>
               <option value="gross_desc">Gross Acres (High → Low)</option>
               <option value="val_desc">Assessed Value (High → Low)</option>
               <option value="address_asc">Address (A → Z)</option>
@@ -618,7 +618,7 @@ export function SiteList() {
                 <th className="px-2 py-2.5 whitespace-nowrap" title="Automatically calculated from source data">Score /100</th>
                 <th className="px-2 py-2.5 whitespace-nowrap">Listing Status</th>
                 <th className="px-2.5 py-2.5 whitespace-nowrap">Listing History</th>
-                <th className="px-2 py-2.5 text-right whitespace-nowrap">Acres (Usable/Gross)</th>
+                <th className="px-2 py-2.5 text-right whitespace-nowrap">Acres (Vacant/Gross)</th>
                 <th className="px-2 py-2.5 text-right whitespace-nowrap">Assessed Value</th>
                 <th className="px-2 py-2.5 whitespace-nowrap">Road Corridor</th>
               </tr>
@@ -805,7 +805,8 @@ export function SiteList() {
                           p.zillow_past_attempt,
                           p.zillow_link,
                           p.redfin_past_attempt,
-                          p.redfin_link
+                          p.redfin_link,
+                          p.past_listing_attempt
                         );
 
                         if (attempts.length === 0) {
@@ -818,14 +819,14 @@ export function SiteList() {
 
                         return (
                           <span
-                            title={attempts.map((att) => att.source).join(', ')}
+                            title={attempts.map((att) => `${att.source}: ${att.text}`).join('\n')}
                             className={`inline-flex items-center gap-1 text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded leading-none border ${
                               attempts[0].source === 'Zillow'
                                 ? 'bg-blue-50 text-blue-700 border-blue-200'
                                 : 'bg-rose-50 text-rose-700 border-rose-200'
                             }`}
                           >
-                            {attempts[0].source}
+                            {/^sold\b/i.test(attempts[0].text) ? 'Sale history' : attempts[0].source}
                             {attempts.length > 1 && <span>+{attempts.length - 1}</span>}
                           </span>
                         );

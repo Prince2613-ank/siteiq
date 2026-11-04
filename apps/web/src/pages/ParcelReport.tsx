@@ -168,11 +168,11 @@ export function ParcelReport() {
     { label: 'Recorded lot area', acres: recordedAcres, percent: null, type: 'lot' },
     { label: complete ? 'Building footprint' : 'Mapped building footprint', acres: buildingAcres, percent: percentOf(buildingAcres, gisAcres), type: 'building' },
     { label: complete ? 'Wetland area' : 'Mapped wetland area', acres: wetlandAcres, percent: percentOf(wetlandAcres, gisAcres), type: 'wetland' },
-    { label: 'Usable land', acres: usableAcres, percent: percentOf(usableAcres, recordedAcres), type: 'usable' },
+    { label: 'Vacant land', acres: usableAcres, percent: percentOf(usableAcres, recordedAcres), type: 'usable' },
   ].filter(row => row.acres !== null && Number.isFinite(row.acres));
   const metrics = [
     { label: 'Recorded lot area', value: recordedAcres, unit: 'ac', digits: 2 },
-    { label: 'Usable land', value: usableAcres, unit: 'ac', digits: 2 },
+    { label: 'Vacant land', value: usableAcres, unit: 'ac', digits: 2 },
     { label: 'Recorded wetland coverage', value: wetlandPercent, unit: '%', digits: 1 },
   ].filter(metric => metric.value !== null);
   const zone = ZONING_DISTRICTS.find(district => district.code === zoningCode(p.zoning));

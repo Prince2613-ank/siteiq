@@ -36,15 +36,15 @@ export const LOAN_SCORE_BANDS = [
 ] as const;
 // Usable (dry, open) acres. Exact endpoints enter the higher band.
 export const SIZE_SCORE_BANDS = [
-  { minimum: 3, points: 15, label: '3+ usable acres' },
-  { minimum: 1.5, points: 10, label: '1.5 to under 3 usable acres' },
-  { minimum: 0.75, points: 5, label: '0.75 to under 1.5 usable acres' },
-  { minimum: 0, points: 0, label: 'Under 0.75 usable acres' },
+  { minimum: 3, points: 15, label: '3+ vacant acres' },
+  { minimum: 1.5, points: 10, label: '1.5 to under 3 vacant acres' },
+  { minimum: 0.75, points: 5, label: '0.75 to under 1.5 vacant acres' },
+  { minimum: 0, points: 0, label: 'Under 0.75 vacant acres' },
 ] as const;
 export const FACTORS: readonly Omit<ScoreFactor, 'points' | 'evidence' | 'hasData'>[] = [
   { id: 'highway', label: 'Distance to highway exit', group: 'site', max: 10, options: [[10, 'Under 0.5 mile'], [5, '0.5 to 1 mile'], [0, 'Over 1 mile']] },
   { id: 'land', label: 'Land type', group: 'site', max: 10, options: [[10, 'Commercial, industrial or developable'], [5, 'Paved lot'], [0, 'House lot, non-developable or public']] },
-  { id: 'size', label: 'Usable size (dry, open land)', group: 'site', max: 15, options: SIZE_SCORE_BANDS.map(band => [band.points, band.label] as const) },
+  { id: 'size', label: 'Vacant land (dry, open land)', group: 'site', max: 15, options: SIZE_SCORE_BANDS.map(band => [band.points, band.label] as const) },
   { id: 'industry', label: 'Industry nearby', group: 'site', max: 5, options: [[5, '2+ industrial lots within ¼ mile'], [0, 'Fewer']] },
   { id: 'estate', label: 'Estate after a death', group: 'seller', max: 40, options: [[40, 'Estate record for owner or same-name family'], [30, 'Life estate on deed'], [20, 'Estate record after purchase, to check'], [0, 'No estate record']] },
   { id: 'tax', label: 'Unpaid property tax', group: 'seller', max: 40, options: [[40, 'Recent tax taking, no payoff found'], [20, 'Older tax taking, status unclear'], [0, 'No tax taking by current owner']] },
@@ -98,7 +98,7 @@ export function scoreParcel(parcel: ScoringInput, asOf = new Date()) {
   const usable = number(parcel.usable_acres);
   const sizeBand = usable === null ? undefined : SIZE_SCORE_BANDS.find(band => usable >= band.minimum);
   set('size', sizeBand?.points ?? null,
-    sizeBand ? `${usable} usable acres (${parcel.acres ?? '?'} total): ${sizeBand.label}.` : 'Usable lot area is missing.');
+    sizeBand ? `${usable} vacant acres (${parcel.acres ?? '?'} total): ${sizeBand.label}.` : 'Vacant land area is missing.');
   const industrial = number(parcel.industrial_lots_within_quarter_mile);
   set('industry', industrial === null ? null : industrial >= 2 ? 5 : 0,
     industrial === null ? 'Nearby industrial lots have not been counted.' : `${industrial} other industrial lot${industrial === 1 ? '' : 's'} within ¼ mile (centre to centre, corridor parcels only).`);

@@ -108,7 +108,7 @@ export const CATEGORIES: CategoryDefinition[] = [
   {
     group: 'size',
     key: 'Under 1 usable acre',
-    label: 'Under 1 usable acre',
+    label: 'Under 1 vacant acre',
     fill: '#db2777',
     stroke: '#9d174d',
     textClass: 'text-pink-700 bg-pink-50 border-pink-200',

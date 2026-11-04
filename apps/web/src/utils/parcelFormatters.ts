@@ -338,7 +338,8 @@ export function getListingAttempts(
   zillowAttempt?: string | null,
   zillowLink?: string | null,
   redfinAttempt?: string | null,
-  redfinLink?: string | null
+  redfinLink?: string | null,
+  pastListingAttempt?: string | null
 ): ListingAttemptSource[] {
   const attempts: ListingAttemptSource[] = [];
 
@@ -356,6 +357,13 @@ export function getListingAttempts(
       text: redfinAttempt!.trim(),
       link: redfinLink?.trim() || null,
     });
+  }
+
+  // The combined history field is sourced from Redfin and may contain a sale
+  // even when the dedicated listing-attempt field says "None since last sale".
+  if (!attempts.some(attempt => attempt.source === 'Redfin') &&
+      /^\s*(?:sold|listed|for sale|currently listed)\b/i.test(pastListingAttempt ?? '')) {
+    attempts.push({ source: 'Redfin', text: pastListingAttempt!.trim(), link: redfinLink?.trim() || null });
   }
 
   return attempts;
