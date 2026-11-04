@@ -125,7 +125,7 @@ export async function snapshotParcelReport(article: HTMLElement, data: ParcelRep
     rankText: data.rank && data.rank > 0 ? `#${data.rank}` : (p.keep === 'Y' ? null : 'Unranked (Excluded)'),
     lifeEvents,
     tags: [...article.querySelectorAll('.report-property-tags > span')].map(tag => text(tag.textContent)).join(' | '),
-    filename: `SiteIQ-${p.town}-${p.parcel_id}.pdf`.replace(/[<>:"/\\|?*\x00-\x1f]/g, '-'),
+    filename: `SiteIQ-Rank-${p.town}-${p.parcel_id}.pdf`.replace(/[<>:"/\\|?*\x00-\x1f]/g, '-'),
     sections, mapAttribution: text(mapElement.querySelector('.leaflet-control-attribution')?.textContent || data.sources.imagery_attribution),
     mapLegend: `Yellow: parcel boundary | Green: subject land${data.wetlands.features.length ? ' | Teal: mapped wetland' : ''}${data.buildings.features.length ? ' | Red: building footprint' : ''}`,
     map: '', mapWidth: 0, mapHeight: 0,
