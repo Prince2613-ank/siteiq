@@ -27,6 +27,7 @@ fs.mkdirSync(output, { recursive: true });
       await page.locator('.report-property-heading h1').waitFor();
       assert.equal(await exportButton.isEnabled(), true);
       assert.equal(await page.getByRole('heading', { name: 'Property links', exact: true }).count(), 0);
+      assert.equal(await page.getByRole('heading', { name: 'Screening', exact: true }).count(), 0);
       assert.equal(await page.locator('.report-property-links').count(), 0);
       await page.getByRole('button', { name: 'Copy link', exact: true }).click();
       assert.equal(await page.evaluate(() => navigator.clipboard.readText()), url);

@@ -37,9 +37,9 @@ for (const p of parcels) {
     await page.getByRole('combobox', { name: 'Screening results', exact: true }).getByRole('option', { name: 'Qualified (213)', exact: true }).waitFor({ state: 'attached' });
     for (const [id, qualified] of [['10-27', true], ['10-82', true], ['23-41', true], ['18-125', false], ['19-110', false]]) {
       await page.goto(`${base}/sites/report/SALISBURY/${id}`);
-      const section = page.getByRole('heading', { name: 'Screening', exact: true }).locator('..');
-      await section.waitFor();
-      assert.match(await section.textContent(), qualified ? /Qualified.*town records describe this land as developable/s : /Excluded/);
+      const badge = page.locator(qualified ? '.report-tag-qualified' : '.report-tag-excluded');
+      await badge.waitFor();
+      assert.equal(await page.getByRole('heading', { name: 'Screening', exact: true }).count(), 0);
       const category = page.locator('dt').filter({ hasText: /^Land category$/ }).locator('..');
       assert.match(await category.textContent(), /Developable/);
     }

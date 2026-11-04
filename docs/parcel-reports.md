@@ -2,6 +2,15 @@
 
 Every source parcel has a report addressed by its town and parcel ID, including parcels with no street address. The former Country Club URL remains supported.
 
+The Screening section is omitted from individual property reports and PDF
+exports. The Qualified/Excluded badge remains in the report header. The
+Screening Logic page at `/screening-logic`, after Sites in the main navigation,
+explains exclusions, then the building-coverage threshold, listing labels, scores
+and ranks. The former `/screening-report` path redirects to this page. The
+"What does Qualified mean?" section is removed. Totals and first-applicable exclusion counts
+are loaded through the same `loadParcels` screening pipeline used by Dashboard
+and Sites. Counts are not hard-coded or shown when required data cannot load.
+
 All 766 source parcels are visible. Development status has only Vacant and
 Built-up, with an All filter. Building footprint at or below 5% of its matching
 parcel area classifies a parcel as Vacant; above 5% classifies it as Built-up.
@@ -38,6 +47,30 @@ Original category evidence is retained as `source_land_category`. Import with
 requires exact identity matches for every project parcel and never edits Excel.
 Reports load current category evidence so their classification and PDF exports
 match Dashboard and Sites even before report geometry is regenerated.
+
+Land & coverage conversions use original square-metre measurements, not rounded
+acreage. Exact conversion constants are 4046.8564224 m² per acre and 0.09290304 m²
+per square foot. Building/wetland percentages use their report's mapped lot area.
+Vacant land uses the workbook's `open_nonwetland_m2 / parcel_m2`, preserving its
+exclusion of buildings, paving and wetlands. It is not recalculated as mapped
+lot area minus building/wetland area, since paving is not a mapped report layer.
+These source boundaries differ, so rows are not an additive partition. The
+description below the report/PDF table is omitted as requested. Missing measurements stay unavailable rather than
+becoming zero; invalid vacant area above its source lot is not displayed.
+The 4 November audit corrected 763 rounded square-foot values and 629 displayed
+vacant-land percentages. At 47 Pike St, vacant land is 7327.1 m² = 78,868 sq ft =
+1.81 displayed acres, with 90.3% based on the 8115.5 m² source lot. The mapped lot
+is independently 8023.320905 m² (86,362 sq ft). These report presentation fixes do
+not change qualification, scores, ranks or source `usable_acres` calculations.
+Run `npm run test:areas --workspace=apps/web` to check all 766 records and report
+views. The source importer also preserves `source_vacant_area_m2`.
+
+Paved area is shown in Land & coverage and PDF exports using workbook `paved_m2`
+and its matching `parcel_m2` for the percentage. Existing paving row styling
+distinguishes it from buildings and vacant land. Genuine measured zero is shown
+as zero. New Hampshire has no paving layer in this input, so its zero placeholders
+are treated as unavailable and displayed as "Not available", rather than claiming
+there is no paving. Paved measurements do not change qualification or scores.
 
 Partial mapped coverage remains a stated limitation in reports, not a full-site
 survey or proof that the remaining area is free of paving/other constraints.

@@ -85,11 +85,11 @@ const total = Object.keys(coverage).length;
       await page.close();
     }
     const page = await browser.newPage();
-    for (const [town, id, expected] of [['AMESBURY', '43-2', /at or below 5%/], ['SALISBURY', '11-13', /above 5%/], ['AMESBURY', '66-14', /source workbook measurement/]]) {
+    for (const [town, id, expected] of [['AMESBURY', '43-2', 'Vacant'], ['SALISBURY', '11-13', 'Built-up'], ['AMESBURY', '66-14', 'Vacant']]) {
       await page.goto(`${base}/sites/report/${town}/${id}`);
-      const section = page.getByRole('heading', { name: 'Screening', exact: true }).locator('..');
-      await section.waitFor(); assert.match(await section.textContent(), expected);
+      const status = page.locator('dt').filter({ hasText: /^Development status$/ }).locator('..').locator('dd');
+      await status.waitFor(); assert.equal(await status.textContent(), expected);
     }
-    console.log(`PASS: all ${total} report measurements match; ${eligible} measured parcels at or below 5%; binary statuses, exact boundary, missing-data handling, existing exclusions, both-page persistence and report reasons verified.`);
+    console.log(`PASS: all ${total} report measurements match; ${eligible} measured parcels at or below 5%; binary statuses, exact boundary, missing-data handling, existing exclusions, both-page persistence and report status verified.`);
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

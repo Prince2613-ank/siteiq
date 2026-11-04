@@ -40,6 +40,8 @@ def main():
         p['source_building_area_m2'] = record.get('building_m2')
         p['source_parcel_area_m2'] = record.get('parcel_m2')
         p['source_building_data_issue'] = record.get('data_issue')
+        p['source_vacant_area_m2'] = record.get('open_nonwetland_m2')
+        p['source_paved_area_m2'] = record.get('paved_m2')
     target.write_text(json.dumps(data, separators=(',', ':')), encoding='utf-8')
     print(f'Imported original category and reason for all {len(keys)} parcels; workbook unchanged.')
 

@@ -7,12 +7,11 @@ import { loadParcelReport, parcelReportPath, type ParcelReportData } from '../ut
 import { downloadParcelReportPdf, snapshotParcelReport } from '../utils/parcelReportPdf';
 import { parcelKey } from '../utils/dataLoading';
 import { listingGroup } from '../utils/dashboardFilters';
+import { areaMeasurements, vacantLandMeasurements, pavedLandMeasurements, M2_PER_ACRE } from '../utils/parcelAreas';
 import { ZONING_DISTRICTS, zoningCode } from '../utils/parcelZoning';
 import { formatLoanMoney, formatLoanPercent, loanCategoryLabel } from '../utils/parcelLoans';
 import './ParcelReport.css';
 
-const SQFT_PER_ACRE = 43560;
-const M2_PER_ACRE = 4046.8564224;
 // At the parcel locations, level 15 shows a 300 m / 1000 ft scale bar.
 const REPORT_MIN_ZOOM = 15;
 const REPORT_MAX_ZOOM = 20;
@@ -155,24 +154,22 @@ export function ParcelReport() {
   const address = p.address || p.site_address_town_record;
   const heading = address ? titleCase(address) : `Parcel ${p.parcel_id}`;
   const city = titleCase(p.town);
-  const gisAcres = number(data.metrics.gis_area_m2) === null ? null : data.metrics.gis_area_m2 / M2_PER_ACRE;
   const recordedAcres = number(p.acres);
-  const usableAcres = number(p.usable_acres);
+  const vacant = vacantLandMeasurements(p);
+  const paved = pavedLandMeasurements(p);
   const wetlandPercent = number(p.wetland_pct);
-  const buildingAcres = data.metrics.building_area_m2 === null ? null : data.metrics.building_area_m2 / M2_PER_ACRE;
-  const wetlandAcres = data.metrics.mapped_wetland_area_m2 === null ? null : data.metrics.mapped_wetland_area_m2 / M2_PER_ACRE;
   const complete = data.sources.layer_coverage === 'complete';
-  const percentOf = (part: number | null, whole: number | null) => part !== null && whole !== null && whole > 0 ? part / whole * 100 : null;
   const rows = [
-    { label: 'Lot area (GIS)', acres: gisAcres, percent: null, type: 'lot' },
-    { label: 'Recorded lot area', acres: recordedAcres, percent: null, type: 'lot' },
-    { label: complete ? 'Building footprint' : 'Mapped building footprint', acres: buildingAcres, percent: percentOf(buildingAcres, gisAcres), type: 'building' },
-    { label: complete ? 'Wetland area' : 'Mapped wetland area', acres: wetlandAcres, percent: percentOf(wetlandAcres, gisAcres), type: 'wetland' },
-    { label: 'Vacant land', acres: usableAcres, percent: percentOf(usableAcres, recordedAcres), type: 'usable' },
-  ].filter(row => row.acres !== null && Number.isFinite(row.acres));
+    { label: 'Lot area (MassGIS)', ...areaMeasurements(data.metrics.gis_area_m2, null), type: 'lot' },
+    { label: 'Recorded lot area', ...areaMeasurements(recordedAcres === null ? null : recordedAcres * M2_PER_ACRE, null), type: 'lot' },
+    { label: complete ? 'Building footprint' : 'Mapped building footprint', ...areaMeasurements(data.metrics.building_area_m2, data.metrics.gis_area_m2), type: 'building' },
+    { label: 'Paved area', ...paved, type: 'paved' },
+    { label: complete ? 'Wetland area' : 'Mapped wetland area', ...areaMeasurements(data.metrics.mapped_wetland_area_m2, data.metrics.gis_area_m2), type: 'wetland' },
+    { label: 'Vacant land', ...vacant, type: 'usable' },
+  ].filter(row => row.type === 'paved' || (row.acres !== null && Number.isFinite(row.acres)));
   const metrics = [
     { label: 'Recorded lot area', value: recordedAcres, unit: 'ac', digits: 2 },
-    { label: 'Vacant land', value: usableAcres, unit: 'ac', digits: 2 },
+    { label: 'Vacant land', value: vacant.acres, unit: 'ac', digits: 2 },
     { label: 'Recorded wetland coverage', value: wetlandPercent, unit: '%', digits: 1 },
   ].filter(metric => metric.value !== null);
   const zone = ZONING_DISTRICTS.find(district => district.code === zoningCode(p.zoning));
@@ -205,12 +202,8 @@ export function ParcelReport() {
         ]} />
         {rows.length > 0 && <section className="report-section report-area-section"><div className="report-section-heading"><h2>Land & coverage</h2></div>
           <table className="report-area-table"><thead><tr><th scope="col">Area</th><th scope="col">sq ft</th><th scope="col">acres</th><th scope="col">% of lot</th></tr></thead>
-          <tbody>{rows.map(row => <tr key={row.label} className={`report-area-${row.type}`}><th scope="row"><span className={`report-area-key report-area-key-${row.type}`} />{row.label}</th><td>{format(row.acres! * SQFT_PER_ACRE)}</td><td>{format(row.acres!, 2)}</td><td>{row.percent === null ? '' : `${format(row.percent, 1)}%`}</td></tr>)}</tbody></table>
+          <tbody>{rows.map(row => <tr key={row.label} className={`report-area-${row.type}`}><th scope="row"><span className={`report-area-key report-area-key-${row.type}`} />{row.label}</th><td>{row.sqft === null ? 'Not available' : format(row.sqft)}</td><td>{row.acres === null ? '—' : format(row.acres, 2)}</td><td>{row.percent === null ? (row.type === 'paved' ? '—' : '') : `${format(row.percent, 1)}%`}</td></tr>)}</tbody></table>
         </section>}
-        <RecordSection title="Screening" fields={[
-          ['Result', p.keep === 'Y' ? 'Qualified' : 'Excluded'], ['Reason', p.screening_reason],
-          ['Building coverage', number(p.building_coverage_pct) !== null ? `${format(Number(p.building_coverage_pct), 2)}% of ${p.building_coverage_source === 'source_workbook' ? 'spreadsheet lot area (source workbook measurement)' : `GIS lot area${p.building_layer_coverage === 'partial' ? ' (partial mapped coverage)' : ''}`}` : null],
-        ]} />
         <RecordSection title="Ownership & records" fields={[
           ['Owner type', p.owner_type], ['Mailing address', p.owner_mailing_address],
           ['Owner lives on parcel', p.owner_lives_on_lot === 'Y' ? 'Yes' : p.owner_lives_on_lot === 'N' ? 'No' : null],

@@ -47,7 +47,7 @@ export async function loadParcels() {
   };
 }
 
-type BuildingCoverageIndex = { parcels: Record<string, { building_pct: number | null; layer_coverage: 'complete' | 'partial'; measurement_source?: 'report' | 'source_workbook' }> };
+type BuildingCoverageIndex = { parcels: Record<string, { building_pct: number | null; layer_coverage: 'complete' | 'partial'; measurement_source?: 'report' | 'source_workbook'; source_vacant_area_m2?: number | null; source_paved_area_m2?: number | null; source_parcel_area_m2?: number | null }> };
 export async function loadParcelBuildingCoverage(): Promise<BuildingCoverageIndex> {
   const data = await fetchJson('/geojson/parcel_building_coverage.json');
   if (!data || !data.parcels || typeof data.parcels !== 'object' || Array.isArray(data.parcels)) {
@@ -62,6 +62,9 @@ export function withBuildingCoverage<T extends { town?: string; parcel_id?: stri
     status: developmentStatusFromBuildingCoverage(record?.building_pct, properties.status), building_coverage_pct: record?.building_pct ?? null,
     building_layer_coverage: record?.layer_coverage,
     building_coverage_source: record?.measurement_source ?? 'report',
+    vacant_land_area_m2: record?.source_vacant_area_m2 ?? null,
+    paved_land_area_m2: record?.source_paved_area_m2 ?? null,
+    vacant_land_lot_area_m2: record?.source_parcel_area_m2 ?? null,
   };
 }
 

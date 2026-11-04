@@ -1,7 +1,7 @@
 import type { jsPDF } from 'jspdf';
 import type { ParcelReportData } from './parcelReports';
 
-type Section = { title: string; head?: string[]; rows: string[][]; links?: string[] };
+type Section = { title: string; head?: string[]; rows: string[][]; links?: string[]; notes?: string[] };
 export type ParcelReportPdfSnapshot = {
   title: string; location: string; tags: string; filename: string;
   sections: Section[]; map: string; mapWidth: number; mapHeight: number; mapLegend: string; mapAttribution: string;
@@ -83,6 +83,7 @@ export async function snapshotParcelReport(article: HTMLElement, data: ParcelRep
     const title = text(section.querySelector('h2')?.textContent);
     if (section.querySelector('table')) {
       sections.push({ title, head: [...section.querySelectorAll('thead th')].map(cell => text(cell.textContent)),
+        notes: [...section.querySelectorAll('[data-report-note]')].map(note => text(note.textContent)),
         rows: [...section.querySelectorAll('tbody tr')].map(row => [...row.querySelectorAll('th, td')].map(cell => text(cell.textContent))) });
     } else if (section.querySelector('dl')) {
       sections.push({ title, rows: [...section.querySelectorAll('dl > div')].map(row =>
@@ -140,6 +141,11 @@ export async function downloadParcelReportPdf(snapshot: ParcelReportPdfSnapshot)
       },
     });
     y = (doc as jsPDF & { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 21;
+    for (const note of section.notes ?? []) {
+      const lines = doc.splitTextToSize(note, width) as string[];
+      room(lines.length * 8 * 1.2 + 7);
+      paragraph(note, 8, false, '#52685b');
+    }
   }
   const pages = doc.getNumberOfPages();
   for (let page = 1; page <= pages; page++) {

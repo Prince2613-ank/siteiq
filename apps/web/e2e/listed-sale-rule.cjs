@@ -76,9 +76,8 @@ const qualified = visible.filter(p => !listed.includes(p) && screenParcel(p).kee
     for (const p of listed) {
       await page.goto(`${base}/sites/report/${encodeURIComponent(p.town)}/${encodeURIComponent(p.parcel_id)}`);
       await page.locator('.report-property-heading h1').waitFor();
-      const section = page.getByRole('heading', { name: 'Screening', exact: true }).locator('..');
-      assert.match(await section.textContent(), /Excluded/);
-      assert.match(await section.textContent(), /Listed for sale/);
+      assert.equal(await page.locator('.report-tag-excluded').textContent(), 'Excluded');
+      assert.equal(await page.getByRole('heading', { name: 'Screening', exact: true }).count(), 0);
     }
     // A removed listing must not remain excluded because of a cached report snapshot.
     const offMarket = structuredClone(listings);
@@ -86,7 +85,7 @@ const qualified = visible.filter(p => !listed.includes(p) && screenParcel(p).kee
     await page.route('**/geojson/listing_check.json', route => route.fulfill({ json: offMarket }));
     await page.goto(`${base}/sites/report/SALISBURY/23-39`);
     await page.locator('.report-property-heading h1').waitFor();
-    assert.match(await page.getByRole('heading', { name: 'Screening', exact: true }).locator('..').textContent(), /Qualified/);
+    assert.equal(await page.locator('.report-tag-qualified').textContent(), 'Qualified');
     await page.unroute('**/geojson/listing_check.json');
     await page.route('**/geojson/listing_check.json', route => route.abort());
     await page.goto(`${base}/sites`);

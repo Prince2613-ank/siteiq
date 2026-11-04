@@ -5,6 +5,7 @@ import { Layout } from './components/Layout';
 import { Dashboard } from './pages/Dashboard';
 import { SiteList } from './pages/SiteList';
 import { ParcelReport } from './pages/ParcelReport';
+import { ScreeningReport } from './pages/ScreeningReport';
 import { PARCEL_REPORT_ROUTE, COUNTRY_CLUB_REPORT_PATH } from './utils/parcelReports';
 
 const queryClient = new QueryClient({
@@ -30,6 +31,8 @@ export default function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<Dashboard />} />
               <Route path="/sites" element={<SiteList />} />
+              <Route path="/screening-logic" element={<ScreeningReport />} />
+              <Route path="/screening-report" element={<Navigate to="/screening-logic" replace />} />
               <Route path={PARCEL_REPORT_ROUTE} element={<ParcelReport />} />
               <Route path={COUNTRY_CLUB_REPORT_PATH} element={<ParcelReport />} />
               <Route path="/sites/new" element={<Navigate to="/" replace />} />

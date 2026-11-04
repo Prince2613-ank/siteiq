@@ -40,6 +40,10 @@ def build_coverage_index():
             'layer_coverage': report['sources']['layer_coverage'],
             'measurement_source': source,
             'report_building_area_m2': report_building, 'report_gis_area_m2': report_lot,
+            'source_vacant_area_m2': p.get('source_vacant_area_m2'),
+            # NH input has no paving layer; its zero placeholders are not measurements.
+            'source_paved_area_m2': p.get('source_paved_area_m2') if p.get('state') == 'MA' else None,
+            'source_parcel_area_m2': p.get('source_parcel_area_m2'),
         }
     result = {
         'version': 2, 'method': '100 * building area / matching parcel area; report measurements first, validated source workbook building_m2 / parcel_m2 when report building area is missing; unrounded threshold',

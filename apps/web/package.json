@@ -14,6 +14,8 @@
     "test:mixed-coverage": "node e2e/mixed-building-coverage.cjs",
     "test:development": "node e2e/mixed-building-coverage.cjs",
     "test:category-reasons": "node e2e/category-reasons.cjs",
+    "test:areas": "node e2e/area-calculations.cjs",
+    "test:screening-report": "node e2e/screening-report.cjs",
     "test:report-pdf": "node e2e/parcel-report-pdf.cjs",
     "test:loans": "node e2e/parcel-loans.cjs",
     "test:loan-ranking": "node e2e/parcel-scoring.cjs && node e2e/loan-ranking-ui.cjs",
