@@ -6,6 +6,7 @@ import { useRememberScroll, readSession, writeSession } from '../utils/sessionSt
 import { loadParcelReport, parcelReportPath, type ParcelReportData } from '../utils/parcelReports';
 import { downloadParcelReportPdf, snapshotParcelReport } from '../utils/parcelReportPdf';
 import { parcelKey } from '../utils/dataLoading';
+import { listingGroup } from '../utils/dashboardFilters';
 import { ZONING_DISTRICTS, zoningCode } from '../utils/parcelZoning';
 import { formatLoanMoney, formatLoanPercent, loanCategoryLabel } from '../utils/parcelLoans';
 import './ParcelReport.css';
@@ -148,6 +149,9 @@ export function ParcelReport() {
     {failed && <button type="button" onClick={() => window.location.reload()} className="report-retry">Try again</button>}
   </div></div>;
   const p = data.subject.properties;
+  const listingStatus = listingGroup(data.listing ?? undefined) === 'NO_LINKS'
+    ? 'Not listed/Not found'
+    : listingGroup(data.listing ?? undefined) === 'LISTED' ? data.listing?.status || 'Listed' : 'Not listed';
   const address = p.address || p.site_address_town_record;
   const heading = address ? titleCase(address) : `Parcel ${p.parcel_id}`;
   const city = titleCase(p.town);
@@ -186,7 +190,7 @@ export function ParcelReport() {
           <div className="report-property-tags">
             <span className={p.keep === 'Y' ? 'report-tag-qualified' : 'report-tag-excluded'}>{p.keep === 'Y' ? 'Qualified' : 'Excluded'}</span>
             {available(p.zoning) && <span className="report-tag-zone">{p.zoning}{zone ? ` / ${zone.name}` : ''}</span>}
-            {available(data.listing?.status) && <span className="report-tag-zone">{data.listing?.status}</span>}
+            <span className="report-tag-zone" data-listing-status>{listingStatus}</span>
           </div>
         </header>
         {metrics.length > 0 && <section className="report-key-metrics" aria-label="Key parcel figures">
@@ -232,7 +236,7 @@ export function ParcelReport() {
           ['Estate & ownership signal', p.life_event_signal], ['Estate record', p.estate_record_detail], ['Children / heirs', p.children_count_estate_owner],
         ]} />
         <RecordSection title="Listing & history" fields={[
-          ['Listing status', data.listing?.status], ['Past listing attempt', p.past_listing_attempt],
+          ['Listing status', listingStatus], ['Past listing attempt', p.past_listing_attempt],
           ['Zillow history', p.zillow_past_attempt], ['Redfin history', p.redfin_past_attempt],
         ]} />
       </article>
