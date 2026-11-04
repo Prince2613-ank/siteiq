@@ -10,9 +10,11 @@ export type ParcelReportPdfSnapshot = {
   sections: Section[]; map: string; mapWidth: number; mapHeight: number; mapLegend: string; mapAttribution: string;
 };
 
-// Standard PDF fonts support Latin text; normalize punctuation rather than
-// producing unreadable glyphs for the arrows used by the screen UI.
-const text = (value: string | null | undefined) => (value ?? '').replace(/\s+/g, ' ').trim()
+// Standard PDF fonts support Latin text; normalize punctuation and strip emojis rather than
+// producing unreadable glyphs for symbols used by the screen UI.
+const text = (value: string | null | undefined) => (value ?? '')
+  .replace(/[\u{1F000}-\u{1FFFF}\u{2300}-\u{23FF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{200D}]/gu, '')
+  .replace(/\s+/g, ' ').trim()
   .replace(/[\u2010-\u2015]/g, '-').replace(/[\u2018\u2019]/g, "'")
   .replace(/[\u201c\u201d]/g, '"').replace(/[\u2192\u2197]/g, '').replace(/\u2026/g, '...').trim();
 
@@ -101,7 +103,7 @@ export async function snapshotParcelReport(article: HTMLElement, data: ParcelRep
   for (const section of article.querySelectorAll('.report-section')) {
     const title = text(section.querySelector('h2')?.textContent);
     if (section.querySelector('table')) {
-      const head = [...section.querySelectorAll('th')].map(cell => text(cell.textContent));
+      const head = [...section.querySelectorAll('thead th')].map(cell => text(cell.textContent));
       const rows = [...section.querySelectorAll('tbody tr')].map(row => [...row.querySelectorAll('th, td')].map(cell => text(cell.textContent)));
       sections.push({ title, head, rows });
     } else if (section.querySelector('dl')) {
@@ -116,7 +118,7 @@ export async function snapshotParcelReport(article: HTMLElement, data: ParcelRep
     }
   }
 
-  const lifeEvents = [...article.querySelectorAll('.report-life-events .report-life-event-badge')].map(badge => text(badge.textContent));
+  const lifeEvents = [...article.querySelectorAll('.report-life-events .report-life-event-badge')].map(badge => text(badge.textContent)).filter(Boolean);
   const snapshot: ParcelReportPdfSnapshot = {
     title: text(article.querySelector('h1')?.textContent), location: text(article.querySelector('.report-location')?.textContent),
     rank: data.rank ?? null,
@@ -143,16 +145,24 @@ export async function downloadParcelReportPdf(snapshot: ParcelReportPdfSnapshot)
     doc.text(lines, margin, y + size); y += lines.length * size * 1.2 + 7;
   };
   const room = (height: number) => { if (y + height > bottom) { doc.addPage(); y = 54; } };
+
+  // Render Rank on top right
+  const rankY = y;
+  if (snapshot.rank != null && snapshot.rank > 0) {
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor('#64748b');
+    doc.text('RANK', 572, rankY + 11, { align: 'right' });
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(18); doc.setTextColor('#1e293b');
+    doc.text(`#${snapshot.rank}`, 572, rankY + 31, { align: 'right' });
+  } else if (snapshot.rank === 0) {
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor('#64748b');
+    doc.text('Unranked (Excluded)', 572, rankY + 20, { align: 'right' });
+  }
+
   paragraph('SiteIQ / PROPERTY REPORT', 9, true, '#287156');
   paragraph(snapshot.title, 23, true);
   paragraph(snapshot.location, 10);
-  if (snapshot.rank != null && snapshot.rank > 0) {
-    paragraph(`SiteIQ Rank: #${snapshot.rank}`, 11, true, '#1d4ed8');
-  } else if (snapshot.rank === 0) {
-    paragraph('SiteIQ Rank: Unranked (Excluded)', 11, true, '#64748b');
-  }
   if (snapshot.lifeEvents && snapshot.lifeEvents.length > 0) {
-    paragraph(`Ownership signals: ${snapshot.lifeEvents.join('  |  ')}`, 9, true, '#6b21a8');
+    paragraph(snapshot.lifeEvents.join('   |   '), 8.5, true, '#6b21a8');
   }
   paragraph(snapshot.tags, 9);
   paragraph('Aerial parcel map', 10, true);

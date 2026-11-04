@@ -287,9 +287,8 @@ export function ParcelReport() {
         {metrics.length > 0 && <section className="report-key-metrics" aria-label="Key parcel figures">
           {metrics.map(metric => <div key={metric.label}><span>{metric.label}</span><strong>{format(metric.value!, metric.digits)}<small> {metric.unit}</small></strong></div>)}
         </section>}
-        <RecordSection title="Property identity" fields={[
+        <RecordSection title="Property Identity" fields={[
           ['Parcel ID', p.parcel_id], ['Land use', p.use], ['Owner', p.owner_name || p.owner],
-          ['SiteIQ rank', data.rank && data.rank > 0 ? `#${data.rank}` : (p.keep === 'Y' ? null : 'Unranked (Excluded)')],
           ['Assessed value', valuation !== null ? `$${format(valuation)}` : null], ['Development status', p.status],
           ['Land category', p.category], ['Category reason', p.category_reason], ['Units', p.units], ['Zoning', p.zoning],
           ['Nearest road', p.road],
