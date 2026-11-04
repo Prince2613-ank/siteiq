@@ -3,7 +3,8 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useRememberScroll, readSession, writeSession } from '../utils/sessionState';
-import { loadParcelReport, type ParcelReportData } from '../utils/parcelReports';
+import { loadParcelReport, parcelReportPath, type ParcelReportData } from '../utils/parcelReports';
+import { downloadParcelReportPdf, snapshotParcelReport } from '../utils/parcelReportPdf';
 import { parcelKey } from '../utils/dataLoading';
 import { ZONING_DISTRICTS, zoningCode } from '../utils/parcelZoning';
 import { formatLoanMoney, formatLoanPercent, loanCategoryLabel } from '../utils/parcelLoans';
@@ -45,7 +46,12 @@ function ReportMap({ data }: { data: ParcelReportData }) {
     const map = L.map(container.current, { zoomControl: false, zoomAnimation: false, minZoom: REPORT_MIN_ZOOM, maxZoom: REPORT_MAX_ZOOM });
     L.control.zoom({ position: 'bottomleft' }).addTo(map);
     L.control.scale({ position: 'bottomleft', imperial: true, metric: true, maxWidth: 100 }).addTo(map);
-    const imagery = L.tileLayer(data.sources.imagery_url, { attribution: data.sources.imagery_attribution, maxZoom: 20 }).addTo(map);
+    const imagery = L.tileLayer(data.sources.imagery_url, {
+      attribution: data.sources.imagery_attribution, maxZoom: 20,
+      // World Imagery returns placeholder tiles at level 20 in this area.
+      // Upscale its level-19 imagery while retaining the report's zoom range.
+      maxNativeZoom: data.sources.imagery_url.includes('/World_Imagery/') ? 19 : 20,
+    }).addTo(map);
     let tileErrors = 0;
     imagery.on('tileerror', () => { if (++tileErrors >= 3) setImageryUnavailable(true); });
     imagery.on('tileload', () => setImageryUnavailable(false));
@@ -88,14 +94,36 @@ export function ParcelReport() {
   const town = params.town ?? 'AMESBURY';
   const parcelId = params.parcelId ?? '42-15';
   const identity = parcelKey({ town, parcel_id: parcelId });
+  const reportUrl = new URL(parcelReportPath({ town, parcel_id: parcelId }), window.location.origin).href;
+  const reportContent = useRef<HTMLElement>(null);
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
+  const [linkCopied, setLinkCopied] = useState(false);
   const [loaded, setLoaded] = useState<{ identity: string; data: ParcelReportData } | null>(null);
   const [failed, setFailed] = useState<string | null>(null);
   const data = loaded?.identity === identity ? loaded.data : null;
+  const exportPdf = async () => {
+    if (!data || !reportContent.current || exporting) return;
+    setExporting(true); setExportError(null);
+    try {
+      const mapElement = document.querySelector<HTMLElement>('.parcel-report-map');
+      if (!mapElement) throw new Error('The report map is not ready. Please try again.');
+      const snapshot = await snapshotParcelReport(reportContent.current, data, mapElement);
+      await downloadParcelReportPdf(snapshot);
+    } catch (error) {
+      setExportError(error instanceof Error && /^(Aerial imagery|The report map)/.test(error.message) ? error.message : 'PDF export could not be completed. Please try again.');
+    } finally { setExporting(false); }
+  };
+  const copyLink = async () => {
+    try { await navigator.clipboard.writeText(reportUrl); setLinkCopied(true); }
+    catch { setExportError('The link could not be copied. Copy the report URL from your browser address bar.'); }
+  };
   useRememberScroll(`report:${identity}:content`, '.parcel-report-content', Boolean(data));
   useRememberScroll(`report:${identity}:page`, undefined, Boolean(data));
   useEffect(() => {
     const controller = new AbortController();
     setFailed(null);
+    setLinkCopied(false); setExportError(null);
     loadParcelReport(town, parcelId, controller.signal).then(data => {
       if (!controller.signal.aborted) setLoaded({ identity, data });
     }).catch(error => { if (!controller.signal.aborted) setFailed(error.message); });
@@ -107,7 +135,13 @@ export function ParcelReport() {
       navigate('/sites');
     }}><ArrowLeft /><span>Sites</span></button><span className="report-breadcrumb-divider">/</span><span>Parcel report</span></div>
     {location.state?.fromDashboard && <button type="button" className="report-return-map" onClick={() => navigate('/')}><ArrowLeft />Go back to map</button>}
-    <span className="report-record-reference">{titleCase(town)}{data?.subject.properties.state ? `, ${data.subject.properties.state}` : ''}<span>{parcelId}</span></span>
+    <div className="report-toolbar-actions">
+      <span className="report-record-reference">{titleCase(town)}{data?.subject.properties.state ? `, ${data.subject.properties.state}` : ''}<span>{parcelId}</span></span>
+      <button type="button" className="report-copy-link" onClick={copyLink} disabled={!data}>{linkCopied ? 'Link copied' : 'Copy link'}</button>
+      <button type="button" className="report-export-pdf" onClick={exportPdf} disabled={!data || exporting} aria-busy={exporting}>
+        {exporting ? 'Exporting...' : 'Export PDF'}
+      </button>
+    </div>
   </header>;
   if (!data) return <div className="parcel-report-page">{topbar}<div className="parcel-report-loading">
     <p role={failed ? 'alert' : 'status'}>{failed ? 'The parcel report could not be loaded.' : 'Opening parcel report...'}</p>
@@ -139,16 +173,13 @@ export function ParcelReport() {
   ].filter(metric => metric.value !== null);
   const zone = ZONING_DISTRICTS.find(district => district.code === zoningCode(p.zoning));
   const valuation = number(p.total_val);
-  const propertyLinks = new Map<string, string>();
-  for (const [label, url] of Object.entries({
-    'Town property record': p.town_record_link, 'Tax record': p.tax_check_link, 'Company register': p.company_record_link,
-    Zillow: p.zillow_link, Redfin: p.redfin_link, ...data.listing?.links,
-  })) if (typeof url === 'string' && /^https?:\/\//i.test(url)) propertyLinks.set(label, url);
   return <div className="parcel-report-page">
     {topbar}
+    {exportError && <p className="report-export-error" role="alert">{exportError}</p>}
+    <span className="report-share-feedback" role="status">{linkCopied ? 'Property report link copied.' : ''}</span>
     <div className="parcel-report-workspace">
       <ReportMap key={identity} data={data} />
-      <article className="parcel-report-content" aria-label={`Parcel report for ${heading}`}>
+      <article ref={reportContent} className="parcel-report-content" aria-label={`Parcel report for ${heading}`}>
         <header className="report-property-heading">
           <div className="report-eyebrow">PARCEL REPORT</div>
           <h1>{heading}</h1><p className="report-location">{city}, {p.state === 'MA' ? 'Massachusetts' : p.state === 'NH' ? 'New Hampshire' : p.state}</p>
@@ -203,9 +234,6 @@ export function ParcelReport() {
           ['Listing status', data.listing?.status], ['Past listing attempt', p.past_listing_attempt],
           ['Zillow history', p.zillow_past_attempt], ['Redfin history', p.redfin_past_attempt],
         ]} />
-        {propertyLinks.size > 0 && <section className="report-section"><h2>Property links</h2><div className="report-property-links">
-          {[...propertyLinks].map(([label, url]) => <a key={label} href={url} target="_blank" rel="noopener noreferrer">{label} &rarr;</a>)}
-        </div></section>}
       </article>
     </div>
   </div>;

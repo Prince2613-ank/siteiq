@@ -1,0 +1,2682 @@
+{
+  "audit_date": "2026-11-04",
+  "scoring_version": "ranking-v5-loans",
+  "selection": "Top ten score-descending Not listed parcels across all screening results",
+  "app_listing_checked": "22 Oct 2026",
+  "source_sha256": {
+    "apps/web/public/geojson/parcels_250m.geojson": "3053915962085ff970f01ca6c4ff6970bbacb70fce6ac77627879802ca048082",
+    "apps/web/public/geojson/parcel_loans.json": "faf7dc01926f883c312ef8800d79d16d2646e4b7be1ee86740ff874a52f86ef5",
+    "apps/web/public/geojson/listing_check.json": "9f9cc97a11a7e4c354453b4a5d59a66936b9881c2a71883dffe9d83d0a36fa4d",
+    "apps/web/src/utils/parcelScoring.ts": "a4d9236dedd006fca09b34ab9a8e43966c8aa4e948c0f68a87e26dd86c86ffdd"
+  },
+  "wetland_service": "https://services1.arcgis.com/hGdibHYSPO59RG1h/ArcGIS/rest/services/MassDEP_Wetlands_Outlines_and_Labels/FeatureServer/0",
+  "wetland_query": "https://services1.arcgis.com/hGdibHYSPO59RG1h/ArcGIS/rest/services/MassDEP_Wetlands_Outlines_and_Labels/FeatureServer/0/query?where=1%3D1&geometry=-70.929781310504%2C42.8446446641405%2C-70.8772265018852%2C42.8688791697207&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&outFields=%2A&returnGeometry=true&f=geojson",
+  "area_crs": "EPSG:26986",
+  "registry_access": "Document images unavailable: loading-only page, HTTP 403/redirects; browser host unavailable",
+  "records": [
+    {
+      "identity": "SALISBURY|11-13",
+      "off_market_rank": 1,
+      "overall_rank": 1,
+      "app_properties": {
+        "town": "SALISBURY",
+        "state": "MA",
+        "parcel_id": "11-13",
+        "address": "133 MAIN ST",
+        "owner": "ALBERT J JOHNSON FAMILY REALTY LLC",
+        "category": "Commercial",
+        "status": "Mixed (vacant + built-up)",
+        "keep": "Y",
+        "drop_reason": null,
+        "acres": 14,
+        "usable_acres": 8.83,
+        "wetland_pct": 0,
+        "road": "Main St",
+        "road_dist_m": 4.2,
+        "pct_in_250m": 76.9,
+        "zoning": "C2",
+        "use": "Facilities providing building materials, hardware and farm equip, heating, hardware, plumbing, lumber supplies and equip",
+        "total_val": "1664200",
+        "units": 1,
+        "owner_name": "ALBERT J JOHNSON FAMILY REALTY LLC",
+        "owner_type": "Company",
+        "owner_mailing_address": "133 MAIN ST, SALISBURY, MA 01952",
+        "company_people": "Not looked up: state register blocked automated search. Use the link.",
+        "company_record_link": "https://corp.sec.state.ma.us/CorpWeb/CorpSearch/CorpSearch.aspx",
+        "owner_lives_on_lot": "Y",
+        "owner_distance_miles": 0,
+        "owner_distance_group": "Owner address is the lot",
+        "years_owned": 19.9,
+        "last_sale_date": "Dec 04, 2006",
+        "last_sale_price": "$10 (nominal, family or trust transfer)",
+        "deed_book_page": "Book 26348 / Page 244",
+        "tax_takings_found": 0,
+        "unpaid_tax_signal": "No tax taking recorded (2005-2026)",
+        "life_event_signal": "Estate record for owner or a family member with the same surname (death) - heirs may now hold the land",
+        "estate_record_detail": "2014 estate tax lien release (Johnson, Albert J, Book/Page 33180/193)",
+        "past_listing_attempt": "Not checked (no Redfin page)",
+        "children_count_estate_owner": "5 children (Albert J Johnson, died 2011)",
+        "zillow_link": null,
+        "zillow_past_attempt": "No Zillow page",
+        "redfin_link": null,
+        "redfin_past_attempt": "No Redfin page",
+        "open_mortgage": "1 open: latest JOHNSON, CAROL A $2,000,000 on 2014-11-10 (Bk/Pg 33661/173)",
+        "lease_easement_restriction": "None found",
+        "screening_rule": 4,
+        "screening_reason": "Vacant or mixed land in a Developable, Industrial or Commercial category",
+        "loan": {
+          "loan_status": "Current loan (1 open)",
+          "open_mortgage": "1 open: latest JOHNSON, CAROL A $2,000,000 on 2014-11-10 (Bk/Pg 33661/173)",
+          "open_loans_count": 1,
+          "latest_open_loan_lender": "JOHNSON, CAROL A",
+          "latest_loan_amount_usd": 2000000,
+          "latest_loan_date": "2014-11-10",
+          "loan_age_years": 12,
+          "loan_to_value_pct": 1.2017786323759163,
+          "est_balance_now_usd": 1607168,
+          "est_equity_usd": 57032,
+          "est_equity_pct": 0.03426991948083163,
+          "loan_signal": "High leverage (loan >= 80% of value)",
+          "source_row": 755
+        },
+        "industrial_lots_within_quarter_mile": 2
+      },
+      "app_listing": {
+        "status": "Not listed",
+        "address": "133 Main St",
+        "links": {},
+        "proof": null,
+        "note": "None of the sites has a page for this address, so no links are shown."
+      },
+      "app_score": 85,
+      "score_factors": [
+        {
+          "id": "highway",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "land",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "size",
+          "points": 15,
+          "has_source_data": true
+        },
+        {
+          "id": "industry",
+          "points": 5,
+          "has_source_data": true
+        },
+        {
+          "id": "estate",
+          "points": 40,
+          "has_source_data": true
+        },
+        {
+          "id": "tax",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "listing",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "tenure",
+          "points": 5,
+          "has_source_data": true
+        },
+        {
+          "id": "distance",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "family",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "loan",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "lawsuit",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "lease",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "recent",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "wetland",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "restriction",
+          "points": 0,
+          "has_source_data": true
+        }
+      ],
+      "municipal_record": {
+        "account": "871",
+        "recorded_acres": 12.817,
+        "assessment_2026": 1664200,
+        "owner_lines": [
+          "ALBERT J JOHNSON FAMILY REALTY LLC"
+        ],
+        "source_url": "https://webpro.patriotproperties.com/salisbury/Summary.asp?AccountNumber=871",
+        "zoning": "C2",
+        "last_sale_date": "Dec 04, 2006",
+        "deed_book_page": "Book 26348 / Page 244",
+        "last_sale_consideration": "$10"
+      },
+      "official_massgis_attributes": {
+        "OBJECTID": 158808,
+        "MAP_PAR_ID": "11-13",
+        "LOC_ID": "M_248846_956881",
+        "POLY_TYPE": "FEE",
+        "MAP_NO": "11",
+        "SOURCE": "SUBDIV",
+        "PLAN_ID": "Survey: 357-69",
+        "LAST_EDIT": 20121212,
+        "BND_CHK": null,
+        "NO_MATCH": "N",
+        "TOWN_ID": 259,
+        "PROP_ID": "11-13",
+        "BLDG_VAL": 522300,
+        "LAND_VAL": 640400,
+        "OTHER_VAL": 501500,
+        "TOTAL_VAL": 1664200,
+        "FY": 2026,
+        "LOT_SIZE": 12.82,
+        "LS_DATE": "20061204",
+        "LS_PRICE": 10,
+        "USE_CODE": "321",
+        "SITE_ADDR": "133 MAIN ST",
+        "ADDR_NUM": "133",
+        "FULL_STR": "MAIN ST",
+        "LOCATION": null,
+        "CITY": "SALISBURY",
+        "ZIP": "01952",
+        "OWNER1": "ALBERT J JOHNSON FAMILY REALTY LLC",
+        "OWN_ADDR": "133 MAIN ST",
+        "OWN_CITY": "SALISBURY",
+        "OWN_STATE": "MA",
+        "OWN_ZIP": "01952",
+        "OWN_CO": "USA",
+        "LS_BOOK": "26348",
+        "LS_PAGE": "244",
+        "REG_ID": "26348/244",
+        "ZONING": "C2",
+        "YEAR_BUILT": 1970,
+        "BLD_AREA": 13460,
+        "UNITS": 1,
+        "RES_AREA": 13460,
+        "STYLE": "SM RETAIL",
+        "NUM_ROOMS": null,
+        "LOT_UNITS": "Acres",
+        "STORIES": "1",
+        "USE_DESC": "Facilities providing building materials, hardware and farm equip, heating, hardware, plumbing, lumber supplies and equip",
+        "TOWNID_UC": "259_321",
+        "GlobalID": "db2fa9f4-bc61-4fab-98cc-725aa16ccc0e",
+        "Shape__Area": 105534.3359375,
+        "Shape__Length": 1626.4041023399916
+      },
+      "geometry_comparison": {
+        "town": "SALISBURY",
+        "parcel_id": "11-13",
+        "address": "133 MAIN ST",
+        "official_gis_acres": 14.005268880852752,
+        "app_gis_acres": 13.99979042209981,
+        "symmetric_difference_m2": 48.10578447134871,
+        "source_acres": 14,
+        "usable_acres": 8.83,
+        "assessor_lot_size": 12.82,
+        "source_wetland_pct": 0,
+        "report_metrics": {
+          "gis_area_m2": 56655.14178192863,
+          "corridor_coverage_fraction": 0.7694358138982098,
+          "building_area_m2": 6106.675713195354,
+          "building_count": 10,
+          "mapped_wetland_area_m2": null
+        },
+        "report_layer_coverage": "partial"
+      },
+      "independent_massdep_overlap": {
+        "town": "SALISBURY",
+        "parcel_id": "11-13",
+        "address": "133 MAIN ST",
+        "mapped_wetland_m2": 1299.0652057493573,
+        "mapped_wetland_pct": 2.2920374178340746
+      },
+      "verification": {
+        "identity": "matches municipal record",
+        "zoning_code": "matches municipal and/or MassGIS record; not a permitted-use certification",
+        "last_transfer": "matches assessor record; deed not inspected",
+        "assessment": "matches FY2026 municipal record",
+        "wetland": "contradiction with independent MassDEP polygons",
+        "usable_acres": "unverified GIS-derived input",
+        "registry_instruments": "not independently retrieved",
+        "mortgage_balance": "not independently verified",
+        "current_tax_debt": "not independently verified",
+        "listing": "public off-market indication; no live MLS confirmation",
+        "occupancy": "mailing-address inference, not independently verified",
+        "score": "arithmetic reproduced; factual inputs remain provisional"
+      }
+    },
+    {
+      "identity": "AMESBURY|77-31",
+      "off_market_rank": 2,
+      "overall_rank": 2,
+      "app_properties": {
+        "town": "AMESBURY",
+        "state": "MA",
+        "parcel_id": "77-31",
+        "address": "250 MAIN ST",
+        "owner": "PIKE EDWARD M TR",
+        "category": "Developable",
+        "status": "Mixed (vacant + built-up)",
+        "keep": "Y",
+        "drop_reason": null,
+        "acres": 1.68,
+        "usable_acres": 1.54,
+        "wetland_pct": 0,
+        "road": "Macy St",
+        "road_dist_m": 55,
+        "pct_in_250m": 100,
+        "zoning": "R20",
+        "use": "Developable Residential Land",
+        "total_val": "617000",
+        "units": 1,
+        "owner_name": "PIKE EDWARD M TR",
+        "owner_type": "Trust",
+        "owner_mailing_address": "54 HIGH STREET, NEWBURYPORT, MA 01950",
+        "owner_lives_on_lot": "N",
+        "owner_distance_miles": 3.8,
+        "owner_distance_group": "Within 10 miles",
+        "years_owned": 21.3,
+        "last_sale_date": "Jun 20, 2005",
+        "last_sale_price": "$1 (nominal, family or trust transfer)",
+        "deed_book_page": "Book 24437 / Page 69",
+        "tax_takings_found": 0,
+        "unpaid_tax_signal": "No tax taking recorded (2005-2026)",
+        "life_event_signal": "None found",
+        "estate_record_detail": null,
+        "past_listing_attempt": "No unsold past listing (Redfin)",
+        "children_count_estate_owner": null,
+        "zillow_link": "https://www.zillow.com/homedetails/56906217_zpid/",
+        "zillow_past_attempt": "Listed 30 Aug 2012 at $549,000, removed 1 Mar 2015 - not sold",
+        "redfin_link": "https://www.redfin.com/MA/Amesbury/250-Main-St-01913/home/8211640",
+        "redfin_past_attempt": "No history on Redfin",
+        "open_mortgage": "No open mortgage (1 discharged)",
+        "lease_easement_restriction": "Easement x1 (to MASS ELECTRIC CO; latest 2026, Bk/Pg 43502/143)",
+        "screening_rule": 4,
+        "screening_reason": "Vacant or mixed land in a Developable, Industrial or Commercial category",
+        "loan": {
+          "loan_status": "Past loan only - paid off (1)",
+          "open_mortgage": "No open mortgage (1 discharged)",
+          "open_loans_count": 0,
+          "latest_open_loan_lender": null,
+          "latest_loan_amount_usd": null,
+          "latest_loan_date": null,
+          "loan_age_years": null,
+          "loan_to_value_pct": null,
+          "est_balance_now_usd": null,
+          "est_equity_usd": null,
+          "est_equity_pct": null,
+          "loan_signal": "No open loan - likely free & clear",
+          "source_row": 620
+        },
+        "industrial_lots_within_quarter_mile": 2
+      },
+      "app_listing": {
+        "status": "Not listed",
+        "address": "250 Main St",
+        "links": {
+          "Zillow": "https://www.zillow.com/homedetails/56906217_zpid/",
+          "Redfin": "https://www.redfin.com/MA/Amesbury/250-Main-St-01913/home/8211640"
+        },
+        "proof": null,
+        "note": "Not for sale on the linked pages (checked 22 Oct 2026)."
+      },
+      "app_score": 80,
+      "score_factors": [
+        {
+          "id": "highway",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "land",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "size",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "industry",
+          "points": 5,
+          "has_source_data": true
+        },
+        {
+          "id": "estate",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "tax",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "listing",
+          "points": 35,
+          "has_source_data": true
+        },
+        {
+          "id": "tenure",
+          "points": 15,
+          "has_source_data": true
+        },
+        {
+          "id": "distance",
+          "points": 5,
+          "has_source_data": true
+        },
+        {
+          "id": "family",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "loan",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "lawsuit",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "lease",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "recent",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "wetland",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "restriction",
+          "points": -5,
+          "has_source_data": true
+        }
+      ],
+      "municipal_record": {
+        "pid": "3100",
+        "recorded_acres": 1.68,
+        "assessment_2026": 640400,
+        "owner_lines": [
+          "PIKE EDWARD M TR",
+          "EDWARD M PIKE TRUST"
+        ],
+        "source_url": "https://gis.vgsi.com/amesburyma/Parcel.aspx?pid=3100",
+        "zoning": "R20",
+        "last_sale_date": "Jun 20, 2005",
+        "deed_book_page": "Book 24437 / Page 69",
+        "last_sale_consideration": "$1"
+      },
+      "official_massgis_attributes": {
+        "OBJECTID": 787664,
+        "MAP_PAR_ID": "77-31",
+        "LOC_ID": "M_246683_955255",
+        "POLY_TYPE": "FEE",
+        "MAP_NO": "77",
+        "SOURCE": "SUBDIV",
+        "PLAN_ID": "Survey: 432-76",
+        "LAST_EDIT": 20140228,
+        "BND_CHK": null,
+        "NO_MATCH": "N",
+        "TOWN_ID": 7,
+        "PROP_ID": "77-31",
+        "BLDG_VAL": 317000,
+        "LAND_VAL": 298300,
+        "OTHER_VAL": 1700,
+        "TOTAL_VAL": 617000,
+        "FY": 2026,
+        "LOT_SIZE": 1.68,
+        "LS_DATE": "20050620",
+        "LS_PRICE": 1,
+        "USE_CODE": "130",
+        "SITE_ADDR": "250 MAIN ST",
+        "ADDR_NUM": "250",
+        "FULL_STR": "MAIN ST",
+        "LOCATION": null,
+        "CITY": "AMESBURY",
+        "ZIP": "01913",
+        "OWNER1": "PIKE EDWARD M TR",
+        "OWN_ADDR": "54 HIGH STREET",
+        "OWN_CITY": "NEWBURYPORT",
+        "OWN_STATE": "MA",
+        "OWN_ZIP": "01950",
+        "OWN_CO": "USA",
+        "LS_BOOK": "24437",
+        "LS_PAGE": "69",
+        "REG_ID": "24437/69",
+        "ZONING": "R20",
+        "YEAR_BUILT": 1900,
+        "BLD_AREA": 2860,
+        "UNITS": 2,
+        "RES_AREA": 1560,
+        "STYLE": "Colonial",
+        "NUM_ROOMS": 8,
+        "LOT_UNITS": "Acres",
+        "STORIES": "2",
+        "USE_DESC": "Developable Residential Land",
+        "TOWNID_UC": "7_130",
+        "GlobalID": "d6d0ebbf-9704-4d27-92d5-ed2b949d5dde",
+        "Shape__Area": 12616.8046875,
+        "Shape__Length": 630.3939874378792
+      },
+      "geometry_comparison": {
+        "town": "AMESBURY",
+        "parcel_id": "77-31",
+        "address": "250 MAIN ST",
+        "official_gis_acres": 1.6751390294356971,
+        "app_gis_acres": 1.674450438545078,
+        "symmetric_difference_m2": 8.396908537956422,
+        "source_acres": 1.68,
+        "usable_acres": 1.54,
+        "assessor_lot_size": 1.68,
+        "source_wetland_pct": 0,
+        "report_metrics": {
+          "gis_area_m2": 6776.260511216646,
+          "corridor_coverage_fraction": 1.0,
+          "building_area_m2": 415.27298069803,
+          "building_count": 2,
+          "mapped_wetland_area_m2": 0
+        },
+        "report_layer_coverage": "complete"
+      },
+      "independent_massdep_overlap": {
+        "town": "AMESBURY",
+        "parcel_id": "77-31",
+        "address": "250 MAIN ST",
+        "mapped_wetland_m2": 2144.6744495533767,
+        "mapped_wetland_pct": 31.63681274612158
+      },
+      "verification": {
+        "identity": "matches municipal record",
+        "zoning_code": "matches municipal and/or MassGIS record; not a permitted-use certification",
+        "last_transfer": "matches assessor record; deed not inspected",
+        "assessment": "outdated: matches FY2025 history, not FY2026 municipal record",
+        "wetland": "contradiction with independent MassDEP polygons",
+        "usable_acres": "unverified; conflicts with dry-area upper bound",
+        "registry_instruments": "not independently retrieved",
+        "mortgage_balance": "not independently verified",
+        "current_tax_debt": "not independently verified",
+        "listing": "public off-market indication; no live MLS confirmation",
+        "occupancy": "mailing-address inference, not independently verified",
+        "score": "arithmetic reproduced; factual inputs remain provisional"
+      }
+    },
+    {
+      "identity": "SALISBURY|10-143",
+      "off_market_rank": 3,
+      "overall_rank": 3,
+      "app_properties": {
+        "town": "SALISBURY",
+        "state": "MA",
+        "parcel_id": "10-143",
+        "address": "29 OLD ELM ST",
+        "owner": "MACDOUGALL GLENN H",
+        "category": "Commercial",
+        "status": "Mixed (vacant + built-up)",
+        "keep": "Y",
+        "drop_reason": null,
+        "acres": 1.59,
+        "usable_acres": 1.24,
+        "wetland_pct": 0,
+        "road": "Rabbit Rd",
+        "road_dist_m": 16,
+        "pct_in_250m": 100,
+        "zoning": "C",
+        "use": "Mixed Use (Primarily Commercial, some Residential)",
+        "total_val": "756100",
+        "units": 1,
+        "owner_name": "MACDOUGALL GLENN H",
+        "owner_type": "Individual",
+        "owner_mailing_address": "29 OLD ELM ST, SALISBURY, MA 01952",
+        "owner_lives_on_lot": "Y",
+        "owner_distance_miles": 0,
+        "owner_distance_group": "Owner address is the lot",
+        "years_owned": 16.4,
+        "last_sale_date": "May 20, 2010",
+        "last_sale_price": "$1 (nominal, family or trust transfer)",
+        "deed_book_page": "Book 29473 / Page 460",
+        "tax_takings_found": 0,
+        "unpaid_tax_signal": "No tax taking recorded (2005-2026)",
+        "life_event_signal": "Estate record for owner or a family member with the same surname (death) - heirs may now hold the land",
+        "estate_record_detail": "2009 estate tax affidavit (Macdougall, Harvey L Jr, Book/Page 29134/406); 2010 estate tax affidavit (Macdougall, Louise A, Book/Page 29473/460)",
+        "past_listing_attempt": "No unsold past listing (Redfin)",
+        "children_count_estate_owner": "1 child (Harvey L MacDougall, died 2009)",
+        "zillow_link": "https://www.zillow.com/homedetails/56962262_zpid/",
+        "zillow_past_attempt": "No history on Zillow",
+        "redfin_link": "https://www.redfin.com/MA/Salisbury/29-Old-Elm-St-01952/home/8365110",
+        "redfin_past_attempt": "No history on Redfin",
+        "open_mortgage": "No mortgage on record",
+        "lease_easement_restriction": "None found",
+        "screening_rule": 4,
+        "screening_reason": "Vacant or mixed land in a Developable, Industrial or Commercial category",
+        "loan": {
+          "loan_status": "No loan on record",
+          "open_mortgage": "No mortgage on record",
+          "open_loans_count": 0,
+          "latest_open_loan_lender": null,
+          "latest_loan_amount_usd": null,
+          "latest_loan_date": null,
+          "loan_age_years": null,
+          "loan_to_value_pct": null,
+          "est_balance_now_usd": null,
+          "est_equity_usd": null,
+          "est_equity_pct": null,
+          "loan_signal": "No open loan - likely free & clear",
+          "source_row": 610
+        },
+        "industrial_lots_within_quarter_mile": 2
+      },
+      "app_listing": {
+        "status": "Not listed",
+        "address": "29 Old Elm St",
+        "links": {
+          "Zillow": "https://www.zillow.com/homedetails/56962262_zpid/",
+          "Redfin": "https://www.redfin.com/MA/Salisbury/29-Old-Elm-St-01952/home/8365110"
+        },
+        "proof": null,
+        "note": "Not for sale on the linked pages (checked 22 Oct 2026)."
+      },
+      "app_score": 75,
+      "score_factors": [
+        {
+          "id": "highway",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "land",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "size",
+          "points": 5,
+          "has_source_data": true
+        },
+        {
+          "id": "industry",
+          "points": 5,
+          "has_source_data": true
+        },
+        {
+          "id": "estate",
+          "points": 40,
+          "has_source_data": true
+        },
+        {
+          "id": "tax",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "listing",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "tenure",
+          "points": 5,
+          "has_source_data": true
+        },
+        {
+          "id": "distance",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "family",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "loan",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "lawsuit",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "lease",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "recent",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "wetland",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "restriction",
+          "points": 0,
+          "has_source_data": true
+        }
+      ],
+      "municipal_record": {
+        "account": "764",
+        "recorded_acres": 1.6,
+        "assessment_2026": 756100,
+        "owner_lines": [
+          "MACDOUGALL GLENN H",
+          "MACDOUGALL LINDA J"
+        ],
+        "source_url": "https://webpro.patriotproperties.com/salisbury/Summary.asp?AccountNumber=764",
+        "zoning": "C",
+        "last_sale_date": "May 20, 2010",
+        "deed_book_page": "Book 29473 / Page 460",
+        "last_sale_consideration": "$1"
+      },
+      "official_massgis_attributes": {
+        "OBJECTID": 175460,
+        "MAP_PAR_ID": "10-143",
+        "LOC_ID": "M_249185_955154",
+        "POLY_TYPE": "FEE",
+        "MAP_NO": "10",
+        "SOURCE": "ASSESS",
+        "PLAN_ID": null,
+        "LAST_EDIT": 20121212,
+        "BND_CHK": null,
+        "NO_MATCH": "N",
+        "TOWN_ID": 259,
+        "PROP_ID": "10-143",
+        "BLDG_VAL": 430700,
+        "LAND_VAL": 325400,
+        "OTHER_VAL": 0,
+        "TOTAL_VAL": 756100,
+        "FY": 2026,
+        "LOT_SIZE": 1.6,
+        "LS_DATE": "20100520",
+        "LS_PRICE": 1,
+        "USE_CODE": "031",
+        "SITE_ADDR": "29 OLD ELM ST",
+        "ADDR_NUM": "29",
+        "FULL_STR": "OLD ELM ST",
+        "LOCATION": null,
+        "CITY": "SALISBURY",
+        "ZIP": "01952",
+        "OWNER1": "MACDOUGALL GLENN H",
+        "OWN_ADDR": "29 OLD ELM ST",
+        "OWN_CITY": "SALISBURY",
+        "OWN_STATE": "MA",
+        "OWN_ZIP": "01952",
+        "OWN_CO": "USA",
+        "LS_BOOK": "29473",
+        "LS_PAGE": "460",
+        "REG_ID": "29473/460",
+        "ZONING": "C",
+        "YEAR_BUILT": 1950,
+        "BLD_AREA": 6452,
+        "UNITS": 1,
+        "RES_AREA": 6452,
+        "STYLE": "COLONIAL",
+        "NUM_ROOMS": 6,
+        "LOT_UNITS": "Acres",
+        "STORIES": "2",
+        "USE_DESC": "Mixed Use (Primarily Commercial, some Residential)",
+        "TOWNID_UC": "259_031",
+        "GlobalID": "0dee3b0c-9a0b-413f-97d6-61905af72be8",
+        "Shape__Area": 11945.7421875,
+        "Shape__Length": 461.7636715432545
+      },
+      "geometry_comparison": {
+        "town": "SALISBURY",
+        "parcel_id": "10-143",
+        "address": "29 OLD ELM ST",
+        "official_gis_acres": 1.58610011982351,
+        "app_gis_acres": 1.5827062966767655,
+        "symmetric_difference_m2": 42.527950014910374,
+        "source_acres": 1.59,
+        "usable_acres": 1.24,
+        "assessor_lot_size": 1.6,
+        "source_wetland_pct": 0,
+        "report_metrics": {
+          "gis_area_m2": 6404.985141479288,
+          "corridor_coverage_fraction": 0.9999999999999999,
+          "building_area_m2": 643.0548151508019,
+          "building_count": 3,
+          "mapped_wetland_area_m2": 0
+        },
+        "report_layer_coverage": "complete"
+      },
+      "independent_massdep_overlap": {
+        "town": "SALISBURY",
+        "parcel_id": "10-143",
+        "address": "29 OLD ELM ST",
+        "mapped_wetland_m2": 0.0,
+        "mapped_wetland_pct": 0.0
+      },
+      "verification": {
+        "identity": "matches municipal record",
+        "zoning_code": "matches municipal and/or MassGIS record; not a permitted-use certification",
+        "last_transfer": "matches assessor record; deed not inspected",
+        "assessment": "matches FY2026 municipal record",
+        "wetland": "no positive-area overlap in queried MassDEP polygons; not field-confirmed absence",
+        "usable_acres": "unverified GIS-derived input",
+        "registry_instruments": "not independently retrieved",
+        "mortgage_balance": "not independently verified",
+        "current_tax_debt": "not independently verified",
+        "listing": "public off-market indication; no live MLS confirmation",
+        "occupancy": "mailing-address inference, not independently verified",
+        "score": "arithmetic reproduced; factual inputs remain provisional"
+      }
+    },
+    {
+      "identity": "SALISBURY|19-56",
+      "off_market_rank": 4,
+      "overall_rank": 4,
+      "app_properties": {
+        "town": "SALISBURY",
+        "state": "MA",
+        "parcel_id": "19-56",
+        "address": "47 PIKE ST",
+        "owner": "JANVRIN MARC J",
+        "category": "Developable",
+        "status": "Mixed (vacant + built-up)",
+        "keep": "Y",
+        "drop_reason": null,
+        "acres": 2,
+        "usable_acres": 1.81,
+        "wetland_pct": 0,
+        "road": "Pike St",
+        "road_dist_m": 6,
+        "pct_in_250m": 100,
+        "zoning": "R2",
+        "use": "Single Family Residential",
+        "total_val": "728800",
+        "units": 1,
+        "owner_name": "JANVRIN MARC J",
+        "owner_type": "Individual",
+        "owner_mailing_address": "47 PIKE ST, SALISBURY, MA 01952",
+        "owner_lives_on_lot": "Y",
+        "owner_distance_miles": 0,
+        "owner_distance_group": "Owner address is the lot",
+        "years_owned": 32,
+        "last_sale_date": "Oct 21, 1994",
+        "last_sale_price": "$84,000",
+        "deed_book_page": "Book 12791 / Page 402",
+        "tax_takings_found": 0,
+        "unpaid_tax_signal": "No tax taking recorded (2005-2026)",
+        "life_event_signal": "Owned 32 yrs (likely older owner)",
+        "estate_record_detail": null,
+        "past_listing_attempt": "No unsold past listing (Redfin)",
+        "children_count_estate_owner": null,
+        "zillow_link": "https://www.zillow.com/homedetails/56962960_zpid/",
+        "zillow_past_attempt": "Listed twice: 3 Oct 2009 at $389,000 cut to $289,000, removed 5 Mar 2011; 9 Jun 2011 at $319,000 cut to $295,000, removed 12 Sep 2011 - not sold",
+        "redfin_link": "https://www.redfin.com/MA/Salisbury/47-Pike-St-01952/home/8368663",
+        "redfin_past_attempt": "None since last sale",
+        "open_mortgage": "No open mortgage (7 discharged)",
+        "lease_easement_restriction": "None found",
+        "screening_rule": 4,
+        "screening_reason": "Vacant or mixed land in a Developable, Industrial or Commercial category",
+        "loan": {
+          "loan_status": "Past loan only - paid off (7)",
+          "open_mortgage": "No open mortgage (7 discharged)",
+          "open_loans_count": 0,
+          "latest_open_loan_lender": null,
+          "latest_loan_amount_usd": null,
+          "latest_loan_date": null,
+          "loan_age_years": null,
+          "loan_to_value_pct": null,
+          "est_balance_now_usd": null,
+          "est_equity_usd": null,
+          "est_equity_pct": null,
+          "loan_signal": "No open loan - likely free & clear",
+          "source_row": 649
+        },
+        "industrial_lots_within_quarter_mile": 0
+      },
+      "app_listing": {
+        "status": "Not listed",
+        "address": "47 Pike St",
+        "links": {
+          "Zillow": "https://www.zillow.com/homedetails/56962960_zpid/",
+          "Redfin": "https://www.redfin.com/MA/Salisbury/47-Pike-St-01952/home/8368663"
+        },
+        "proof": null,
+        "note": "Not for sale on the linked pages (checked 22 Oct 2026)."
+      },
+      "app_score": 75,
+      "score_factors": [
+        {
+          "id": "highway",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "land",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "size",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "industry",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "estate",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "tax",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "listing",
+          "points": 35,
+          "has_source_data": true
+        },
+        {
+          "id": "tenure",
+          "points": 20,
+          "has_source_data": true
+        },
+        {
+          "id": "distance",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "family",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "loan",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "lawsuit",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "lease",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "recent",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "wetland",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "restriction",
+          "points": 0,
+          "has_source_data": true
+        }
+      ],
+      "municipal_record": {
+        "account": "1821",
+        "recorded_acres": 1.959,
+        "assessment_2026": 728800,
+        "owner_lines": [
+          "JANVRIN MARC J",
+          "ARTHUR HOLLY B"
+        ],
+        "source_url": "https://webpro.patriotproperties.com/salisbury/Summary.asp?AccountNumber=1821",
+        "zoning": "R2",
+        "last_sale_date": "Oct 21, 1994",
+        "deed_book_page": "Book 12791 / Page 402",
+        "last_sale_consideration": "$84,000"
+      },
+      "official_massgis_attributes": {
+        "OBJECTID": 503711,
+        "MAP_PAR_ID": "19-56",
+        "LOC_ID": "M_250857_957652",
+        "POLY_TYPE": "FEE",
+        "MAP_NO": "19",
+        "SOURCE": "ASSESS",
+        "PLAN_ID": null,
+        "LAST_EDIT": 20121212,
+        "BND_CHK": null,
+        "NO_MATCH": "N",
+        "TOWN_ID": 259,
+        "PROP_ID": "19-56",
+        "BLDG_VAL": 535000,
+        "LAND_VAL": 188600,
+        "OTHER_VAL": 5200,
+        "TOTAL_VAL": 728800,
+        "FY": 2026,
+        "LOT_SIZE": 1.96,
+        "LS_DATE": "19941021",
+        "LS_PRICE": 84000,
+        "USE_CODE": "101",
+        "SITE_ADDR": "47 PIKE ST",
+        "ADDR_NUM": "47",
+        "FULL_STR": "PIKE ST",
+        "LOCATION": null,
+        "CITY": "SALISBURY",
+        "ZIP": "01952",
+        "OWNER1": "JANVRIN MARC J",
+        "OWN_ADDR": "47 PIKE ST",
+        "OWN_CITY": "SALISBURY",
+        "OWN_STATE": "MA",
+        "OWN_ZIP": "01952",
+        "OWN_CO": "USA",
+        "LS_BOOK": "12791",
+        "LS_PAGE": "402",
+        "REG_ID": "12791/402",
+        "ZONING": "R2",
+        "YEAR_BUILT": 1997,
+        "BLD_AREA": 2854,
+        "UNITS": 1,
+        "RES_AREA": 2854,
+        "STYLE": "COLONIAL",
+        "NUM_ROOMS": 7,
+        "LOT_UNITS": "Acres",
+        "STORIES": "2",
+        "USE_DESC": "Single Family Residential",
+        "TOWNID_UC": "259_101",
+        "GlobalID": "e632221e-6a92-4d8a-9c97-40f006bcceef",
+        "Shape__Area": 15114.05859375,
+        "Shape__Length": 639.8428247206463
+      },
+      "geometry_comparison": {
+        "town": "SALISBURY",
+        "parcel_id": "19-56",
+        "address": "47 PIKE ST",
+        "official_gis_acres": 2.0053752449452746,
+        "app_gis_acres": 1.982605772863599,
+        "symmetric_difference_m2": 92.52974813208934,
+        "source_acres": 2,
+        "usable_acres": 1.81,
+        "assessor_lot_size": 1.96,
+        "source_wetland_pct": 0,
+        "report_metrics": {
+          "gis_area_m2": 8023.320905000372,
+          "corridor_coverage_fraction": 1.0,
+          "building_area_m2": 157.8275330511685,
+          "building_count": 2,
+          "mapped_wetland_area_m2": 0
+        },
+        "report_layer_coverage": "complete"
+      },
+      "independent_massdep_overlap": {
+        "town": "SALISBURY",
+        "parcel_id": "19-56",
+        "address": "47 PIKE ST",
+        "mapped_wetland_m2": 3329.330715469407,
+        "mapped_wetland_pct": 41.02451840622323
+      },
+      "verification": {
+        "identity": "matches municipal record",
+        "zoning_code": "matches municipal and/or MassGIS record; not a permitted-use certification",
+        "last_transfer": "matches assessor record; deed not inspected",
+        "assessment": "matches FY2026 municipal record",
+        "wetland": "contradiction with independent MassDEP polygons",
+        "usable_acres": "unverified; conflicts with dry-area upper bound",
+        "registry_instruments": "not independently retrieved",
+        "mortgage_balance": "not independently verified",
+        "current_tax_debt": "not independently verified",
+        "listing": "public off-market indication; no live MLS confirmation",
+        "occupancy": "mailing-address inference, not independently verified",
+        "score": "arithmetic reproduced; factual inputs remain provisional"
+      }
+    },
+    {
+      "identity": "SALISBURY|18-21",
+      "off_market_rank": 5,
+      "overall_rank": 5,
+      "app_properties": {
+        "town": "SALISBURY",
+        "state": "MA",
+        "parcel_id": "18-21",
+        "address": "68 PIKE ST",
+        "owner": "PERRON SUZANNE WILMOT",
+        "category": "Commercial",
+        "status": "Mixed (vacant + built-up)",
+        "keep": "Y",
+        "drop_reason": null,
+        "acres": 4.45,
+        "usable_acres": 4.35,
+        "wetland_pct": 0,
+        "road": "Pike St",
+        "road_dist_m": 6.7,
+        "pct_in_250m": 100,
+        "zoning": "LM",
+        "use": "Single Family Residential",
+        "total_val": "579300",
+        "units": 1,
+        "owner_name": "PERRON SUZANNE WILMOT",
+        "owner_type": "Individual",
+        "owner_mailing_address": "68 PIKE ST, SALISBURY, MA 01952",
+        "owner_lives_on_lot": "Y",
+        "owner_distance_miles": 0,
+        "owner_distance_group": "Owner address is the lot",
+        "years_owned": 24.1,
+        "last_sale_date": "Sep 25, 2002",
+        "last_sale_price": "$1 (nominal, family or trust transfer)",
+        "deed_book_page": "Book 19286 / Page 93",
+        "tax_takings_found": 2,
+        "last_tax_taking": "2022-11-03 Â· $1,976.57 Â· Book/Page 41284/349",
+        "unpaid_tax_signal": "Older tax taking (2022), current status not confirmed",
+        "tax_check_link": "https://www.salemdeeds.com/masearches",
+        "life_event_signal": "None found",
+        "estate_record_detail": null,
+        "past_listing_attempt": "No unsold past listing (Redfin)",
+        "children_count_estate_owner": null,
+        "zillow_link": "https://www.zillow.com/homedetails/56962801_zpid/",
+        "zillow_past_attempt": "No history on Zillow",
+        "redfin_link": "https://www.redfin.com/MA/Salisbury/68-Pike-St-01952/home/8367872",
+        "redfin_past_attempt": "No history on Redfin",
+        "open_mortgage": "No mortgage on record",
+        "lease_easement_restriction": "None found",
+        "screening_rule": 4,
+        "screening_reason": "Vacant or mixed land in a Developable, Industrial or Commercial category",
+        "loan": {
+          "loan_status": "No loan on record",
+          "open_mortgage": "No mortgage on record",
+          "open_loans_count": 0,
+          "latest_open_loan_lender": null,
+          "latest_loan_amount_usd": null,
+          "latest_loan_date": null,
+          "loan_age_years": null,
+          "loan_to_value_pct": null,
+          "est_balance_now_usd": null,
+          "est_equity_usd": null,
+          "est_equity_pct": null,
+          "loan_signal": "No open loan - likely free & clear",
+          "source_row": 721
+        },
+        "industrial_lots_within_quarter_mile": 4
+      },
+      "app_listing": {
+        "status": "Not listed",
+        "address": "68 Pike St",
+        "links": {
+          "Zillow": "https://www.zillow.com/homedetails/56962801_zpid/",
+          "Redfin": "https://www.redfin.com/MA/Salisbury/68-Pike-St-01952/home/8367872"
+        },
+        "proof": null,
+        "note": "Not for sale on the linked pages (checked 22 Oct 2026)."
+      },
+      "app_score": 75,
+      "score_factors": [
+        {
+          "id": "highway",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "land",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "size",
+          "points": 15,
+          "has_source_data": true
+        },
+        {
+          "id": "industry",
+          "points": 5,
+          "has_source_data": true
+        },
+        {
+          "id": "estate",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "tax",
+          "points": 20,
+          "has_source_data": true
+        },
+        {
+          "id": "listing",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "tenure",
+          "points": 15,
+          "has_source_data": true
+        },
+        {
+          "id": "distance",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "family",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "loan",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "lawsuit",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "lease",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "recent",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "wetland",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "restriction",
+          "points": 0,
+          "has_source_data": true
+        }
+      ],
+      "municipal_record": {
+        "account": "1586",
+        "recorded_acres": 4.246,
+        "assessment_2026": 579300,
+        "owner_lines": [
+          "PERRON SUZANNE WILMOT"
+        ],
+        "source_url": "https://webpro.patriotproperties.com/salisbury/Summary.asp?AccountNumber=1586",
+        "zoning": "LM",
+        "last_sale_date": "Sep 25, 2002",
+        "deed_book_page": "Book 19286 / Page 93",
+        "last_sale_consideration": "$1"
+      },
+      "official_massgis_attributes": {
+        "OBJECTID": 488442,
+        "MAP_PAR_ID": "18-21",
+        "LOC_ID": "M_250429_957669",
+        "POLY_TYPE": "FEE",
+        "MAP_NO": "18",
+        "SOURCE": "ASSESS",
+        "PLAN_ID": null,
+        "LAST_EDIT": 20121212,
+        "BND_CHK": null,
+        "NO_MATCH": "N",
+        "TOWN_ID": 259,
+        "PROP_ID": "18-21",
+        "BLDG_VAL": 170100,
+        "LAND_VAL": 382200,
+        "OTHER_VAL": 27000,
+        "TOTAL_VAL": 579300,
+        "FY": 2026,
+        "LOT_SIZE": 4.25,
+        "LS_DATE": "20020925",
+        "LS_PRICE": 1,
+        "USE_CODE": "101",
+        "SITE_ADDR": "68 PIKE ST",
+        "ADDR_NUM": "68",
+        "FULL_STR": "PIKE ST",
+        "LOCATION": null,
+        "CITY": "SALISBURY",
+        "ZIP": "01952",
+        "OWNER1": "PERRON SUZANNE WILMOT",
+        "OWN_ADDR": "68 PIKE ST",
+        "OWN_CITY": "SALISBURY",
+        "OWN_STATE": "MA",
+        "OWN_ZIP": "01952",
+        "OWN_CO": "USA",
+        "LS_BOOK": "19286",
+        "LS_PAGE": "93",
+        "REG_ID": "19286/93",
+        "ZONING": "LM",
+        "YEAR_BUILT": 1945,
+        "BLD_AREA": 1185,
+        "UNITS": 1,
+        "RES_AREA": 1185,
+        "STYLE": "COTTAGE",
+        "NUM_ROOMS": 4,
+        "LOT_UNITS": "Acres",
+        "STORIES": "1",
+        "USE_DESC": "Single Family Residential",
+        "TOWNID_UC": "259_101",
+        "GlobalID": "a64889c6-2010-48d5-86ba-9d21fbb12461",
+        "Shape__Area": 33532.0078125,
+        "Shape__Length": 879.4770042123347
+      },
+      "geometry_comparison": {
+        "town": "SALISBURY",
+        "parcel_id": "18-21",
+        "address": "68 PIKE ST",
+        "official_gis_acres": 4.448948528404764,
+        "app_gis_acres": 4.444794954507601,
+        "symmetric_difference_m2": 28.210317966010546,
+        "source_acres": 4.45,
+        "usable_acres": 4.35,
+        "assessor_lot_size": 4.25,
+        "source_wetland_pct": 0,
+        "report_metrics": {
+          "gis_area_m2": 17987.447007900202,
+          "corridor_coverage_fraction": 1.0,
+          "building_area_m2": 149.2207649181455,
+          "building_count": 2,
+          "mapped_wetland_area_m2": 0
+        },
+        "report_layer_coverage": "complete"
+      },
+      "independent_massdep_overlap": {
+        "town": "SALISBURY",
+        "parcel_id": "18-21",
+        "address": "68 PIKE ST",
+        "mapped_wetland_m2": 0.0,
+        "mapped_wetland_pct": 0.0
+      },
+      "verification": {
+        "identity": "matches municipal record",
+        "zoning_code": "matches municipal and/or MassGIS record; not a permitted-use certification",
+        "last_transfer": "matches assessor record; deed not inspected",
+        "assessment": "matches FY2026 municipal record",
+        "wetland": "no positive-area overlap in queried MassDEP polygons; not field-confirmed absence",
+        "usable_acres": "unverified GIS-derived input",
+        "registry_instruments": "not independently retrieved",
+        "mortgage_balance": "not independently verified",
+        "current_tax_debt": "not independently verified",
+        "listing": "public off-market indication; no live MLS confirmation",
+        "occupancy": "mailing-address inference, not independently verified",
+        "score": "arithmetic reproduced; factual inputs remain provisional"
+      }
+    },
+    {
+      "identity": "SALISBURY|10-213",
+      "off_market_rank": 6,
+      "overall_rank": 6,
+      "app_properties": {
+        "town": "SALISBURY",
+        "state": "MA",
+        "parcel_id": "10-213",
+        "address": "72 BAKER RD",
+        "owner": "MERLUZZI BRUCE",
+        "category": "Developable",
+        "status": "Mixed (vacant + built-up)",
+        "keep": "Y",
+        "drop_reason": null,
+        "acres": 1.17,
+        "usable_acres": 1.06,
+        "wetland_pct": 0,
+        "road": "Rabbit Rd",
+        "road_dist_m": 190.2,
+        "pct_in_250m": 100,
+        "zoning": "R2",
+        "use": "Other",
+        "total_val": "768300",
+        "units": 1,
+        "owner_name": "MERLUZZI BRUCE",
+        "owner_type": "Individual",
+        "owner_mailing_address": "72 BAKER RD, SALISBURY, MA 01952",
+        "owner_lives_on_lot": "Y",
+        "owner_distance_miles": 0,
+        "owner_distance_group": "Owner address is the lot",
+        "years_owned": 41.3,
+        "last_sale_date": "Jun 28, 1985",
+        "last_sale_price": "$20,000",
+        "deed_book_page": "Book 7810 / Page 228",
+        "tax_takings_found": 0,
+        "unpaid_tax_signal": "No tax taking recorded (2005-2026)",
+        "life_event_signal": "Estate record for owner or a family member with the same surname (death) - heirs may now hold the land; Owned 41 yrs (likely older owner)",
+        "estate_record_detail": "2024 estate tax affidavit (Merluzzi, Amy L, Book/Page 42099/035)",
+        "past_listing_attempt": "No unsold past listing (Redfin)",
+        "children_count_estate_owner": "2 children (Amy L Merluzzi, died 2023)",
+        "zillow_link": "https://www.zillow.com/homedetails/56962301_zpid/",
+        "zillow_past_attempt": "No history on Zillow",
+        "redfin_link": "https://www.redfin.com/MA/Salisbury/72-Baker-Rd-01952/home/8365318",
+        "redfin_past_attempt": "No history on Redfin",
+        "open_mortgage": "No open mortgage (5 discharged)",
+        "lease_easement_restriction": "None found",
+        "screening_rule": 4,
+        "screening_reason": "Vacant or mixed land in a Developable, Industrial or Commercial category",
+        "loan": {
+          "loan_status": "Past loan only - paid off (5)",
+          "open_mortgage": "No open mortgage (5 discharged)",
+          "open_loans_count": 0,
+          "latest_open_loan_lender": null,
+          "latest_loan_amount_usd": null,
+          "latest_loan_date": null,
+          "loan_age_years": null,
+          "loan_to_value_pct": null,
+          "est_balance_now_usd": null,
+          "est_equity_usd": null,
+          "est_equity_pct": null,
+          "loan_signal": "No open loan - likely free & clear",
+          "source_row": 554
+        },
+        "industrial_lots_within_quarter_mile": 1
+      },
+      "app_listing": {
+        "status": "Not listed",
+        "address": "72 Baker Rd",
+        "links": {
+          "Zillow": "https://www.zillow.com/homedetails/56962301_zpid/",
+          "Redfin": "https://www.redfin.com/MA/Salisbury/72-Baker-Rd-01952/home/8365318"
+        },
+        "proof": null,
+        "note": "Not for sale on the linked pages (checked 22 Oct 2026)."
+      },
+      "app_score": 75,
+      "score_factors": [
+        {
+          "id": "highway",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "land",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "size",
+          "points": 5,
+          "has_source_data": true
+        },
+        {
+          "id": "industry",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "estate",
+          "points": 40,
+          "has_source_data": true
+        },
+        {
+          "id": "tax",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "listing",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "tenure",
+          "points": 25,
+          "has_source_data": true
+        },
+        {
+          "id": "distance",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "family",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "loan",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "lawsuit",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "lease",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "recent",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "wetland",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "restriction",
+          "points": 0,
+          "has_source_data": true
+        }
+      ],
+      "municipal_record": {
+        "account": "827",
+        "recorded_acres": 1.16,
+        "assessment_2026": 768300,
+        "owner_lines": [
+          "MERLUZZI BRUCE",
+          "MERLUZZI AMY"
+        ],
+        "residential_units": 2,
+        "source_url": "https://webpro.patriotproperties.com/salisbury/Summary.asp?AccountNumber=827",
+        "zoning": "R2",
+        "last_sale_date": "Jun 28, 1985",
+        "deed_book_page": "Book 7810 / Page 228",
+        "last_sale_consideration": "$20,000"
+      },
+      "official_massgis_attributes": {
+        "OBJECTID": 157139,
+        "MAP_PAR_ID": "10-213",
+        "LOC_ID": "M_249610_956094",
+        "POLY_TYPE": "FEE",
+        "MAP_NO": "10",
+        "SOURCE": "ASSESS",
+        "PLAN_ID": "Assessors Office",
+        "LAST_EDIT": 20121212,
+        "BND_CHK": null,
+        "NO_MATCH": "N",
+        "TOWN_ID": 259,
+        "PROP_ID": "10-213",
+        "BLDG_VAL": 574200,
+        "LAND_VAL": 194100,
+        "OTHER_VAL": 0,
+        "TOTAL_VAL": 768300,
+        "FY": 2026,
+        "LOT_SIZE": 1.16,
+        "LS_DATE": "19850628",
+        "LS_PRICE": 20000,
+        "USE_CODE": "101A",
+        "SITE_ADDR": "72 BAKER RD",
+        "ADDR_NUM": "72",
+        "FULL_STR": "BAKER RD",
+        "LOCATION": null,
+        "CITY": "SALISBURY",
+        "ZIP": "01952",
+        "OWNER1": "MERLUZZI BRUCE",
+        "OWN_ADDR": "72 BAKER RD",
+        "OWN_CITY": "SALISBURY",
+        "OWN_STATE": "MA",
+        "OWN_ZIP": "01952",
+        "OWN_CO": "USA",
+        "LS_BOOK": "7810",
+        "LS_PAGE": "228",
+        "REG_ID": "7810/228",
+        "ZONING": "R2",
+        "YEAR_BUILT": 1988,
+        "BLD_AREA": 3476,
+        "UNITS": 2,
+        "RES_AREA": 3476,
+        "STYLE": "COLONIAL",
+        "NUM_ROOMS": 11,
+        "LOT_UNITS": "Acres",
+        "STORIES": "2.5",
+        "USE_DESC": "Other",
+        "TOWNID_UC": "259_101A",
+        "GlobalID": "038b21d6-4bce-4faa-90f5-57b39e45ad46",
+        "Shape__Area": 8826.08984375,
+        "Shape__Length": 423.23631357352804
+      },
+      "geometry_comparison": {
+        "town": "SALISBURY",
+        "parcel_id": "10-213",
+        "address": "72 BAKER RD",
+        "official_gis_acres": 1.1715698994594594,
+        "app_gis_acres": 1.1687902736252402,
+        "symmetric_difference_m2": 14.698440460217459,
+        "source_acres": 1.17,
+        "usable_acres": 1.06,
+        "assessor_lot_size": 1.16,
+        "source_wetland_pct": 0,
+        "report_metrics": {
+          "gis_area_m2": 4729.926425258957,
+          "corridor_coverage_fraction": 1.0,
+          "building_area_m2": 218.28250844155806,
+          "building_count": 1,
+          "mapped_wetland_area_m2": 0
+        },
+        "report_layer_coverage": "complete"
+      },
+      "independent_massdep_overlap": {
+        "town": "SALISBURY",
+        "parcel_id": "10-213",
+        "address": "72 BAKER RD",
+        "mapped_wetland_m2": 0.0,
+        "mapped_wetland_pct": 0.0
+      },
+      "verification": {
+        "identity": "matches municipal record",
+        "zoning_code": "matches municipal and/or MassGIS record; not a permitted-use certification",
+        "last_transfer": "matches assessor record; deed not inspected",
+        "assessment": "matches FY2026 municipal record",
+        "wetland": "no positive-area overlap in queried MassDEP polygons; not field-confirmed absence",
+        "usable_acres": "unverified GIS-derived input",
+        "registry_instruments": "not independently retrieved",
+        "mortgage_balance": "not independently verified",
+        "current_tax_debt": "not independently verified",
+        "listing": "public off-market indication; no live MLS confirmation",
+        "occupancy": "mailing-address inference, not independently verified",
+        "score": "arithmetic reproduced; factual inputs remain provisional"
+      }
+    },
+    {
+      "identity": "AMESBURY|43-2",
+      "off_market_rank": 7,
+      "overall_rank": 7,
+      "app_properties": {
+        "town": "AMESBURY",
+        "state": "MA",
+        "parcel_id": "43-2",
+        "address": "87 MONROE ST",
+        "owner": "RAYMOND & ARLINE POULIOT",
+        "category": "Industrial",
+        "status": "Mixed (vacant + built-up)",
+        "keep": "Y",
+        "drop_reason": null,
+        "acres": 1.28,
+        "usable_acres": 1.22,
+        "wetland_pct": 0,
+        "road": "Main St",
+        "road_dist_m": 6.8,
+        "pct_in_250m": 100,
+        "zoning": "I",
+        "use": "Single Family Residential",
+        "total_val": "566100",
+        "units": 1,
+        "owner_name": "RAYMOND & ARLINE POULIOT",
+        "owner_type": "Individual",
+        "owner_mailing_address": "6 EAST GREENWOOD ST, AMESBURY, MA 01913",
+        "owner_lives_on_lot": "N",
+        "owner_distance_miles": 1.3,
+        "owner_distance_group": "Same town",
+        "years_owned": 14.3,
+        "last_sale_date": "Jul 06, 2012",
+        "last_sale_price": "$1 (nominal, family or trust transfer)",
+        "deed_book_page": "Book 31499 / Page 89",
+        "tax_takings_found": 0,
+        "unpaid_tax_signal": "No tax taking recorded (2005-2026)",
+        "life_event_signal": "Estate record for owner or a family member with the same surname (death) - heirs may now hold the land",
+        "estate_record_detail": "2025 estate tax lien release (Pouliot, Raymond E, Book/Page 42587/508)",
+        "past_listing_attempt": "No unsold past listing (Redfin)",
+        "children_count_estate_owner": "3 children (Raymond E Pouliot, died 2023)",
+        "zillow_link": "https://www.zillow.com/homedetails/56904093_zpid/",
+        "zillow_past_attempt": "None since last sale",
+        "redfin_link": "https://www.redfin.com/MA/Amesbury/87-Monroe-St-01913/home/8200855",
+        "redfin_past_attempt": "None since last sale",
+        "open_mortgage": "No mortgage by current owner on record",
+        "lease_easement_restriction": "None found",
+        "screening_rule": 4,
+        "screening_reason": "Vacant or mixed land in a Developable, Industrial or Commercial category",
+        "loan": {
+          "loan_status": "Past loan by previous owner only",
+          "open_mortgage": "No mortgage by current owner on record",
+          "open_loans_count": 0,
+          "latest_open_loan_lender": null,
+          "latest_loan_amount_usd": null,
+          "latest_loan_date": null,
+          "loan_age_years": null,
+          "loan_to_value_pct": null,
+          "est_balance_now_usd": null,
+          "est_equity_usd": null,
+          "est_equity_pct": null,
+          "loan_signal": "No open loan - likely free & clear",
+          "source_row": 574
+        },
+        "industrial_lots_within_quarter_mile": 6
+      },
+      "app_listing": {
+        "status": "Not listed",
+        "address": "87 Monroe St",
+        "links": {
+          "Zillow": "https://www.zillow.com/homedetails/56904093_zpid/",
+          "Redfin": "https://www.redfin.com/MA/Amesbury/87-Monroe-St-01913/home/8200855"
+        },
+        "proof": null,
+        "note": "Not for sale on the linked pages (checked 22 Oct 2026)."
+      },
+      "app_score": 75,
+      "score_factors": [
+        {
+          "id": "highway",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "land",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "size",
+          "points": 5,
+          "has_source_data": true
+        },
+        {
+          "id": "industry",
+          "points": 5,
+          "has_source_data": true
+        },
+        {
+          "id": "estate",
+          "points": 40,
+          "has_source_data": true
+        },
+        {
+          "id": "tax",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "listing",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "tenure",
+          "points": 5,
+          "has_source_data": true
+        },
+        {
+          "id": "distance",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "family",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "loan",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "lawsuit",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "lease",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "recent",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "wetland",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "restriction",
+          "points": 0,
+          "has_source_data": true
+        }
+      ],
+      "municipal_record": {
+        "pid": "3564",
+        "recorded_acres": 1.15,
+        "assessment_2026": 583700,
+        "owner_lines": [
+          "RAYMOND & ARLINE POULIOT",
+          "JESSICA POULIOT (LIFE ESTATE)"
+        ],
+        "source_url": "https://gis.vgsi.com/amesburyma/Parcel.aspx?pid=3564",
+        "zoning": "I",
+        "last_sale_date": "Jul 06, 2012",
+        "deed_book_page": "Book 31499 / Page 89",
+        "last_sale_consideration": "$1"
+      },
+      "official_massgis_attributes": {
+        "OBJECTID": 1906354,
+        "MAP_PAR_ID": "43-2",
+        "LOC_ID": "M_248643_956726",
+        "POLY_TYPE": "FEE",
+        "MAP_NO": "43",
+        "SOURCE": "ASSESS",
+        "PLAN_ID": null,
+        "LAST_EDIT": 20121010,
+        "BND_CHK": null,
+        "NO_MATCH": "N",
+        "TOWN_ID": 7,
+        "PROP_ID": "43-2",
+        "BLDG_VAL": 272900,
+        "LAND_VAL": 291900,
+        "OTHER_VAL": 1300,
+        "TOTAL_VAL": 566100,
+        "FY": 2026,
+        "LOT_SIZE": 1.1500000000000001,
+        "LS_DATE": "20120706",
+        "LS_PRICE": 1,
+        "USE_CODE": "1010",
+        "SITE_ADDR": "87 MONROE ST",
+        "ADDR_NUM": "87",
+        "FULL_STR": "MONROE ST",
+        "LOCATION": null,
+        "CITY": "AMESBURY",
+        "ZIP": "01913",
+        "OWNER1": "RAYMOND & ARLINE POULIOT",
+        "OWN_ADDR": "6 EAST GREENWOOD ST",
+        "OWN_CITY": "AMESBURY",
+        "OWN_STATE": "MA",
+        "OWN_ZIP": "01913",
+        "OWN_CO": "USA",
+        "LS_BOOK": "31499",
+        "LS_PAGE": "89",
+        "REG_ID": "31499/89",
+        "ZONING": "I",
+        "YEAR_BUILT": 1940,
+        "BLD_AREA": 4074,
+        "UNITS": 1,
+        "RES_AREA": 1626,
+        "STYLE": "Cape Cod",
+        "NUM_ROOMS": 6,
+        "LOT_UNITS": "Acres",
+        "STORIES": "1.5",
+        "USE_DESC": "Single Family Residential",
+        "TOWNID_UC": "7_1010",
+        "GlobalID": "771edb94-b943-4434-85c5-6654f8cd3191",
+        "Shape__Area": 9678.01953125,
+        "Shape__Length": 422.19701180548407
+      },
+      "geometry_comparison": {
+        "town": "AMESBURY",
+        "parcel_id": "43-2",
+        "address": "87 MONROE ST",
+        "official_gis_acres": 1.284415982990728,
+        "app_gis_acres": 1.285728383783108,
+        "symmetric_difference_m2": 12.009372798946039,
+        "source_acres": 1.28,
+        "usable_acres": 1.22,
+        "assessor_lot_size": 1.1500000000000001,
+        "source_wetland_pct": 0,
+        "report_metrics": {
+          "gis_area_m2": 5203.158167374642,
+          "corridor_coverage_fraction": 1.0,
+          "building_area_m2": 144.10047417147936,
+          "building_count": 1,
+          "mapped_wetland_area_m2": 0
+        },
+        "report_layer_coverage": "complete"
+      },
+      "independent_massdep_overlap": {
+        "town": "AMESBURY",
+        "parcel_id": "43-2",
+        "address": "87 MONROE ST",
+        "mapped_wetland_m2": 0.0,
+        "mapped_wetland_pct": 0.0
+      },
+      "verification": {
+        "identity": "matches municipal record",
+        "zoning_code": "matches municipal and/or MassGIS record; not a permitted-use certification",
+        "last_transfer": "matches assessor record; deed not inspected",
+        "assessment": "outdated: matches FY2025 history, not FY2026 municipal record",
+        "wetland": "no positive-area overlap in queried MassDEP polygons; not field-confirmed absence",
+        "usable_acres": "unverified GIS-derived input",
+        "registry_instruments": "not independently retrieved",
+        "mortgage_balance": "not independently verified",
+        "current_tax_debt": "not independently verified",
+        "listing": "public off-market indication; no live MLS confirmation",
+        "occupancy": "mailing-address inference, not independently verified",
+        "score": "arithmetic reproduced; factual inputs remain provisional"
+      }
+    },
+    {
+      "identity": "SALISBURY|18-35",
+      "off_market_rank": 8,
+      "overall_rank": 9,
+      "app_properties": {
+        "town": "SALISBURY",
+        "state": "MA",
+        "parcel_id": "18-35",
+        "address": "4 HIGH ST",
+        "owner": "MACDONALD JANE A",
+        "category": "Developable",
+        "status": "Mixed (vacant + built-up)",
+        "keep": "Y",
+        "drop_reason": null,
+        "acres": 1.46,
+        "usable_acres": 1.35,
+        "wetland_pct": 0,
+        "road": "Pike St",
+        "road_dist_m": 191,
+        "pct_in_250m": 67.6,
+        "zoning": "R2",
+        "use": "Single Family Residential",
+        "total_val": "402000",
+        "units": 1,
+        "owner_name": "MACDONALD JANE A",
+        "owner_type": "Individual",
+        "owner_mailing_address": "4 HIGH ST, SALISBURY, MA 01952",
+        "owner_lives_on_lot": "Y",
+        "owner_distance_miles": 0,
+        "owner_distance_group": "Owner address is the lot",
+        "years_owned": 13.2,
+        "last_sale_date": "Aug 01, 2013",
+        "last_sale_price": "$100 (nominal, family or trust transfer)",
+        "deed_book_page": "Book 32711 / Page 128",
+        "tax_takings_found": 0,
+        "unpaid_tax_signal": "No tax taking recorded (2005-2026)",
+        "life_event_signal": "Estate record for owner or a family member with the same surname (death) - heirs may now hold the land",
+        "estate_record_detail": "2026 estate tax affidavit (Macdonald, Jane A, Book/Page 43386/077)",
+        "past_listing_attempt": "No unsold past listing (Redfin)",
+        "children_count_estate_owner": "2 children (Jane A MacDonald, died 2022)",
+        "zillow_link": "https://www.zillow.com/homedetails/56962814_zpid/",
+        "zillow_past_attempt": "No history on Zillow",
+        "redfin_link": "https://www.redfin.com/MA/Salisbury/4-High-St-01952/home/8367933",
+        "redfin_past_attempt": "No history on Redfin",
+        "open_mortgage": "No mortgage on record",
+        "lease_easement_restriction": "None found",
+        "screening_rule": 4,
+        "screening_reason": "Vacant or mixed land in a Developable, Industrial or Commercial category",
+        "loan": {
+          "loan_status": "No loan on record",
+          "open_mortgage": "No mortgage on record",
+          "open_loans_count": 0,
+          "latest_open_loan_lender": null,
+          "latest_loan_amount_usd": null,
+          "latest_loan_date": null,
+          "loan_age_years": null,
+          "loan_to_value_pct": null,
+          "est_balance_now_usd": null,
+          "est_equity_usd": null,
+          "est_equity_pct": null,
+          "loan_signal": "No open loan - likely free & clear",
+          "source_row": 495
+        },
+        "industrial_lots_within_quarter_mile": 0
+      },
+      "app_listing": {
+        "status": "Not listed",
+        "address": "4 High St",
+        "links": {
+          "Zillow": "https://www.zillow.com/homedetails/56962814_zpid/",
+          "Redfin": "https://www.redfin.com/MA/Salisbury/4-High-St-01952/home/8367933"
+        },
+        "proof": null,
+        "note": "Not for sale on the linked pages (checked 22 Oct 2026)."
+      },
+      "app_score": 70,
+      "score_factors": [
+        {
+          "id": "highway",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "land",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "size",
+          "points": 5,
+          "has_source_data": true
+        },
+        {
+          "id": "industry",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "estate",
+          "points": 40,
+          "has_source_data": true
+        },
+        {
+          "id": "tax",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "listing",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "tenure",
+          "points": 5,
+          "has_source_data": true
+        },
+        {
+          "id": "distance",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "family",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "loan",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "lawsuit",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "lease",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "recent",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "wetland",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "restriction",
+          "points": 0,
+          "has_source_data": true
+        }
+      ],
+      "municipal_record": {
+        "account": "1599",
+        "recorded_acres": 1.5,
+        "assessment_2026": 402000,
+        "owner_lines": [
+          "MACDONALD JANE A",
+          "ANTHONY J D`ANNA",
+          "PATRICIA L D`ANNA"
+        ],
+        "source_url": "https://webpro.patriotproperties.com/salisbury/Summary.asp?AccountNumber=1599",
+        "zoning": "R2",
+        "last_sale_date": "Aug 01, 2013",
+        "deed_book_page": "Book 32711 / Page 128",
+        "last_sale_consideration": "$100"
+      },
+      "official_massgis_attributes": {
+        "OBJECTID": 508777,
+        "MAP_PAR_ID": "18-35",
+        "LOC_ID": "M_250747_957416",
+        "POLY_TYPE": "FEE",
+        "MAP_NO": "18",
+        "SOURCE": "ASSESS",
+        "PLAN_ID": null,
+        "LAST_EDIT": 20121212,
+        "BND_CHK": null,
+        "NO_MATCH": "N",
+        "TOWN_ID": 259,
+        "PROP_ID": "18-35",
+        "BLDG_VAL": 180000,
+        "LAND_VAL": 181700,
+        "OTHER_VAL": 40300,
+        "TOTAL_VAL": 402000,
+        "FY": 2026,
+        "LOT_SIZE": 1.5,
+        "LS_DATE": "20130801",
+        "LS_PRICE": 100,
+        "USE_CODE": "101",
+        "SITE_ADDR": "4 HIGH ST",
+        "ADDR_NUM": "4",
+        "FULL_STR": "HIGH ST",
+        "LOCATION": null,
+        "CITY": "SALISBURY",
+        "ZIP": "01952",
+        "OWNER1": "MACDONALD JANE A",
+        "OWN_ADDR": "4 HIGH ST",
+        "OWN_CITY": "SALISBURY",
+        "OWN_STATE": "MA",
+        "OWN_ZIP": "01952",
+        "OWN_CO": "USA",
+        "LS_BOOK": "32711",
+        "LS_PAGE": "128",
+        "REG_ID": "32711/128",
+        "ZONING": "R2",
+        "YEAR_BUILT": 1800,
+        "BLD_AREA": 994,
+        "UNITS": 1,
+        "RES_AREA": 994,
+        "STYLE": "ANTIQUE",
+        "NUM_ROOMS": 6,
+        "LOT_UNITS": "Acres",
+        "STORIES": "1.5",
+        "USE_DESC": "Single Family Residential",
+        "TOWNID_UC": "259_101",
+        "GlobalID": "79838240-032b-45a4-9fdd-d5924ea4cd2b",
+        "Shape__Area": 10962.40625,
+        "Shape__Length": 451.239494812948
+      },
+      "geometry_comparison": {
+        "town": "SALISBURY",
+        "parcel_id": "18-35",
+        "address": "4 HIGH ST",
+        "official_gis_acres": 1.4545874352245813,
+        "app_gis_acres": 1.4472996018336037,
+        "symmetric_difference_m2": 34.4682661989455,
+        "source_acres": 1.46,
+        "usable_acres": 1.35,
+        "assessor_lot_size": 1.5,
+        "source_wetland_pct": 0,
+        "report_metrics": {
+          "gis_area_m2": 5857.013688817282,
+          "corridor_coverage_fraction": 0.6738785509615515,
+          "building_area_m2": 51.71201805110269,
+          "building_count": 3,
+          "mapped_wetland_area_m2": null
+        },
+        "report_layer_coverage": "partial"
+      },
+      "independent_massdep_overlap": {
+        "town": "SALISBURY",
+        "parcel_id": "18-35",
+        "address": "4 HIGH ST",
+        "mapped_wetland_m2": 0.0,
+        "mapped_wetland_pct": 0.0
+      },
+      "verification": {
+        "identity": "matches municipal record",
+        "zoning_code": "matches municipal and/or MassGIS record; not a permitted-use certification",
+        "last_transfer": "matches assessor record; deed not inspected",
+        "assessment": "matches FY2026 municipal record",
+        "wetland": "no positive-area overlap in queried MassDEP polygons; not field-confirmed absence",
+        "usable_acres": "unverified GIS-derived input",
+        "registry_instruments": "not independently retrieved",
+        "mortgage_balance": "not independently verified",
+        "current_tax_debt": "not independently verified",
+        "listing": "public off-market indication; no live MLS confirmation",
+        "occupancy": "mailing-address inference, not independently verified",
+        "score": "arithmetic reproduced; factual inputs remain provisional"
+      }
+    },
+    {
+      "identity": "SALISBURY|10-4",
+      "off_market_rank": 9,
+      "overall_rank": 10,
+      "app_properties": {
+        "town": "SALISBURY",
+        "state": "MA",
+        "parcel_id": "10-4",
+        "address": "11 RABBIT RD",
+        "owner": "COATES HAROLD N",
+        "category": "Commercial",
+        "status": "Built-up",
+        "keep": "N",
+        "drop_reason": "Less than 1 usable acre",
+        "acres": 0.4,
+        "usable_acres": 0.29,
+        "wetland_pct": 0,
+        "road": "Rabbit Rd",
+        "road_dist_m": 11.5,
+        "pct_in_250m": 100,
+        "zoning": "C4",
+        "use": "Single Family Residential",
+        "total_val": "577600",
+        "units": 1,
+        "owner_name": "COATES HAROLD N",
+        "owner_type": "Individual",
+        "owner_mailing_address": "11 RABBIT RD, SALISBURY, MA 01952",
+        "owner_lives_on_lot": "Y",
+        "owner_distance_miles": 0,
+        "owner_distance_group": "Owner address is the lot",
+        "years_owned": 42,
+        "last_sale_date": "Nov 02, 1984",
+        "last_sale_price": "$44,000",
+        "deed_book_page": "Book 7568 / Page 519",
+        "tax_takings_found": 0,
+        "unpaid_tax_signal": "No tax taking recorded (2005-2026)",
+        "life_event_signal": "Owned 42 yrs (likely older owner)",
+        "estate_record_detail": null,
+        "past_listing_attempt": "No unsold past listing (Redfin)",
+        "children_count_estate_owner": null,
+        "zillow_link": "https://www.zillow.com/homedetails/56962210_zpid/",
+        "zillow_past_attempt": "Listed 26 May 2010 at $290,000, cut to $245,000, removed 20 May 2011 - not sold",
+        "redfin_link": "https://www.redfin.com/MA/Salisbury/11-Rabbit-Rd-01952/home/8364814",
+        "redfin_past_attempt": "No history on Redfin",
+        "open_mortgage": "No open mortgage (2 discharged)",
+        "lease_easement_restriction": "None found",
+        "screening_rule": 9,
+        "screening_reason": "Less than 1 usable acre",
+        "loan": {
+          "loan_status": "Past loan only - paid off (2)",
+          "open_mortgage": "No open mortgage (2 discharged)",
+          "open_loans_count": 0,
+          "latest_open_loan_lender": null,
+          "latest_loan_amount_usd": null,
+          "latest_loan_date": null,
+          "loan_age_years": null,
+          "loan_to_value_pct": null,
+          "est_balance_now_usd": null,
+          "est_equity_usd": null,
+          "est_equity_pct": null,
+          "loan_signal": "No open loan - likely free & clear",
+          "source_row": 242
+        },
+        "industrial_lots_within_quarter_mile": 1
+      },
+      "app_listing": {
+        "status": "Not listed",
+        "address": "11 Rabbit Rd",
+        "links": {
+          "Zillow": "https://www.zillow.com/homedetails/56962210_zpid/",
+          "Redfin": "https://www.redfin.com/MA/Salisbury/11-Rabbit-Rd-01952/home/8364814"
+        },
+        "proof": null,
+        "note": "Not for sale on the linked pages (checked 22 Oct 2026)."
+      },
+      "app_score": 70,
+      "score_factors": [
+        {
+          "id": "highway",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "land",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "size",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "industry",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "estate",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "tax",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "listing",
+          "points": 35,
+          "has_source_data": true
+        },
+        {
+          "id": "tenure",
+          "points": 25,
+          "has_source_data": true
+        },
+        {
+          "id": "distance",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "family",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "loan",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "lawsuit",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "lease",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "recent",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "wetland",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "restriction",
+          "points": 0,
+          "has_source_data": true
+        }
+      ],
+      "municipal_record": {
+        "account": "641",
+        "recorded_acres": 0.396,
+        "assessment_2026": 577600,
+        "owner_lines": [
+          "COATES HAROLD N",
+          "COATES DONNA L"
+        ],
+        "source_url": "https://webpro.patriotproperties.com/salisbury/Summary.asp?AccountNumber=641",
+        "zoning": "C4",
+        "last_sale_date": "Nov 02, 1984",
+        "deed_book_page": "Book 7568 / Page 519",
+        "last_sale_consideration": "$44,000"
+      },
+      "official_massgis_attributes": {
+        "OBJECTID": 1129695,
+        "MAP_PAR_ID": "10-4",
+        "LOC_ID": "M_249073_955352",
+        "POLY_TYPE": "FEE",
+        "MAP_NO": "10",
+        "SOURCE": "SUBDIV",
+        "PLAN_ID": "Survey: 179-17",
+        "LAST_EDIT": 20121212,
+        "BND_CHK": null,
+        "NO_MATCH": "N",
+        "TOWN_ID": 259,
+        "PROP_ID": "10-4",
+        "BLDG_VAL": 413900,
+        "LAND_VAL": 163700,
+        "OTHER_VAL": 0,
+        "TOTAL_VAL": 577600,
+        "FY": 2026,
+        "LOT_SIZE": 0.4,
+        "LS_DATE": "19841102",
+        "LS_PRICE": 44000,
+        "USE_CODE": "101",
+        "SITE_ADDR": "11 RABBIT RD",
+        "ADDR_NUM": "11",
+        "FULL_STR": "RABBIT RD",
+        "LOCATION": null,
+        "CITY": "SALISBURY",
+        "ZIP": "01952",
+        "OWNER1": "COATES HAROLD N",
+        "OWN_ADDR": "11 RABBIT RD",
+        "OWN_CITY": "SALISBURY",
+        "OWN_STATE": "MA",
+        "OWN_ZIP": "01952",
+        "OWN_CO": "USA",
+        "LS_BOOK": "7568",
+        "LS_PAGE": "519",
+        "REG_ID": "7568/519",
+        "ZONING": "C4",
+        "YEAR_BUILT": 2012,
+        "BLD_AREA": 2256,
+        "UNITS": 1,
+        "RES_AREA": 2256,
+        "STYLE": "RANCH",
+        "NUM_ROOMS": 6,
+        "LOT_UNITS": "Acres",
+        "STORIES": "1",
+        "USE_DESC": "Single Family Residential",
+        "TOWNID_UC": "259_101",
+        "GlobalID": "41a43959-2bfb-4a89-8508-74b0cd610a86",
+        "Shape__Area": 3042.94140625,
+        "Shape__Length": 290.6721006107753
+      },
+      "geometry_comparison": {
+        "town": "SALISBURY",
+        "parcel_id": "10-4",
+        "address": "11 RABBIT RD",
+        "official_gis_acres": 0.4040055471661226,
+        "app_gis_acres": 0.40371057294377155,
+        "symmetric_difference_m2": 4.529812775283271,
+        "source_acres": 0.4,
+        "usable_acres": 0.29,
+        "assessor_lot_size": 0.4,
+        "source_wetland_pct": 0,
+        "report_metrics": {
+          "gis_area_m2": 1633.7587249082856,
+          "corridor_coverage_fraction": 1.0,
+          "building_area_m2": 183.60883216665775,
+          "building_count": 2,
+          "mapped_wetland_area_m2": 0
+        },
+        "report_layer_coverage": "complete"
+      },
+      "independent_massdep_overlap": {
+        "town": "SALISBURY",
+        "parcel_id": "10-4",
+        "address": "11 RABBIT RD",
+        "mapped_wetland_m2": 0.0,
+        "mapped_wetland_pct": 0.0
+      },
+      "verification": {
+        "identity": "matches municipal record",
+        "zoning_code": "matches municipal and/or MassGIS record; not a permitted-use certification",
+        "last_transfer": "matches assessor record; deed not inspected",
+        "assessment": "matches FY2026 municipal record",
+        "wetland": "no positive-area overlap in queried MassDEP polygons; not field-confirmed absence",
+        "usable_acres": "unverified GIS-derived input",
+        "registry_instruments": "not independently retrieved",
+        "mortgage_balance": "not independently verified",
+        "current_tax_debt": "not independently verified",
+        "listing": "public off-market indication; no live MLS confirmation",
+        "occupancy": "mailing-address inference, not independently verified",
+        "score": "arithmetic reproduced; factual inputs remain provisional"
+      }
+    },
+    {
+      "identity": "AMESBURY|79-18",
+      "off_market_rank": 10,
+      "overall_rank": 11,
+      "app_properties": {
+        "town": "AMESBURY",
+        "state": "MA",
+        "parcel_id": "79-18",
+        "address": "14 ROCKY HILL RD",
+        "owner": "DOHERTY GEO F JR-S M ALDRICH",
+        "category": "Developable",
+        "status": "Vacant",
+        "keep": "N",
+        "drop_reason": "Less than 1 usable acre",
+        "acres": 0.15,
+        "usable_acres": 0.15,
+        "wetland_pct": 0,
+        "road": "Macy St",
+        "road_dist_m": 178.8,
+        "pct_in_250m": 100,
+        "zoning": "R20",
+        "use": "Developable Residential Land",
+        "total_val": "199700",
+        "units": 1,
+        "owner_name": "DOHERTY GEO F JR-S M ALDRICH",
+        "owner_type": "Individual",
+        "owner_mailing_address": "P O BOX 249, NEW HARBOR, ME 04554",
+        "owner_lives_on_lot": "N",
+        "owner_distance_miles": 100.5,
+        "owner_distance_group": "Over 50 miles (out of state)",
+        "years_owned": 45.7,
+        "last_sale_date": "Feb 12, 1981",
+        "last_sale_price": "$5,000",
+        "deed_book_page": "Book 6791 / Page 591",
+        "tax_takings_found": 1,
+        "last_tax_taking": "2014-12-09 Â· $1,975.19 Â· Book/Page 33726/308",
+        "unpaid_tax_signal": "Older tax taking (2014), current status not confirmed",
+        "tax_check_link": "https://www.salemdeeds.com/masearches",
+        "life_event_signal": "Owned 46 yrs (likely older owner)",
+        "estate_record_detail": null,
+        "past_listing_attempt": "No unsold past listing (Redfin)",
+        "children_count_estate_owner": null,
+        "zillow_link": "https://www.zillow.com/homedetails/123187315_zpid/",
+        "zillow_past_attempt": "No history on Zillow",
+        "redfin_link": "https://www.redfin.com/MA/Amesbury/14-Rocky-Hill-Rd-01913/home/85688758",
+        "redfin_past_attempt": "None since last sale",
+        "open_mortgage": "No mortgage on record",
+        "lease_easement_restriction": "None found",
+        "screening_rule": 9,
+        "screening_reason": "Less than 1 usable acre",
+        "loan": {
+          "loan_status": "No loan on record",
+          "open_mortgage": "No mortgage on record",
+          "open_loans_count": 0,
+          "latest_open_loan_lender": null,
+          "latest_loan_amount_usd": null,
+          "latest_loan_date": null,
+          "loan_age_years": null,
+          "loan_to_value_pct": null,
+          "est_balance_now_usd": null,
+          "est_equity_usd": null,
+          "est_equity_pct": null,
+          "loan_signal": "No open loan - likely free & clear",
+          "source_row": 66
+        },
+        "industrial_lots_within_quarter_mile": 1
+      },
+      "app_listing": {
+        "status": "Not listed",
+        "address": "14 Rocky Hill Rd",
+        "links": {
+          "Zillow": "https://www.zillow.com/homedetails/123187315_zpid/",
+          "Redfin": "https://www.redfin.com/MA/Amesbury/14-Rocky-Hill-Rd-01913/home/85688758"
+        },
+        "proof": null,
+        "note": "Not for sale on the linked pages (checked 22 Oct 2026)."
+      },
+      "app_score": 70,
+      "score_factors": [
+        {
+          "id": "highway",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "land",
+          "points": 10,
+          "has_source_data": true
+        },
+        {
+          "id": "size",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "industry",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "estate",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "tax",
+          "points": 20,
+          "has_source_data": true
+        },
+        {
+          "id": "listing",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "tenure",
+          "points": 25,
+          "has_source_data": true
+        },
+        {
+          "id": "distance",
+          "points": 15,
+          "has_source_data": true
+        },
+        {
+          "id": "family",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "loan",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "lawsuit",
+          "points": 0,
+          "has_source_data": false
+        },
+        {
+          "id": "lease",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "recent",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "wetland",
+          "points": 0,
+          "has_source_data": true
+        },
+        {
+          "id": "restriction",
+          "points": 0,
+          "has_source_data": true
+        }
+      ],
+      "municipal_record": {
+        "pid": "3015",
+        "recorded_acres": 0.17,
+        "assessment_2026": 205600,
+        "owner_lines": [
+          "DOHERTY GEO F JR-S M ALDRICH",
+          "D E BARRON-J HINCKLEY-E G W"
+        ],
+        "living_area_sqft": 0,
+        "source_url": "https://gis.vgsi.com/amesburyma/Parcel.aspx?pid=3015",
+        "zoning": "R20",
+        "last_sale_date": "Feb 12, 1981",
+        "deed_book_page": "Book 6791 / Page 591",
+        "last_sale_consideration": "$5,000"
+      },
+      "official_massgis_attributes": {
+        "OBJECTID": 755075,
+        "MAP_PAR_ID": "79-18",
+        "LOC_ID": "M_247767_955069",
+        "POLY_TYPE": "FEE",
+        "MAP_NO": "79",
+        "SOURCE": "ASSESS",
+        "PLAN_ID": null,
+        "LAST_EDIT": 20121010,
+        "BND_CHK": null,
+        "NO_MATCH": "N",
+        "TOWN_ID": 7,
+        "PROP_ID": "79-18",
+        "BLDG_VAL": 0,
+        "LAND_VAL": 199700,
+        "OTHER_VAL": 0,
+        "TOTAL_VAL": 199700,
+        "FY": 2026,
+        "LOT_SIZE": 0.167,
+        "LS_DATE": "19810212",
+        "LS_PRICE": 5000,
+        "USE_CODE": "1300",
+        "SITE_ADDR": "14 ROCKY HILL RD",
+        "ADDR_NUM": "14",
+        "FULL_STR": "ROCKY HILL RD",
+        "LOCATION": null,
+        "CITY": "AMESBURY",
+        "ZIP": "01913",
+        "OWNER1": "DOHERTY GEO F JR-S M ALDRICH",
+        "OWN_ADDR": "P O BOX 249",
+        "OWN_CITY": "NEW HARBOR",
+        "OWN_STATE": "ME",
+        "OWN_ZIP": "04554",
+        "OWN_CO": "USA",
+        "LS_BOOK": "6791",
+        "LS_PAGE": "591",
+        "REG_ID": "6791/591",
+        "ZONING": "R20",
+        "YEAR_BUILT": null,
+        "BLD_AREA": 0,
+        "UNITS": 1,
+        "RES_AREA": 0,
+        "STYLE": "Vacant Land",
+        "NUM_ROOMS": 0,
+        "LOT_UNITS": "Acres",
+        "STORIES": "0",
+        "USE_DESC": "Developable Residential Land",
+        "TOWNID_UC": "7_1300",
+        "GlobalID": "c79cf8d8-0735-488d-bd87-b7519a4b4ca9",
+        "Shape__Area": 1116.55859375,
+        "Shape__Length": 136.04773353670805
+      },
+      "geometry_comparison": {
+        "town": "AMESBURY",
+        "parcel_id": "79-18",
+        "address": "14 ROCKY HILL RD",
+        "official_gis_acres": 0.14825367955875002,
+        "app_gis_acres": 0.14817820261070297,
+        "symmetric_difference_m2": 1.6742008975140463,
+        "source_acres": 0.15,
+        "usable_acres": 0.15,
+        "assessor_lot_size": 0.167,
+        "source_wetland_pct": 0,
+        "report_metrics": {
+          "gis_area_m2": 599.6559108948118,
+          "corridor_coverage_fraction": 0.9999999999999998,
+          "building_area_m2": 0,
+          "building_count": 0,
+          "mapped_wetland_area_m2": 0
+        },
+        "report_layer_coverage": "complete"
+      },
+      "independent_massdep_overlap": {
+        "town": "AMESBURY",
+        "parcel_id": "79-18",
+        "address": "14 ROCKY HILL RD",
+        "mapped_wetland_m2": 0.0,
+        "mapped_wetland_pct": 0.0
+      },
+      "verification": {
+        "identity": "matches municipal record",
+        "zoning_code": "matches municipal and/or MassGIS record; not a permitted-use certification",
+        "last_transfer": "matches assessor record; deed not inspected",
+        "assessment": "outdated: matches FY2025 history, not FY2026 municipal record",
+        "wetland": "no positive-area overlap in queried MassDEP polygons; not field-confirmed absence",
+        "usable_acres": "unverified GIS-derived input",
+        "registry_instruments": "not independently retrieved",
+        "mortgage_balance": "not independently verified",
+        "current_tax_debt": "not independently verified",
+        "listing": "public off-market indication; no live MLS confirmation",
+        "occupancy": "mailing-address inference, not independently verified",
+        "score": "arithmetic reproduced; factual inputs remain provisional"
+      }
+    }
+  ]
+}

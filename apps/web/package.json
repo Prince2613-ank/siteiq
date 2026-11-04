@@ -10,6 +10,7 @@
     "test:dashboard": "node e2e/dashboard-filter-flow.cjs",
     "test:sites-filters": "node e2e/sites-filters.cjs",
     "test:all-filters": "node e2e/all-filters-audit.cjs",
+    "test:report-pdf": "node e2e/parcel-report-pdf.cjs",
     "test:loans": "node e2e/parcel-loans.cjs",
     "test:loan-ranking": "node e2e/parcel-scoring.cjs && node e2e/loan-ranking-ui.cjs",
     "test:client": "node e2e/parcel-scoring.cjs && node e2e/parcel-scoring-ui.cjs && node e2e/scoring-dialog.cjs && node e2e/site-ranking.cjs && node e2e/screening-rules.cjs && node e2e/client-audit.cjs && node e2e/edge-audit.cjs && node e2e/industrial-layer.cjs && node e2e/acreage-filter.cjs",
@@ -17,6 +18,8 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.59.20",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.9",
     "leaflet": "^1.9.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
