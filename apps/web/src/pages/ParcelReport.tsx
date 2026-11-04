@@ -323,6 +323,8 @@ export function ParcelReport() {
         ]} />
         <RecordSection title="Listing & History" links={parcelListingLinks(data.listing, p)} fields={[
           ['Listing status', listingStatus],
+          ['Zillow history', p.zillow_past_attempt],
+          ['Redfin history', p.redfin_past_attempt],
         ]} />
       </article>
     </div>
