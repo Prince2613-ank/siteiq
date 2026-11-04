@@ -110,3 +110,6 @@ country = index['parcels']['AMESBURY|42-15']['file']
 print(json.dumps(dict(reports=len(index['parcels']), complete_corridor_coverage=complete_count,
                      partial_corridor_coverage=len(parcels)-complete_count,
                      bytes=sum(p.stat().st_size for p in OUT.glob('*.json')))))
+
+from build_parcel_building_coverage import build_coverage_index
+build_coverage_index()

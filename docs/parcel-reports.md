@@ -2,6 +2,54 @@
 
 Every source parcel has a report addressed by its town and parcel ID, including parcels with no street address. The former Country Club URL remains supported.
 
+All 766 source parcels are visible. Development status has only Vacant and
+Built-up, with an All filter. Building footprint at or below 5% of its matching
+parcel area classifies a parcel as Vacant; above 5% classifies it as Built-up.
+The unrounded percentage is used. Mixed is no longer a displayed status.
+
+Report measurements take priority. For 89 parcels with a missing report building
+measurement, the index uses the source workbook's `building_m2 / parcel_m2`.
+Both values must be finite, parcel area positive, building area between zero
+and parcel area, and the source must have no data-issue flag. Zero is valid;
+missing is never zero. The workbook's `builtup_pct` includes paving and is not
+used for the building-only threshold. Index entries retain both the report
+metrics and the measurement source; reports label spreadsheet measurements.
+If both sources are unavailable, a formerly Built-up/Mixed record stays Built-up.
+The original status remains in source records and runtime audit metadata.
+Current totals: 346 Vacant, 420 Built-up; 213 Qualified
+and 553 Excluded. All Built-up parcels are excluded, even in a Developable land
+category. Vacant parcels still must pass ownership, wetland and condo checks.
+Active/partial/pending sale listings are Excluded and score zero.
+
+Land category combines the original spreadsheet `land_category` and
+`category_reason`. An explicit `town code says developable` resolves private
+land to Developable, including Paved land and Non-developable wetland conflicts.
+This takes precedence over the Non-developable >50% wetland exclusion; the
+wetland measurement remains unchanged. It does not override listed sale,
+Built-up, condo or ownership exclusions. Negative words such as undevelopable
+and non-developable never count as a positive developability statement.
+Other paved land may resolve to Commercial or Industrial from its reason.
+An explicit town undevelopable statement excludes otherwise vacant land. A
+Non-developable category whose reason identifies cemetery/conservation/Chapter
+61 use also remains excluded rather than falling through to generic Vacant.
+The full decision audit is `docs/audits/2026-11-04-category-screening.json`.
+Original category evidence is retained as `source_land_category`. Import with
+`python scripts/sync_category_reason.py "path/to/source.xlsx"`; the importer
+requires exact identity matches for every project parcel and never edits Excel.
+Reports load current category evidence so their classification and PDF exports
+match Dashboard and Sites even before report geometry is regenerated.
+
+Partial mapped coverage remains a stated limitation in reports, not a full-site
+survey or proof that the remaining area is free of paving/other constraints.
+Classification is applied consistently before filters, map features, rankings
+and report screening. Old saved Mixed/Paved filter selections reset to All.
+Listing and building-coverage checks must load before browsing or report
+screening; unavailable required assets trigger a retryable data-load error.
+
+`scripts/build_parcel_reports.py` also regenerates
+`geojson/parcel_building_coverage.json`. To rebuild only this lightweight index
+from existing report assets, run `python scripts/build_parcel_building_coverage.py`.
+
 Run `python scripts/build_parcel_reports.py` after updating parcel, building, wetland, corridor, or listing records. Install its pinned geometry dependencies from `scripts/requirements-parcel-reports.txt` if needed. Generated JSON files and their identity index live in `apps/web/public/reports/` and are served as static assets.
 
 The generator projects geometry to EPSG:26986 for area calculations, repairs invalid polygon topology, clips buildings and wetlands to each subject parcel, and uses union areas to avoid counting overlapping geometry twice. Neighbors are limited to parcels within 100 metres. Parcel source fields are preserved, including nulls.

@@ -100,14 +100,20 @@ eq(score(maximumInput).score,100,'calculation does not consult storage');
 const square=(eastMetres,category)=>{const x=-70.9+eastMetres/81620,y=42.85,d=0.0001;return {properties:{category},geometry:{type:'Polygon',coordinates:[[[x,y],[x+d,y],[x+d,y+d],[x,y+d],[x,y]]]}}};
 eq(api.withNearbyIndustry([square(0,'Industrial'),square(300,'Industrial'),square(500,'Commercial'),square(1000,'Industrial')]).map(p=>p.industrial_lots_within_quarter_mile),[1,1,1,0],'industrial lots within a quarter mile, excluding the lot itself');
 eq(api.withNearbyIndustry([{properties:{category:'Industrial'},geometry:null}])[0].industrial_lots_within_quarter_mile,null,'missing geometry is not counted');
-const records = JSON.parse(fs.readFileSync(path.join(__dirname,'../public/geojson/parcels_250m.geojson'))).features;
+const { attachCoverage } = require('./parcel-coverage-fixture.cjs');
+const listings = JSON.parse(fs.readFileSync(path.join(__dirname,'../public/geojson/listing_check.json'))).lots;
+const records = JSON.parse(fs.readFileSync(path.join(__dirname,'../public/geojson/parcels_250m.geojson'))).features.map(f => {
+  const p = attachCoverage(f.properties);
+  const status = listings[`${p.town}|${p.parcel_id}`]?.status || '';
+  return { ...f, properties: { ...p, listed_for_sale: /^(listed\b|for sale\b|active\b|under agreement\b|pending\b)/i.test(status) } };
+});
 const loans=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/geojson/parcel_loans.json'),'utf8')).parcels;
 const inputs=api.withNearbyIndustry(records.map(f=>({...f,properties:{...f.properties,loan:loans[`${f.properties.town.trim().toUpperCase()}|${f.properties.parcel_id.trim()}`]}})));
-const snapshots=inputs.map(p=>({town:p.town,parcel_id:p.parcel_id,address:p.address,...score(p)}));
+const snapshots=inputs.map(p=>({town:p.town,parcel_id:p.parcel_id,address:p.address,listed_for_sale:p.listed_for_sale,...score(p)}));
 const distribution=id=>{const counts={};for(const result of snapshots){const f=result.factors.find(f=>f.id===id);const key=f.hasData?f.points:'no data';counts[key]=(counts[key]||0)+1;}return counts;};
-eq(distribution('land'),{10:383,5:15,0:368},'land type across 766');
+eq(distribution('land'),{10:400,5:1,0:365},'land type across 766');
 eq(distribution('size'),{15:63,10:68,5:177,0:458},'usable size across 766');
-eq(distribution('industry'),{5:240,0:526},'industry nearby across 766');
+eq(distribution('industry'),{5:159,0:607},'industry nearby after category resolution across 766');
 eq(distribution('estate'),{40:24,30:1,20:32,0:666,'no data':43},'estate across 766');
 eq(distribution('tax'),{40:12,20:24,0:678,'no data':52},'tax across 766');
 eq(distribution('listing'),{35:17,15:3,5:6,0:511,'no data':229},'listing across 766');
@@ -124,9 +130,9 @@ for (const result of snapshots) {
   assert.equal(result.factors.length,16);
   assert.ok(result.factors.every(f=>typeof f.points==='number'&&Number.isFinite(f.points)));
   assert.ok(result.factors.filter(f=>!f.hasData).every(f=>f.points===0));
-  assert.equal(result.score,Math.max(0,Math.min(100,result.site+result.seller+result.deductions)));
+  assert.equal(result.score,result.listed_for_sale ? 0 : Math.max(0,Math.min(100,result.site+result.seller+result.deductions)));
 }
 eq(snapshots.length,766,'all parcel scores computed');
-eq(records.filter(f=>f.properties.keep==='Y').length,185,'qualification unchanged');
+eq(records.filter(f=>f.properties.keep==='Y').length,213,'qualification reconciles to current screening audit');
 fs.writeFileSync(path.resolve(__dirname,'../../../scratch/parcel-ranking-v5-audit.json'),JSON.stringify({asOf:full.asOf,version:api.SCORING_VERSION,checks,records:snapshots},null,2));
-console.log(`${checks} scoring assertions and all 766 parcel scores passed. Qualified remains 185.`);
+console.log(`${checks} scoring assertions and all 766 parcel scores passed. Qualified is 213.`);

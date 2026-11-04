@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
+const { attachCoverage, isBrowsable } = require('./parcel-coverage-fixture.cjs');
 const root = path.resolve(__dirname, '../../..');
 const api = {};
 new Function('exports', ts.transpileModule(fs.readFileSync(path.join(root, 'apps/web/src/utils/parcelScoring.ts'), 'utf8'), {
@@ -10,8 +11,11 @@ new Function('exports', ts.transpileModule(fs.readFileSync(path.join(root, 'apps
 }).outputText)(api);
 const read = name => JSON.parse(fs.readFileSync(path.join(root, 'apps/web/public/geojson', name), 'utf8'));
 const loans = read('parcel_loans.json').parcels;
+const listings = read('listing_check.json').lots;
 const id = p => `${p.town.trim().toUpperCase()}|${p.parcel_id.trim()}`;
-const source = api.withNearbyIndustry(read('parcels_250m.geojson').features.map(f => ({ ...f, properties: { ...f.properties, loan: loans[id(f.properties)] } })));
+const source = api.withNearbyIndustry(read('parcels_250m.geojson').features.map(f => ({
+  ...f, properties: { ...attachCoverage(f.properties), loan: loans[id(f.properties)], listed_for_sale: Boolean(listings[id(f.properties)]?.status && listings[id(f.properties)].status !== 'Not listed') },
+})).filter(f => isBrowsable(f.properties)));
 const ranked = source.map(p => ({ p, score: api.scoreParcel(p) })).sort((a, b) => b.score.score - a.score.score ||
   (a.p.address || a.p.parcel_id).localeCompare(b.p.address || b.p.parcel_id, 'en', { numeric: true, sensitivity: 'base' }) ||
   api.scoringStorageKey(a.p).localeCompare(api.scoringStorageKey(b.p), 'en'));
@@ -33,15 +37,15 @@ const expectedLoanPoints = {
     await page.locator('[data-parcel-rank]').first().waitFor();
     assert.equal(await page.getByRole('combobox', { name: 'Sort by', exact: true }).inputValue(), 'score_desc');
     await page.getByRole('combobox', { name: 'Rows per page', exact: true }).selectOption('0');
-    await page.waitForFunction(() => document.querySelectorAll('[data-parcel-rank]').length === 766);
+    await page.waitForFunction(total => document.querySelectorAll('[data-parcel-rank]').length === total, ranked.length);
     const actual = await page.locator('tbody tr').evaluateAll(rows => rows.map(row => ({
       address: row.querySelector('td:first-child span').textContent.trim(),
       rank: Number(row.querySelector('[data-parcel-rank]').dataset.parcelRank),
       score: Number(row.querySelector('.parcel-score-badge').textContent.split('/')[0]),
     })));
     assert.deepEqual(actual, ranked.map(({ p, score }, index) => ({ address: p.address || p.parcel_id, rank: index + 1, score: score.score })));
-    assert.equal(actual[0].address, '133 MAIN ST');
-    assert.equal(actual[0].score, 85);
+    assert.equal(actual[0].address, ranked[0].p.address || ranked[0].p.parcel_id);
+    assert.equal(actual[0].score, ranked[0].score.score);
     const dialog = page.getByRole('dialog');
     const shownCategories = new Set();
     for (let i = 0; i < ranked.length; i++) {
@@ -68,7 +72,7 @@ const expectedLoanPoints = {
     assert.equal(shownCategories.size, 6);
     await page.reload();
     await page.locator('[data-parcel-rank]').first().waitFor();
-    assert.equal(await page.locator('tbody tr').first().locator('.parcel-score-badge').textContent(), '85/100');
+    assert.equal(await page.locator('tbody tr').first().locator('.parcel-score-badge').textContent(), `${ranked[0].score.score}/100`);
     await page.setViewportSize({ width: 390, height: 844 });
     await page.locator('tbody tr').first().locator('.parcel-score-badge').click();
     await dialog.waitFor();
@@ -77,6 +81,6 @@ const expectedLoanPoints = {
     await page.keyboard.press('Escape');
     assert.equal(await dialog.count(), 0);
     assert.deepEqual(errors, []);
-    console.log('PASS: all 766 scores and ranks match loan-aware source calculations; six loan categories add 0/2/5/10 points under seller likelihood; mortgage deduction removed; dialog, refresh, legacy overrides and mobile verified.');
+    console.log(`PASS: all ${ranked.length} visible scores and ranks match loan-aware source calculations; six loan categories add 0/2/5/10 points under seller likelihood; mortgage deduction removed; dialog, refresh, legacy overrides and mobile verified.`);
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

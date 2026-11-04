@@ -1,5 +1,7 @@
-import { screenParcel } from './parcelScreening';
+import { screenParcel, resolveCategory } from './parcelScreening';
 import { loadParcelLoans } from './parcelLoans';
+import { developmentStatusFromBuildingCoverage } from './parcelDevelopment';
+import { isListedForSale } from './parcelListing';
 
 async function fetchJson(url: string) {
   const controller = new AbortController();
@@ -31,14 +33,35 @@ export async function loadListingCheck() {
 }
 
 export async function loadParcels() {
-  const [data, loans] = await Promise.all([loadGeoJson('/geojson/parcels_250m.geojson'), loadParcelLoans()]);
+  const [data, loans, listings, coverage] = await Promise.all([
+    loadGeoJson('/geojson/parcels_250m.geojson'), loadParcelLoans(), loadListingCheck(), loadParcelBuildingCoverage(),
+  ]);
   return {
     ...data,
     features: data.features.map((feature: any) => {
       const loan = loans.parcels[parcelKey(feature.properties)];
       if (!loan) throw new Error('A parcel has no matching loan record');
-      return { ...feature, properties: { ...feature.properties, ...screenParcel(feature.properties), loan } };
+      const properties = { ...withBuildingCoverage(feature.properties, coverage), listed_for_sale: isListedForSale(listings.lots[parcelKey(feature.properties)]?.status) };
+      return { ...feature, properties: { ...properties, ...screenParcel(properties), loan } };
     }),
+  };
+}
+
+type BuildingCoverageIndex = { parcels: Record<string, { building_pct: number | null; layer_coverage: 'complete' | 'partial'; measurement_source?: 'report' | 'source_workbook' }> };
+export async function loadParcelBuildingCoverage(): Promise<BuildingCoverageIndex> {
+  const data = await fetchJson('/geojson/parcel_building_coverage.json');
+  if (!data || !data.parcels || typeof data.parcels !== 'object' || Array.isArray(data.parcels)) {
+    throw new Error('Building coverage data is invalid.');
+  }
+  return data;
+}
+
+export function withBuildingCoverage<T extends { town?: string; parcel_id?: string; status?: string; category?: string; category_reason?: string | null }>(properties: T, coverage: BuildingCoverageIndex) {
+  const record = coverage.parcels[parcelKey(properties)];
+  return { ...properties, category: resolveCategory(properties.category, properties.category_reason), recorded_development_status: properties.status,
+    status: developmentStatusFromBuildingCoverage(record?.building_pct, properties.status), building_coverage_pct: record?.building_pct ?? null,
+    building_layer_coverage: record?.layer_coverage,
+    building_coverage_source: record?.measurement_source ?? 'report',
   };
 }
 

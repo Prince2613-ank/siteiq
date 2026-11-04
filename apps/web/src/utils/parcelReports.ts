@@ -1,4 +1,5 @@
-import { parcelKey } from './dataLoading';
+import { parcelKey, loadGeoJson, loadListingCheck, loadParcelBuildingCoverage, withBuildingCoverage } from './dataLoading';
+import { isListedForSale } from './parcelListing';
 import { screenParcel } from './parcelScreening';
 import { loadParcelLoans, type ParcelLoanData } from './parcelLoans';
 
@@ -28,9 +29,18 @@ export async function loadParcelReport(town: string, parcelId: string, signal?: 
   if (!entry) throw new Error('Parcel report not found');
   const response = await fetch(`/reports/${entry.file}`, { signal });
   if (!response.ok) throw new Error('Parcel report unavailable');
-  const [data, loans] = await Promise.all([response.json() as Promise<ParcelReportData>, loadParcelLoans()]);
+  const [data, loans, listings, coverage, parcels] = await Promise.all([
+    response.json() as Promise<ParcelReportData>, loadParcelLoans(), loadListingCheck(), loadParcelBuildingCoverage(),
+    loadGeoJson('/geojson/parcels_250m.geojson'),
+  ]);
   if (parcelKey(data.subject.properties) !== key || !data.subject.geometry) throw new Error('Parcel report identity does not match');
-  data.subject.properties = { ...data.subject.properties, ...screenParcel(data.subject.properties) };
+  data.listing = listings.lots[key] ?? null;
+  const current = parcels.features.find((feature: any) => parcelKey(feature.properties) === key)?.properties;
+  if (!current) throw new Error('Parcel category record not found');
+  const properties = { ...withBuildingCoverage({ ...data.subject.properties,
+    category: current.category, category_reason: current.category_reason, source_land_category: current.source_land_category,
+  }, coverage), listed_for_sale: isListedForSale(data.listing?.status) };
+  data.subject.properties = { ...properties, ...screenParcel(properties) };
   data.loan = loans.parcels[key];
   if (!data.loan) throw new Error('Loan record does not match this parcel');
   return data;

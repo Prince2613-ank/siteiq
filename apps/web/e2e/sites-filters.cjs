@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
+const { attachCoverage, isBrowsable } = require('./parcel-coverage-fixture.cjs');
 const root = path.resolve(__dirname, '../../..');
 const read = file => JSON.parse(fs.readFileSync(path.join(root, 'apps/web/public/geojson', file), 'utf8'));
 const screening = {};
@@ -10,9 +11,12 @@ new Function('exports', ts.transpileModule(fs.readFileSync(path.join(root, 'apps
   compilerOptions: { module: ts.ModuleKind.CommonJS },
 }).outputText)(screening);
 const loans = read('parcel_loans.json').parcels;
-const records = read('parcels_250m.geojson').features.map(({ properties: p }) => ({
-  ...p, ...screening.screenParcel(p), loan: loans[`${p.town.trim().toUpperCase()}|${p.parcel_id.trim()}`],
-}));
+const listings = read('listing_check.json').lots;
+const records = read('parcels_250m.geojson').features.map(({ properties: p }) => {
+  const key = `${p.town.trim().toUpperCase()}|${p.parcel_id.trim()}`;
+  const fields = { ...attachCoverage(p), listed_for_sale: Boolean(listings[key]?.status && listings[key].status !== 'Not listed') };
+  return { ...fields, ...screening.screenParcel(fields), loan: loans[key] };
+}).filter(isBrowsable);
 const residential = p => ['6R', 'R1', 'R2', 'R8', 'R-8', 'R20', 'R-20', 'R40', 'RES', 'RESIDNTL'].includes(p.zoning);
 
 (async () => {
@@ -22,13 +26,13 @@ const residential = p => ['6R', 'R1', 'R2', 'R8', 'R-8', 'R20', 'R-20', 'R40', '
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(`${process.env.SITEIQ_URL || 'http://127.0.0.1:5173'}/sites`);
-    await page.getByRole('combobox', { name: 'Screening results', exact: true }).getByRole('option', { name: 'All (766)', exact: true }).waitFor({ state: 'attached' });
+    await page.getByRole('combobox', { name: 'Screening results', exact: true }).getByRole('option', { name: `All (${records.length})`, exact: true }).waitFor({ state: 'attached' });
     await page.getByRole('combobox', { name: 'Rows per page' }).selectOption('0');
     const rows = page.locator('tbody tr');
     const reset = () => page.getByRole('button', { name: /Reset Filters/ }).click();
     const open = label => page.getByRole('button', { name: new RegExp(`^${label}:`) }).click();
     const close = () => page.keyboard.press('Escape');
-    assert.equal(await rows.count(), 766);
+    assert.equal(await rows.count(), records.length);
     const arrows = await page.locator('.site-filter-select').evaluateAll(elements => elements.map(element => getComputedStyle(element).backgroundImage));
     assert.ok(arrows.every(arrow => arrow === arrows[0] && arrow.includes('svg')), 'All dropdowns must share the same chevron');
     assert.equal(await page.getByRole('checkbox').count(), 0);
@@ -87,7 +91,7 @@ const residential = p => ['6R', 'R1', 'R2', 'R8', 'R-8', 'R20', 'R-20', 'R40', '
     assert.equal(await rows.count(), expected.length);
     await page.getByRole('button', { name: 'Owner type: 2 selected', exact: true }).waitFor();
     await reset();
-    assert.equal(await rows.count(), 766);
+    assert.equal(await rows.count(), records.length);
     const yearsSelect = page.getByRole('combobox', { name: 'Years owned', exact: true });
     assert.equal(await yearsSelect.getAttribute('multiple'), null);
     await yearsSelect.selectOption('20_30');

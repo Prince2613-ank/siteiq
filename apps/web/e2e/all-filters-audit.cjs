@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
+const { attachCoverage, isBrowsable } = require('./parcel-coverage-fixture.cjs');
 const root = path.resolve(__dirname, '../../..');
 const base = process.env.SITEIQ_URL || 'http://127.0.0.1:5173';
 const json = name => JSON.parse(fs.readFileSync(path.join(root, 'apps/web/public/geojson', name), 'utf8'));
@@ -19,7 +20,11 @@ const loanOptions = moduleExports('parcelLoans.ts').LOAN_FILTER_OPTIONS.filter(o
 const loans = json('parcel_loans.json').parcels;
 const listings = json('listing_check.json').lots;
 const key = p => `${p.town}|${p.parcel_id}`;
-const records = json('parcels_250m.geojson').features.map(({ properties: p }) => ({ ...p, ...screening.screenParcel(p), loan: loans[key(p)] }));
+const sourceRecords = json('parcels_250m.geojson').features.map(({ properties: p }) => {
+  const fields = { ...attachCoverage(p), listed_for_sale: Boolean(listings[key(p)]?.status && listings[key(p)].status !== 'Not listed') };
+  return { ...fields, ...screening.screenParcel(fields), loan: loans[key(p)] };
+});
+const records = sourceRecords.filter(isBrowsable);
 const listingCategory = p => {
   const listing = listings[key(p)];
   if (listing?.status && listing.status !== 'Not listed') return 'LISTED';
@@ -59,8 +64,21 @@ let checks = 0;
       const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
       const errors = [];
       page.on('pageerror', e => errors.push(e.message));
+      await page.addInitScript(() => {
+        // Retired status selections must not strand returning users on an empty view.
+        if (sessionStorage.getItem('test:mixed-migration')) return;
+        sessionStorage.setItem('test:mixed-migration', 'seeded');
+        sessionStorage.setItem('siteiq:view:v1:dashboard', JSON.stringify({
+          selectedStatus: 'ALL', selectedOwnerType: [], keepFilter: 'ALL',
+          parcel: 'SALISBURY|11-13', center: [42.86, -70.9], zoom: 13, minZoom: 10, scrollTop: 0,
+        }));
+        sessionStorage.setItem('siteiq:view:v1:sites:development', JSON.stringify('ALL'));
+      });
       await page.goto(`${base}${sites ? '/sites' : '/'}`);
-      await page.waitForFunction(() => document.body.textContent.includes('(766)'));
+      await page.waitForFunction(total => document.body.textContent.includes(`(${total})`), records.length);
+      const statusGroup = sites ? page.getByRole('combobox', { name: 'Development status', exact: true }) : page.getByRole('group', { name: 'Development status', exact: true });
+      assert.doesNotMatch(await statusGroup.textContent(), /mixed/i, 'Only All, Vacant and Built-up should be offered');
+      if (sites) assert.equal(await statusGroup.inputValue(), 'ALL', 'Restore retired Mixed filter to All');
       if (sites) await page.getByRole('combobox', { name: 'Rows per page' }).selectOption('0');
       const reset = async () => {
         const button = page.getByRole('button', { name: sites ? /Reset Filters/ : 'Reset filters', exact: !sites });
@@ -89,13 +107,14 @@ let checks = 0;
           await select.selectOption(value);
         } else {
           const group = page.getByRole('group', { name: label, exact: true });
-          const optionName = label === 'Screening results' ? { Y: 'Qualified', N: 'Excluded' }[value] : label === 'Listing status'
+          const optionName = label === 'Development status' && value === 'Mixed (vacant + built-up)' ? 'Mixed' : label === 'Screening results' ? { Y: 'Qualified', N: 'Excluded' }[value] : label === 'Listing status'
             ? { LISTED: 'Listed', NOT_LISTED: 'Not listed', NO_LINKS: 'No links' }[value] : value;
           const button = group.getByRole('button', { name: new RegExp(`^${escape(optionName)} \\(`) });
           assert.equal(textCount(await button.textContent()), expected.length, `${label} ${value} count`);
           await button.click();
         }
       };
+      await result(records, 'Initial view includes only Mixed parcels within the building limit');
       const chooseMulti = async (label, option, expected) => {
         if (sites || label === 'Years owned') await open(label);
         const button = page.getByRole('group', { name: label, exact: true }).getByRole('button', { name: new RegExp(`^${escape(option.label)} \\(`) });
@@ -107,7 +126,7 @@ let checks = 0;
         await reset(); const expected = records.filter(p => p.keep === value);
         await chooseSingle('Screening results', value, expected); await result(expected, `screening ${value}`);
       }
-      const statuses = sites ? [...new Set(records.map(p => p.status))].sort() : ['Vacant', 'Built-up'];
+      const statuses = ['Vacant', 'Built-up'];
       for (const value of statuses) {
         await reset(); const expected = records.filter(p => p.status === value);
         await chooseSingle('Development status', value, expected); await result(expected, `status ${value}`);

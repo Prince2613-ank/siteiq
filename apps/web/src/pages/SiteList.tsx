@@ -98,12 +98,11 @@ export interface ListingCheckData {
   lots: Record<string, ListingLot>;
 }
 
+const DEVELOPMENT_STATUSES = ['Vacant', 'Built-up'];
 const CATEGORY_COLORS: Record<string, string> = {
   Commercial: '#3b82f6',
   Developable: '#eab308',
   Vacant: '#10b981',
-  'Mixed (vacant + built-up)': '#f97316',
-  Mixed: '#f97316',
   'Built-up': '#64748b',
   'Built-up (other)': '#64748b',
   Industrial: '#ef4444',
@@ -155,7 +154,8 @@ export function SiteList() {
   const [zoningGroups, setZoningGroups] = useSessionState<string[]>('sites:zoningGroups', []);
   const [zoningDistricts, setZoningDistricts] = useSessionState<string[]>('sites:zoningDistricts', []);
   const [developmentSelection, setDevelopment] = useSessionState<string[] | string>('sites:development', 'ALL');
-  const development = Array.isArray(developmentSelection) ? developmentSelection.at(-1) ?? 'ALL' : developmentSelection;
+  const savedDevelopment = Array.isArray(developmentSelection) ? developmentSelection.at(-1) ?? 'ALL' : developmentSelection;
+  const development = savedDevelopment === 'Vacant' || savedDevelopment === 'Built-up' ? savedDevelopment : 'ALL';
   const [owners, setOwners] = useSessionState<string[]>('sites:owners', []);
   const [yearsSelection, setYearsOwned] = useSessionState<string | string[]>('sites:yearsOwned', 'ALL');
   const yearsOwned = Array.isArray(yearsSelection) ? yearsSelection.at(-1) ?? 'ALL' : yearsSelection;
@@ -172,7 +172,7 @@ export function SiteList() {
     status: development, owner: owners, years: yearsOwned, loan: loanCategories, wetland: wetlands, listing: listingFilter,
   }), [keepFilter, zoningGroups, zoningDistricts, development, owners, yearsOwned, loanCategories, wetlands, listingFilter]);
   const ownerTypes = useMemo(() => [...new Set(parcels.map(({ properties }) => properties.owner_type?.trim() || 'Unknown'))].sort(), [parcels]);
-  const developmentStatuses = useMemo(() => [...new Set(parcels.map(({ properties }) => properties.status).filter((status): status is string => Boolean(status)))].sort(), [parcels]);
+  const developmentStatuses = DEVELOPMENT_STATUSES;
   const contextParcels = useMemo(() => parcels.filter(({ properties }) =>
     matchesSiteSearch(properties, search) && matchesSiteLifeEvent(properties, lifeEventFilter)), [parcels, search, lifeEventFilter]);
   const lifeCounts = useMemo(() => {

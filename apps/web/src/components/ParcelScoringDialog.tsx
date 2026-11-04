@@ -50,7 +50,9 @@ export function ParcelScoringDialog({ parcel, score, onClose }: {
             <div><span>Site quality</span><strong>{score.site}<small>/40</small></strong></div>
             <div><span>Seller likelihood</span><strong>{score.seller}<small>/60</small></strong></div>
           </div>
-          <p id={noteId}>Site quality + seller likelihood (counted up to 60) − deal blockers, capped at 0–100. This is a research ranking, not a probability of sale.</p>
+          <p id={noteId}>{score.exclusionReason
+            ? 'Listed for sale: the score is fixed at 0 and the parcel is excluded from Qualified. The underlying factors below do not change this rule.'
+            : 'Site quality + seller likelihood (counted up to 60) - deal blockers, capped at 0-100. This is a research ranking, not a probability of sale.'}</p>
         </section>
         {(['site', 'seller', 'blocker'] as const).map(group => <section className="parcel-scoring-group" key={group}>
           <h3>{group === 'site' ? 'Site quality · up to 40 points' : group === 'seller' ? 'Seller likelihood · up to 60 points' : 'Deal blockers · deductions'}</h3>

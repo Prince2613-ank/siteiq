@@ -1,10 +1,12 @@
 # Parcel opportunity ranking
 
-Uses the client's 23 October 2026 ranking model, updated on 3 November 2026 as `ranking-v5-loans`. Loan categories now add seller points and replace the former open-mortgage deduction. Commercial land now earns 10 points, matching the supplied business plan. Other factor rules are retained from `ranking-v4` (commit `0d36733`). This ranking is separate from property identity confidence and from Qualified / Excluded screening. Neither screening rules nor source GeoJSON records are changed by scoring.
+Uses the client's 23 October 2026 ranking model, updated on 4 November 2026 as `ranking-v6-off-market`. Active sale listings receive a total score of zero and are Excluded from Qualified. This includes unit/partial listings and under-agreement/pending sales. A shared flag derived from the current listing-check asset drives scoring and screening on Dashboard, Sites and property reports. Historical withdrawn listings do not trigger this override. Source GeoJSON records remain intact.
 
-`score = clamp(site quality + min(seller likelihood, 60) + deductions, 0, 100)`
+`score = listed_for_sale ? 0 : clamp(site quality + min(seller likelihood, 60) + deductions, 0, 100)`
 
-Site quality contributes up to 40 points. Seller factors can add up to 175, but only the first 60 count. The five blockers stack and can deduct up to 45. This is an ordinal research score, not a probability that an owner will sell. Listed and excluded parcels may have scores; their existing eligibility and listing labels remain visible.
+Site quality contributes up to 40 points. Seller factors can add up to 175, but only the first 60 count. The five blockers stack and can deduct up to 45. This is an ordinal research score, not a probability that an owner will sell. Active listings stay visible with a zero score and an Excluded label. The score dialog explains the override while retaining underlying factor details for reference. Other excluded parcels can still have positive scores.
+
+All 766 parcels are visible. Development status is derived from mapped building coverage: at or below 5% is Vacant, above 5% is Built-up. Formerly Mixed/Built-up records with missing coverage remain Built-up; existing vacant/no-building records retain recorded vacancy when coverage is missing. Mixed is not a displayed status. Built-up parcels are excluded from Qualified; other screening rules and the listed-sale zero-score override still apply. Tables below and the loan-rescoring comparison describe the original model snapshot; they are not current status/qualification counts or rankings.
 
 ## Site quality (max 40)
 

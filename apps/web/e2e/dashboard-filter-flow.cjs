@@ -4,6 +4,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
+const { attachCoverage, isBrowsable } = require('./parcel-coverage-fixture.cjs');
 const root = path.resolve(__dirname, '../../..');
 const baseURL = process.env.SITEIQ_URL || 'http://localhost:5174';
 const load = file => JSON.parse(fs.readFileSync(path.join(root, 'apps/web/public', file), 'utf8'));
@@ -11,7 +12,12 @@ const screening = {};
 new Function('exports', ts.transpileModule(fs.readFileSync(path.join(root, 'apps/web/src/utils/parcelScreening.ts'), 'utf8'), {
   compilerOptions: { module: ts.ModuleKind.CommonJS },
 }).outputText)(screening);
-const records = load('geojson/parcels_250m.geojson').features.map(f => ({ ...f.properties, ...screening.screenParcel(f.properties) }));
+const listings = load('geojson/listing_check.json').lots;
+const records = load('geojson/parcels_250m.geojson').features.map(({ properties: p }) => {
+  const key = `${p.town.trim().toUpperCase()}|${p.parcel_id.trim()}`;
+  const fields = { ...attachCoverage(p), listed_for_sale: Boolean(listings[key]?.status && listings[key].status !== 'Not listed') };
+  return { ...fields, ...screening.screenParcel(fields) };
+}).filter(isBrowsable);
 const loans = load('geojson/parcel_loans.json').parcels;
 const identity = p => `${p.town.trim().toUpperCase()}|${p.parcel_id.trim()}`;
 const residential = p => ['6R', 'R1', 'R2', 'R8', 'R-8', 'R20', 'R-20', 'R40', 'RES', 'RESIDNTL'].includes(p.zoning);
@@ -25,9 +31,9 @@ const count = locator => locator.textContent().then(text => Number(text.match(/\
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(baseURL);
     const screeningGroup = page.getByRole('group', { name: 'Screening results', exact: true });
-    await screeningGroup.getByRole('button', { name: 'All (766)', exact: true }).waitFor();
+    await screeningGroup.getByRole('button', { name: `All (${records.length})`, exact: true }).waitFor();
     const paths = page.locator('.dashboard-parcel-overlay');
-    assert.equal(await paths.count(), 766);
+    assert.equal(await paths.count(), records.length);
     assert.ok(Number(await paths.first().getAttribute('fill-opacity')) > 0);
     assert.equal(await page.getByRole('combobox', { name: 'Owner type', exact: true }).count(), 0);
     const roadsPane = page.locator('.leaflet-dashboard-roads-pane');
@@ -38,7 +44,7 @@ const count = locator => locator.textContent().then(text => Number(text.match(/\
     assert.equal(await wetlands.locator('option').filter({ hasText: 'Unknown' }).count(), 0);
     const wetlandCounts = await wetlands.locator('option').allTextContents();
     assert.ok(wetlandCounts.every(text => /\(\d+\)$/.test(text)));
-    assert.equal(wetlandCounts.slice(1).reduce((sum, text) => sum + Number(text.match(/\((\d+)\)$/)[1]), 0), 766);
+    assert.equal(wetlandCounts.slice(1).reduce((sum, text) => sum + Number(text.match(/\((\d+)\)$/)[1]), 0), records.length);
 
     assert.equal(await page.getByRole('group', { name: 'Listing status', exact: true }).count(), 1);
     const initialSnapshot = await page.evaluate(() => JSON.parse(sessionStorage.getItem('siteiq:view:v1:dashboard')));
@@ -131,7 +137,7 @@ const count = locator => locator.textContent().then(text => Number(text.match(/\
     await yearsSelect.selectOption('ALL');
     assert.equal(await paths.count(), tenureBase.length);
     await page.getByRole('button', { name: 'Reset filters', exact: true }).click();
-    assert.equal(await paths.count(), 766);
+    assert.equal(await paths.count(), records.length);
     assert.equal(await districts.count(), 0);
     assert.equal(await groups.getByRole('button').count(), 6);
     const resetSnapshot = await page.evaluate(() => JSON.parse(sessionStorage.getItem('siteiq:view:v1:dashboard')));
@@ -173,7 +179,7 @@ const count = locator => locator.textContent().then(text => Number(text.match(/\
     assert.equal(await paths.count(), records.filter(p => ownerMatches(p) && loans[identity(p)].loan_signal === signals[1]).length);
     await owners.getByRole('button', { name: /^All owner types \(/ }).click();
     await loanGroup.getByRole('button', { name: /^All categories \(/ }).click();
-    assert.equal(await paths.count(), 766);
+    assert.equal(await paths.count(), records.length);
     await page.getByRole('button', { name: 'Reset filters', exact: true }).click();
     await page.setViewportSize({ width: 390, height: 844 });
     await groups.getByRole('button', { name: /^Residential \(/ }).click();

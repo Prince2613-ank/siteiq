@@ -2,6 +2,7 @@ import type { ParcelLoanData } from './parcelLoans';
 
 // Refined ranking model, independent of the parcel qualification rules.
 export interface ScoringInput {
+  listed_for_sale?: boolean;
   category?: string; acres?: number | string | null; usable_acres?: number | string | null; wetland_pct?: number | string | null;
   years_owned?: number | string | null; last_sale_date?: string | null; last_sale_price?: string | null;
   owner_type?: string; owner_distance_miles?: number | string | null;
@@ -23,7 +24,7 @@ export interface ScoreFactor {
   points: number; evidence: string; hasData: boolean;
 }
 
-export const SCORING_VERSION = 'ranking-v5-loans';
+export const SCORING_VERSION = 'ranking-v6-off-market';
 // Seller factors can add up to more than 60; only the first 60 count.
 export const SELLER_CAP = 60;
 export const LOAN_SCORE_BANDS = [
@@ -184,8 +185,9 @@ export function scoreParcel(parcel: ScoringInput, asOf = new Date()) {
   const total = (group: ScoreFactor['group']) => factors.filter(f => f.group === group).reduce((sum, f) => sum + f.points, 0);
   const site = total('site'), seller = Math.min(SELLER_CAP, total('seller')), deductions = total('blocker');
   const raw = site + seller + deductions;
+  const exclusionReason = parcel.listed_for_sale === true ? 'Listed for sale' : null;
   return {
-    score: clamp(raw), raw, site, seller, deductions, factors,
+    score: exclusionReason ? 0 : clamp(raw), raw, site, seller, deductions, factors, exclusionReason,
     asOf: asOf.toISOString().slice(0, 10),
   };
 }

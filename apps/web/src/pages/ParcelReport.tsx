@@ -205,6 +205,7 @@ export function ParcelReport() {
         </section>}
         <RecordSection title="Screening" fields={[
           ['Result', p.keep === 'Y' ? 'Qualified' : 'Excluded'], ['Reason', p.screening_reason],
+          ['Building coverage', number(p.building_coverage_pct) !== null ? `${format(Number(p.building_coverage_pct), 2)}% of ${p.building_coverage_source === 'source_workbook' ? 'spreadsheet lot area (source workbook measurement)' : `GIS lot area${p.building_layer_coverage === 'partial' ? ' (partial mapped coverage)' : ''}`}` : null],
         ]} />
         <RecordSection title="Ownership & records" fields={[
           ['Owner type', p.owner_type], ['Mailing address', p.owner_mailing_address],

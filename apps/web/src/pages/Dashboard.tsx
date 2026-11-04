@@ -188,15 +188,6 @@ export const CATEGORIES: CategoryDefinition[] = [
   },
   {
     group: 'status',
-    key: 'Mixed',
-    label: 'Mixed (Vacant + Built-up)',
-    fill: '#f97316',
-    stroke: '#c2410c',
-    textClass: 'text-orange-700 bg-orange-50 border-orange-200',
-    match: (p) => p.status === 'Mixed (vacant + built-up)',
-  },
-  {
-    group: 'status',
     key: 'Built-up',
     label: 'Built-up',
     fill: '#64748b',
@@ -311,7 +302,7 @@ export function Dashboard() {
   const [selectedLoanCategory, setSelectedLoanCategory] = useState<string[]>(() => restoreMultiSelection(returnState?.selectedLoanCategory));
   const zoningGroupsRef = useRef(selectedZoningGroups);
   zoningGroupsRef.current = selectedZoningGroups;
-  const [selectedStatus, setSelectedStatus] = useState(returnState?.selectedStatus ?? 'ALL');
+  const [selectedStatus, setSelectedStatus] = useState(returnState?.selectedStatus === 'Vacant' || returnState?.selectedStatus === 'Built-up' ? returnState.selectedStatus : 'ALL');
   const [selectedOwnerType, setSelectedOwnerType] = useState<string[]>(() => restoreMultiSelection(returnState?.selectedOwnerType));
   const [selectedWetland, setSelectedWetland] = useState(WETLAND_FILTERS.some(option => option.value === returnState?.selectedWetland) ? returnState!.selectedWetland! : 'ALL');
   const [selectedListing, setSelectedListing] = useState(returnState?.selectedListing ?? 'ALL');
