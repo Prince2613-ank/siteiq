@@ -1,7 +1,7 @@
 import type { jsPDF } from 'jspdf';
 import type { ParcelReportData } from './parcelReports';
 
-type Section = { title: string; head?: string[]; rows: string[][]; links?: string[]; notes?: string[] };
+type Section = { title: string; head?: string[]; rows: string[][]; links?: string[]; notes?: string[]; description?: string };
 export type ParcelReportPdfSnapshot = {
   title: string; location: string; tags: string; filename: string;
   sections: Section[]; map: string; mapWidth: number; mapHeight: number; mapLegend: string; mapAttribution: string;
@@ -11,7 +11,7 @@ export type ParcelReportPdfSnapshot = {
 // producing unreadable glyphs for the arrows used by the screen UI.
 const text = (value: string | null | undefined) => (value ?? '').replace(/\s+/g, ' ').trim()
   .replace(/[\u2010-\u2015]/g, '-').replace(/[\u2018\u2019]/g, "'")
-  .replace(/[\u201c\u201d]/g, '"').replace(/\u2192/g, '').replace(/\u2026/g, '...');
+  .replace(/[\u201c\u201d]/g, '"').replace(/[\u2192\u2197]/g, '').replace(/\u2026/g, '...').trim();
 
 async function captureParcelMap(container: HTMLElement): Promise<{ map: string; mapWidth: number; mapHeight: number }> {
   const bounds = container.getBoundingClientRect();
@@ -86,8 +86,13 @@ export async function snapshotParcelReport(article: HTMLElement, data: ParcelRep
         notes: [...section.querySelectorAll('[data-report-note]')].map(note => text(note.textContent)),
         rows: [...section.querySelectorAll('tbody tr')].map(row => [...row.querySelectorAll('th, td')].map(cell => text(cell.textContent))) });
     } else if (section.querySelector('dl')) {
-      sections.push({ title, rows: [...section.querySelectorAll('dl > div')].map(row =>
-        [text(row.querySelector('dt')?.textContent), text(row.querySelector('dd')?.textContent)]) });
+      const fields = [...section.querySelectorAll('dl > div')].map(row =>
+        [text(row.querySelector('dt')?.textContent), text(row.querySelector('dd')?.textContent)]);
+      const links = [...section.querySelectorAll<HTMLAnchorElement>('.report-listing-links a')].filter(link => /^https?:/i.test(link.href));
+      sections.push({ title, description: text(section.querySelector('[data-report-description]')?.textContent),
+        rows: [...fields, ...links.map(link => [text(link.textContent), link.href])],
+        links: [...fields.map(() => ''), ...links.map(link => link.href)],
+      });
     } else {
       const links = [...section.querySelectorAll<HTMLAnchorElement>('a')].filter(link => /^https?:/i.test(link.href));
       if (links.length) sections.push({ title, rows: links.map(link => [text(link.textContent), link.href]), links: links.map(link => link.href) });
@@ -126,8 +131,9 @@ export async function downloadParcelReportPdf(snapshot: ParcelReportPdfSnapshot)
   paragraph(snapshot.mapLegend, 8, false, '#52685b');
   paragraph(snapshot.mapAttribution, 8, false, '#52685b');
   for (const section of snapshot.sections) {
-    room(70);
+    room(70 + (section.description ? (doc.splitTextToSize(section.description, width) as string[]).length * 10 + 7 : 0));
     paragraph(section.title, 11, true);
+    if (section.description) paragraph(section.description, 8, false, '#52685b');
     autoTable(doc, {
       startY: y - 2, margin: { left: margin, right: margin, top: 54, bottom: 50 },
       theme: 'plain', head: section.head ? [section.head] : undefined, body: section.rows,

@@ -11,6 +11,14 @@ and ranks. The former `/screening-report` path redirects to this page. The
 are loaded through the same `loadParcels` screening pipeline used by Dashboard
 and Sites. Counts are not hard-coded or shown when required data cannot load.
 
+Listing & history contains each parcel's available external listing links from
+the listing-check asset, Zillow/Redfin source fields, and any separate listing
+proof. URLs are validated and deduplicated; parcels without links say "No listing
+links found." These links open in a new tab and remain clickable in PDF exports.
+They do not add an internal property-report URL to the PDF. Loan information
+contains the supplied registry source note, Open mortgage, and Leases, easements
+& restrictions; there is no separate Mortgage & restrictions section.
+
 All 766 source parcels are visible. Development status has only Vacant and
 Built-up, with an All filter. Building footprint at or below 5% of its matching
 parcel area classifies a parcel as Vacant; above 5% classifies it as Built-up.

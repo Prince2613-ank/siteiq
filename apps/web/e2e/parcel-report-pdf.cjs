@@ -28,6 +28,12 @@ fs.mkdirSync(output, { recursive: true });
       assert.equal(await exportButton.isEnabled(), true);
       assert.equal(await page.getByRole('heading', { name: 'Property links', exact: true }).count(), 0);
       assert.equal(await page.getByRole('heading', { name: 'Screening', exact: true }).count(), 0);
+      assert.equal(await page.getByRole('heading', { name: 'Mortgage & restrictions', exact: true }).count(), 0);
+      for (const label of ['Open mortgage', 'Leases, easements & restrictions']) {
+        const fields = page.locator('dt').filter({ hasText: new RegExp(`^${label}$`) });
+        assert.equal(await fields.count(), await page.locator('.report-loan-section dt').filter({ hasText: new RegExp(`^${label}$`) }).count(), `${label} must be inside Loan information`);
+      }
+      assert.match(await page.locator('.report-loan-section > h2 + [data-report-description]').textContent(), /Southern Essex Registry of Deeds \(salemdeeds.com\).*loans recorded only under the owner’s name may not appear/);
       assert.equal(await page.locator('.report-property-links').count(), 0);
       await page.getByRole('button', { name: 'Copy link', exact: true }).click();
       assert.equal(await page.evaluate(() => navigator.clipboard.readText()), url);
@@ -36,7 +42,7 @@ fs.mkdirSync(output, { recursive: true });
         title: article.querySelector('h1').textContent,
         sections: [...article.querySelectorAll('.report-section h2')].map(heading => heading.textContent),
         fields: [...article.querySelectorAll('.report-section dl > div')].map(row => [row.querySelector('dt').textContent, row.querySelector('dd').textContent]),
-        links: [...article.querySelectorAll('.report-property-links a')].map(link => link.href),
+        links: [...article.querySelectorAll('.report-listing-links a')].map(link => link.href),
       }));
       await page.locator('.parcel-report-map .leaflet-tile-loaded').first().waitFor();
       if (url.includes('/SEABROOK/')) {

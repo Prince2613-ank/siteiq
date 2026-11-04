@@ -7,6 +7,7 @@ import { loadParcelReport, parcelReportPath, type ParcelReportData } from '../ut
 import { downloadParcelReportPdf, snapshotParcelReport } from '../utils/parcelReportPdf';
 import { parcelKey } from '../utils/dataLoading';
 import { listingGroup } from '../utils/dashboardFilters';
+import { parcelListingLinks, type ParcelListingLink } from '../utils/parcelListing';
 import { areaMeasurements, vacantLandMeasurements, pavedLandMeasurements, M2_PER_ACRE } from '../utils/parcelAreas';
 import { ZONING_DISTRICTS, zoningCode } from '../utils/parcelZoning';
 import { formatLoanMoney, formatLoanPercent, loanCategoryLabel } from '../utils/parcelLoans';
@@ -29,12 +30,18 @@ function titleCase(value: string): string { return value.toLowerCase().replace(/
 function ArrowLeft() {
   return <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="m12 19-7-7 7-7M5 12h14" /></svg>;
 }
-function RecordSection({ title, fields, showNotChecked = false, className = '' }: { title: string; fields: [string, unknown][]; showNotChecked?: boolean; className?: string }) {
+function RecordSection({ title, fields, showNotChecked = false, className = '', description, links }: { title: string; fields: [string, unknown][]; showNotChecked?: boolean; className?: string; description?: string; links?: ParcelListingLink[] }) {
   const visible = fields.filter(([, value]) => available(value) || (showNotChecked && /^not checked\b/i.test(String(value))));
   if (!visible.length) return null;
-  return <section className={`report-section ${className}`}><h2>{title}</h2><dl className="report-identity-grid">
+  return <section className={`report-section ${className}`}><h2>{title}</h2>
+    {description && <p data-report-description className="report-source-note">{description}</p>}
+    <dl className="report-identity-grid">
     {visible.map(([label, value]) => <div key={label} className={String(value).length > 45 ? 'report-full-row' : undefined}><dt>{label}</dt><dd>{String(value)}</dd></div>)}
-  </dl></section>;
+  </dl>
+    {links && (links.length ? <div className="report-listing-links" aria-label="Listing source links">{links.map(link =>
+      <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>
+    )}</div> : <p className="report-no-listing-links">No listing links found.</p>)}
+  </section>;
 }
 
 function ReportMap({ data }: { data: ParcelReportData }) {
@@ -211,8 +218,9 @@ export function ParcelReport() {
           ['Years owned', number(p.years_owned) !== null ? `${format(Number(p.years_owned), 1)} years` : null],
           ['Last transfer', p.last_sale_date], ['Transfer price', p.last_sale_price], ['Deed reference', p.deed_book_page], ['Company people', p.company_people],
         ]} />
-        {data.loan && <RecordSection title="Loan information" className="report-loan-section" fields={data.loan.loan_signal === 'Not checked' ? [
+        {data.loan && <RecordSection title="Loan information" className="report-loan-section" description="*Source: Southern Essex Registry of Deeds (salemdeeds.com), searched by property address for mortgage, discharge and UCC filings; loans recorded only under the owner’s name may not appear." fields={data.loan.loan_signal === 'Not checked' ? [
           ['Loan category', loanCategoryLabel(data.loan.loan_signal)],
+          ['Open mortgage', p.open_mortgage], ['Leases, easements & restrictions', p.lease_easement_restriction],
         ] : [
           ['Loan category', loanCategoryLabel(data.loan.loan_signal)], ['Loan status', data.loan.loan_status],
           ['Open loans', data.loan.open_loans_count], ['Latest open-loan lender', data.loan.latest_open_loan_lender],
@@ -220,15 +228,13 @@ export function ParcelReport() {
           ['Loan age', data.loan.loan_age_years === null ? null : `${format(data.loan.loan_age_years, 1)} years`],
           ['Loan to value', formatLoanPercent(data.loan.loan_to_value_pct)],
           ['Estimated current balance', formatLoanMoney(data.loan.est_balance_now_usd)],
-        ]} />}
-        <RecordSection title="Mortgage & restrictions" fields={[
           ['Open mortgage', p.open_mortgage], ['Leases, easements & restrictions', p.lease_easement_restriction],
-        ]} />
+        ]} />}
         <RecordSection title="Tax & estate records" fields={[
           ['Property tax', p.unpaid_tax_signal], ['Tax takings found', p.tax_takings_found], ['Latest tax taking', p.last_tax_taking],
           ['Estate & ownership signal', p.life_event_signal], ['Estate record', p.estate_record_detail], ['Children / heirs', p.children_count_estate_owner],
         ]} />
-        <RecordSection title="Listing & history" fields={[
+        <RecordSection title="Listing & history" links={parcelListingLinks(data.listing, p)} fields={[
           ['Listing status', listingStatus], ['Past listing attempt', p.past_listing_attempt],
           ['Zillow history', p.zillow_past_attempt], ['Redfin history', p.redfin_past_attempt],
         ]} />
