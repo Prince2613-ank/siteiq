@@ -1,0 +1,43 @@
+﻿const { chromium } = require('playwright');
+const assert = require('node:assert/strict');
+(async () => {
+ const browser = await chromium.launch({headless:true});
+ try {
+ const page = await browser.newPage({viewport:{width:1440,height:1000}});
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://localhost:5173');
+ const paths=page.locator('.leaflet-overlay-pane path[fill="#ef4444"]');
+ await paths.first().waitFor();
+ assert.equal(await page.getByRole('heading',{name:'Filters',exact:true}).count(),1);
+ assert.equal(await page.locator('.dashboard-map-legend').count(),0);
+ assert.equal(await page.getByText('Overview',{exact:true}).count(),0);
+ assert.equal(await page.getByText(/Road corridor/i).count(),0);
+ assert.equal(await page.locator('.dashboard-total').count(),0);
+ assert.equal(await page.locator('.leaflet-container select, .leaflet-container input').count(),0);
+ const all = await paths.count();
+ await page.getByLabel('Land category',{exact:true}).selectOption('Developable');
+ assert.equal(await paths.count(),0);
+ await page.getByRole('button',{name:'Reset filters',exact:true}).click();
+ await paths.first().waitFor();assert.equal(await paths.count(),all);
+ await paths.first().evaluate(el=>el.dispatchEvent(new MouseEvent('click',{bubbles:true,clientX:750,clientY:400})));
+ await page.locator('.dashboard-parcel-card').waitFor();
+ const address=await page.locator('.dashboard-parcel-card strong').innerText();
+ await page.getByRole('button',{name:'Details',exact:true}).click();
+ await page.waitForURL('**/sites?**');
+ await page.getByRole('dialog',{name:address,exact:true}).waitFor();
+ assert.ok(new URL(page.url()).searchParams.get('parcel'));
+ assert.ok(new URL(page.url()).searchParams.get('town'));
+ await page.getByRole('button',{name:'Dismiss property information'}).click();
+ assert.equal(await page.getByRole('dialog').count(),0);
+ assert.equal(new URL(page.url()).searchParams.has('parcel'),false);
+ await page.goto('http://localhost:5173');
+ await page.setViewportSize({width:390,height:844});
+ await page.getByLabel('Land category',{exact:true}).waitFor();
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ await page.screenshot({path:'scratch/dashboard-filters-mobile.png'});
+ await page.setViewportSize({width:1440,height:1000});
+ await page.screenshot({path:'scratch/dashboard-filters-desktop.png'});
+ assert.deepEqual(errors,[]);
+ console.log('PASS: sidebar filters, removed overlays/corridor/counts, exact parcel Details navigation, dismissal, mobile overflow, no browser errors.');
+ } finally {await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1});

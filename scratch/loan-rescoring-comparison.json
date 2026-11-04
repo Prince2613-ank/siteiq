@@ -1,0 +1,5407 @@
+{
+  "summary": {
+    "increased": 415,
+    "unchanged": 351,
+    "top5": [
+      {
+        "address": "133 MAIN ST",
+        "town": "SALISBURY",
+        "id": "11-13",
+        "old": 65,
+        "score": 85
+      },
+      {
+        "address": "250 MAIN ST",
+        "town": "AMESBURY",
+        "id": "77-31",
+        "old": 80,
+        "score": 80
+      },
+      {
+        "address": "29 OLD ELM ST",
+        "town": "SALISBURY",
+        "id": "10-143",
+        "old": 70,
+        "score": 75
+      },
+      {
+        "address": "47 PIKE ST",
+        "town": "SALISBURY",
+        "id": "19-56",
+        "old": 75,
+        "score": 75
+      },
+      {
+        "address": "68 PIKE ST",
+        "town": "SALISBURY",
+        "id": "18-21",
+        "old": 70,
+        "score": 75
+      }
+    ]
+  },
+  "parcels": [
+    {
+      "address": "133 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-13",
+      "old": 65,
+      "score": 85
+    },
+    {
+      "address": "250 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-31",
+      "old": 80,
+      "score": 80
+    },
+    {
+      "address": "29 OLD ELM ST",
+      "town": "SALISBURY",
+      "id": "10-143",
+      "old": 70,
+      "score": 75
+    },
+    {
+      "address": "47 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-56",
+      "old": 75,
+      "score": 75
+    },
+    {
+      "address": "68 PIKE ST",
+      "town": "SALISBURY",
+      "id": "18-21",
+      "old": 70,
+      "score": 75
+    },
+    {
+      "address": "72 BAKER RD",
+      "town": "SALISBURY",
+      "id": "10-213",
+      "old": 75,
+      "score": 75
+    },
+    {
+      "address": "87 MONROE ST",
+      "town": "AMESBURY",
+      "id": "43-2",
+      "old": 75,
+      "score": 75
+    },
+    {
+      "address": "2 COLLINS ST",
+      "town": "SALISBURY",
+      "id": "23-39",
+      "old": 65,
+      "score": 70
+    },
+    {
+      "address": "4 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-35",
+      "old": 70,
+      "score": 70
+    },
+    {
+      "address": "11 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-4",
+      "old": 65,
+      "score": 70
+    },
+    {
+      "address": "14 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-18",
+      "old": 70,
+      "score": 70
+    },
+    {
+      "address": "15 RABBIT RD",
+      "town": "AMESBURY",
+      "id": "81-1",
+      "old": 50,
+      "score": 70
+    },
+    {
+      "address": "22 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-190",
+      "old": 65,
+      "score": 70
+    },
+    {
+      "address": "24 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-232",
+      "old": 65,
+      "score": 70
+    },
+    {
+      "address": "91 MACY ST",
+      "town": "AMESBURY",
+      "id": "79-57",
+      "old": 65,
+      "score": 70
+    },
+    {
+      "address": "137 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-14",
+      "old": 50,
+      "score": 70
+    },
+    {
+      "address": "48 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-81",
+      "old": 55,
+      "score": 67
+    },
+    {
+      "address": "5 ROSEDALE ST",
+      "town": "AMESBURY",
+      "id": "77-86",
+      "old": 60,
+      "score": 65
+    },
+    {
+      "address": "7 COLLINS ST",
+      "town": "SALISBURY",
+      "id": "23-21",
+      "old": 65,
+      "score": 65
+    },
+    {
+      "address": "8 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-229",
+      "old": 60,
+      "score": 65
+    },
+    {
+      "address": "9 COLLINS ST",
+      "town": "SALISBURY",
+      "id": "23-22",
+      "old": 65,
+      "score": 65
+    },
+    {
+      "address": "9 ODIN ST",
+      "town": "SALISBURY",
+      "id": "19-132",
+      "old": 65,
+      "score": 65
+    },
+    {
+      "address": "10 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-33",
+      "old": 50,
+      "score": 65
+    },
+    {
+      "address": "13 LOCUST ST",
+      "town": "SALISBURY",
+      "id": "12-27",
+      "old": 65,
+      "score": 65
+    },
+    {
+      "address": "14 CHILDS AVE",
+      "town": "AMESBURY",
+      "id": "65-60",
+      "old": 65,
+      "score": 65
+    },
+    {
+      "address": "14 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-26",
+      "old": 65,
+      "score": 65
+    },
+    {
+      "address": "14 MACY ST #R",
+      "town": "AMESBURY",
+      "id": "77-82",
+      "old": 65,
+      "score": 65
+    },
+    {
+      "address": "17 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-112",
+      "old": 55,
+      "score": 65
+    },
+    {
+      "address": "34 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "67-123",
+      "old": 65,
+      "score": 65
+    },
+    {
+      "address": "47 MACY ST",
+      "town": "AMESBURY",
+      "id": "78-9",
+      "old": 50,
+      "score": 65
+    },
+    {
+      "address": "52 MACY ST",
+      "town": "AMESBURY",
+      "id": "78-4",
+      "old": 50,
+      "score": 65
+    },
+    {
+      "address": "58 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-70",
+      "old": 50,
+      "score": 65
+    },
+    {
+      "address": "66 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-217",
+      "old": 50,
+      "score": 65
+    },
+    {
+      "address": "127 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-36",
+      "old": 45,
+      "score": 65
+    },
+    {
+      "address": "218 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "23-40",
+      "old": 60,
+      "score": 65
+    },
+    {
+      "address": "230 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-91",
+      "old": 55,
+      "score": 65
+    },
+    {
+      "address": "232 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "23-18",
+      "old": 60,
+      "score": 65
+    },
+    {
+      "address": "253 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-22",
+      "old": 55,
+      "score": 65
+    },
+    {
+      "address": "12 MACY ST",
+      "town": "AMESBURY",
+      "id": "77-84",
+      "old": 55,
+      "score": 62
+    },
+    {
+      "address": "68 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-204",
+      "old": 55,
+      "score": 62
+    },
+    {
+      "address": "145 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-17",
+      "old": 50,
+      "score": 62
+    },
+    {
+      "address": "2 COUNTRY CLUB LN",
+      "town": "AMESBURY",
+      "id": "42-15",
+      "old": 55,
+      "score": 60
+    },
+    {
+      "address": "4 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-212",
+      "old": 40,
+      "score": 60
+    },
+    {
+      "address": "30 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-1",
+      "old": 60,
+      "score": 60
+    },
+    {
+      "address": "32 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-62",
+      "old": 60,
+      "score": 60
+    },
+    {
+      "address": "33 OLD ELM ST",
+      "town": "SALISBURY",
+      "id": "10-1",
+      "old": 55,
+      "score": 60
+    },
+    {
+      "address": "44 TOLL RD",
+      "town": "SALISBURY",
+      "id": "19-215",
+      "old": 55,
+      "score": 60
+    },
+    {
+      "address": "45 MACY ST #C106",
+      "town": "AMESBURY",
+      "id": "78-38Z",
+      "old": 55,
+      "score": 60
+    },
+    {
+      "address": "86 MONROE ST",
+      "town": "AMESBURY",
+      "id": "43-6",
+      "old": 50,
+      "score": 60
+    },
+    {
+      "address": "242 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-28",
+      "old": 55,
+      "score": 60
+    },
+    {
+      "address": "42 TOLL RD",
+      "town": "SALISBURY",
+      "id": "19-233",
+      "old": 45,
+      "score": 57
+    },
+    {
+      "address": "6 BARTLETT ST",
+      "town": "AMESBURY",
+      "id": "77-84B",
+      "old": 55,
+      "score": 55
+    },
+    {
+      "address": "7 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-127",
+      "old": 55,
+      "score": 55
+    },
+    {
+      "address": "8 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-99",
+      "old": 40,
+      "score": 55
+    },
+    {
+      "address": "12 MACY ST #R",
+      "town": "AMESBURY",
+      "id": "77-84A",
+      "old": 55,
+      "score": 55
+    },
+    {
+      "address": "15 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-6",
+      "old": 55,
+      "score": 55
+    },
+    {
+      "address": "26 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-138",
+      "old": 35,
+      "score": 55
+    },
+    {
+      "address": "39 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-160",
+      "old": 45,
+      "score": 55
+    },
+    {
+      "address": "39 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "67-138",
+      "old": 55,
+      "score": 55
+    },
+    {
+      "address": "51 MACY ST",
+      "town": "AMESBURY",
+      "id": "78-11",
+      "old": 35,
+      "score": 55
+    },
+    {
+      "address": "51 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-168",
+      "old": 50,
+      "score": 55
+    },
+    {
+      "address": "77 MONROE ST",
+      "town": "AMESBURY",
+      "id": "56-26",
+      "old": 55,
+      "score": 55
+    },
+    {
+      "address": "77 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-27",
+      "old": 55,
+      "score": 55
+    },
+    {
+      "address": "90 INTERSTATE 95 SOUTHBOUND",
+      "town": "SALISBURY",
+      "id": "12-12",
+      "old": 55,
+      "score": 55
+    },
+    {
+      "address": "90 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-138",
+      "old": 55,
+      "score": 55
+    },
+    {
+      "address": "92 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-139",
+      "old": 55,
+      "score": 55
+    },
+    {
+      "address": "245 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-104",
+      "old": 35,
+      "score": 55
+    },
+    {
+      "address": "287 ELM ST",
+      "town": "AMESBURY",
+      "id": "68-15",
+      "old": 55,
+      "score": 55
+    },
+    {
+      "address": "2 DENRAEL DR",
+      "town": "SALISBURY",
+      "id": "10-233",
+      "old": 40,
+      "score": 52
+    },
+    {
+      "address": "1 COLLINS ST",
+      "town": "SALISBURY",
+      "id": "23-20",
+      "old": 45,
+      "score": 50
+    },
+    {
+      "address": "3 CONGRESS ST",
+      "town": "SALISBURY",
+      "id": "11-49",
+      "old": 45,
+      "score": 50
+    },
+    {
+      "address": "8 WELLS AVE",
+      "town": "AMESBURY",
+      "id": "77-98",
+      "old": 50,
+      "score": 50
+    },
+    {
+      "address": "14 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-96",
+      "old": 50,
+      "score": 50
+    },
+    {
+      "address": "19 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-46",
+      "old": 40,
+      "score": 50
+    },
+    {
+      "address": "48 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-184",
+      "old": 45,
+      "score": 50
+    },
+    {
+      "address": "54 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-73",
+      "old": 35,
+      "score": 50
+    },
+    {
+      "address": "60 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-172",
+      "old": 45,
+      "score": 50
+    },
+    {
+      "address": "63 MAIN ST",
+      "town": "SALISBURY",
+      "id": "18-14",
+      "old": 45,
+      "score": 50
+    },
+    {
+      "address": "105 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-2",
+      "old": 50,
+      "score": 50
+    },
+    {
+      "address": "213 ELM ST",
+      "town": "SALISBURY",
+      "id": "9-50",
+      "old": 45,
+      "score": 50
+    },
+    {
+      "address": "5 ODIN ST",
+      "town": "SALISBURY",
+      "id": "19-130",
+      "old": 40,
+      "score": 47
+    },
+    {
+      "address": "14 MACY ST",
+      "town": "AMESBURY",
+      "id": "77-83",
+      "old": 40,
+      "score": 47
+    },
+    {
+      "address": "26 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "80-24",
+      "old": 40,
+      "score": 47
+    },
+    {
+      "address": "70 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-203",
+      "old": 40,
+      "score": 47
+    },
+    {
+      "address": "123 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-234",
+      "old": 35,
+      "score": 47
+    },
+    {
+      "address": "4 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-68",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "5 HIGH BACK RD",
+      "town": "SALISBURY",
+      "id": "18-106",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "6 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-67",
+      "old": 35,
+      "score": 45
+    },
+    {
+      "address": "6 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-22",
+      "old": 35,
+      "score": 45
+    },
+    {
+      "address": "7 LENA MAE WAY",
+      "town": "SALISBURY",
+      "id": "19-151",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "9 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-206",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "10-27-0",
+      "town": "SEABROOK",
+      "id": "10-27-0",
+      "old": 40,
+      "score": 45
+    },
+    {
+      "address": "13 MACY ST",
+      "town": "AMESBURY",
+      "id": "77-73",
+      "old": 40,
+      "score": 45
+    },
+    {
+      "address": "20 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-206",
+      "old": 40,
+      "score": 45
+    },
+    {
+      "address": "22 OLD ELM ST",
+      "town": "SALISBURY",
+      "id": "10-155",
+      "old": 40,
+      "score": 45
+    },
+    {
+      "address": "25 CLARKS RD #208",
+      "town": "AMESBURY",
+      "id": "80-28",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "26 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-63",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "29 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "80-21",
+      "old": 30,
+      "score": 45
+    },
+    {
+      "address": "32 MACY ST",
+      "town": "AMESBURY",
+      "id": "77-78",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "38 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-188",
+      "old": 40,
+      "score": 45
+    },
+    {
+      "address": "39 MACY ST",
+      "town": "AMESBURY",
+      "id": "78-5",
+      "old": 25,
+      "score": 45
+    },
+    {
+      "address": "42 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-186",
+      "old": 40,
+      "score": 45
+    },
+    {
+      "address": "42 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-81",
+      "old": 35,
+      "score": 45
+    },
+    {
+      "address": "44 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-290",
+      "old": 40,
+      "score": 45
+    },
+    {
+      "address": "50 MACY ST #RR",
+      "town": "AMESBURY",
+      "id": "66-17",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "54 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-80",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "58 OLD MERRILL ST",
+      "town": "AMESBURY",
+      "id": "81-5",
+      "old": 40,
+      "score": 45
+    },
+    {
+      "address": "74 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-238",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "79 MONROE ST",
+      "town": "AMESBURY",
+      "id": "56-22",
+      "old": 35,
+      "score": 45
+    },
+    {
+      "address": "81 MONROE ST",
+      "town": "AMESBURY",
+      "id": "56-23",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "82 MONROE ST",
+      "town": "AMESBURY",
+      "id": "43-5A",
+      "old": 30,
+      "score": 45
+    },
+    {
+      "address": "115 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-5",
+      "old": 40,
+      "score": 45
+    },
+    {
+      "address": "116 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-29",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "119 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-7",
+      "old": 30,
+      "score": 45
+    },
+    {
+      "address": "143 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-16",
+      "old": 30,
+      "score": 45
+    },
+    {
+      "address": "201 ELM ST",
+      "town": "SALISBURY",
+      "id": "9-46",
+      "old": 40,
+      "score": 45
+    },
+    {
+      "address": "211 ELM ST",
+      "town": "SALISBURY",
+      "id": "9-47",
+      "old": 40,
+      "score": 45
+    },
+    {
+      "address": "287.5 ELM ST",
+      "town": "AMESBURY",
+      "id": "80-4",
+      "old": 40,
+      "score": 45
+    },
+    {
+      "address": "HAVELOCK ST",
+      "town": "AMESBURY",
+      "id": "77-85",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "MACY ST #RR",
+      "town": "AMESBURY",
+      "id": "65-89",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-161",
+      "old": 45,
+      "score": 45
+    },
+    {
+      "address": "3 JOY RD",
+      "town": "SALISBURY",
+      "id": "11-50",
+      "old": 30,
+      "score": 42
+    },
+    {
+      "address": "8 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "79-59",
+      "old": 35,
+      "score": 42
+    },
+    {
+      "address": "12 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-97",
+      "old": 35,
+      "score": 42
+    },
+    {
+      "address": "28 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-88",
+      "old": 35,
+      "score": 42
+    },
+    {
+      "address": "34 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-19",
+      "old": 30,
+      "score": 42
+    },
+    {
+      "address": "266 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-37",
+      "old": 35,
+      "score": 42
+    },
+    {
+      "address": "1 JON ST",
+      "town": "SALISBURY",
+      "id": "19-189",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "1 MERRILL ST",
+      "town": "SALISBURY",
+      "id": "9-51",
+      "old": 35,
+      "score": 40
+    },
+    {
+      "address": "2 INDUSTRIAL WAY",
+      "town": "AMESBURY",
+      "id": "56-19",
+      "old": 25,
+      "score": 40
+    },
+    {
+      "address": "4 CONGRESS ST",
+      "town": "SALISBURY",
+      "id": "12-47",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "4 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-100",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "6 LENA MAE WAY",
+      "town": "SALISBURY",
+      "id": "19-239",
+      "old": 35,
+      "score": 40
+    },
+    {
+      "address": "8 LENA MAE WAY",
+      "town": "SALISBURY",
+      "id": "19-240",
+      "old": 35,
+      "score": 40
+    },
+    {
+      "address": "9 LENA MAE WAY",
+      "town": "SALISBURY",
+      "id": "19-175",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "10-13-0",
+      "town": "SEABROOK",
+      "id": "10-13-0",
+      "old": 35,
+      "score": 40
+    },
+    {
+      "address": "10-14-15",
+      "town": "SEABROOK",
+      "id": "10-14-15",
+      "old": 35,
+      "score": 40
+    },
+    {
+      "address": "10-18-0",
+      "town": "SEABROOK",
+      "id": "10-18-0",
+      "old": 35,
+      "score": 40
+    },
+    {
+      "address": "10-21-0",
+      "town": "SEABROOK",
+      "id": "10-21-0",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "12 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "79-56",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "12 LENA MAE WAY",
+      "town": "SALISBURY",
+      "id": "19-242",
+      "old": 35,
+      "score": 40
+    },
+    {
+      "address": "16 BROOKS RD",
+      "town": "SALISBURY",
+      "id": "23-81",
+      "old": 30,
+      "score": 40
+    },
+    {
+      "address": "18 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-64",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "21 OLD ELM ST",
+      "town": "SALISBURY",
+      "id": "10-152",
+      "old": 25,
+      "score": 40
+    },
+    {
+      "address": "24 TOLL RD",
+      "town": "SALISBURY",
+      "id": "19-62",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "26 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-204",
+      "old": 35,
+      "score": 40
+    },
+    {
+      "address": "33 RIVER ST",
+      "town": "AMESBURY",
+      "id": "66-14",
+      "old": 25,
+      "score": 40
+    },
+    {
+      "address": "35 TOLL RD",
+      "town": "SALISBURY",
+      "id": "18-38",
+      "old": 35,
+      "score": 40
+    },
+    {
+      "address": "38 ROCKY HILL RD #A",
+      "town": "AMESBURY",
+      "id": "67-126",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "57 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-261",
+      "old": 35,
+      "score": 40
+    },
+    {
+      "address": "74 MONROE ST",
+      "town": "AMESBURY",
+      "id": "56-17",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "83 MONROE ST",
+      "town": "AMESBURY",
+      "id": "56-24",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "89 MONROE ST",
+      "town": "AMESBURY",
+      "id": "43-1",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "90 MAIN ST",
+      "town": "SALISBURY",
+      "id": "12-49",
+      "old": 25,
+      "score": 40
+    },
+    {
+      "address": "94 MONROE ST",
+      "town": "AMESBURY",
+      "id": "43-10",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "118 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-59",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "119 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-37",
+      "old": 20,
+      "score": 40
+    },
+    {
+      "address": "205 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-34",
+      "old": 35,
+      "score": 40
+    },
+    {
+      "address": "223 MAIN ST",
+      "town": "AMESBURY",
+      "id": "65-24",
+      "old": 25,
+      "score": 40
+    },
+    {
+      "address": "228 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "23-19",
+      "old": 40,
+      "score": 40
+    },
+    {
+      "address": "MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-18",
+      "old": 35,
+      "score": 40
+    },
+    {
+      "address": "MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-208",
+      "old": 35,
+      "score": 40
+    },
+    {
+      "address": "3 CAROLINE DR",
+      "town": "SALISBURY",
+      "id": "19-266",
+      "old": 30,
+      "score": 37
+    },
+    {
+      "address": "23 MACY ST",
+      "town": "AMESBURY",
+      "id": "77-75",
+      "old": 25,
+      "score": 37
+    },
+    {
+      "address": "33 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-158",
+      "old": 25,
+      "score": 37
+    },
+    {
+      "address": "57A OLD MERRILL ST",
+      "town": "AMESBURY",
+      "id": "81-7A",
+      "old": 30,
+      "score": 37
+    },
+    {
+      "address": "92 MONROE ST",
+      "town": "AMESBURY",
+      "id": "43-9",
+      "old": 30,
+      "score": 37
+    },
+    {
+      "address": "125 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-238",
+      "old": 25,
+      "score": 37
+    },
+    {
+      "address": "1 HAVERHILL RD",
+      "town": "AMESBURY",
+      "id": "77-108",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "2 LENA MAE WAY",
+      "town": "SALISBURY",
+      "id": "19-237",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "3 ODIN ST",
+      "town": "SALISBURY",
+      "id": "19-129",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "5 MACY ST",
+      "town": "AMESBURY",
+      "id": "77-69",
+      "old": 15,
+      "score": 35
+    },
+    {
+      "address": "6 DEL-LOGAN DR",
+      "town": "SALISBURY",
+      "id": "19-13",
+      "old": 25,
+      "score": 35
+    },
+    {
+      "address": "9 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-3",
+      "old": 25,
+      "score": 35
+    },
+    {
+      "address": "10 CHILDS AVE",
+      "town": "AMESBURY",
+      "id": "65-61",
+      "old": 20,
+      "score": 35
+    },
+    {
+      "address": "10-5-0",
+      "town": "SEABROOK",
+      "id": "10-5-0",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "10-12-0",
+      "town": "SEABROOK",
+      "id": "10-12-0",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "10-50-0",
+      "town": "SEABROOK",
+      "id": "10-50-0",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "13 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-59",
+      "old": 20,
+      "score": 35
+    },
+    {
+      "address": "15 LOCUST ST",
+      "town": "SALISBURY",
+      "id": "12-100",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "17 LOCUST ST",
+      "town": "SALISBURY",
+      "id": "12-101",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "17 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-78",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "18 LOCUST ST",
+      "town": "SALISBURY",
+      "id": "12-45",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "18 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-207",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "22 TOLL RD",
+      "town": "SALISBURY",
+      "id": "19-63",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "23 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-61",
+      "old": 25,
+      "score": 35
+    },
+    {
+      "address": "23 MACY ST",
+      "town": "AMESBURY",
+      "id": "77-74A",
+      "old": 20,
+      "score": 35
+    },
+    {
+      "address": "25 OLD ELM ST",
+      "town": "SALISBURY",
+      "id": "10-236",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "29 MACY ST",
+      "town": "AMESBURY",
+      "id": "77-77",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "33 TOLL RD",
+      "town": "SALISBURY",
+      "id": "18-37",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "35 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-159",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "37 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-117",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "37 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-289",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "41 MACY ST",
+      "town": "AMESBURY",
+      "id": "78-6",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "45 TOLL RD",
+      "town": "SALISBURY",
+      "id": "18-227",
+      "old": 20,
+      "score": 35
+    },
+    {
+      "address": "49 MACY ST",
+      "town": "AMESBURY",
+      "id": "78-10",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "49 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-167",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "50 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-147",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "52 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-182",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "58 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-181",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "62 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-69",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "75 MONROE ST",
+      "town": "AMESBURY",
+      "id": "56-21",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "88 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-137",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "95 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-233",
+      "old": 20,
+      "score": 35
+    },
+    {
+      "address": "100 MACY ST",
+      "town": "AMESBURY",
+      "id": "79-6",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "103 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-35",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "109 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-3",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "121 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-246",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "124 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-21",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "126 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-121",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "201 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-33",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "204 ELM ST",
+      "town": "SALISBURY",
+      "id": "10-147",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "208 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "23-41",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "237 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-230",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "249 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-105",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "253 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-149",
+      "old": 15,
+      "score": 35
+    },
+    {
+      "address": "270 ELM ST",
+      "town": "AMESBURY",
+      "id": "68-18",
+      "old": 20,
+      "score": 35
+    },
+    {
+      "address": "281 ELM ST",
+      "town": "AMESBURY",
+      "id": "68-20",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "287 ELM ST",
+      "town": "AMESBURY",
+      "id": "80-3",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "289 ELM ST",
+      "town": "AMESBURY",
+      "id": "80-7",
+      "old": 30,
+      "score": 35
+    },
+    {
+      "address": "KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-52A",
+      "old": 35,
+      "score": 35
+    },
+    {
+      "address": "1 JAMES CT",
+      "town": "SALISBURY",
+      "id": "18-27",
+      "old": 25,
+      "score": 32
+    },
+    {
+      "address": "4 PINE ST",
+      "town": "SALISBURY",
+      "id": "19-18",
+      "old": 20,
+      "score": 32
+    },
+    {
+      "address": "5 JOY RD",
+      "town": "SALISBURY",
+      "id": "11-41",
+      "old": 20,
+      "score": 32
+    },
+    {
+      "address": "20 OLD ELM ST",
+      "town": "SALISBURY",
+      "id": "10-156",
+      "old": 25,
+      "score": 32
+    },
+    {
+      "address": "25 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-52",
+      "old": 25,
+      "score": 32
+    },
+    {
+      "address": "30 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-203",
+      "old": 20,
+      "score": 32
+    },
+    {
+      "address": "39A PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-292",
+      "old": 25,
+      "score": 32
+    },
+    {
+      "address": "120 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-47",
+      "old": 20,
+      "score": 32
+    },
+    {
+      "address": "125 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-12",
+      "old": 20,
+      "score": 32
+    },
+    {
+      "address": "2 JAMES CT",
+      "town": "SALISBURY",
+      "id": "18-31",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "4 JAMES CT",
+      "town": "SALISBURY",
+      "id": "18-30",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "6 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-211",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "7 FANARAS DR",
+      "town": "SALISBURY",
+      "id": "18-221",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "8 CONGRESS ST",
+      "town": "SALISBURY",
+      "id": "12-32",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "9-153-0",
+      "town": "SEABROOK",
+      "id": "9-153-0",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "9-165-0",
+      "town": "SEABROOK",
+      "id": "9-165-0",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "10-29-2",
+      "town": "SEABROOK",
+      "id": "10-29-2",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "11 DANIEL CT",
+      "town": "SALISBURY",
+      "id": "19-283",
+      "old": 20,
+      "score": 30
+    },
+    {
+      "address": "12 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-19",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "14 MERRILL ST",
+      "town": "SALISBURY",
+      "id": "9-59",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "16 LOCUST ST",
+      "town": "SALISBURY",
+      "id": "12-46",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "17 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-7",
+      "old": 15,
+      "score": 30
+    },
+    {
+      "address": "19 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-109",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "25 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-11",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "31 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-50",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "32 MERRILL ST",
+      "town": "AMESBURY",
+      "id": "91-14",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "46 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-185",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "55 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-18",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "59 OLD MERRILL ST",
+      "town": "AMESBURY",
+      "id": "81-6",
+      "old": 20,
+      "score": 30
+    },
+    {
+      "address": "59 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-59",
+      "old": 15,
+      "score": 30
+    },
+    {
+      "address": "64 MONROE ST",
+      "town": "AMESBURY",
+      "id": "56-14",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "69 PIKE ST",
+      "town": "SALISBURY",
+      "id": "18-22",
+      "old": 15,
+      "score": 30
+    },
+    {
+      "address": "72 MONROE ST",
+      "town": "AMESBURY",
+      "id": "56-16",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "75 MAIN ST",
+      "town": "SALISBURY",
+      "id": "18-11",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "77 MACY ST",
+      "town": "AMESBURY",
+      "id": "79-13",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "78 MONROE ST",
+      "town": "AMESBURY",
+      "id": "56-18",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "99 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-1",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "103 MACY ST",
+      "town": "AMESBURY",
+      "id": "80-16",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "109 MACY ST",
+      "town": "AMESBURY",
+      "id": "80-17",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "111 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-3",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "127 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-237",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "129 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-9",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "131 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-10",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "140 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-20",
+      "old": 20,
+      "score": 30
+    },
+    {
+      "address": "211 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-37",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "266 ELM ST",
+      "town": "AMESBURY",
+      "id": "67-134A",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "270 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-38",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "270 MAIN ST #R",
+      "town": "AMESBURY",
+      "id": "77-56",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "277  ELM ST",
+      "town": "AMESBURY",
+      "id": "68-13A",
+      "old": 15,
+      "score": 30
+    },
+    {
+      "address": "412 MAIN ST",
+      "town": "AMESBURY",
+      "id": "78-30",
+      "old": 15,
+      "score": 30
+    },
+    {
+      "address": "CONGRESS ST",
+      "town": "SALISBURY",
+      "id": "11-28",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "LENA MAE WAY",
+      "town": "SALISBURY",
+      "id": "19-216",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "MINGO RD",
+      "town": "SALISBURY",
+      "id": "11-22",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "RABBIT RD",
+      "town": "AMESBURY",
+      "id": "81-2",
+      "old": 30,
+      "score": 30
+    },
+    {
+      "address": "REAR MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-183",
+      "old": 25,
+      "score": 30
+    },
+    {
+      "address": "3 DANIEL CT",
+      "town": "SALISBURY",
+      "id": "19-287",
+      "old": 20,
+      "score": 27
+    },
+    {
+      "address": "5 VIKING ST",
+      "town": "SALISBURY",
+      "id": "19-118",
+      "old": 20,
+      "score": 27
+    },
+    {
+      "address": "6 BARTLETT PL",
+      "town": "AMESBURY",
+      "id": "77-54",
+      "old": 20,
+      "score": 27
+    },
+    {
+      "address": "6 COLLINS ST",
+      "town": "SALISBURY",
+      "id": "23-77",
+      "old": 20,
+      "score": 27
+    },
+    {
+      "address": "8 ODIN ST",
+      "town": "SALISBURY",
+      "id": "19-133",
+      "old": 20,
+      "score": 27
+    },
+    {
+      "address": "15 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-77",
+      "old": 20,
+      "score": 27
+    },
+    {
+      "address": "16 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-95",
+      "old": 20,
+      "score": 27
+    },
+    {
+      "address": "67 PIKE ST",
+      "town": "SALISBURY",
+      "id": "18-41",
+      "old": 15,
+      "score": 27
+    },
+    {
+      "address": "80 MONROE ST",
+      "town": "AMESBURY",
+      "id": "43-4",
+      "old": 20,
+      "score": 27
+    },
+    {
+      "address": "90 MONROE ST",
+      "town": "AMESBURY",
+      "id": "43-8",
+      "old": 20,
+      "score": 27
+    },
+    {
+      "address": "121 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-7",
+      "old": 15,
+      "score": 27
+    },
+    {
+      "address": "207 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-35",
+      "old": 20,
+      "score": 27
+    },
+    {
+      "address": "1 DEL-LOGAN DR",
+      "town": "SALISBURY",
+      "id": "19-231",
+      "old": 15,
+      "score": 25
+    },
+    {
+      "address": "1 ODIN ST",
+      "town": "SALISBURY",
+      "id": "19-128",
+      "old": 15,
+      "score": 25
+    },
+    {
+      "address": "2 FANARAS DR C",
+      "town": "SALISBURY",
+      "id": "18-136",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "2 GODDARD AVE",
+      "town": "AMESBURY",
+      "id": "64-74",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "2 JON ST",
+      "town": "SALISBURY",
+      "id": "19-201",
+      "old": 15,
+      "score": 25
+    },
+    {
+      "address": "4 ROSEDALE ST",
+      "town": "AMESBURY",
+      "id": "77-88",
+      "old": 5,
+      "score": 25
+    },
+    {
+      "address": "4 VIKING ST",
+      "town": "SALISBURY",
+      "id": "19-138",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "5 MORRILL PL",
+      "town": "AMESBURY",
+      "id": "65-83",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "6 JUNO ST",
+      "town": "SALISBURY",
+      "id": "19-123",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "7 JUNO ST",
+      "town": "SALISBURY",
+      "id": "19-120",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "8 FANARAS DR",
+      "town": "SALISBURY",
+      "id": "18-209",
+      "old": 15,
+      "score": 25
+    },
+    {
+      "address": "8 JON ST",
+      "town": "SALISBURY",
+      "id": "19-198",
+      "old": 15,
+      "score": 25
+    },
+    {
+      "address": "8 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-66",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "8 PINE ST",
+      "town": "SALISBURY",
+      "id": "19-16",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "8 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-21",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "9 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-58",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "9-152-0",
+      "town": "SEABROOK",
+      "id": "9-152-0",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "9-157-0",
+      "town": "SEABROOK",
+      "id": "9-157-0",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "9-162-0",
+      "town": "SEABROOK",
+      "id": "9-162-0",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "10 WELLS AVE",
+      "town": "AMESBURY",
+      "id": "77-100",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "10-4-0",
+      "town": "SEABROOK",
+      "id": "10-4-0",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "10-6-0",
+      "town": "SEABROOK",
+      "id": "10-6-0",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "10-49-0",
+      "town": "SEABROOK",
+      "id": "10-49-0",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "12 JOY RD",
+      "town": "SALISBURY",
+      "id": "11-55",
+      "old": 10,
+      "score": 25
+    },
+    {
+      "address": "12 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-141",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "13 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-107",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "13 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-5",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "16 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-65",
+      "old": 15,
+      "score": 25
+    },
+    {
+      "address": "17 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-45",
+      "old": 15,
+      "score": 25
+    },
+    {
+      "address": "22 CHILDS AVE",
+      "town": "AMESBURY",
+      "id": "65-58",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "23 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-10",
+      "old": 10,
+      "score": 25
+    },
+    {
+      "address": "24 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-14",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "25 MACY ST",
+      "town": "AMESBURY",
+      "id": "77-76",
+      "old": 5,
+      "score": 25
+    },
+    {
+      "address": "29 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-4",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "31 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-157",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "32 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-20",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "32 OLD ELM ST",
+      "town": "SALISBURY",
+      "id": "10-2",
+      "old": 10,
+      "score": 25
+    },
+    {
+      "address": "33 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "80-19",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "34 LENA MAE WAY",
+      "town": "SALISBURY",
+      "id": "19-180",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "34 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-202",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "34 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-85",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "35 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-116",
+      "old": 5,
+      "score": 25
+    },
+    {
+      "address": "36 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-18",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "41 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-162",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "42 LAFAYETTE ST EXT",
+      "town": "AMESBURY",
+      "id": "66-51",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "46 TOLL RD",
+      "town": "SALISBURY",
+      "id": "19-224",
+      "old": 10,
+      "score": 25
+    },
+    {
+      "address": "50 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-191",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "54 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-236",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "55 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-169",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "59 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-170",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "60 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-79",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "66 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-205",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "67 MAIN ST",
+      "town": "SALISBURY",
+      "id": "18-16",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "67 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-24",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "76 MACY ST",
+      "town": "AMESBURY",
+      "id": "79-12",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "80 MACY ST",
+      "town": "AMESBURY",
+      "id": "79-11",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "84 MACY ST",
+      "town": "AMESBURY",
+      "id": "79-8",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "84 MONROE ST",
+      "town": "AMESBURY",
+      "id": "43-5",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "84 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-30",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "85 MACY ST",
+      "town": "AMESBURY",
+      "id": "79-81",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "89 MACY ST",
+      "town": "AMESBURY",
+      "id": "79-82",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "99 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-1",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "100 HIGHLAND ST",
+      "town": "AMESBURY",
+      "id": "64-73",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "107 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-2",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "115 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-4",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "117 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-5",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "123 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-6",
+      "old": 10,
+      "score": 25
+    },
+    {
+      "address": "208 ELM ST",
+      "town": "SALISBURY",
+      "id": "10-216",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "209 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-36",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "213 MAIN ST",
+      "town": "AMESBURY",
+      "id": "65-84",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "215 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-40",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "260 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-34",
+      "old": 15,
+      "score": 25
+    },
+    {
+      "address": "265 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-16",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "275 ELM ST",
+      "town": "AMESBURY",
+      "id": "68-11",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "289 ELM ST #R",
+      "town": "AMESBURY",
+      "id": "80-6",
+      "old": 20,
+      "score": 25
+    },
+    {
+      "address": "LOCUST ST",
+      "town": "SALISBURY",
+      "id": "19-177",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-13",
+      "old": 25,
+      "score": 25
+    },
+    {
+      "address": "1 DENRAEL DR",
+      "town": "SALISBURY",
+      "id": "10-232",
+      "old": 10,
+      "score": 22
+    },
+    {
+      "address": "5 DANIEL CT",
+      "town": "SALISBURY",
+      "id": "19-286",
+      "old": 15,
+      "score": 22
+    },
+    {
+      "address": "6 VIKING ST",
+      "town": "SALISBURY",
+      "id": "19-137",
+      "old": 15,
+      "score": 22
+    },
+    {
+      "address": "17 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-55",
+      "old": 15,
+      "score": 22
+    },
+    {
+      "address": "24 OLD ELM ST",
+      "town": "SALISBURY",
+      "id": "10-154",
+      "old": 10,
+      "score": 22
+    },
+    {
+      "address": "35 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-51",
+      "old": 15,
+      "score": 22
+    },
+    {
+      "address": "37 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-293",
+      "old": 15,
+      "score": 22
+    },
+    {
+      "address": "72 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-32",
+      "old": 15,
+      "score": 22
+    },
+    {
+      "address": "82 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-248",
+      "old": 15,
+      "score": 22
+    },
+    {
+      "address": "100 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-48",
+      "old": 10,
+      "score": 22
+    },
+    {
+      "address": "225 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-92",
+      "old": 15,
+      "score": 22
+    },
+    {
+      "address": "261 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-18",
+      "old": 15,
+      "score": 22
+    },
+    {
+      "address": "282 ELM ST",
+      "town": "AMESBURY",
+      "id": "68-16",
+      "old": 10,
+      "score": 22
+    },
+    {
+      "address": "1 LENA MAE WAY",
+      "town": "SALISBURY",
+      "id": "19-173",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "2 DANIEL CT",
+      "town": "SALISBURY",
+      "id": "19-273",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "2 MACY ST",
+      "town": "AMESBURY",
+      "id": "77-89",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "3 CATHERINE WAY",
+      "town": "SALISBURY",
+      "id": "10-276",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "3 JAMES CT",
+      "town": "SALISBURY",
+      "id": "18-28",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "3 JON ST",
+      "town": "SALISBURY",
+      "id": "19-190",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "4 ODIN ST",
+      "town": "SALISBURY",
+      "id": "19-135",
+      "old": 10,
+      "score": 20
+    },
+    {
+      "address": "4 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-23",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "5 ANDREWS ST",
+      "town": "AMESBURY",
+      "id": "79-28",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "5 CATHERINE WAY",
+      "town": "SALISBURY",
+      "id": "10-34",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "5 FANARAS DR C",
+      "town": "SALISBURY",
+      "id": "18-220",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "5 LENA MAE WAY",
+      "town": "SALISBURY",
+      "id": "19-150",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "6 CHILDS AVE",
+      "town": "AMESBURY",
+      "id": "65-62",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "6 DANIEL CT",
+      "town": "SALISBURY",
+      "id": "19-275",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "6 DEMOCRACY DR",
+      "town": "AMESBURY",
+      "id": "67-122",
+      "old": 10,
+      "score": 20
+    },
+    {
+      "address": "7 JOY RD",
+      "town": "SALISBURY",
+      "id": "11-43",
+      "old": 5,
+      "score": 20
+    },
+    {
+      "address": "7 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-57",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "8 CAROLINE DR",
+      "town": "SALISBURY",
+      "id": "19-264",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "8 COLLINS ST",
+      "town": "SALISBURY",
+      "id": "23-78",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "8 JOY RD",
+      "town": "SALISBURY",
+      "id": "11-53",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "8 JUNO ST",
+      "town": "SALISBURY",
+      "id": "19-122",
+      "old": 10,
+      "score": 20
+    },
+    {
+      "address": "9 LOCUST ST",
+      "town": "SALISBURY",
+      "id": "12-33",
+      "old": 10,
+      "score": 20
+    },
+    {
+      "address": "9-155-0",
+      "town": "SEABROOK",
+      "id": "9-155-0",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "9-156-0",
+      "town": "SEABROOK",
+      "id": "9-156-0",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "9-158-0",
+      "town": "SEABROOK",
+      "id": "9-158-0",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "10 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-98",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "10-9-0",
+      "town": "SEABROOK",
+      "id": "10-9-0",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "10-11-0",
+      "town": "SEABROOK",
+      "id": "10-11-0",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "10-25-0",
+      "town": "SEABROOK",
+      "id": "10-25-0",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "10-28-0",
+      "town": "SEABROOK",
+      "id": "10-28-0",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "10-47-0",
+      "town": "SEABROOK",
+      "id": "10-47-0",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "11 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-111",
+      "old": 10,
+      "score": 20
+    },
+    {
+      "address": "11 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-76",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "15 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-272",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "17 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "79-84",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "17 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-243",
+      "old": 10,
+      "score": 20
+    },
+    {
+      "address": "18 CHILDS AVE",
+      "town": "AMESBURY",
+      "id": "65-59",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "18 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-24",
+      "old": 0,
+      "score": 20
+    },
+    {
+      "address": "19 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-60",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "20 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "80-25A",
+      "old": 5,
+      "score": 20
+    },
+    {
+      "address": "20 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-140",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "20A CLARKS RD",
+      "town": "AMESBURY",
+      "id": "80-26",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "21 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-110",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "21 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-47",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "24 FANARAS DR",
+      "town": "SALISBURY",
+      "id": "18-218",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "24 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-90",
+      "old": 10,
+      "score": 20
+    },
+    {
+      "address": "25 FANARAS DR",
+      "town": "SALISBURY",
+      "id": "18-226",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "25 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-48",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "26 FANARAS DR",
+      "town": "SALISBURY",
+      "id": "18-219",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "26 OLD ELM ST",
+      "town": "SALISBURY",
+      "id": "10-153",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "27 OLD ELM ST",
+      "town": "SALISBURY",
+      "id": "10-145",
+      "old": 5,
+      "score": 20
+    },
+    {
+      "address": "27.5 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "80-22",
+      "old": 10,
+      "score": 20
+    },
+    {
+      "address": "28.5 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-62",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "29 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-156",
+      "old": 5,
+      "score": 20
+    },
+    {
+      "address": "30 OLD ELM ST",
+      "town": "SALISBURY",
+      "id": "10-142",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "31 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-247",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "31 TOLL RD",
+      "town": "SALISBURY",
+      "id": "18-236",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "33 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-3",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "37 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "80-18",
+      "old": 5,
+      "score": 20
+    },
+    {
+      "address": "39 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-52",
+      "old": 10,
+      "score": 20
+    },
+    {
+      "address": "41 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "67-137",
+      "old": 10,
+      "score": 20
+    },
+    {
+      "address": "44 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-84",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "45 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-164",
+      "old": 0,
+      "score": 20
+    },
+    {
+      "address": "46 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-82",
+      "old": 5,
+      "score": 20
+    },
+    {
+      "address": "58 MACY ST #11",
+      "town": "AMESBURY",
+      "id": "78-1",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "64 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-67",
+      "old": 5,
+      "score": 20
+    },
+    {
+      "address": "65 MAIN ST",
+      "town": "SALISBURY",
+      "id": "18-15",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "71 MAIN ST",
+      "town": "SALISBURY",
+      "id": "18-17",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "76 BAKER RD",
+      "town": "SALISBURY",
+      "id": "10-33",
+      "old": 10,
+      "score": 20
+    },
+    {
+      "address": "83 MACY ST",
+      "town": "AMESBURY",
+      "id": "79-80",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "88 MONROE ST",
+      "town": "AMESBURY",
+      "id": "43-7",
+      "old": 10,
+      "score": 20
+    },
+    {
+      "address": "136 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-118",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "141 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-38",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "210 ELM ST",
+      "town": "SALISBURY",
+      "id": "10-144",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "222 MAIN ST",
+      "town": "AMESBURY",
+      "id": "65-25",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "247 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-24",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "255 MAIN ST #R",
+      "town": "AMESBURY",
+      "id": "77-21",
+      "old": 5,
+      "score": 20
+    },
+    {
+      "address": "257 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-19",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "264 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-36",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "283 ELM ST",
+      "town": "AMESBURY",
+      "id": "68-14",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "284 ELM ST",
+      "town": "AMESBURY",
+      "id": "80-1",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "297 ELM ST",
+      "town": "AMESBURY",
+      "id": "80-12",
+      "old": 15,
+      "score": 20
+    },
+    {
+      "address": "406 MAIN ST",
+      "town": "AMESBURY",
+      "id": "78-29",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "RABBIT RD",
+      "town": "AMESBURY",
+      "id": "69-2",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "VIKING ST",
+      "town": "SALISBURY",
+      "id": "19-126",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "VIKING ST",
+      "town": "SALISBURY",
+      "id": "19-127",
+      "old": 20,
+      "score": 20
+    },
+    {
+      "address": "1 DANIEL CT",
+      "town": "SALISBURY",
+      "id": "19-288",
+      "old": 10,
+      "score": 17
+    },
+    {
+      "address": "2 MERRILL ST",
+      "town": "SALISBURY",
+      "id": "9-61",
+      "old": 5,
+      "score": 17
+    },
+    {
+      "address": "4 DEMOCRACY DR",
+      "town": "AMESBURY",
+      "id": "67-120",
+      "old": 10,
+      "score": 17
+    },
+    {
+      "address": "20 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-16",
+      "old": 10,
+      "score": 17
+    },
+    {
+      "address": "28 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-104",
+      "old": 5,
+      "score": 17
+    },
+    {
+      "address": "56 MERRILL ST",
+      "town": "AMESBURY",
+      "id": "92-2",
+      "old": 10,
+      "score": 17
+    },
+    {
+      "address": "116 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-126",
+      "old": 10,
+      "score": 17
+    },
+    {
+      "address": "216 MAIN ST",
+      "town": "AMESBURY",
+      "id": "65-27",
+      "old": 10,
+      "score": 17
+    },
+    {
+      "address": "1 CATHERINE WAY",
+      "town": "SALISBURY",
+      "id": "10-275",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "1 CONGRESS ST",
+      "town": "SALISBURY",
+      "id": "11-61",
+      "old": 0,
+      "score": 15
+    },
+    {
+      "address": "1 RIVER WAY",
+      "town": "SALISBURY",
+      "id": "10-124",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "2  ROSELETT WAY",
+      "town": "AMESBURY",
+      "id": "77-84-2",
+      "old": 0,
+      "score": 15
+    },
+    {
+      "address": "2 JOY RD",
+      "town": "SALISBURY",
+      "id": "11-58",
+      "old": 5,
+      "score": 15
+    },
+    {
+      "address": "2 WELLS AVE",
+      "town": "AMESBURY",
+      "id": "77-93",
+      "old": 5,
+      "score": 15
+    },
+    {
+      "address": "3 DEMOCRACY DR",
+      "town": "AMESBURY",
+      "id": "67-119",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "3 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-108",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "4 JON ST",
+      "town": "SALISBURY",
+      "id": "19-200",
+      "old": 5,
+      "score": 15
+    },
+    {
+      "address": "5 HAVERHILL RD",
+      "town": "AMESBURY",
+      "id": "77-107",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "7 ANDREWS ST",
+      "town": "AMESBURY",
+      "id": "79-30",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "7 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-74",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "8 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-34",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "8.5 WELLS AVE",
+      "town": "AMESBURY",
+      "id": "77-99",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "9 DANIEL CT",
+      "town": "SALISBURY",
+      "id": "19-284",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "9 JUNO ST",
+      "town": "SALISBURY",
+      "id": "19-121",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "9-154-0",
+      "town": "SEABROOK",
+      "id": "9-154-0",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "9-161-1",
+      "town": "SEABROOK",
+      "id": "9-161-1",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "9-168-0",
+      "town": "SEABROOK",
+      "id": "9-168-0",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "10 HAVERHILL RD",
+      "town": "AMESBURY",
+      "id": "76-6",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "10 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-20",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "10-7-0",
+      "town": "SEABROOK",
+      "id": "10-7-0",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "10-11-1",
+      "town": "SEABROOK",
+      "id": "10-11-1",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "10-22-0",
+      "town": "SEABROOK",
+      "id": "10-22-0",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "10-23-0",
+      "town": "SEABROOK",
+      "id": "10-23-0",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "10-29-1",
+      "town": "SEABROOK",
+      "id": "10-29-1",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "10-45-0",
+      "town": "SEABROOK",
+      "id": "10-45-0",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "10-46-0",
+      "town": "SEABROOK",
+      "id": "10-46-0",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "10-48-0",
+      "town": "SEABROOK",
+      "id": "10-48-0",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "10-51-0",
+      "town": "SEABROOK",
+      "id": "10-51-0",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "11 LOCUST ST",
+      "town": "SALISBURY",
+      "id": "12-79",
+      "old": 0,
+      "score": 15
+    },
+    {
+      "address": "14 JON ST",
+      "town": "SALISBURY",
+      "id": "19-195",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "15 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-262",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "16 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-25",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "19 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-113",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "19 OLD ELM ST",
+      "town": "SALISBURY",
+      "id": "10-151",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "21 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-114",
+      "old": 0,
+      "score": 15
+    },
+    {
+      "address": "21 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-79",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "27 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-49",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "28 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-10",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "28 TOLL RD",
+      "town": "SALISBURY",
+      "id": "19-61",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "29 TOLL RD",
+      "town": "SALISBURY",
+      "id": "18-235",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "31 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "80-20",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "32 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-2",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "34 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-134",
+      "old": 0,
+      "score": 15
+    },
+    {
+      "address": "38 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-83",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "40 LAFAYETTE ST EXT #R",
+      "town": "AMESBURY",
+      "id": "66-53",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "43 MACY ST",
+      "town": "AMESBURY",
+      "id": "78-7",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "43 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-163",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "43 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-54",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "51 RIVER ST",
+      "town": "AMESBURY",
+      "id": "66-16",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "55 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-57",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "57 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-19",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "60 MERRILL ST",
+      "town": "AMESBURY",
+      "id": "81-4",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "63 PIKE ST",
+      "town": "SALISBURY",
+      "id": "18-39",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "63 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-22",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "70 MAIN ST",
+      "town": "SALISBURY",
+      "id": "12-54",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "71 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-192",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "73 MONROE ST",
+      "town": "AMESBURY",
+      "id": "56-20",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "74 BAKER RD",
+      "town": "SALISBURY",
+      "id": "10-214",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "78 MACY ST",
+      "town": "AMESBURY",
+      "id": "79-12A",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "81 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-28",
+      "old": 0,
+      "score": 15
+    },
+    {
+      "address": "83 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-29",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "94 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-129",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "98 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-141",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "102 MACY ST",
+      "town": "AMESBURY",
+      "id": "80-15",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "106 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-31",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "132 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-120",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "134 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-119",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "194 ELM ST",
+      "town": "SALISBURY",
+      "id": "10-148",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "221 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-41",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "233 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-152",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "234 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-90",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "246 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-30",
+      "old": 0,
+      "score": 15
+    },
+    {
+      "address": "293 ELM ST",
+      "town": "AMESBURY",
+      "id": "80-10",
+      "old": 10,
+      "score": 15
+    },
+    {
+      "address": "PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-143",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-12",
+      "old": 15,
+      "score": 15
+    },
+    {
+      "address": "1 JOY RD",
+      "town": "SALISBURY",
+      "id": "11-40",
+      "old": 0,
+      "score": 12
+    },
+    {
+      "address": "6 MORRILL PL",
+      "town": "AMESBURY",
+      "id": "65-23",
+      "old": 0,
+      "score": 12
+    },
+    {
+      "address": "12 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-209",
+      "old": 0,
+      "score": 12
+    },
+    {
+      "address": "19 MACY ST",
+      "town": "AMESBURY",
+      "id": "77-74",
+      "old": 0,
+      "score": 12
+    },
+    {
+      "address": "22 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-205",
+      "old": 0,
+      "score": 12
+    },
+    {
+      "address": "31 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-51",
+      "old": 5,
+      "score": 12
+    },
+    {
+      "address": "38 TOLL RD",
+      "town": "SALISBURY",
+      "id": "19-68",
+      "old": 0,
+      "score": 12
+    },
+    {
+      "address": "45 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-55",
+      "old": 5,
+      "score": 12
+    },
+    {
+      "address": "1 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-107",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "1 MCCANCE WAY",
+      "town": "SALISBURY",
+      "id": "11-57",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "2 JUNO ST",
+      "town": "SALISBURY",
+      "id": "19-125",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "4 DANIEL CT",
+      "town": "SALISBURY",
+      "id": "19-274",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "4 DEL-LOGAN DR",
+      "town": "SALISBURY",
+      "id": "19-14",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "4 LENA MAE WAY",
+      "town": "SALISBURY",
+      "id": "19-238",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "4 ROSELETT WAY",
+      "town": "AMESBURY",
+      "id": "77-84-4",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "5 CAROLINE DR",
+      "town": "SALISBURY",
+      "id": "19-265",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "5 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-109",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "6 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-36",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "6 JON ST",
+      "town": "SALISBURY",
+      "id": "19-199",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "7 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-110",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "8 ANDREWS ST",
+      "town": "AMESBURY",
+      "id": "78-31",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "9 JOY RD",
+      "town": "SALISBURY",
+      "id": "11-42",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "9 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-228",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "9-160-0",
+      "town": "SEABROOK",
+      "id": "9-160-0",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "10 DANIEL CT",
+      "town": "SALISBURY",
+      "id": "19-277",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "10 LENA MAE WAY",
+      "town": "SALISBURY",
+      "id": "19-241",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "10 MACY ST",
+      "town": "AMESBURY",
+      "id": "77-87",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "10 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-210",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "10-19-0",
+      "town": "SEABROOK",
+      "id": "10-19-0",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "10-20-0",
+      "town": "SEABROOK",
+      "id": "10-20-0",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "10-20-100",
+      "town": "SEABROOK",
+      "id": "10-20-100",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "10-51-1",
+      "town": "SEABROOK",
+      "id": "10-51-1",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "12 MERRILL ST",
+      "town": "SALISBURY",
+      "id": "9-60",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "14 JOY RD",
+      "town": "SALISBURY",
+      "id": "11-56",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "14 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-227",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "15 WELLS AVE",
+      "town": "AMESBURY",
+      "id": "77-103",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "16 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-225",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "18 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "80-27",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "21 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-9",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "22 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "80-25",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "23 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-115",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "27 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-50",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "30 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "80-5",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "30 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-136",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "40 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-187",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "40 TOLL RD",
+      "town": "SALISBURY",
+      "id": "19-232",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "47 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-166",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "49 MACY ST #R",
+      "town": "AMESBURY",
+      "id": "78-13",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "51 MACY ST #R",
+      "town": "AMESBURY",
+      "id": "78-12",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "52 RIVER ST",
+      "town": "AMESBURY",
+      "id": "66-18",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "54 OLD MERRILL ST",
+      "town": "AMESBURY",
+      "id": "92-2A",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "56 MACY ST",
+      "town": "AMESBURY",
+      "id": "78-2",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "56 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-71",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "65 PIKE ST",
+      "town": "SALISBURY",
+      "id": "18-40",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "68 BAKER RD",
+      "town": "SALISBURY",
+      "id": "10-212",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "72 MAIN ST",
+      "town": "SALISBURY",
+      "id": "12-53",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "74 MAIN ST",
+      "town": "SALISBURY",
+      "id": "12-50",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "75 BAKER RD",
+      "town": "SALISBURY",
+      "id": "10-261",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "85 MONROE ST",
+      "town": "AMESBURY",
+      "id": "43-3",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "96 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-140",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "100 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-142",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "108 MACY ST",
+      "town": "AMESBURY",
+      "id": "80-2",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "110 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-30",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "114 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-134",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "124 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-123",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "198 ELM ST",
+      "town": "SALISBURY",
+      "id": "10-198",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "213 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-39",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "235 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-101",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "238 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "23-17",
+      "old": 0,
+      "score": 10
+    },
+    {
+      "address": "241 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-27",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "252 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-32",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "293 ELM ST #RR",
+      "town": "AMESBURY",
+      "id": "80-9",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "295 ELM ST",
+      "town": "AMESBURY",
+      "id": "80-11",
+      "old": 5,
+      "score": 10
+    },
+    {
+      "address": "ADDRESS UNKNOWN",
+      "town": "SALISBURY",
+      "id": "11-19",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "FEE",
+      "town": "SALISBURY",
+      "id": "FEE",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "RABBIT RD REAR",
+      "town": "AMESBURY",
+      "id": "81-3",
+      "old": 10,
+      "score": 10
+    },
+    {
+      "address": "2 DEL-LOGAN DR",
+      "town": "SALISBURY",
+      "id": "19-15",
+      "old": 0,
+      "score": 7
+    },
+    {
+      "address": "2 WESTMINSTER ST",
+      "town": "AMESBURY",
+      "id": "77-79",
+      "old": 0,
+      "score": 7
+    },
+    {
+      "address": "3 VIKING ST",
+      "town": "SALISBURY",
+      "id": "19-117",
+      "old": 0,
+      "score": 7
+    },
+    {
+      "address": "6 WESTMINSTER ST",
+      "town": "AMESBURY",
+      "id": "77-81",
+      "old": 0,
+      "score": 7
+    },
+    {
+      "address": "32 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-86",
+      "old": 0,
+      "score": 7
+    },
+    {
+      "address": "43 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "67-136",
+      "old": 0,
+      "score": 7
+    },
+    {
+      "address": "45 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "67-135",
+      "old": 0,
+      "score": 7
+    },
+    {
+      "address": "70 MONROE ST",
+      "town": "AMESBURY",
+      "id": "56-15",
+      "old": 0,
+      "score": 7
+    },
+    {
+      "address": "255 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-20",
+      "old": 0,
+      "score": 7
+    },
+    {
+      "address": "256 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-33",
+      "old": 0,
+      "score": 7
+    },
+    {
+      "address": "0 HAVERHILL RD",
+      "town": "AMESBURY",
+      "id": "76-7",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "1 INDUSTRIAL WAY",
+      "town": "AMESBURY",
+      "id": "56-30",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "1 VIKING ST",
+      "town": "SALISBURY",
+      "id": "19-116",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "2 ODIN ST",
+      "town": "SALISBURY",
+      "id": "19-136",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "4 CAROLINE DR",
+      "town": "SALISBURY",
+      "id": "19-263",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "4 FANARAS DR",
+      "town": "SALISBURY",
+      "id": "18-208",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "4 WESTMINSTER ST",
+      "town": "AMESBURY",
+      "id": "77-80",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "5 DEMOCRACY DR",
+      "town": "AMESBURY",
+      "id": "67-121",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "5 JAMES CT",
+      "town": "SALISBURY",
+      "id": "18-29",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "5 JUNO ST",
+      "town": "SALISBURY",
+      "id": "19-119",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "5 WELLS AVE",
+      "town": "AMESBURY",
+      "id": "77-102",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "6 JOY RD",
+      "town": "SALISBURY",
+      "id": "11-52",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "6 WELLS AVE #A",
+      "town": "AMESBURY",
+      "id": "77-94CM",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "7 ODIN ST",
+      "town": "SALISBURY",
+      "id": "19-131",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "8 DANIEL CT",
+      "town": "SALISBURY",
+      "id": "19-276",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "9-11  WELLS AVE",
+      "town": "AMESBURY",
+      "id": "77-104",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "9-161-0",
+      "town": "SEABROOK",
+      "id": "9-161-0",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "9-163-0",
+      "town": "SEABROOK",
+      "id": "9-163-0",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "10 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "79-58",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "10-8-0",
+      "town": "SEABROOK",
+      "id": "10-8-0",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "10-10-0",
+      "town": "SEABROOK",
+      "id": "10-10-0",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "10-24-0",
+      "town": "SEABROOK",
+      "id": "10-24-0",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "11 BARTLETT PL",
+      "town": "AMESBURY",
+      "id": "77-49",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "11 LENA MAE WAY",
+      "town": "SALISBURY",
+      "id": "19-269",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "12 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-32",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "12 JON ST",
+      "town": "SALISBURY",
+      "id": "19-196",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "15 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-108",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "18 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-17",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "20 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-92",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "25 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-154",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "26 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-89",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "27 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-111",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "29 KENDRICKS CT",
+      "town": "AMESBURY",
+      "id": "77-50A",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "35 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "67-139",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "36 LAFAYETTE ST EXT",
+      "town": "AMESBURY",
+      "id": "66-55",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "36 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "67-125",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "38.5 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "67-128C",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "41 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-53",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "48 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-77",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "54 MACY ST",
+      "town": "AMESBURY",
+      "id": "78-3",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "56 MACY ST",
+      "town": "AMESBURY",
+      "id": "78-14",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "57 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-58",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "62 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-78",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "64 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-77",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "65 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-23",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "69 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-26",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "80 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-31",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "112 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-60",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "118 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-125",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "122 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "18-124",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "199 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-32",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "203 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "19-148",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "217 MAIN ST",
+      "town": "AMESBURY",
+      "id": "65-21",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "226 MAIN ST",
+      "town": "AMESBURY",
+      "id": "65-26",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "251 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-23",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "252 LAFAYETTE RD",
+      "town": "SALISBURY",
+      "id": "23-1",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "291 ELM ST",
+      "town": "AMESBURY",
+      "id": "80-8",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "293 ELM ST #REAR",
+      "town": "AMESBURY",
+      "id": "69-1",
+      "old": 0,
+      "score": 5
+    },
+    {
+      "address": "BEVAN AVE",
+      "town": "AMESBURY",
+      "id": "77-109",
+      "old": 5,
+      "score": 5
+    },
+    {
+      "address": "2 VIKING ST",
+      "town": "SALISBURY",
+      "id": "19-139",
+      "old": 0,
+      "score": 2
+    },
+    {
+      "address": "6 ODIN ST",
+      "town": "SALISBURY",
+      "id": "19-134",
+      "old": 0,
+      "score": 2
+    },
+    {
+      "address": "9 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-75",
+      "old": 0,
+      "score": 2
+    },
+    {
+      "address": "22 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-91",
+      "old": 0,
+      "score": 2
+    },
+    {
+      "address": "27 CLARKS RD",
+      "town": "AMESBURY",
+      "id": "80-23",
+      "old": 0,
+      "score": 2
+    },
+    {
+      "address": "44 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-80",
+      "old": 0,
+      "score": 2
+    },
+    {
+      "address": "263 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-17",
+      "old": 0,
+      "score": 2
+    },
+    {
+      "address": "3 DEL-LOGAN DR",
+      "town": "SALISBURY",
+      "id": "19-213",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "3 LENA MAE WAY",
+      "town": "SALISBURY",
+      "id": "19-174",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "4 ANDREWS ST",
+      "town": "AMESBURY",
+      "id": "79-27",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "4 JUNO ST",
+      "town": "SALISBURY",
+      "id": "19-124",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "5 JON ST",
+      "town": "SALISBURY",
+      "id": "19-191",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "6 PINE ST",
+      "town": "SALISBURY",
+      "id": "19-17",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "7 DANIEL CT",
+      "town": "SALISBURY",
+      "id": "19-285",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "7 DEMOCRACY DR",
+      "town": "AMESBURY",
+      "id": "66-58",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "7 JON ST",
+      "town": "SALISBURY",
+      "id": "19-192",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "7 WELLS AVE",
+      "town": "AMESBURY",
+      "id": "77-105",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "9 JON ST",
+      "town": "SALISBURY",
+      "id": "19-193",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "9-159-0",
+      "town": "SEABROOK",
+      "id": "9-159-0",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "9-164-0",
+      "town": "SEABROOK",
+      "id": "9-164-0",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "10 BARTLETT PL",
+      "town": "AMESBURY",
+      "id": "77-53",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "10 COLLINS ST",
+      "town": "SALISBURY",
+      "id": "23-73",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "10 JON ST",
+      "town": "SALISBURY",
+      "id": "19-197",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "10-9-1",
+      "town": "SEABROOK",
+      "id": "10-9-1",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "10-11-2",
+      "town": "SEABROOK",
+      "id": "10-11-2",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "10-29-903",
+      "town": "SEABROOK",
+      "id": "10-29-903",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "11 JON ST",
+      "town": "SALISBURY",
+      "id": "19-194",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "12 WELLS AVE",
+      "town": "AMESBURY",
+      "id": "77-101",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "18 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-94",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "19 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-8",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "22 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-15",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "23 ROCKY HILL RD",
+      "town": "AMESBURY",
+      "id": "79-9",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "24 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-139",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "25 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-112",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "27 MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-155",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "29 HIGH ST",
+      "town": "SALISBURY",
+      "id": "18-113",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "30 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-87",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "36 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-84",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "36 ROCKY HILL RD #A",
+      "town": "AMESBURY",
+      "id": "67-124",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "38 LAFAYETTE ST EXT",
+      "town": "AMESBURY",
+      "id": "66-54",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "40 LAFAYETTE ST EXT",
+      "town": "AMESBURY",
+      "id": "66-52",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "40 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-82",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "46 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-78",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "47 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-14",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "49 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-15",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "50 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-76",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "51 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-16",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "52 PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-74",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "53 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-17",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "59 RABBIT RD",
+      "town": "SALISBURY",
+      "id": "10-20",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "77 BAKER RD",
+      "town": "SALISBURY",
+      "id": "10-292",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "79 BAKER RD",
+      "town": "SALISBURY",
+      "id": "10-293",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "81 BAKER RD",
+      "town": "SALISBURY",
+      "id": "10-294",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "92 MAIN ST",
+      "town": "SALISBURY",
+      "id": "12-48",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "98 MAIN ST",
+      "town": "SALISBURY",
+      "id": "11-32",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "262 MAIN ST",
+      "town": "AMESBURY",
+      "id": "77-35",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "ADDRESS UNKNOWN",
+      "town": "SALISBURY",
+      "id": "19-60",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "FEE",
+      "town": "AMESBURY",
+      "id": "FEE",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "OFF MAIN ST",
+      "town": "SALISBURY",
+      "id": "19-165",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-141",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-142",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "REAR PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-140",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "REAR PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-21",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "REAR PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-23",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "REAR PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-24",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "REAR PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-25",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "REAR PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-27",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "REAR PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-28",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "REAR PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-29",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "REAR PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-30",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "REAR PIKE ST",
+      "town": "SALISBURY",
+      "id": "19-93",
+      "old": 0,
+      "score": 0
+    },
+    {
+      "address": "RIVER WAY",
+      "town": "SALISBURY",
+      "id": "10-295",
+      "old": 0,
+      "score": 0
+    }
+  ]
+}

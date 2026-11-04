@@ -11,6 +11,9 @@ import { parcelListingLinks, listingSourceLogo, type ParcelListingLink } from '.
 import { areaMeasurements, vacantLandMeasurements, pavedLandMeasurements, M2_PER_ACRE } from '../utils/parcelAreas';
 import { ZONING_DISTRICTS, zoningCode } from '../utils/parcelZoning';
 import { formatLoanMoney, formatLoanPercent, loanCategoryLabel } from '../utils/parcelLoans';
+import { parseLifeEventSignal } from '../utils/parcelFormatters';
+import { ScoreBadge } from '../components/ParcelScore';
+import { ParcelScoringDialog } from '../components/ParcelScoringDialog';
 import './ParcelReport.css';
 
 // At the parcel locations, level 15 shows a 300 m / 1000 ft scale bar.
@@ -73,44 +76,54 @@ function ReportMap({ data }: { data: ParcelReportData }) {
     const center = bounds.getCenter();
     const propertyZoom = Math.max(REPORT_MIN_ZOOM, Math.min(REPORT_MAX_ZOOM,
       map.getBoundsZoom(bounds, false, L.point(64, 96))));
-    const viewKey = `report:${parcelKey(data.subject.properties)}:map:v2`;
-    const savedZoom = readSession<{ zoom: number }>(viewKey)?.zoom;
-    map.setView(center, typeof savedZoom === 'number' && Number.isFinite(savedZoom) ? Math.max(REPORT_MIN_ZOOM, Math.min(REPORT_MAX_ZOOM, savedZoom)) : propertyZoom, { animate: false });
-    writeSession(viewKey, { zoom: map.getZoom() });
-    map.on('zoomend', () => writeSession(viewKey, { zoom: map.getZoom() }));
-    const resize = new ResizeObserver(() => {
-      map.invalidateSize({ pan: false });
-      map.setView(center, map.getZoom(), { animate: false });
-    });
-    resize.observe(container.current);
-    return () => { resize.disconnect(); map.stop(); map.remove(); };
+    const viewKey = `report:${parcelKey(data.subject.properties)}:view`;
+    const rememberedView = readSession<{ center: [number, number]; zoom: number }>(viewKey);
+    const rememberedWithinLimits = rememberedView
+      && rememberedView.zoom >= REPORT_MIN_ZOOM && rememberedView.zoom <= REPORT_MAX_ZOOM
+      && bounds.pad(1.2).contains(rememberedView.center);
+    if (rememberedWithinLimits) {
+      map.setView(rememberedView.center, rememberedView.zoom);
+    } else {
+      map.setView(center, propertyZoom);
+    }
+    const onMove = () => {
+      writeSession(viewKey, {
+        center: [map.getCenter().lat, map.getCenter().lng],
+        zoom: map.getZoom(),
+      });
+    };
+    map.on('moveend', onMove);
+    return () => {
+      map.off('moveend', onMove);
+      map.remove();
+    };
   }, [data]);
-  return <section className="parcel-report-map-panel" aria-label="Aerial parcel map">
-    <div ref={container} className="parcel-report-map" />
-    {imageryUnavailable && <div className="report-imagery-notice" role="status">Aerial imagery is temporarily unavailable.</div>}
-    <div className="report-map-legend" aria-label="Map legend">
-      <span><i className="report-legend-boundary" />Parcel boundary</span><span><i className="report-legend-subject" />Subject parcel</span>
-      {data.buildings.features.length > 0 && <span><i className="report-legend-building" />Building footprint</span>}
-      {data.wetlands.features.length > 0 && <span><i className="report-legend-wetland" />Mapped wetland</span>}
-      <span><i className="report-legend-land" />Subject land</span>
+  return <div className="parcel-report-map" ref={container}>
+    {imageryUnavailable && <div className="report-imagery-warning" role="status">
+      High-resolution aerial imagery is temporarily unreachable. Parcel boundary remains visible.
+    </div>}
+    <div className="report-map-legend">
+      <span><span className="report-map-swatch report-legend-boundary" />Parcel boundary</span>
+      <span><span className="report-map-swatch report-legend-subject" />Subject parcel</span>
+      {data.buildings.features.length > 0 && <span><span className="report-map-swatch report-legend-building" />Building footprint</span>}
+      {data.wetlands.features.length > 0 && <span><span className="report-map-swatch report-legend-wetland" />Subject land</span>}
     </div>
-  </section>;
+  </div>;
 }
 
 export function ParcelReport() {
-  const navigate = useNavigate();
+  const { town = '', parcelId = '' } = useParams();
+  const identity = `${town.trim().toUpperCase()}|${parcelId.trim()}`;
   const location = useLocation();
-  const params = useParams<{ town: string; parcelId: string }>();
-  const town = params.town ?? 'AMESBURY';
-  const parcelId = params.parcelId ?? '42-15';
-  const identity = parcelKey({ town, parcel_id: parcelId });
-  const reportUrl = new URL(parcelReportPath({ town, parcel_id: parcelId }), window.location.origin).href;
+  const navigate = useNavigate();
   const reportContent = useRef<HTMLElement>(null);
+  const reportUrl = `${window.location.origin}${location.pathname}`;
   const [exporting, setExporting] = useState(false);
   const [exportError, setExportError] = useState<string | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
   const [loaded, setLoaded] = useState<{ identity: string; data: ParcelReportData } | null>(null);
   const [failed, setFailed] = useState<string | null>(null);
+  const [scoringOpen, setScoringOpen] = useState(false);
   const data = loaded?.identity === identity ? loaded.data : null;
   const exportPdf = async () => {
     if (!data || !reportContent.current || exporting) return;
@@ -158,6 +171,7 @@ export function ParcelReport() {
     {failed && <button type="button" onClick={() => window.location.reload()} className="report-retry">Try again</button>}
   </div></div>;
   const p = data.subject.properties;
+  const score = data.score;
   const listingStatus = listingGroup(data.listing ?? undefined) === 'NO_LINKS'
     ? 'Not listed/Not found'
     : listingGroup(data.listing ?? undefined) === 'LISTED' ? data.listing?.status || 'Listed' : 'Not listed';
@@ -184,6 +198,14 @@ export function ParcelReport() {
   ].filter(metric => metric.value !== null);
   const zone = ZONING_DISTRICTS.find(district => district.code === zoningCode(p.zoning));
   const valuation = number(p.total_val);
+
+  // Live events and ownership signals displayed above Qualified
+  const taxTakingsCount = number(p.tax_takings_found) ?? 0;
+  const lifeInfo = parseLifeEventSignal(p.life_event_signal, p.estate_record_detail, p.town, p.state);
+  const olderOwnerYears = number(p.years_owned) ?? 0;
+  const hasOlderOwnerBadge = !lifeInfo.hasSignal && olderOwnerYears >= 30;
+  const hasLifeEvents = taxTakingsCount > 0 || lifeInfo.hasSignal || Boolean(p.children_count_estate_owner) || hasOlderOwnerBadge;
+
   return <div className="parcel-report-page">
     {topbar}
     {exportError && <p className="report-export-error" role="alert">{exportError}</p>}
@@ -192,8 +214,62 @@ export function ParcelReport() {
       <ReportMap key={identity} data={data} />
       <article ref={reportContent} className="parcel-report-content" aria-label={`Parcel report for ${heading}`}>
         <header className="report-property-heading">
-          <div className="report-eyebrow">PARCEL REPORT</div>
-          <h1>{heading}</h1><p className="report-location">{city}, {p.state === 'MA' ? 'Massachusetts' : p.state === 'NH' ? 'New Hampshire' : p.state}</p>
+          <div className="report-heading-row">
+            <div className="report-heading-titles">
+              <div className="report-eyebrow">PARCEL REPORT</div>
+              <h1>{heading}</h1>
+              <p className="report-location">{city}, {p.state === 'MA' ? 'Massachusetts' : p.state === 'NH' ? 'New Hampshire' : p.state}</p>
+            </div>
+            {score && (
+              <div className="report-heading-score">
+                <span className="report-heading-score-label">Score</span>
+                <ScoreBadge score={score} onClick={() => setScoringOpen(true)} />
+              </div>
+            )}
+          </div>
+
+          {/* Above Qualified: Live events and owner signals */}
+          {hasLifeEvents && (
+            <div className="report-life-events" aria-label="Live events and owner signals">
+              {taxTakingsCount > 0 && (
+                <span
+                  className="report-life-event-badge report-badge-tax"
+                  title={p.last_tax_taking || p.unpaid_tax_signal || 'Recorded tax taking'}
+                >
+                  <span aria-hidden="true">⚠️</span>
+                  <span>Tax taking ({taxTakingsCount})</span>
+                </span>
+              )}
+              {lifeInfo.hasSignal && (
+                <span
+                  className={`report-life-event-badge ${lifeInfo.badgeClass}`}
+                  title={`${p.life_event_signal || ''}${p.estate_record_detail ? ' — ' + p.estate_record_detail : ''}`}
+                >
+                  <span aria-hidden="true">{lifeInfo.icon}</span>
+                  <span>{lifeInfo.badgeText}</span>
+                </span>
+              )}
+              {p.children_count_estate_owner && (
+                <span
+                  className="report-life-event-badge report-badge-children"
+                  title={p.children_count_estate_owner}
+                >
+                  <span aria-hidden="true">👨‍👩‍👧‍👦</span>
+                  <span>{p.children_count_estate_owner}</span>
+                </span>
+              )}
+              {hasOlderOwnerBadge && (
+                <span
+                  className="report-life-event-badge report-badge-older"
+                  title={`Owned ${Math.round(olderOwnerYears)} years`}
+                >
+                  <span aria-hidden="true">⏳</span>
+                  <span>Owned {Math.round(olderOwnerYears)} yrs (older owner)</span>
+                </span>
+              )}
+            </div>
+          )}
+
           <div className="report-property-tags">
             <span className={p.keep === 'Y' ? 'report-tag-qualified' : 'report-tag-excluded'}>{p.keep === 'Y' ? 'Qualified' : 'Excluded'}</span>
             {available(p.zoning) && <span className="report-tag-zone">{p.zoning}{zone ? ` / ${zone.name}` : ''}</span>}
@@ -205,8 +281,9 @@ export function ParcelReport() {
         </section>}
         <RecordSection title="Property identity" fields={[
           ['Parcel ID', p.parcel_id], ['Land use', p.use], ['Owner', p.owner_name || p.owner],
+          ['SiteIQ score', score ? `${score.score}/100` : null],
           ['Assessed value', valuation !== null ? `$${format(valuation)}` : null], ['Development status', p.status],
-          ['Land category', p.category], ['Units', p.units], ['Zoning', p.zoning],
+          ['Land category', p.category], ['Category reason', p.category_reason], ['Units', p.units], ['Zoning', p.zoning],
           ['Nearest road', p.road],
           ['Town-record address', p.site_address_town_record],
         ]} />
@@ -243,5 +320,12 @@ export function ParcelReport() {
         ]} />
       </article>
     </div>
+    {scoringOpen && score && (
+      <ParcelScoringDialog
+        parcel={p}
+        score={score}
+        onClose={() => setScoringOpen(false)}
+      />
+    )}
   </div>;
 }

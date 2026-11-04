@@ -4,6 +4,9 @@ import type { ParcelReportData } from './parcelReports';
 type Section = { title: string; head?: string[]; rows: string[][]; links?: string[]; logos?: string[]; notes?: string[]; description?: string };
 export type ParcelReportPdfSnapshot = {
   title: string; location: string; tags: string; filename: string;
+  score?: number | null;
+  scoreText?: string | null;
+  lifeEvents?: string[];
   sections: Section[]; map: string; mapWidth: number; mapHeight: number; mapLegend: string; mapAttribution: string;
 };
 
@@ -79,10 +82,11 @@ async function captureParcelMap(container: HTMLElement): Promise<{ map: string; 
   for (const [index, overlay] of overlays.entries()) context.drawImage(overlayImages[index], overlay.x, overlay.y, overlay.width, overlay.height);
   for (const scale of scales) {
     context.fillStyle = '#ffffffe0'; context.fillRect(scale.x, scale.y, scale.width, scale.height);
-    context.strokeStyle = '#777'; context.lineWidth = 2;
-    context.beginPath(); context.moveTo(scale.x, scale.y); context.lineTo(scale.x, scale.y + scale.height - 1);
-    context.lineTo(scale.x + scale.width, scale.y + scale.height - 1); context.lineTo(scale.x + scale.width, scale.y); context.stroke();
-    context.fillStyle = '#222'; context.font = '11px Arial'; context.fillText(scale.label, scale.x + 5, scale.y + 13);
+    context.strokeStyle = '#777'; context.lineWidth = 1;
+    context.strokeRect(scale.x + 0.5, scale.y + 0.5, scale.width, scale.height);
+    context.fillStyle = '#111'; context.font = '10px -apple-system, BlinkMacSystemFont, sans-serif';
+    context.textBaseline = 'middle';
+    context.fillText(scale.label, scale.x + 4, scale.y + scale.height / 2);
   }
   return { map: canvas.toDataURL('image/png'), mapWidth: canvas.width, mapHeight: canvas.height };
 }
@@ -97,29 +101,32 @@ export async function snapshotParcelReport(article: HTMLElement, data: ParcelRep
   for (const section of article.querySelectorAll('.report-section')) {
     const title = text(section.querySelector('h2')?.textContent);
     if (section.querySelector('table')) {
-      sections.push({ title, head: [...section.querySelectorAll('thead th')].map(cell => text(cell.textContent)),
-        notes: [...section.querySelectorAll('[data-report-note]')].map(note => text(note.textContent)),
-        rows: [...section.querySelectorAll('tbody tr')].map(row => [...row.querySelectorAll('th, td')].map(cell => text(cell.textContent))) });
+      const head = [...section.querySelectorAll('th')].map(cell => text(cell.textContent));
+      const rows = [...section.querySelectorAll('tbody tr')].map(row => [...row.querySelectorAll('th, td')].map(cell => text(cell.textContent)));
+      sections.push({ title, head, rows });
     } else if (section.querySelector('dl')) {
-      const fields = [...section.querySelectorAll('dl > div')].map(row =>
-        [text(row.querySelector('dt')?.textContent), text(row.querySelector('dd')?.textContent)]);
-      const links = [...section.querySelectorAll<HTMLAnchorElement>('.report-listing-links a')].filter(link => /^https?:/i.test(link.href));
-      sections.push({ title, description: text(section.querySelector('[data-report-description]')?.textContent),
-        rows: [...fields, ...links.map(link => [text(link.textContent), link.href])],
-        links: [...fields.map(() => ''), ...links.map(link => link.href)],
-        logos: [...fields.map(() => ''), ...await Promise.all(links.map(listingLogo))],
-      });
+      const rows = [...section.querySelectorAll('dl > div')].map(row => [text(row.querySelector('dt')?.textContent), text(row.querySelector('dd')?.textContent)]);
+      const links = await Promise.all([...section.querySelectorAll<HTMLAnchorElement>('.report-listing-links a')].map(link => link.href));
+      const logos = await Promise.all([...section.querySelectorAll<HTMLAnchorElement>('.report-listing-links a')].map(listingLogo));
+      const description = text(section.querySelector('[data-report-description]')?.textContent);
+      sections.push({ title, rows, links: links.length ? links : undefined, logos: logos.some(Boolean) ? logos : undefined, description: description || undefined });
     } else {
       const links = [...section.querySelectorAll<HTMLAnchorElement>('a')].filter(link => /^https?:/i.test(link.href));
       if (links.length) sections.push({ title, rows: links.map(link => [text(link.textContent), link.href]), links: links.map(link => link.href) });
     }
   }
-  const snapshot = {
+
+  const lifeEvents = [...article.querySelectorAll('.report-life-events .report-life-event-badge')].map(badge => text(badge.textContent));
+  const snapshot: ParcelReportPdfSnapshot = {
     title: text(article.querySelector('h1')?.textContent), location: text(article.querySelector('.report-location')?.textContent),
+    score: data.score?.score ?? null,
+    scoreText: data.score ? `${data.score.score}/100` : null,
+    lifeEvents,
     tags: [...article.querySelectorAll('.report-property-tags > span')].map(tag => text(tag.textContent)).join(' | '),
     filename: `SiteIQ-${p.town}-${p.parcel_id}.pdf`.replace(/[<>:"/\\|?*\x00-\x1f]/g, '-'),
     sections, mapAttribution: text(mapElement.querySelector('.leaflet-control-attribution')?.textContent || data.sources.imagery_attribution),
     mapLegend: `Yellow: parcel boundary | Green: subject land${data.wetlands.features.length ? ' | Teal: mapped wetland' : ''}${data.buildings.features.length ? ' | Red: building footprint' : ''}`,
+    map: '', mapWidth: 0, mapHeight: 0,
   };
   return { ...snapshot, ...await captureParcelMap(mapElement) };
 }
@@ -139,6 +146,12 @@ export async function downloadParcelReportPdf(snapshot: ParcelReportPdfSnapshot)
   paragraph('SiteIQ / PROPERTY REPORT', 9, true, '#287156');
   paragraph(snapshot.title, 23, true);
   paragraph(snapshot.location, 10);
+  if (snapshot.score != null) {
+    paragraph(`SiteIQ Score: ${snapshot.score}/100`, 11, true, '#1d4ed8');
+  }
+  if (snapshot.lifeEvents && snapshot.lifeEvents.length > 0) {
+    paragraph(`Ownership signals: ${snapshot.lifeEvents.join('  |  ')}`, 9, true, '#6b21a8');
+  }
   paragraph(snapshot.tags, 9);
   paragraph('Aerial parcel map', 10, true);
   const mapHeight = Math.min(360, width * snapshot.mapHeight / snapshot.mapWidth);

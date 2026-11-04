@@ -23,6 +23,19 @@
 .parcel-report-content { overflow-y: auto; padding: 30px 32px 36px; background: #fff; scrollbar-width: thin; }
 .report-eyebrow { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 13px; color: #385c4c; font-size: 9px; font-weight: 800; letter-spacing: .13em; }
 .report-eyebrow > span { color: #9aa69e; font-size: 8px; font-weight: 500; letter-spacing: .07em; }
+.report-heading-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.report-heading-titles { flex: 1; min-width: 0; }
+.report-heading-score { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; padding-top: 4px; }
+.report-heading-score-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #64748b; }
+.report-heading-score .parcel-score-badge { font-size: 15px; padding: 4px 10px; border-radius: 7px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.06); transition: all .15s ease; border-color: #93c5fd; background: #eff6ff; color: #1d4ed8; }
+.report-heading-score .parcel-score-badge:hover { background: #dbeafe; border-color: #60a5fa; transform: translateY(-1px); }
+.report-heading-score .parcel-score-badge span { font-size: 11px; }
+
+.report-life-events { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 14px; margin-bottom: -6px; }
+.report-life-event-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border-radius: 5px; border: 1px solid; font-size: 10.5px; font-weight: 700; line-height: 1.3; }
+.report-badge-tax { background: #fefce8; color: #92400e; border-color: #fde68a !important; }
+.report-badge-children { background: #faf5ff; color: #581c87; border-color: #e9d5ff !important; }
+.report-badge-older { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe !important; }
 .report-property-heading h1 { margin: 0; font-size: clamp(24px, 2.2vw, 34px); letter-spacing: -.045em; font-weight: 750; line-height: 1.2; }
 .report-location { margin-top: 7px; color: #7c8881; font-size: 12px; }
 .report-property-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }

@@ -1,0 +1,1005 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+	<html>
+	<head>
+	<style TYPE="text/css">
+	<!--
+	BODY	{background: #000099;
+		margin-left: 0;
+		margin-top:0;}
+	P	{font-family: Arial,Helvetica,sans-serif;
+		color: white;
+		font-size: 9pt;}
+	TD	{font-family: Arial,Helvetica,sans-serif;
+		color: white;
+		font-size: 9pt;}
+	input	{ border: 0; margin: 0 0 1px 0; padding: 0; }	/* ie */
+	.search { border-right: solid 2px #888888; }
+	-->
+	</style>
+	</head>
+	<body bgcolor="#000099">
+	<table width="100%"><tr><td>
+	<form method="POST" action="SearchResults.asp" name="frmSearch" id="frmSearch" target="bottom">
+	   <table width="100%">
+	      <tr valign='top'>
+		 <td width='1%' nowrap	>Parcel</td>
+		 <td class='search'	><input tabindex="1" name="SearchParcel" id="SearchParcel" size="14" value="" onfocus="this.select()"></td>
+		 <td width='1%' nowrap	>Building type</td>
+		 <td class='search'	><input tabindex="11" name="SearchBuildingType" id="SearchBuildingType" size="16" value=""  onkeyup="this.form.submit();" ondblclick="PopUpSelect('SelectBuildingType',this);"></td>
+		 <td width='1%' nowrap	>Lot size</td>
+		 <td class='search'	><input tabindex="21" name="SearchLotSize" id="SearchLotSize" size="4" value="" onfocus="this.select()">
+					 thru&nbsp;&nbsp;
+					 <input tabindex="22" name="SearchLotSizeThru" id="SearchLotSizeThru" size="4" value="" onfocus="this.select()"></td>
+		 <td width='1%' nowrap	>Total value</td>
+		 <td class='searchx'	><input tabindex="31" name="SearchTotalValue" id="SearchTotalValue" size="8" value="" onfocus="this.select()">
+					 &nbsp;&nbsp;&nbsp;thru&nbsp;
+					 <input tabindex="32" name="SearchTotalValueThru" id="SearchTotalValueThru" size="8" value="" onfocus="this.select()"></td>
+		 <td align="right" rowspan='3'>
+			
+				<STRONG><FONT color=white face=Arial size=5>WebPro&nbsp;</FONT></STRONG>
+			
+		</td>
+	      </tr>
+	      <tr valign='top'>
+		 <td width='1%' nowrap	>Owner</td>
+		 <td class='search'	><input tabindex="2" name="SearchOwner" id="SearchOwner" size="14" value=""  onkeyup="this.form.submit();"></td>
+		 <td width='1%' nowrap	>Year built</td>
+		 <td class='search'	><input tabindex="12" name="SearchYearBuilt" id="SearchYearBuilt" size="4" value="" onfocus="this.select()">
+					 thru
+					 <input tabindex="13" name="SearchYearBuiltThru" id="SearchYearBuiltThru" size="4" value="" onfocus="this.select()"></td>
+		 <td width='1%' nowrap	>Fin size</td>
+		 <td class='search'	><input tabindex="23" name="SearchFinSize" id="SearchFinSize" size="4" value="" onfocus="this.select()">
+					 thru&nbsp;&nbsp;
+					 <input tabindex="24" name="SearchFinSizeThru" id="SearchFinSizeThru" size="4" value="" onfocus="this.select()"></td>
+		 <td width='1%' nowrap	>Sale price</td>
+		 <td class='searchx'	><input tabindex="33" name="SearchSalePrice" id="SearchSalePrice" size="8" value="" onfocus="this.select()">
+					 &nbsp;&nbsp;&nbsp;thru&nbsp;
+					 <input tabindex="33" name="SearchSalePriceThru" id="SearchSalePriceThru" size="8" value="" onfocus="this.select()"></td>
+	      </tr>
+	      <tr valign='top'>
+		 <td width='1%' nowrap	>Street name</td>
+		 <td class='search'	><input tabindex="3" name="SearchStreetName" id="SearchStreetName" size="14" value=""  onkeyup="this.form.submit();"></td>
+		 <td width='1%' nowrap	>Beds</td>
+		 <td class='search'	><input tabindex="14" name="SearchBedrooms" id="SearchBedrooms" size="4" value="" onfocus="this.select()">
+					 thru
+					 <input tabindex="15" name="SearchBedroomsThru" id="SearchBedroomsThru" size="4" value="" onfocus="this.select()"></td>
+		 
+		 <td width='1%' nowrap	>NHood</td>
+		 <td class='search'	><input tabindex=43" name="SearchNeighborhood" id="SearchNeighborhood" size="4" value="" onfocus="this.select()" onchange="SearchNeighborhoodChanged();" ondblclick="PopUpSelect('SelectNeighborhood',this);">
+				         desc
+					 <input tabindex="44" name="SearchNBHDescription" id="SearchNBHDescription" size="12" value="" onfocus="this.select()" onchange="SearchNBHDescriptionChanged();"  ondblclick="PopUpSelect('SelectNBHDescription',this);"></td>
+		 <td width='1%' nowrap	>Sale date</td>
+		 <td class='searchx'	><input tabindex="35" name="SearchSaleDate" id="SearchSaleDate" size="8" value="" onfocus="this.select()">
+					 &nbsp;&nbsp;&nbsp;thru&nbsp;
+					 <input tabindex="36" name="SearchSaleDateThru" id="SearchSaleDateThru" size="8" value="" onfocus="this.select()"></td>
+	      </tr>
+	      <tr valign='top'>
+		 <td width='1%' nowrap	>Street num</td>
+		 <td class='search'	><input tabindex="4" name="SearchStreetNumber" id="SearchStreetNumber" size="14" value="" onfocus="this.select()"></td>
+		 <td width='1%' nowrap	>Baths</td>
+		 <td class='search'	><input tabindex="16" name="SearchBathrooms" id="SearchBathrooms" size="4" value="" onfocus="this.select()">
+					 thru
+					 <input tabindex="17" name="SearchBathroomsThru" id="SearchBathroomsThru" size="4" value="" onfocus="this.select()"></td>
+		 <td width='1%' nowrap	>LUC</td>
+		 <td class='search'	><input tabindex="25" name="SearchLUC" id="SearchLUC" size="4" value="" onfocus="this.select()" onchange="SearchLUCChanged();" ondblclick="PopUpSelect('SelectLUC',this);">
+				         desc
+					 <input tabindex="26" name="SearchLUCDescription" id="SearchLUCDescription" size="12" value="" onfocus="this.select()" onchange="SearchLUCDescriptionChanged();"  ondblclick="PopUpSelect('SelectLUCDescription',this);"></td>
+		 <td width='1%' nowrap	>Book</td>
+		 <td class='searchx'	><input tabindex="37" name="SearchBook" id="SearchBook" size="8" value="" onfocus="this.select()">
+		                         &nbsp;Page 
+		                    	 <input tabindex="38" name="SearchPage" id="SearchPage" size="8" value="" onfocus="this.select()"></td>
+		 <td class='searchx' align='right'>
+				        <input name="SearchSubmitted" id="SearchSubmitted" type="hidden" value="yes">
+					<input tabindex="41" type="button" value="Clear form" name="cmdClear" id="cmdClear" onclick="ClearForm(document.frmSearch);">
+					&nbsp; &nbsp; &nbsp;
+					<input tabindex="42" type="submit" value="Go" name="cmdGo" id="cmdGo"></td>
+	      </tr>
+	   </table>
+	</form>
+	</td>
+	</tr>
+	</table>
+
+	<div id="popup" style="position: absolute; top: 5px; left: 20px; display: none; overflow: visible;">
+          <form name'popupform' method='GET' action='javascript:;'>
+	      <div id='popupselect'>
+		 <select id='SelectLUC' name='SelectLUC' size='6' onchange='SelectLUCChanged();' onmouseout='HidePopUpSelect();' onblur='HidePopUpSelect();' style='display: none;'>
+  <option value=''></option>
+  <option value='0 1'>0 1</option>
+  <option value='0 9'>0 9</option>
+  <option value='01'>01</option>
+  <option value='Res/Comm'>013</option>
+  <option value='0134'>0134</option>
+  <option value='0137'>0137</option>
+  <option value='Res/Ind'>014</option>
+  <option value='016'>016</option>
+  <option value='RES/61A'>017</option>
+  <option value='0173'>0173</option>
+  <option value='019'>019</option>
+  <option value='03'>03</option>
+  <option value='Com/Res'>031</option>
+  <option value='0314'>0314</option>
+  <option value='034'>034</option>
+  <option value='0341'>0341</option>
+  <option value='037'>037</option>
+  <option value='038'>038</option>
+  <option value='039'>039</option>
+  <option value='Ind/Res'>041</option>
+  <option value='IND/COMM'>043</option>
+  <option value='IND/61A'>047</option>
+  <option value='61A/Res'>071</option>
+  <option value='0713'>0713</option>
+  <option value='073'>073</option>
+  <option value='0731'>0731</option>
+  <option value='074'>074</option>
+  <option value='091'>091</option>
+  <option value='093'>093</option>
+  <option value='ONE FAM'>101</option>
+  <option value='SF + ACC APT'>101A</option>
+  <option value='CONDO'>102</option>
+  <option value='MOBILE HOME'>103</option>
+  <option value='Two family'>104</option>
+  <option value='2FAM+ACC APT'>104A</option>
+  <option value='Three family'>105</option>
+  <option value='OUT BUILDING'>106</option>
+  <option value='MULTI HOUSE'>109</option>
+  <option value='110'>110</option>
+  <option value='APT 4-8'>111</option>
+  <option value='APTS >8'>112</option>
+  <option value='AFFRDBL APTS'>114</option>
+  <option value='BOARDING'>121</option>
+  <option value='FRAT'>122</option>
+  <option value='DORM'>123</option>
+  <option value='RECTORY'>124</option>
+  <option value='OTHR HSING'>125</option>
+  <option value='BUILDABLE'>130</option>
+  <option value='POTENTIAL'>131</option>
+  <option value='UNBUILDABLE'>132</option>
+  <option value='CHILDCARE'>140</option>
+  <option value='MIXED USE'>199</option>
+  <option value='221'>221</option>
+  <option value='230'>230</option>
+  <option value='HOTEL'>300</option>
+  <option value='MOTEL'>301</option>
+  <option value='INN'>302</option>
+  <option value='303'>303</option>
+  <option value='NURSING'>304</option>
+  <option value='HOSPITAL'>305</option>
+  <option value='CRE&TRTMNT'>306</option>
+  <option value='OIL STO'>310</option>
+  <option value='GAS STORAGE'>311</option>
+  <option value='GRAIN'>312</option>
+  <option value='LUMBER'>313</option>
+  <option value='TRAILER TRM'>314</option>
+  <option value='DOCKYARD'>315</option>
+  <option value='COM STG/DIST'>316</option>
+  <option value='FARM BLDG'>317</option>
+  <option value='GREENHOUSE'>318</option>
+  <option value='HARDWARE'>321</option>
+  <option value='DISC STORE'>322</option>
+  <option value='SHOPPING CTR'>323</option>
+  <option value='SUPERMARKET'>324</option>
+  <option value='SM RETAIL'>325</option>
+  <option value='RST/BAR'>326</option>
+  <option value='CONDO RTL'>327</option>
+  <option value='AUTO SS'>330</option>
+  <option value='AUTOPRT'>331</option>
+  <option value='AUTOREP'>332</option>
+  <option value='GAS STATION'>333</option>
+  <option value='SERVICE STA'>334</option>
+  <option value='CARWASH'>335</option>
+  <option value='PARKING GAR'>336</option>
+  <option value='PARKING LOT'>337</option>
+  <option value='OTHER S&S'>338</option>
+  <option value='OFFICE'>340</option>
+  <option value='BANK'>341</option>
+  <option value='PROF OFFICE'>342</option>
+  <option value='CONDO MED'>343</option>
+  <option value='CONDO OFC'>344</option>
+  <option value='POST OFFICE'>350</option>
+  <option value='SCHOOL'>351</option>
+  <option value='DYCARE, ADLT'>352</option>
+  <option value='FRATRNL'>353</option>
+  <option value='TRANSPN'>354</option>
+  <option value='FUNERAL'>355</option>
+  <option value='PROF AS'>356</option>
+  <option value='MUSEUM'>360</option>
+  <option value='ART GALLERY'>361</option>
+  <option value='MOVIE'>362</option>
+  <option value='DRIVEIN'>363</option>
+  <option value='THEATER'>364</option>
+  <option value='STADIUM'>365</option>
+  <option value='ARENA'>366</option>
+  <option value='RACE TRACK'>367</option>
+  <option value='FAIRGROUND'>368</option>
+  <option value='CULTURAL'>369</option>
+  <option value='BOWLING'>370</option>
+  <option value='ICESKATING'>371</option>
+  <option value='ROLLERSKTNG'>372</option>
+  <option value='SWIMMING'>373</option>
+  <option value='HEALTH SPA'>374</option>
+  <option value='TENNIS'>375</option>
+  <option value='GYM/ATHL CLB'>376</option>
+  <option value='INDOOR RECR'>377</option>
+  <option value='GOLF COURSE'>380</option>
+  <option value='TENNIS COURT'>381</option>
+  <option value='RIDING STBLE'>382</option>
+  <option value='BEACHES'>383</option>
+  <option value='MARINA'>384</option>
+  <option value='FSH/GAME CLB'>385</option>
+  <option value='CAMPGRNDS'>386</option>
+  <option value='YOUTHCAMPS'>387</option>
+  <option value='OTH OUT'>388</option>
+  <option value='BLDG-61B'>389</option>
+  <option value='LAND-COMM'>390</option>
+  <option value='POTENTL-COMM'>391</option>
+  <option value='UNDEV-COMM'>392</option>
+  <option value='AGRICULTURAL'>393</option>
+  <option value='MIXED USE'>399</option>
+  <option value='MANUFACTURIN'>400</option>
+  <option value='IND WHS'>401</option>
+  <option value='IND OFFICE'>402</option>
+  <option value='ACCLAND'>403</option>
+  <option value='R&D BLDG'>404</option>
+  <option value='SAND&GRAVEL'>410</option>
+  <option value='GYPSUM'>411</option>
+  <option value='QUARRY'>412</option>
+  <option value='OTHMINE'>413</option>
+  <option value='TANK-UT'>420</option>
+  <option value='LNG TANK'>421</option>
+  <option value='ELECPLANT'>422</option>
+  <option value='ELECROW'>423</option>
+  <option value='ELECSUB'>424</option>
+  <option value='GAS PLT'>425</option>
+  <option value='GAS ROW'>426</option>
+  <option value='GAS STG'>427</option>
+  <option value='GAS SUB'>428</option>
+  <option value='TEL X-STA'>430</option>
+  <option value='RELAY TWR'>431</option>
+  <option value='CABLETV'>432</option>
+  <option value='R/TV TW'>433</option>
+  <option value='LAND-IND'>440</option>
+  <option value='POTENTL-IND'>441</option>
+  <option value='UNDEV-IND'>442</option>
+  <option value='IND CONDO'>444</option>
+  <option value='EL PNT-NO AG'>450</option>
+  <option value='Partnerships/ (Not a Ma Code)'>500</option>
+  <option value='Sole Proprietorship/LLP/LLCo.'>501</option>
+  <option value='Corporations/LLCorp'>502</option>
+  <option value='Manufacturing Corporation'>503</option>
+  <option value='Local Assessed Utility'>504</option>
+  <option value='D.O.R. Valued Utility'>505</option>
+  <option value='DOR Value Utility - Pipelines'>506</option>
+  <option value='CELL PHONE CO.'>508</option>
+  <option value='Power Plant'>550</option>
+  <option value='Power Plant Renew'>551</option>
+  <option value='Power Plant with Agreement'>552</option>
+  <option value='Exempt'>599</option>
+  <option value='600'>600</option>
+  <option value='C61 10Y'>601</option>
+  <option value='C61 5YR'>602</option>
+  <option value='CRANBERRY'>710</option>
+  <option value='TOB,SOD'>711</option>
+  <option value='VEGETABLES'>712</option>
+  <option value='FIELD CROPS'>713</option>
+  <option value='ORCH&VINEYRD'>714</option>
+  <option value='XMAS TREES'>715</option>
+  <option value='CROPLND/PAST'>716</option>
+  <option value='PROD WDLAND'>717</option>
+  <option value='PASTR&RELATD'>718</option>
+  <option value='NURSERY'>719</option>
+  <option value='NONPROD/WET'>720</option>
+  <option value='722'>722</option>
+  <option value='61B HIKE'>801</option>
+  <option value='61B CAMP'>802</option>
+  <option value='61B NATURE'>803</option>
+  <option value='61B BOAT'>804</option>
+  <option value='61B GOLF'>805</option>
+  <option value='61B HORSE'>806</option>
+  <option value='61B HUNT'>807</option>
+  <option value='61B FISH'>808</option>
+  <option value='61B SKI'>809</option>
+  <option value='61B XSKI'>810</option>
+  <option value='61B SWIM'>811</option>
+  <option value='61B PICNIC'>812</option>
+  <option value='61B NONCOMFL'>813</option>
+  <option value='61B TARGET'>814</option>
+  <option value='61B PROD WD'>815</option>
+  <option value='US GOVT'>900</option>
+  <option value='COMMASS-OLD'>901</option>
+  <option value='COUNTY'>902</option>
+  <option value='MUNICPL'>903</option>
+  <option value='PSCHOOL'>904</option>
+  <option value='CHARITY'>905</option>
+  <option value='CHURCH'>906</option>
+  <option value='CH 121A'>907</option>
+  <option value='HOUSING'>908</option>
+  <option value='MA-DCR'>910</option>
+  <option value='MA-FISH&GAME'>911</option>
+  <option value='MA-CORR/YSRV'>912</option>
+  <option value='MA-PUB HLTH'>913</option>
+  <option value='MA-MNTL HLTH'>914</option>
+  <option value='MA-DCR-WTR S'>915</option>
+  <option value='MA-MILITARY'>916</option>
+  <option value='MA-EDUCATION'>917</option>
+  <option value='MA-DEP RWM'>918</option>
+  <option value='MA-OTHER'>919</option>
+  <option value='MA-DCR-NR'>920</option>
+  <option value='MA-F&G NOT R'>921</option>
+  <option value='MA-COR/YS-NR'>922</option>
+  <option value='MA-PUBHLT-NR'>923</option>
+  <option value='MA-MAHWY NR'>924</option>
+  <option value='MA-DCR-WS-NR'>925</option>
+  <option value='MA-JUDCRY-NR'>926</option>
+  <option value='MA-EDUCTN-NR'>927</option>
+  <option value='MA-CAP ASST'>928</option>
+  <option value='MA-OTHER NR'>929</option>
+  <option value='VAC-BOS'>930</option>
+  <option value='IMPROVED-BOS'>931</option>
+  <option value='VAC-CON COMM'>932</option>
+  <option value='VAC-EDUCATN'>933</option>
+  <option value='IMPRVD-EDUCT'>934</option>
+  <option value='IMPR-PUBSFTY'>935</option>
+  <option value='VAC-TAX TITL'>936</option>
+  <option value='IMPRVD-TAX T'>937</option>
+  <option value='VAC-DISTRICT'>938</option>
+  <option value='IMP-DISTRICT'>939</option>
+  <option value='PRIV-ELEMNTR'>940</option>
+  <option value='PRIV-SEONDRY'>941</option>
+  <option value='PRIV-COL/UNV'>942</option>
+  <option value='PRIV-OTHR ED'>943</option>
+  <option value='PRIV-AUX ATH'>944</option>
+  <option value='PRIV-ED HSNG'>945</option>
+  <option value='PRIV-VACANT'>946</option>
+  <option value='PRIV-OTHER'>947</option>
+  <option value='CH-VAC CONSR'>950</option>
+  <option value='CH-OTHER'>951</option>
+  <option value='CH-ACC USE'>952</option>
+  <option value='CH-CEMETERY'>953</option>
+  <option value='CH-FRATERNAL'>954</option>
+  <option value='CH-HOSPITAL'>955</option>
+  <option value='CH-LIB/MUSM'>956</option>
+  <option value='CH-SERVICES'>957</option>
+  <option value='CH-RECREATN'>958</option>
+  <option value='CH-HSNG OTHR'>959</option>
+  <option value='REL-CHURCH'>960</option>
+  <option value='REL-RECTORY'>961</option>
+  <option value='REL-OTHER'>962</option>
+  <option value='AUTH-HOUSING'>970</option>
+  <option value='AUTH-UTILITY'>971</option>
+  <option value='AUTH-TRANSPR'>972</option>
+  <option value='AUTH-VAC HSG'>973</option>
+  <option value='AUTH-VAC UTL'>974</option>
+  <option value='AUTH-VAC TRN'>975</option>
+  <option value='OOT-VAC BOS'>980</option>
+  <option value='OOT-IMP BOS'>981</option>
+  <option value='OOT-VAC CONS'>982</option>
+  <option value='OOT-IMP SFTY'>985</option>
+  <option value='OOT-VAC OTHR'>988</option>
+  <option value='OOT-IMP OTHR'>989</option>
+  <option value='OTHR-121A'>990</option>
+  <option value='OTHR-VAC CNT'>991</option>
+  <option value='OTHR-IMP REG'>992</option>
+  <option value='OTHR-IMP COR'>993</option>
+  <option value='OTHR-IMP ASC'>994</option>
+  <option value='OTHR-OPN SPC'>995</option>
+  <option value='OTHR-COM CND'>996</option>
+  <option value='OTHR-OTHER'>997</option>
+</select>
+<select id='SelectLUCDescription' name='SelectLUCDescription' size='6' onchange='SelectLUCDescriptionChanged();' onmouseout='HidePopUpSelect();' onblur='HidePopUpSelect();' style='display: none;'>
+  <option value=''></option>
+  <option value='0 1'>0 1</option>
+  <option value='0 9'>0 9</option>
+  <option value='01'>01</option>
+  <option value='0134'>0134</option>
+  <option value='0137'>0137</option>
+  <option value='016'>016</option>
+  <option value='0173'>0173</option>
+  <option value='019'>019</option>
+  <option value='03'>03</option>
+  <option value='0314'>0314</option>
+  <option value='034'>034</option>
+  <option value='0341'>0341</option>
+  <option value='037'>037</option>
+  <option value='038'>038</option>
+  <option value='039'>039</option>
+  <option value='0713'>0713</option>
+  <option value='073'>073</option>
+  <option value='0731'>0731</option>
+  <option value='074'>074</option>
+  <option value='091'>091</option>
+  <option value='093'>093</option>
+  <option value='110'>110</option>
+  <option value='221'>221</option>
+  <option value='230'>230</option>
+  <option value='104A'>2FAM+ACC APT</option>
+  <option value='303'>303</option>
+  <option value='600'>600</option>
+  <option value='071'>61A/Res</option>
+  <option value='804'>61B BOAT</option>
+  <option value='802'>61B CAMP</option>
+  <option value='808'>61B FISH</option>
+  <option value='805'>61B GOLF</option>
+  <option value='801'>61B HIKE</option>
+  <option value='806'>61B HORSE</option>
+  <option value='807'>61B HUNT</option>
+  <option value='803'>61B NATURE</option>
+  <option value='813'>61B NONCOMFL</option>
+  <option value='812'>61B PICNIC</option>
+  <option value='815'>61B PROD WD</option>
+  <option value='809'>61B SKI</option>
+  <option value='811'>61B SWIM</option>
+  <option value='814'>61B TARGET</option>
+  <option value='810'>61B XSKI</option>
+  <option value='722'>722</option>
+  <option value='403'>ACCLAND</option>
+  <option value='114'>AFFRDBL APTS</option>
+  <option value='393'>AGRICULTURAL</option>
+  <option value='111'>APT 4-8</option>
+  <option value='112'>APTS >8</option>
+  <option value='366'>ARENA</option>
+  <option value='361'>ART GALLERY</option>
+  <option value='970'>AUTH-HOUSING</option>
+  <option value='972'>AUTH-TRANSPR</option>
+  <option value='971'>AUTH-UTILITY</option>
+  <option value='973'>AUTH-VAC HSG</option>
+  <option value='975'>AUTH-VAC TRN</option>
+  <option value='974'>AUTH-VAC UTL</option>
+  <option value='330'>AUTO SS</option>
+  <option value='331'>AUTOPRT</option>
+  <option value='332'>AUTOREP</option>
+  <option value='341'>BANK</option>
+  <option value='383'>BEACHES</option>
+  <option value='389'>BLDG-61B</option>
+  <option value='121'>BOARDING</option>
+  <option value='370'>BOWLING</option>
+  <option value='130'>BUILDABLE</option>
+  <option value='601'>C61 10Y</option>
+  <option value='602'>C61 5YR</option>
+  <option value='432'>CABLETV</option>
+  <option value='386'>CAMPGRNDS</option>
+  <option value='335'>CARWASH</option>
+  <option value='508'>CELL PHONE CO.</option>
+  <option value='907'>CH 121A</option>
+  <option value='952'>CH-ACC USE</option>
+  <option value='953'>CH-CEMETERY</option>
+  <option value='954'>CH-FRATERNAL</option>
+  <option value='955'>CH-HOSPITAL</option>
+  <option value='959'>CH-HSNG OTHR</option>
+  <option value='956'>CH-LIB/MUSM</option>
+  <option value='951'>CH-OTHER</option>
+  <option value='958'>CH-RECREATN</option>
+  <option value='957'>CH-SERVICES</option>
+  <option value='950'>CH-VAC CONSR</option>
+  <option value='905'>CHARITY</option>
+  <option value='140'>CHILDCARE</option>
+  <option value='906'>CHURCH</option>
+  <option value='316'>COM STG/DIST</option>
+  <option value='031'>Com/Res</option>
+  <option value='901'>COMMASS-OLD</option>
+  <option value='102'>CONDO</option>
+  <option value='343'>CONDO MED</option>
+  <option value='344'>CONDO OFC</option>
+  <option value='327'>CONDO RTL</option>
+  <option value='502'>Corporations/LLCorp</option>
+  <option value='902'>COUNTY</option>
+  <option value='710'>CRANBERRY</option>
+  <option value='306'>CRE&TRTMNT</option>
+  <option value='716'>CROPLND/PAST</option>
+  <option value='369'>CULTURAL</option>
+  <option value='505'>D.O.R. Valued Utility</option>
+  <option value='322'>DISC STORE</option>
+  <option value='315'>DOCKYARD</option>
+  <option value='506'>DOR Value Utility - Pipelines</option>
+  <option value='123'>DORM</option>
+  <option value='363'>DRIVEIN</option>
+  <option value='352'>DYCARE, ADLT</option>
+  <option value='450'>EL PNT-NO AG</option>
+  <option value='422'>ELECPLANT</option>
+  <option value='423'>ELECROW</option>
+  <option value='424'>ELECSUB</option>
+  <option value='599'>Exempt</option>
+  <option value='368'>FAIRGROUND</option>
+  <option value='317'>FARM BLDG</option>
+  <option value='713'>FIELD CROPS</option>
+  <option value='122'>FRAT</option>
+  <option value='353'>FRATRNL</option>
+  <option value='385'>FSH/GAME CLB</option>
+  <option value='355'>FUNERAL</option>
+  <option value='425'>GAS PLT</option>
+  <option value='426'>GAS ROW</option>
+  <option value='333'>GAS STATION</option>
+  <option value='427'>GAS STG</option>
+  <option value='311'>GAS STORAGE</option>
+  <option value='428'>GAS SUB</option>
+  <option value='380'>GOLF COURSE</option>
+  <option value='312'>GRAIN</option>
+  <option value='318'>GREENHOUSE</option>
+  <option value='376'>GYM/ATHL CLB</option>
+  <option value='411'>GYPSUM</option>
+  <option value='321'>HARDWARE</option>
+  <option value='374'>HEALTH SPA</option>
+  <option value='305'>HOSPITAL</option>
+  <option value='300'>HOTEL</option>
+  <option value='908'>HOUSING</option>
+  <option value='371'>ICESKATING</option>
+  <option value='939'>IMP-DISTRICT</option>
+  <option value='935'>IMPR-PUBSFTY</option>
+  <option value='931'>IMPROVED-BOS</option>
+  <option value='934'>IMPRVD-EDUCT</option>
+  <option value='937'>IMPRVD-TAX T</option>
+  <option value='444'>IND CONDO</option>
+  <option value='402'>IND OFFICE</option>
+  <option value='401'>IND WHS</option>
+  <option value='047'>IND/61A</option>
+  <option value='043'>IND/COMM</option>
+  <option value='041'>Ind/Res</option>
+  <option value='377'>INDOOR RECR</option>
+  <option value='302'>INN</option>
+  <option value='390'>LAND-COMM</option>
+  <option value='440'>LAND-IND</option>
+  <option value='421'>LNG TANK</option>
+  <option value='504'>Local Assessed Utility</option>
+  <option value='313'>LUMBER</option>
+  <option value='928'>MA-CAP ASST</option>
+  <option value='922'>MA-COR/YS-NR</option>
+  <option value='912'>MA-CORR/YSRV</option>
+  <option value='910'>MA-DCR</option>
+  <option value='920'>MA-DCR-NR</option>
+  <option value='925'>MA-DCR-WS-NR</option>
+  <option value='915'>MA-DCR-WTR S</option>
+  <option value='918'>MA-DEP RWM</option>
+  <option value='917'>MA-EDUCATION</option>
+  <option value='927'>MA-EDUCTN-NR</option>
+  <option value='921'>MA-F&G NOT R</option>
+  <option value='911'>MA-FISH&GAME</option>
+  <option value='926'>MA-JUDCRY-NR</option>
+  <option value='924'>MA-MAHWY NR</option>
+  <option value='916'>MA-MILITARY</option>
+  <option value='914'>MA-MNTL HLTH</option>
+  <option value='919'>MA-OTHER</option>
+  <option value='929'>MA-OTHER NR</option>
+  <option value='913'>MA-PUB HLTH</option>
+  <option value='923'>MA-PUBHLT-NR</option>
+  <option value='400'>MANUFACTURIN</option>
+  <option value='503'>Manufacturing Corporation</option>
+  <option value='384'>MARINA</option>
+  <option value='199'>MIXED USE</option>
+  <option value='399'>MIXED USE</option>
+  <option value='103'>MOBILE HOME</option>
+  <option value='301'>MOTEL</option>
+  <option value='362'>MOVIE</option>
+  <option value='109'>MULTI HOUSE</option>
+  <option value='903'>MUNICPL</option>
+  <option value='360'>MUSEUM</option>
+  <option value='720'>NONPROD/WET</option>
+  <option value='719'>NURSERY</option>
+  <option value='304'>NURSING</option>
+  <option value='340'>OFFICE</option>
+  <option value='310'>OIL STO</option>
+  <option value='101'>ONE FAM</option>
+  <option value='981'>OOT-IMP BOS</option>
+  <option value='989'>OOT-IMP OTHR</option>
+  <option value='985'>OOT-IMP SFTY</option>
+  <option value='980'>OOT-VAC BOS</option>
+  <option value='982'>OOT-VAC CONS</option>
+  <option value='988'>OOT-VAC OTHR</option>
+  <option value='714'>ORCH&VINEYRD</option>
+  <option value='388'>OTH OUT</option>
+  <option value='338'>OTHER S&S</option>
+  <option value='413'>OTHMINE</option>
+  <option value='125'>OTHR HSING</option>
+  <option value='990'>OTHR-121A</option>
+  <option value='996'>OTHR-COM CND</option>
+  <option value='994'>OTHR-IMP ASC</option>
+  <option value='993'>OTHR-IMP COR</option>
+  <option value='992'>OTHR-IMP REG</option>
+  <option value='995'>OTHR-OPN SPC</option>
+  <option value='997'>OTHR-OTHER</option>
+  <option value='991'>OTHR-VAC CNT</option>
+  <option value='106'>OUT BUILDING</option>
+  <option value='336'>PARKING GAR</option>
+  <option value='337'>PARKING LOT</option>
+  <option value='500'>Partnerships/ (Not a Ma Code)</option>
+  <option value='718'>PASTR&RELATD</option>
+  <option value='350'>POST OFFICE</option>
+  <option value='131'>POTENTIAL</option>
+  <option value='391'>POTENTL-COMM</option>
+  <option value='441'>POTENTL-IND</option>
+  <option value='550'>Power Plant</option>
+  <option value='551'>Power Plant Renew</option>
+  <option value='552'>Power Plant with Agreement</option>
+  <option value='944'>PRIV-AUX ATH</option>
+  <option value='942'>PRIV-COL/UNV</option>
+  <option value='945'>PRIV-ED HSNG</option>
+  <option value='940'>PRIV-ELEMNTR</option>
+  <option value='947'>PRIV-OTHER</option>
+  <option value='943'>PRIV-OTHR ED</option>
+  <option value='941'>PRIV-SEONDRY</option>
+  <option value='946'>PRIV-VACANT</option>
+  <option value='717'>PROD WDLAND</option>
+  <option value='356'>PROF AS</option>
+  <option value='342'>PROF OFFICE</option>
+  <option value='904'>PSCHOOL</option>
+  <option value='412'>QUARRY</option>
+  <option value='404'>R&D BLDG</option>
+  <option value='433'>R/TV TW</option>
+  <option value='367'>RACE TRACK</option>
+  <option value='124'>RECTORY</option>
+  <option value='960'>REL-CHURCH</option>
+  <option value='962'>REL-OTHER</option>
+  <option value='961'>REL-RECTORY</option>
+  <option value='431'>RELAY TWR</option>
+  <option value='017'>RES/61A</option>
+  <option value='013'>Res/Comm</option>
+  <option value='014'>Res/Ind</option>
+  <option value='382'>RIDING STBLE</option>
+  <option value='372'>ROLLERSKTNG</option>
+  <option value='326'>RST/BAR</option>
+  <option value='410'>SAND&GRAVEL</option>
+  <option value='351'>SCHOOL</option>
+  <option value='334'>SERVICE STA</option>
+  <option value='101A'>SF + ACC APT</option>
+  <option value='323'>SHOPPING CTR</option>
+  <option value='325'>SM RETAIL</option>
+  <option value='501'>Sole Proprietorship/LLP/LLCo.</option>
+  <option value='365'>STADIUM</option>
+  <option value='324'>SUPERMARKET</option>
+  <option value='373'>SWIMMING</option>
+  <option value='420'>TANK-UT</option>
+  <option value='430'>TEL X-STA</option>
+  <option value='375'>TENNIS</option>
+  <option value='381'>TENNIS COURT</option>
+  <option value='364'>THEATER</option>
+  <option value='105'>Three family</option>
+  <option value='711'>TOB,SOD</option>
+  <option value='314'>TRAILER TRM</option>
+  <option value='354'>TRANSPN</option>
+  <option value='104'>Two family</option>
+  <option value='132'>UNBUILDABLE</option>
+  <option value='392'>UNDEV-COMM</option>
+  <option value='442'>UNDEV-IND</option>
+  <option value='900'>US GOVT</option>
+  <option value='930'>VAC-BOS</option>
+  <option value='932'>VAC-CON COMM</option>
+  <option value='938'>VAC-DISTRICT</option>
+  <option value='933'>VAC-EDUCATN</option>
+  <option value='936'>VAC-TAX TITL</option>
+  <option value='712'>VEGETABLES</option>
+  <option value='715'>XMAS TREES</option>
+  <option value='387'>YOUTHCAMPS</option>
+</select>
+<select id='SelectBuildingType' name='SelectBuildingType' size='6' onchange='SelectBuildingTypeChanged();' onmouseout='HidePopUpSelect();' onblur='HidePopUpSelect();' style='display: none;'>
+  <option value=''></option>
+  <option value='ANTIQUE'>01</option>
+  <option value='COTTAGE'>02</option>
+  <option value='CAPE'>05</option>
+  <option value='COLONIAL'>06</option>
+  <option value='CONDO-GRDN'>07</option>
+  <option value='CONDO-TNHS'>08</option>
+  <option value='CONTEMPORARY'>09</option>
+  <option value='SRVC/SHWRM'>100</option>
+  <option value='SELF SER GAS'>101</option>
+  <option value='GROUP HOME'>103</option>
+  <option value='MOBlLE/MAN-S'>11</option>
+  <option value='MOBILE/MAN-D'>11DW</option>
+  <option value='MULTI 2-3'>12</option>
+  <option value='OLD STYLE'>15</option>
+  <option value='SPLIT CAPE'>16</option>
+  <option value='SPLIT COLONL'>17</option>
+  <option value='SPLIT ENTRY'>18</option>
+  <option value='RANCH'>19</option>
+  <option value='APT 4-8'>20</option>
+  <option value='SPLIT LEVEL'>21</option>
+  <option value='APT 9-19'>22</option>
+  <option value='BOARDING HSE'>23</option>
+  <option value='AUTO DEALER'>24</option>
+  <option value='CAR WASH-DTH'>25</option>
+  <option value='CAR WASH-SS'>25A</option>
+  <option value='COLD STORAGE'>26</option>
+  <option value='STORAGE GAR'>30</option>
+  <option value='INDUST-HVY'>32</option>
+  <option value='INDUST-LT'>33</option>
+  <option value='IND-ENG/R&D'>34</option>
+  <option value='REPAIR GAR'>39</option>
+  <option value='STABLE'>41</option>
+  <option value='TRUCK TERM'>42</option>
+  <option value='WAREHOUSE'>43</option>
+  <option value='WHSE-MINI'>44</option>
+  <option value='BANK'>45</option>
+  <option value='CHURCH/SYN'>46</option>
+  <option value='FIRE STATION'>48</option>
+  <option value='FUNERAL HM'>49</option>
+  <option value='GOVT BLDGS'>50</option>
+  <option value='GYMNASIUM'>51</option>
+  <option value='MIXED USE'>52</option>
+  <option value='LIBRARY'>53</option>
+  <option value='POST OFFICE'>56</option>
+  <option value='SCHOOL'>58</option>
+  <option value='UTILITY BLD'>59</option>
+  <option value='BAR'>60</option>
+  <option value='CONDO-OFFICE'>63</option>
+  <option value='CONDO-RETAIL'>64</option>
+  <option value='CONVEN MKT'>65</option>
+  <option value='FAST FOOD'>67</option>
+  <option value='GAS STATION'>68</option>
+  <option value='CLUBHOUSE'>69</option>
+  <option value='NIGHT CLUB'>70</option>
+  <option value='OFFICE'>71</option>
+  <option value='RESTAURANT'>74</option>
+  <option value='SERVICE ST'>75</option>
+  <option value='SHOPPING CTR'>76</option>
+  <option value='RETAIL CHAIN'>77</option>
+  <option value='SM RETAIL'>78</option>
+  <option value='DRUG STORE'>79</option>
+  <option value='FUNCTN HALL'>80</option>
+  <option value='THEATER'>81</option>
+  <option value='VET CLINIC'>82</option>
+  <option value='HEALTH CLUB'>88</option>
+  <option value='MOTEL'>91</option>
+  <option value='COM DIST/SAL'>92</option>
+  <option value='APT COMPLEX'>APTC</option>
+  <option value='ARCADE'>ARCD</option>
+  <option value='BARN'>BARN</option>
+  <option value='CONDO CARWSH'>CCAR</option>
+  <option value='CONDO-DETACH'>CD</option>
+  <option value='CONDO GARAGE'>CGAR</option>
+  <option value='CONDO GYM/AC'>CGYM</option>
+  <option value='CONDO INDUST'>CONI</option>
+  <option value='CONDO MINI-S'>CONM</option>
+  <option value='CONDO WAREHS'>CONW</option>
+  <option value='CONDO ROW'>CROW</option>
+  <option value='CONDO SERVIC'>CSER</option>
+  <option value='DUPLEX'>DPL</option>
+  <option value='GREEN HOUSE'>GRHS</option>
+  <option value='MOBILE W/ADD'>MCON</option>
+  <option value='POLICE STATN'>POLC</option>
+  <option value='QUONSET KIT'>QUON</option>
+  <option value='RAISED RANCH'>R2</option>
+  <option value='RAISED COLON'>R3</option>
+  <option value='RAISED CAPE'>R4</option>
+  <option value='RES ACC BLD'>RAB</option>
+  <option value='RESTROOM BLD'>RRMS</option>
+  <option value='VISITOR CNTR'>VSTC</option>
+</select>
+<select id='SelectNeighborhood' name='SelectNeighborhood' size='6' onchange='SelectNeighborhoodChanged();' onmouseout='HidePopUpSelect();' onblur='HidePopUpSelect();' style='display: none;'>
+  <option value=''></option>
+  <option value='Beach OcnFrt'>14</option>
+  <option value='OcnFrt-North'>14NE</option>
+  <option value='14 No St FF'>14NF</option>
+  <option value='14 NoBch FF'>14OR</option>
+  <option value='14NoBchFF-NE'>14RN</option>
+  <option value='SOL Bch OcnF'>14S</option>
+  <option value='OcnFrt-South'>14SE</option>
+  <option value='Main/Rabbit'>17</option>
+  <option value='Beach West'>3</option>
+  <option value='Brdg/Laf/Bch'>30</option>
+  <option value='SOL B/L/B'>30S</option>
+  <option value='Elm'>32</option>
+  <option value='Elm St 95'>32M</option>
+  <option value='Bch Ctr/Com'>34</option>
+  <option value='Bch Cm Outer'>34O</option>
+  <option value='Bch Cm Prime'>34P</option>
+  <option value='SOL Bch Cntr'>34S</option>
+  <option value='Back-4&5Back'>3B</option>
+  <option value='North End'>3N</option>
+  <option value='SOL Bch West'>3S</option>
+  <option value='Industrial'>40</option>
+  <option value='Intown'>7</option>
+  <option value='7 Good'>7G</option>
+  <option value='7 Good/SOL'>7GS</option>
+  <option value='SOL Intown'>7S</option>
+  <option value='Rural'>8</option>
+  <option value='8 Good'>8G</option>
+  <option value='SOL Rural'>8S</option>
+  <option value='RI, FF & PF'>9</option>
+  <option value='Res River'>9R</option>
+  <option value='SOL River'>9RS</option>
+  <option value='SOL RI,FF,PF'>9S</option>
+</select>
+<select id='SelectNBHDescription' name='SelectNBHDescription' size='6' onchange='SelectNBHDescriptionChanged();' onmouseout='HidePopUpSelect();' onblur='HidePopUpSelect();' style='display: none;'>
+  <option value=''></option>
+  <option value='14NF'>14 No St FF</option>
+  <option value='14OR'>14 NoBch FF</option>
+  <option value='14RN'>14NoBchFF-NE</option>
+  <option value='7G'>7 Good</option>
+  <option value='7GS'>7 Good/SOL</option>
+  <option value='8G'>8 Good</option>
+  <option value='3B'>Back-4&5Back</option>
+  <option value='34O'>Bch Cm Outer</option>
+  <option value='34P'>Bch Cm Prime</option>
+  <option value='34'>Bch Ctr/Com</option>
+  <option value='14'>Beach OcnFrt</option>
+  <option value='3'>Beach West</option>
+  <option value='30'>Brdg/Laf/Bch</option>
+  <option value='32'>Elm</option>
+  <option value='32M'>Elm St 95</option>
+  <option value='40'>Industrial</option>
+  <option value='7'>Intown</option>
+  <option value='17'>Main/Rabbit</option>
+  <option value='3N'>North End</option>
+  <option value='14NE'>OcnFrt-North</option>
+  <option value='14SE'>OcnFrt-South</option>
+  <option value='9R'>Res River</option>
+  <option value='9'>RI, FF & PF</option>
+  <option value='8'>Rural</option>
+  <option value='30S'>SOL B/L/B</option>
+  <option value='34S'>SOL Bch Cntr</option>
+  <option value='14S'>SOL Bch OcnF</option>
+  <option value='3S'>SOL Bch West</option>
+  <option value='7S'>SOL Intown</option>
+  <option value='9S'>SOL RI,FF,PF</option>
+  <option value='9RS'>SOL River</option>
+  <option value='8S'>SOL Rural</option>
+</select>
+
+
+	      </div>
+	  </form>
+	</div>
+
+	<script type='text/javascript'>
+
+		document.frmSearch.SearchParcel.focus();
+
+	//	SetIncrementalSearch(document.frmSearch);
+
+		function ClearForm( form ) {
+		   for( var element = 0; element < form.elements.length; element++ ) {
+		      switch( form.elements[element].type ) {
+			 case "text":
+			    form.elements[element].value = "";
+			    break;
+		      }
+		   }
+		}
+
+		function SetIncrementalSearch( form ) {
+		   for( var element = 0; element < form.elements.length; element++ ) {
+		      switch( form.elements[element].type ) {
+			 case "text":
+			    form.elements[element].onkeyup = function() { form.submit(); };
+			    break;
+		      }
+		   }
+		}
+
+		function PopUpSelect(elementIdToShow, elementIdToPosition) {
+		    Element('SelectLUC').style.display		  = 'none';
+		    Element('SelectLUCDescription').style.display = 'none';
+		    Element('SelectNeighborhood').style.display		  = 'none';
+		    Element('SelectNBHDescription').style.display = 'none';
+		    Element('SelectBuildingType').style.display	  = 'none';
+		    Element(elementIdToShow).style.display	  = 'block';
+		    Element('popup').style.left			  = elementIdToPosition.getBoundingClientRect().left;
+		    Element('popup').style.display		  = 'block';
+		    var element					  = Element(elementIdToShow);
+		    var lookFor					  = elementIdToPosition.value.toUpperCase();
+		    for( var i = 0; i < element.options.length; i++ ) {
+			if( element[i].text.toUpperCase() == lookFor ) {
+			    element.selectedIndex = i;
+			    break;
+			}
+		    }
+		}
+
+		function SelectLUCChanged() {
+		//	alert( 'SelectLUCChanged' );
+		    Element('SearchLUC').value			  = SelectText('SelectLUC');
+		    Element('SearchLUCDescription').value	  = SelectValue('SelectLUC');
+		    HidePopUpSelect();
+		}
+
+		function SelectLUCDescriptionChanged() {
+		    Element('SearchLUC').value			  = SelectValue('SelectLUCDescription');
+		    Element('SearchLUCDescription').value	  = SelectText('SelectLUCDescription');
+		    HidePopUpSelect();
+		}
+
+
+		function SelectNeighborhoodChanged() {
+		//	alert( 'SelectLUCChanged' );
+		    Element('SearchNeighborhood').value			  = SelectText('SelectNeighborhood');
+		    Element('SearchNBHDescription').value	  = SelectValue('SelectNeighborhood');
+		    HidePopUpSelect();
+		}
+
+
+		function SelectNBHDescriptionChanged() {
+		    Element('SearchNeighborhood').value			  = SelectValue('SelectNBHDescription');
+		    Element('SearchNBHDescription').value	  = SelectText('SelectNBHDescription');
+		    HidePopUpSelect();
+		}
+
+
+
+
+		function SelectBuildingTypeChanged() {
+		    Element('SearchBuildingType').value		  = SelectValue('SelectBuildingType');
+		    HidePopUpSelect();
+		}
+
+		function SearchLUCChanged() {
+		    var element					  = Element('SearchLUC');
+		    var lookFor					  = element.value.toUpperCase();
+		    var table					  = Element('SelectLUC');
+		    for( var i = 0; i < table.options.length; i++ ) {
+			if( table[i].text.toUpperCase() == lookFor ) {
+			    Element('SearchLUCDescription').value = table[i].value;
+			    break;
+			}
+		    }
+		}
+
+		function SearchLUCDescriptionChanged() {
+		    var element					  = Element('SearchLUCDescription');
+		    var lookFor					  = element.value.toUpperCase();
+		    var table					  = Element('SelectLUCDescription');
+		    for( var i = 0; i < table.options.length; i++ ) {
+			if( table[i].text.toUpperCase() == lookFor ) {
+			    Element('SearchLUC').value = table[i].value;
+			    break;
+			}
+		    }
+		}
+
+
+		function SearchNeighborhoodChanged() {
+		    var element					  = Element('SearchNeighborhood');
+		    var lookFor					  = element.value.toUpperCase();
+		    var table					  = Element('SelectNeighborhood');
+		    for( var i = 0; i < table.options.length; i++ ) {
+			if( table[i].text.toUpperCase() == lookFor ) {
+			    Element('SearchNBHDescription').value = table[i].value;
+			    break;
+			}
+		    }
+		}
+
+		function SearchNBHDescriptionChanged() {
+		    var element					  = Element('SearchNBHDescription');
+		    var lookFor					  = element.value.toUpperCase();
+		    var table					  = Element('SelectNBHDescription');
+		    for( var i = 0; i < table.options.length; i++ ) {
+			if( table[i].text.toUpperCase() == lookFor ) {
+			    Element('SearchNeighborhood').value = table[i].value;
+			    break;
+			}
+		    }
+		}
+
+
+		function SelectValue(elementId) {
+			var element = Element(elementId);
+			return element[element.selectedIndex].value;
+		}
+
+		function SelectText(elementId) {
+			var element = Element(elementId);
+			return element[element.selectedIndex].text;
+		}
+
+		function SelectIndex(elementId) {
+			var element = Element(elementId);
+			return element.selectedIndex;
+		}
+
+		function HidePopUpSelect() {
+		    if( 1 ) {
+			setTimeout("Element('popup').style.display = 'none';", 100 );
+		    }
+		    else {
+		        Element('popup').style.display = 'none';
+		    }
+		}
+
+		function Element(elementId) {
+			return document.getElementById(elementId);
+		}
+
+	</script>
+	</body>
+	</html>
+

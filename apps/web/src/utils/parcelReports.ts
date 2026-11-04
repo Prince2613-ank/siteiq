@@ -2,6 +2,8 @@ import { parcelKey, loadGeoJson, loadListingCheck, loadParcelBuildingCoverage, w
 import { isListedForSale } from './parcelListing';
 import { screenParcel } from './parcelScreening';
 import { loadParcelLoans, type ParcelLoanData } from './parcelLoans';
+import { scoreParcel, withNearbyIndustry } from './parcelScoring';
+import type { ParcelScore } from './useParcelScores';
 
 export const COUNTRY_CLUB_REPORT_PATH = '/sites/report/2-country-club-ln';
 export const PARCEL_REPORT_ROUTE = '/sites/report/:town/:parcelId';
@@ -13,6 +15,7 @@ export type ParcelReportData = {
   neighbors: any; buildings: any; wetlands: any;
   listing?: { status?: string; links?: Record<string, string>; note?: string } | null;
   loan?: ParcelLoanData;
+  score?: ParcelScore;
   metrics: { gis_area_m2: number; corridor_coverage_fraction: number; building_area_m2: number | null; building_count: number | null; mapped_wetland_area_m2: number | null };
   sources: { imagery_url: string; imagery_attribution: string; layer_coverage: 'complete' | 'partial' };
 };
@@ -43,5 +46,22 @@ export async function loadParcelReport(town: string, parcelId: string, signal?: 
   data.subject.properties = { ...properties, ...screenParcel(properties) };
   data.loan = loans.parcels[key];
   if (!data.loan) throw new Error('Loan record does not match this parcel');
+
+  // Compute nearby industry and scoring for this parcel
+  const withIndustry = withNearbyIndustry(parcels.features.map((feature: any) => ({
+    ...feature,
+    properties: {
+      ...feature.properties,
+      loan: loans.parcels[parcelKey(feature.properties)],
+    },
+  })));
+  const scoredSubject = withIndustry.find((featureProps: any) => parcelKey(featureProps) === key);
+  data.score = scoreParcel({
+    ...data.subject.properties,
+    ...scoredSubject,
+    loan: data.loan,
+    listed_for_sale: data.subject.properties.listed_for_sale,
+  });
+
   return data;
 }
