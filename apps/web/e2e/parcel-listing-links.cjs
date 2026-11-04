@@ -33,7 +33,7 @@ assert.equal(noLinks, 227);
       const p = parcels.find(p => p.town === 'SALISBURY' && p.parcel_id === id);
       const expected = links(listings[`SALISBURY|${id}`], p);
       await page.goto(`${process.env.SITEIQ_URL || 'http://127.0.0.1:5173'}/sites/report/SALISBURY/${id}`);
-      const section = page.getByRole('heading', { name: 'Listing & history', exact: true }).locator('..');
+      const section = page.getByRole('heading', { name: /^Listing & [Hh]istory$/i }).locator('..');
       await section.waitFor();
       assert.deepEqual(await section.locator('a').evaluateAll(elements => elements.map(a => ({ href: a.href, target: a.target, rel: a.rel }))), expected.map(link => ({ href: new URL(link.href).href, target: '_blank', rel: 'noopener noreferrer' })));
       await page.waitForFunction(() => [...document.querySelectorAll('.report-listing-links img')].every(img => img.complete && img.naturalWidth > 0));

@@ -294,18 +294,18 @@ export function ParcelReport() {
           ['Nearest road', p.road],
           ['Town-record address', p.site_address_town_record],
         ]} />
-        {rows.length > 0 && <section className="report-section report-area-section"><div className="report-section-heading"><h2>Land & coverage</h2></div>
+        {rows.length > 0 && <section className="report-section report-area-section"><div className="report-section-heading"><h2>Land & Coverage</h2></div>
           <table className="report-area-table"><thead><tr><th scope="col">Area</th><th scope="col">sq ft</th><th scope="col">acres</th><th scope="col">% of lot</th></tr></thead>
           <tbody>{rows.map(row => <tr key={row.label} className={`report-area-${row.type}`}><th scope="row"><span className={`report-area-key report-area-key-${row.type}`} />{row.label}</th><td>{row.sqft === null ? 'Not available' : format(row.sqft)}</td><td>{row.acres === null ? '—' : format(row.acres, 2)}</td><td>{row.percent === null ? (row.type === 'paved' ? '—' : '') : `${format(row.percent, 1)}%`}</td></tr>)}</tbody></table>
         </section>}
-        <RecordSection title="Ownership & records" fields={[
+        <RecordSection title="Ownership & Records" fields={[
           ['Owner type', p.owner_type], ['Mailing address', p.owner_mailing_address],
           ['Owner lives on parcel', p.owner_lives_on_lot === 'Y' ? 'Yes' : p.owner_lives_on_lot === 'N' ? 'No' : null],
           ['Owner distance', number(p.owner_distance_miles) !== null ? `${format(Number(p.owner_distance_miles), 1)} miles` : null],
           ['Years owned', number(p.years_owned) !== null ? `${format(Number(p.years_owned), 1)} years` : null],
           ['Last transfer', p.last_sale_date], ['Transfer price', p.last_sale_price], ['Deed reference', p.deed_book_page], ['Company people', p.company_people],
         ]} />
-        {data.loan && <RecordSection title="Loan information" className="report-loan-section" description="*Source: Southern Essex Registry of Deeds (salemdeeds.com), searched by property address for mortgage, discharge and UCC filings; loans recorded only under the owner’s name may not appear." fields={data.loan.loan_signal === 'Not checked' ? [
+        {data.loan && <RecordSection title="Loan Information" className="report-loan-section" description="*Source: Southern Essex Registry of Deeds (salemdeeds.com), searched by property address for mortgage, discharge and UCC filings; loans recorded only under the owner’s name may not appear." fields={data.loan.loan_signal === 'Not checked' ? [
           ['Loan category', loanCategoryLabel(data.loan.loan_signal)],
           ['Open mortgage', p.open_mortgage], ['Leases, easements & restrictions', p.lease_easement_restriction],
         ] : [
@@ -317,11 +317,11 @@ export function ParcelReport() {
           ['Estimated current balance', formatLoanMoney(data.loan.est_balance_now_usd)],
           ['Open mortgage', p.open_mortgage], ['Leases, easements & restrictions', p.lease_easement_restriction],
         ]} />}
-        <RecordSection title="Tax & estate records" fields={[
+        <RecordSection title="Tax & Estate Records" fields={[
           ['Property tax', p.unpaid_tax_signal], ['Tax takings found', p.tax_takings_found], ['Latest tax taking', p.last_tax_taking],
           ['Estate & ownership signal', p.life_event_signal], ['Estate record', p.estate_record_detail], ['Children / heirs', p.children_count_estate_owner],
         ]} />
-        <RecordSection title="Listing & history" links={parcelListingLinks(data.listing, p)} fields={[
+        <RecordSection title="Listing & History" links={parcelListingLinks(data.listing, p)} fields={[
           ['Listing status', listingStatus],
         ]} />
       </article>

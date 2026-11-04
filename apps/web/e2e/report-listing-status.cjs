@@ -25,7 +25,7 @@ assert.deepEqual(counts, { Listed: 9, 'Not listed': 530, 'Not listed/Not found':
       await page.locator('[data-listing-status]').waitFor();
       const label = group(p) === 'Listed' ? lots[`${p.town}|${p.parcel_id}`].status : group(p);
       assert.equal(await page.locator('[data-listing-status]').textContent(), label);
-      const section = page.getByRole('heading', { name: 'Listing & history', exact: true }).locator('..');
+      const section = page.getByRole('heading', { name: /^Listing & [Hh]istory$/i }).locator('..');
       const value = section.locator('dt').filter({ hasText: /^Listing status$/ }).locator('..').locator('dd');
       assert.equal(await value.textContent(), label);
       // The PDF reads these same report tags and section fields from the DOM.
