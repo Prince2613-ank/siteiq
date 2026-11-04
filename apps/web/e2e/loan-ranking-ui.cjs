@@ -16,7 +16,7 @@ const id = p => `${p.town.trim().toUpperCase()}|${p.parcel_id.trim()}`;
 const source = api.withNearbyIndustry(read('parcels_250m.geojson').features.map(f => ({
   ...f, properties: { ...attachCoverage(f.properties), loan: loans[id(f.properties)], listed_for_sale: Boolean(listings[id(f.properties)]?.status && listings[id(f.properties)].status !== 'Not listed') },
 })).filter(f => isBrowsable(f.properties)));
-const ranked = source.map(p => ({ p, score: api.scoreParcel(p) })).sort((a, b) => b.score.score - a.score.score ||
+const ranked = source.map(p => ({ p, score: api.scoreParcel(p) })).sort((a, b) => Number(b.p.keep === 'Y') - Number(a.p.keep === 'Y') || b.score.score - a.score.score ||
   (a.p.address || a.p.parcel_id).localeCompare(b.p.address || b.p.parcel_id, 'en', { numeric: true, sensitivity: 'base' }) ||
   api.scoringStorageKey(a.p).localeCompare(api.scoringStorageKey(b.p), 'en'));
 const expectedLoanPoints = {
@@ -43,7 +43,7 @@ const expectedLoanPoints = {
       rank: Number(row.querySelector('[data-parcel-rank]').dataset.parcelRank),
       score: Number(row.querySelector('.parcel-score-badge').textContent.split('/')[0]),
     })));
-    assert.deepEqual(actual, ranked.map(({ p, score }, index) => ({ address: p.address || p.parcel_id, rank: index + 1, score: score.score })));
+    assert.deepEqual(actual, ranked.map(({ p, score }, index) => ({ address: p.address || p.parcel_id, rank: p.keep === 'Y' ? index + 1 : 0, score: score.score })));
     assert.equal(actual[0].address, ranked[0].p.address || ranked[0].p.parcel_id);
     assert.equal(actual[0].score, ranked[0].score.score);
     const dialog = page.getByRole('dialog');
@@ -70,6 +70,14 @@ const expectedLoanPoints = {
       await page.getByRole('button', { name: 'Close scoring details' }).click();
     }
     assert.equal(shownCategories.size, 6);
+    const screening = page.getByRole('combobox', { name: 'Screening results', exact: true });
+    await screening.selectOption('Y');
+    const qualifiedCount = ranked.filter(({ p }) => p.keep === 'Y').length;
+    assert.deepEqual(await page.locator('[data-parcel-rank]').evaluateAll(cells => cells.map(c => Number(c.dataset.parcelRank))), Array.from({ length: qualifiedCount }, (_, i) => i + 1));
+    await screening.selectOption('N');
+    assert.equal(await page.locator('[data-parcel-rank]').count(), ranked.length - qualifiedCount);
+    assert.ok((await page.locator('[data-parcel-rank]').evaluateAll(cells => cells.map(c => Number(c.dataset.parcelRank)))).every(rank => rank === 0));
+    await screening.selectOption('ALL');
     await page.reload();
     await page.locator('[data-parcel-rank]').first().waitFor();
     assert.equal(await page.locator('tbody tr').first().locator('.parcel-score-badge').textContent(), `${ranked[0].score.score}/100`);

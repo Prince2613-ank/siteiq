@@ -1,5 +1,12 @@
 # Parcel opportunity ranking
 
+Display ranks are assigned only to Qualified parcels, in descending score order
+with address and parcel identity resolving ties. Excluded parcels display rank
+0. Ranks are calculated across all Qualified parcels before filters/pagination,
+so filtering does not renumber them. Default rank sorting places Qualified
+parcels first, followed by Excluded parcels sorted by score. This display rule
+does not change score calculations or qualification decisions.
+
 Uses the client's 23 October 2026 ranking model, updated on 4 November 2026 as `ranking-v6-off-market`. Active sale listings receive a total score of zero and are Excluded from Qualified. This includes unit/partial listings and under-agreement/pending sales. A shared flag derived from the current listing-check asset drives scoring and screening on Dashboard, Sites and property reports. Historical withdrawn listings do not trigger this override. Source GeoJSON records remain intact.
 
 `score = listed_for_sale ? 0 : clamp(site quality + min(seller likelihood, 60) + deductions, 0, 100)`

@@ -215,7 +215,7 @@ let checks = 0;
           for (let i = 1; i < displayed.length; i++) {
             const a = recordMap.get(displayed[i - 1].key), b = recordMap.get(displayed[i].key);
             let ordered;
-            if (mode === 'score_desc') ordered = displayed[i - 1].rank < displayed[i].rank;
+            if (mode === 'score_desc') ordered = displayed[i].rank === 0 || (displayed[i - 1].rank > 0 && displayed[i - 1].rank < displayed[i].rank);
             if (mode === 'qualified') ordered = Number(a.keep === 'Y') > Number(b.keep === 'Y') || (a.keep === b.keep && Number(a.usable_acres || 0) >= Number(b.usable_acres || 0));
             if (['usable_desc', 'gross_desc', 'val_desc'].includes(mode)) {
               const field = { usable_desc: 'usable_acres', gross_desc: 'acres', val_desc: 'total_val' }[mode];

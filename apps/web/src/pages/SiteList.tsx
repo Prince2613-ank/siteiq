@@ -362,17 +362,22 @@ export function SiteList() {
     };
   }, [parcels, listingCheckData]);
 
-  // Rank the entire corridor before filtering or pagination. Equal scores use
+  // Rank Qualified parcels before filtering or pagination. Equal scores use
   // address, then the town/parcel identity, for a stable display position.
   const rankedParcels = useMemo(() => [...parcels].sort((a, b) => {
     const pa = a.properties, pb = b.properties;
+    const qualificationDifference = Number(pb.keep === 'Y') - Number(pa.keep === 'Y');
+    if (qualificationDifference) return qualificationDifference;
     const scoreDifference = (ranking.scores.get(scoringStorageKey(pb))?.score ?? 0) - (ranking.scores.get(scoringStorageKey(pa))?.score ?? 0);
     if (scoreDifference) return scoreDifference;
     const addressDifference = (pa.address || pa.parcel_id || '').localeCompare(pb.address || pb.parcel_id || '', 'en', { numeric: true, sensitivity: 'base' });
     return addressDifference || scoringStorageKey(pa).localeCompare(scoringStorageKey(pb), 'en');
   }), [parcels, ranking.scores]);
   const parcelRanks = useMemo(() => new Map(rankedParcels.map((feature, index) =>
-    [scoringStorageKey(feature.properties), index + 1])), [rankedParcels]);
+    [scoringStorageKey(feature.properties), feature.properties.keep === 'Y' ? index + 1 : 0])), [rankedParcels]);
+  const parcelOrder = useMemo(() => new Map(rankedParcels.map((feature, index) =>
+    [scoringStorageKey(feature.properties), index])), [rankedParcels]);
+  const qualifiedCount = rankedParcels.filter(feature => feature.properties.keep === 'Y').length;
 
   // Filtered & Sorted parcels
   const filteredSites = useMemo(() => {
@@ -387,7 +392,7 @@ export function SiteList() {
       const pb = b.properties;
 
       if (sortBy === 'score_desc') {
-        return (parcelRanks.get(scoringStorageKey(pa)) ?? 0) - (parcelRanks.get(scoringStorageKey(pb)) ?? 0);
+        return (parcelOrder.get(scoringStorageKey(pa)) ?? 0) - (parcelOrder.get(scoringStorageKey(pb)) ?? 0);
       }
       if (sortBy === 'qualified') {
         const keepA = pa.keep === 'Y' ? 1 : 0;
@@ -412,7 +417,7 @@ export function SiteList() {
       }
       return 0;
     });
-  }, [contextParcels, filters, yearsOwned, sortBy, parcelRanks, listingCheckData]);
+  }, [contextParcels, filters, yearsOwned, sortBy, parcelOrder, listingCheckData]);
 
   // Paginated Sites
   const totalItems = filteredSites.length;
@@ -609,7 +614,7 @@ export function SiteList() {
                 <th className="px-2 py-2.5 whitespace-nowrap">Category</th>
                 <th className="px-2 py-2.5 whitespace-nowrap">Status</th>
                 <th className="px-2 py-2.5 whitespace-nowrap">Screening</th>
-                <th className="px-2 py-2.5 whitespace-nowrap" title={`Position among all ${parcels.length} sites by score; equal scores use address order`}>Rank</th>
+                <th className="px-2 py-2.5 whitespace-nowrap" title={`Position among ${qualifiedCount} Qualified sites by score; Excluded sites have rank 0; equal scores use address order`}>Rank</th>
                 <th className="px-2 py-2.5 whitespace-nowrap" title="Automatically calculated from source data">Score /100</th>
                 <th className="px-2 py-2.5 whitespace-nowrap">Listing Status</th>
                 <th className="px-2.5 py-2.5 whitespace-nowrap">Listing History</th>
@@ -779,7 +784,7 @@ export function SiteList() {
                     </td>
 
                     <td className="px-2.5 py-1.5 whitespace-nowrap font-bold tabular-nums text-slate-700" data-parcel-rank={parcelRanks.get(scoringStorageKey(p))}
-                      aria-label={`Rank ${parcelRanks.get(scoringStorageKey(p))} of ${parcels.length}`}>
+                      aria-label={p.keep === 'Y' ? `Rank ${parcelRanks.get(scoringStorageKey(p))} of ${qualifiedCount} Qualified sites` : 'Rank 0: Excluded'}>
                       #{parcelRanks.get(scoringStorageKey(p))}
                     </td>
                     <td className="px-2.5 py-1.5 whitespace-nowrap"><ScoreBadge score={ranking.scores.get(scoringStorageKey(p))} onClick={() => setSelectedScoringSite(p)} /></td>
