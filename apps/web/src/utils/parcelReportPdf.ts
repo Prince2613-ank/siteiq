@@ -4,8 +4,8 @@ import type { ParcelReportData } from './parcelReports';
 type Section = { title: string; head?: string[]; rows: string[][]; links?: string[]; logos?: string[]; notes?: string[]; description?: string };
 export type ParcelReportPdfSnapshot = {
   title: string; location: string; tags: string; filename: string;
-  score?: number | null;
-  scoreText?: string | null;
+  rank?: number | null;
+  rankText?: string | null;
   lifeEvents?: string[];
   sections: Section[]; map: string; mapWidth: number; mapHeight: number; mapLegend: string; mapAttribution: string;
 };
@@ -119,8 +119,8 @@ export async function snapshotParcelReport(article: HTMLElement, data: ParcelRep
   const lifeEvents = [...article.querySelectorAll('.report-life-events .report-life-event-badge')].map(badge => text(badge.textContent));
   const snapshot: ParcelReportPdfSnapshot = {
     title: text(article.querySelector('h1')?.textContent), location: text(article.querySelector('.report-location')?.textContent),
-    score: data.score?.score ?? null,
-    scoreText: data.score ? `${data.score.score}/100` : null,
+    rank: data.rank ?? null,
+    rankText: data.rank && data.rank > 0 ? `#${data.rank}` : (p.keep === 'Y' ? null : 'Unranked (Excluded)'),
     lifeEvents,
     tags: [...article.querySelectorAll('.report-property-tags > span')].map(tag => text(tag.textContent)).join(' | '),
     filename: `SiteIQ-${p.town}-${p.parcel_id}.pdf`.replace(/[<>:"/\\|?*\x00-\x1f]/g, '-'),
@@ -146,8 +146,10 @@ export async function downloadParcelReportPdf(snapshot: ParcelReportPdfSnapshot)
   paragraph('SiteIQ / PROPERTY REPORT', 9, true, '#287156');
   paragraph(snapshot.title, 23, true);
   paragraph(snapshot.location, 10);
-  if (snapshot.score != null) {
-    paragraph(`SiteIQ Score: ${snapshot.score}/100`, 11, true, '#1d4ed8');
+  if (snapshot.rank != null && snapshot.rank > 0) {
+    paragraph(`SiteIQ Rank: #${snapshot.rank}`, 11, true, '#1d4ed8');
+  } else if (snapshot.rank === 0) {
+    paragraph('SiteIQ Rank: Unranked (Excluded)', 11, true, '#64748b');
   }
   if (snapshot.lifeEvents && snapshot.lifeEvents.length > 0) {
     paragraph(`Ownership signals: ${snapshot.lifeEvents.join('  |  ')}`, 9, true, '#6b21a8');

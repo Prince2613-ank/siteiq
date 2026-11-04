@@ -220,10 +220,18 @@ export function ParcelReport() {
               <h1>{heading}</h1>
               <p className="report-location">{city}, {p.state === 'MA' ? 'Massachusetts' : p.state === 'NH' ? 'New Hampshire' : p.state}</p>
             </div>
-            {score && (
-              <div className="report-heading-score">
-                <span className="report-heading-score-label">Score</span>
-                <ScoreBadge score={score} onClick={() => setScoringOpen(true)} />
+            {data.rank !== undefined && (
+              <div className="report-heading-score report-heading-rank">
+                <span className="report-heading-score-label">Rank</span>
+                <button
+                  type="button"
+                  className="parcel-score-badge parcel-rank-badge"
+                  onClick={() => score && setScoringOpen(true)}
+                  title={data.rank > 0 ? `Rank #${data.rank} among Qualified parcels (Click to view scoring details)` : 'Excluded parcel: Rank 0'}
+                  aria-label={`Rank ${data.rank > 0 ? '#' + data.rank : 'Unranked'}`}
+                >
+                  {data.rank > 0 ? `#${data.rank}` : 'Unranked'}
+                </button>
               </div>
             )}
           </div>
@@ -281,7 +289,7 @@ export function ParcelReport() {
         </section>}
         <RecordSection title="Property identity" fields={[
           ['Parcel ID', p.parcel_id], ['Land use', p.use], ['Owner', p.owner_name || p.owner],
-          ['SiteIQ score', score ? `${score.score}/100` : null],
+          ['SiteIQ rank', data.rank && data.rank > 0 ? `#${data.rank}` : (p.keep === 'Y' ? null : 'Unranked (Excluded)')],
           ['Assessed value', valuation !== null ? `$${format(valuation)}` : null], ['Development status', p.status],
           ['Land category', p.category], ['Category reason', p.category_reason], ['Units', p.units], ['Zoning', p.zoning],
           ['Nearest road', p.road],
@@ -315,8 +323,7 @@ export function ParcelReport() {
           ['Estate & ownership signal', p.life_event_signal], ['Estate record', p.estate_record_detail], ['Children / heirs', p.children_count_estate_owner],
         ]} />
         <RecordSection title="Listing & history" links={parcelListingLinks(data.listing, p)} fields={[
-          ['Listing status', listingStatus], ['Past listing attempt', p.past_listing_attempt],
-          ['Zillow history', p.zillow_past_attempt], ['Redfin history', p.redfin_past_attempt],
+          ['Listing status', listingStatus],
         ]} />
       </article>
     </div>

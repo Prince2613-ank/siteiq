@@ -1,9 +1,9 @@
-import { parcelKey, loadGeoJson, loadListingCheck, loadParcelBuildingCoverage, withBuildingCoverage } from './dataLoading';
+import { parcelKey, loadListingCheck, loadParcelBuildingCoverage, withBuildingCoverage, loadParcels } from './dataLoading';
 import { isListedForSale } from './parcelListing';
 import { screenParcel } from './parcelScreening';
 import { loadParcelLoans, type ParcelLoanData } from './parcelLoans';
-import { scoreParcel, withNearbyIndustry } from './parcelScoring';
-import type { ParcelScore } from './useParcelScores';
+import { scoringStorageKey } from './parcelScoring';
+import { computeParcelRanks, type ParcelScore } from './useParcelScores';
 
 export const COUNTRY_CLUB_REPORT_PATH = '/sites/report/2-country-club-ln';
 export const PARCEL_REPORT_ROUTE = '/sites/report/:town/:parcelId';
@@ -16,6 +16,7 @@ export type ParcelReportData = {
   listing?: { status?: string; links?: Record<string, string>; note?: string } | null;
   loan?: ParcelLoanData;
   score?: ParcelScore;
+  rank?: number;
   metrics: { gis_area_m2: number; corridor_coverage_fraction: number; building_area_m2: number | null; building_count: number | null; mapped_wetland_area_m2: number | null };
   sources: { imagery_url: string; imagery_attribution: string; layer_coverage: 'complete' | 'partial' };
 };
@@ -32,13 +33,13 @@ export async function loadParcelReport(town: string, parcelId: string, signal?: 
   if (!entry) throw new Error('Parcel report not found');
   const response = await fetch(`/reports/${entry.file}`, { signal });
   if (!response.ok) throw new Error('Parcel report unavailable');
-  const [data, loans, listings, coverage, parcels] = await Promise.all([
+  const [data, loans, listings, coverage, allParcels] = await Promise.all([
     response.json() as Promise<ParcelReportData>, loadParcelLoans(), loadListingCheck(), loadParcelBuildingCoverage(),
-    loadGeoJson('/geojson/parcels_250m.geojson'),
+    loadParcels(),
   ]);
   if (parcelKey(data.subject.properties) !== key || !data.subject.geometry) throw new Error('Parcel report identity does not match');
   data.listing = listings.lots[key] ?? null;
-  const current = parcels.features.find((feature: any) => parcelKey(feature.properties) === key)?.properties;
+  const current = allParcels.features.find((feature: any) => parcelKey(feature.properties) === key)?.properties;
   if (!current) throw new Error('Parcel category record not found');
   const properties = { ...withBuildingCoverage({ ...data.subject.properties,
     category: current.category, category_reason: current.category_reason, source_land_category: current.source_land_category,
@@ -47,21 +48,11 @@ export async function loadParcelReport(town: string, parcelId: string, signal?: 
   data.loan = loans.parcels[key];
   if (!data.loan) throw new Error('Loan record does not match this parcel');
 
-  // Compute nearby industry and scoring for this parcel
-  const withIndustry = withNearbyIndustry(parcels.features.map((feature: any) => ({
-    ...feature,
-    properties: {
-      ...feature.properties,
-      loan: loans.parcels[parcelKey(feature.properties)],
-    },
-  })));
-  const scoredSubject = withIndustry.find((featureProps: any) => parcelKey(featureProps) === key);
-  data.score = scoreParcel({
-    ...data.subject.properties,
-    ...scoredSubject,
-    loan: data.loan,
-    listed_for_sale: data.subject.properties.listed_for_sale,
-  });
+  // Compute ranks and scores across all corridor parcels
+  const { scores, ranks } = computeParcelRanks(allParcels.features);
+  const storageKey = scoringStorageKey(data.subject.properties);
+  data.score = scores.get(storageKey);
+  data.rank = ranks.get(storageKey) ?? (data.subject.properties.keep === 'Y' ? undefined : 0);
 
   return data;
 }
