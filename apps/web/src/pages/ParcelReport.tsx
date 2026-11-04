@@ -200,7 +200,7 @@ export function ParcelReport() {
           ['Parcel ID', p.parcel_id], ['Land use', p.use], ['Owner', p.owner_name || p.owner],
           ['Assessed value', valuation !== null ? `$${format(valuation)}` : null], ['Development status', p.status],
           ['Land category', p.category], ['Units', p.units], ['Zoning', p.zoning],
-          ['Nearest road', p.road], ['Distance to road', number(p.road_dist_m) !== null ? `${format(Number(p.road_dist_m), 1)} m` : null],
+          ['Nearest road', p.road],
           ['Town-record address', p.site_address_town_record],
         ]} />
         {rows.length > 0 && <section className="report-section report-area-section"><div className="report-section-heading"><h2>Land & coverage</h2></div>
